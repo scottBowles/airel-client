@@ -1,0 +1,76 @@
+query npcs {
+	npcs {
+		edges {
+			node {
+				id
+				name
+				description
+				size
+				race {
+					id
+					name
+					ageOfAdulthood
+					lifeExpectancy
+					alignment
+					size
+					speed
+				}
+				featuresAndTraits {
+					edges {
+						node {
+							id
+							name
+							description
+						}
+					}
+				}
+				proficiencies {
+					edges {
+						node {
+							id
+							name
+							description
+							proficiencyType
+						}
+					}
+				}
+			}
+		}
+	}
+}
+query npcById($id: ID!) {
+	npc(id: $id) {
+		id
+		name
+		description
+		size
+		race {
+			id
+			name
+			ageOfAdulthood
+			lifeExpectancy
+			alignment
+			size
+			speed
+		}
+		featuresAndTraits {
+			edges {
+				node {
+					id
+					name
+					description
+				}
+			}
+		}
+		proficiencies {
+			edges {
+				node {
+					id
+					name
+					description
+					proficiencyType
+				}
+			}
+		}
+	}
+}

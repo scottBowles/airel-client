@@ -1,0 +1,19 @@
+query items {
+	items {
+		edges {
+			node {
+				id
+				name
+				description
+			}
+		}
+	}
+}
+
+query itemById($id: ID!) {
+	item(id: $id) {
+		id
+		name
+		description
+	}
+}

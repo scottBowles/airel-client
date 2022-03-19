@@ -1,0 +1,19 @@
+query associations {
+	associations {
+		edges {
+			node {
+				id
+				name
+				description
+			}
+		}
+	}
+}
+
+query associationById($id: ID!) {
+	association(id: $id) {
+		id
+		name
+		description
+	}
+}

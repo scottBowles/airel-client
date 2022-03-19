@@ -1,0 +1,113 @@
+query races {
+	races {
+		edges {
+			node {
+				id
+				name
+				ageOfAdulthood
+				lifeExpectancy
+				alignment
+				size
+				speed
+				baseRace {
+					id
+					name
+					ageOfAdulthood
+					lifeExpectancy
+					alignment
+					size
+					speed
+				}
+				subraces {
+					edges {
+						node {
+							id
+							name
+							ageOfAdulthood
+							lifeExpectancy
+							alignment
+							size
+							speed
+						}
+					}
+				}
+				languages {
+					edges {
+						node {
+							id
+							name
+							description
+							script {
+								name
+							}
+						}
+					}
+				}
+				traits {
+					edges {
+						node {
+							id
+							name
+							description
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+query raceById($id: ID!) {
+	race(id: $id) {
+		id
+		name
+		ageOfAdulthood
+		lifeExpectancy
+		alignment
+		size
+		speed
+		baseRace {
+			id
+			name
+			ageOfAdulthood
+			lifeExpectancy
+			alignment
+			size
+			speed
+		}
+		subraces {
+			edges {
+				node {
+					id
+					name
+					ageOfAdulthood
+					lifeExpectancy
+					alignment
+					size
+					speed
+				}
+			}
+		}
+		languages {
+			edges {
+				node {
+					id
+					name
+					description
+					script {
+						name
+					}
+				}
+			}
+		}
+		traits {
+			edges {
+				node {
+					id
+					name
+					description
+				}
+			}
+		}
+	}
+}
