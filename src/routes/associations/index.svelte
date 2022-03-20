@@ -3,7 +3,6 @@
 		getAssociations,
 		associations as queriedAssociations
 	} from '$lib/graphql/AssociationQueries.gq';
-	import BannerImage from '$lib/components/BannerImage.svelte';
 
 	export async function load({ fetch }) {
 		await getAssociations({ fetch });
@@ -12,13 +11,20 @@
 </script>
 
 <script>
-	import { Anchor, Article, Container, Heading } from '@kahi-ui/framework';
+	import { Container } from '@kahi-ui/framework';
+	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
+	import BannerImage from '$lib/components/BannerImage.svelte';
 
 	$: associations = $queriedAssociations?.associations.edges?.map(({ node }) => node);
 	$: console.log({ associations });
 </script>
 
-<BannerImage overlay="Associations" />
+<BannerImage
+	overlay="Associations"
+	imageId={'dnd/City_guard_and_magister-5e_uk2sr0'}
+	alt="associations banner"
+	gravity={compass('north_east')}
+/>
 
 <div class="spacer" />
 

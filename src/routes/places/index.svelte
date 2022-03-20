@@ -8,16 +8,48 @@
 </script>
 
 <script>
-	import { Anchor, Heading } from '@kahi-ui/framework';
+	import BannerImage from '$lib/components/BannerImage.svelte';
+	import { Anchor, Container, Heading } from '@kahi-ui/framework';
 
 	$: places = $queriedPlaces?.places.edges?.map(({ node }) => node).filter(Boolean);
 	$: console.log({ places });
 </script>
 
-<Heading>Places:</Heading>
-<dl>
-	{#each places as place}
-		<dt><Anchor href={`places/${place.id}`}>Name: {place.name}</Anchor></dt>
-		<dd>Description: {place.description}</dd>
-	{/each}
-</dl>
+<BannerImage overlay="Places" imageId="dnd/places-banner_bwv6ut" alt="places banner" />
+
+<div class="spacer" />
+
+<!-- Show suns and planets in order -->
+
+<!-- Show places in order of most to least recently updated -->
+
+<Container>
+	<dl>
+		{#each places as place}
+			<dt><a href={`places/${place.id}`}>{place.name}</a></dt>
+			<dd>{place.description}</dd>
+		{/each}
+	</dl>
+</Container>
+
+<style>
+	.spacer {
+		height: 2rem;
+	}
+
+	a {
+		color: #908149;
+	}
+
+	a:hover {
+		text-decoration: underline;
+	}
+
+	dt {
+		font-weight: bold;
+	}
+
+	dt:not(:first-child) {
+		margin-top: 1rem;
+	}
+</style>

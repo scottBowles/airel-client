@@ -10,9 +10,9 @@
 	import cloudinary from '$lib/stores/cloudinary';
 
 	export let imageId = 'dnd/sfaedxiltuowlw7whb0c';
-	export let width = 100;
-	export let height = 100;
-	export let radius = 100;
+	export let width = 75;
+	export let height = 75;
+	export let radius = 0;
 
 	let src;
 
