@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 export type ItemsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type ItemsQuery = { __typename?: 'Query', items?: { __typename?: 'ItemNodeConnection', edges: Array<{ __typename?: 'ItemNodeEdge', node?: { __typename?: 'ItemNode', id: string, name: string, description?: string | null } | null } | null> } | null };
+export type ItemsQuery = { __typename?: 'Query', items?: { __typename?: 'ItemNodeConnection', edges: Array<{ __typename?: 'ItemNodeEdge', node?: { __typename?: 'ItemNode', id: string, name: string, description?: string | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null } | null> } | null };
 
 export type ItemByIdQueryVariables = Types.Exact<{
   id: Types.Scalars['ID'];
@@ -34,6 +34,15 @@ export const ItemsDoc = gql`
         id
         name
         description
+        armor {
+          acBonus
+        }
+        weapon {
+          attackBonus
+        }
+        equipment {
+          briefDescription
+        }
       }
     }
   }

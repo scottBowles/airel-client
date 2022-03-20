@@ -5,6 +5,15 @@ query items {
 				id
 				name
 				description
+				armor {
+					acBonus
+				}
+				weapon {
+					attackBonus
+				}
+				equipment {
+					briefDescription
+				}
 			}
 		}
 	}
