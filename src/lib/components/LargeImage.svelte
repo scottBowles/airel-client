@@ -8,7 +8,6 @@
 
 	export let imageId = 'dnd/sfaedxiltuowlw7whb0c';
 	export let width = 400;
-	export let height = 'auto';
 	export let radius = 0;
 	export let alt = '';
 
