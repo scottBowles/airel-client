@@ -5,6 +5,8 @@ query places {
 				id
 				name
 				description
+				imageId
+				thumbnailId
 				created
 				updated
 				placeType
@@ -13,6 +15,8 @@ query places {
 					id
 					name
 					description
+					imageId
+					thumbnailId
 					created
 					updated
 					placeType
@@ -21,6 +25,8 @@ query places {
 						id
 						name
 						description
+						imageId
+						thumbnailId
 						created
 						updated
 						placeType
@@ -37,6 +43,8 @@ query placeById($id: ID!) {
 		id
 		name
 		description
+		imageId
+		thumbnailId
 		created
 		updated
 		placeType
@@ -45,6 +53,8 @@ query placeById($id: ID!) {
 			id
 			name
 			description
+			imageId
+			thumbnailId
 			created
 			updated
 			placeType
@@ -53,6 +63,8 @@ query placeById($id: ID!) {
 				id
 				name
 				description
+				imageId
+				thumbnailId
 				created
 				updated
 				placeType

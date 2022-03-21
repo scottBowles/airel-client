@@ -7,14 +7,14 @@ import gql from 'graphql-tag';
 export type PlacesQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type PlacesQuery = { __typename?: 'Query', places?: { __typename?: 'PlaceNodeConnection', edges: Array<{ __typename?: 'PlaceNodeEdge', node?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number } | null } | null } | null } | null> } | null };
+export type PlacesQuery = { __typename?: 'Query', places?: { __typename?: 'PlaceNodeConnection', edges: Array<{ __typename?: 'PlaceNodeEdge', node?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number } | null } | null } | null } | null> } | null };
 
 export type PlaceByIdQueryVariables = Types.Exact<{
   id: Types.Scalars['ID'];
 }>;
 
 
-export type PlaceByIdQuery = { __typename?: 'Query', place?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number } | null } | null } | null };
+export type PlaceByIdQuery = { __typename?: 'Query', place?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number } | null } | null } | null };
 
 
 type SubscribeWrapperArgs<T> = {
@@ -34,6 +34,8 @@ export const PlacesDoc = gql`
         id
         name
         description
+        imageId
+        thumbnailId
         created
         updated
         placeType
@@ -42,6 +44,8 @@ export const PlacesDoc = gql`
           id
           name
           description
+          imageId
+          thumbnailId
           created
           updated
           placeType
@@ -50,6 +54,8 @@ export const PlacesDoc = gql`
             id
             name
             description
+            imageId
+            thumbnailId
             created
             updated
             placeType
@@ -67,6 +73,8 @@ export const PlaceByIdDoc = gql`
     id
     name
     description
+    imageId
+    thumbnailId
     created
     updated
     placeType
@@ -75,6 +83,8 @@ export const PlaceByIdDoc = gql`
       id
       name
       description
+      imageId
+      thumbnailId
       created
       updated
       placeType
@@ -83,6 +93,8 @@ export const PlaceByIdDoc = gql`
         id
         name
         description
+        imageId
+        thumbnailId
         created
         updated
         placeType

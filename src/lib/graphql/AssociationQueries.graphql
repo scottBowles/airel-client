@@ -5,6 +5,8 @@ query associations {
 				id
 				name
 				description
+				imageId
+				thumbnailId
 			}
 		}
 	}
@@ -15,5 +17,7 @@ query associationById($id: ID!) {
 		id
 		name
 		description
+		imageId
+		thumbnailId
 	}
 }

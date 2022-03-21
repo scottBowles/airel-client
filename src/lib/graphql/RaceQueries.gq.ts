@@ -7,14 +7,14 @@ import gql from 'graphql-tag';
 export type RacesQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type RacesQuery = { __typename?: 'Query', races?: { __typename?: 'RaceNodeConnection', edges: Array<{ __typename?: 'RaceNodeEdge', node?: { __typename?: 'RaceNode', id: string, name: string, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: Types.RaceRaceAlignmentChoices | null, size?: Types.RaceRaceSizeChoices | null, speed?: number | null, baseRace?: { __typename?: 'RaceNode', id: string, name: string, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: Types.RaceRaceAlignmentChoices | null, size?: Types.RaceRaceSizeChoices | null, speed?: number | null } | null, subraces: { __typename?: 'RaceNodeConnection', edges: Array<{ __typename?: 'RaceNodeEdge', node?: { __typename?: 'RaceNode', id: string, name: string, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: Types.RaceRaceAlignmentChoices | null, size?: Types.RaceRaceSizeChoices | null, speed?: number | null } | null } | null> }, languages: { __typename?: 'LanguageNodeConnection', edges: Array<{ __typename?: 'LanguageNodeEdge', node?: { __typename?: 'LanguageNode', id: string, name: string, description: string, script?: { __typename?: 'ScriptNode', name: string } | null } | null } | null> }, traits: { __typename?: 'TraitNodeConnection', edges: Array<{ __typename?: 'TraitNodeEdge', node?: { __typename?: 'TraitNode', id: string, name: string, description?: string | null } | null } | null> } } | null } | null> } | null };
+export type RacesQuery = { __typename?: 'Query', races?: { __typename?: 'RaceNodeConnection', edges: Array<{ __typename?: 'RaceNodeEdge', node?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: Types.RaceRaceAlignmentChoices | null, size?: Types.RaceRaceSizeChoices | null, speed?: number | null, baseRace?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: Types.RaceRaceAlignmentChoices | null, size?: Types.RaceRaceSizeChoices | null, speed?: number | null } | null, subraces: { __typename?: 'RaceNodeConnection', edges: Array<{ __typename?: 'RaceNodeEdge', node?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: Types.RaceRaceAlignmentChoices | null, size?: Types.RaceRaceSizeChoices | null, speed?: number | null } | null } | null> }, languages: { __typename?: 'LanguageNodeConnection', edges: Array<{ __typename?: 'LanguageNodeEdge', node?: { __typename?: 'LanguageNode', id: string, name: string, description: string, script?: { __typename?: 'ScriptNode', name: string } | null } | null } | null> }, traits: { __typename?: 'TraitNodeConnection', edges: Array<{ __typename?: 'TraitNodeEdge', node?: { __typename?: 'TraitNode', id: string, name: string, description?: string | null } | null } | null> } } | null } | null> } | null };
 
 export type RaceByIdQueryVariables = Types.Exact<{
   id: Types.Scalars['ID'];
 }>;
 
 
-export type RaceByIdQuery = { __typename?: 'Query', race?: { __typename?: 'RaceNode', id: string, name: string, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: Types.RaceRaceAlignmentChoices | null, size?: Types.RaceRaceSizeChoices | null, speed?: number | null, baseRace?: { __typename?: 'RaceNode', id: string, name: string, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: Types.RaceRaceAlignmentChoices | null, size?: Types.RaceRaceSizeChoices | null, speed?: number | null } | null, subraces: { __typename?: 'RaceNodeConnection', edges: Array<{ __typename?: 'RaceNodeEdge', node?: { __typename?: 'RaceNode', id: string, name: string, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: Types.RaceRaceAlignmentChoices | null, size?: Types.RaceRaceSizeChoices | null, speed?: number | null } | null } | null> }, languages: { __typename?: 'LanguageNodeConnection', edges: Array<{ __typename?: 'LanguageNodeEdge', node?: { __typename?: 'LanguageNode', id: string, name: string, description: string, script?: { __typename?: 'ScriptNode', name: string } | null } | null } | null> }, traits: { __typename?: 'TraitNodeConnection', edges: Array<{ __typename?: 'TraitNodeEdge', node?: { __typename?: 'TraitNode', id: string, name: string, description?: string | null } | null } | null> } } | null };
+export type RaceByIdQuery = { __typename?: 'Query', race?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: Types.RaceRaceAlignmentChoices | null, size?: Types.RaceRaceSizeChoices | null, speed?: number | null, baseRace?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: Types.RaceRaceAlignmentChoices | null, size?: Types.RaceRaceSizeChoices | null, speed?: number | null } | null, subraces: { __typename?: 'RaceNodeConnection', edges: Array<{ __typename?: 'RaceNodeEdge', node?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: Types.RaceRaceAlignmentChoices | null, size?: Types.RaceRaceSizeChoices | null, speed?: number | null } | null } | null> }, languages: { __typename?: 'LanguageNodeConnection', edges: Array<{ __typename?: 'LanguageNodeEdge', node?: { __typename?: 'LanguageNode', id: string, name: string, description: string, script?: { __typename?: 'ScriptNode', name: string } | null } | null } | null> }, traits: { __typename?: 'TraitNodeConnection', edges: Array<{ __typename?: 'TraitNodeEdge', node?: { __typename?: 'TraitNode', id: string, name: string, description?: string | null } | null } | null> } } | null };
 
 
 type SubscribeWrapperArgs<T> = {
@@ -33,6 +33,9 @@ export const RacesDoc = gql`
       node {
         id
         name
+        description
+        imageId
+        thumbnailId
         ageOfAdulthood
         lifeExpectancy
         alignment
@@ -41,6 +44,9 @@ export const RacesDoc = gql`
         baseRace {
           id
           name
+          description
+          imageId
+          thumbnailId
           ageOfAdulthood
           lifeExpectancy
           alignment
@@ -52,6 +58,9 @@ export const RacesDoc = gql`
             node {
               id
               name
+              description
+              imageId
+              thumbnailId
               ageOfAdulthood
               lifeExpectancy
               alignment
@@ -91,6 +100,9 @@ export const RaceByIdDoc = gql`
   race(id: $id) {
     id
     name
+    description
+    imageId
+    thumbnailId
     ageOfAdulthood
     lifeExpectancy
     alignment
@@ -99,6 +111,9 @@ export const RaceByIdDoc = gql`
     baseRace {
       id
       name
+      description
+      imageId
+      thumbnailId
       ageOfAdulthood
       lifeExpectancy
       alignment
@@ -110,6 +125,9 @@ export const RaceByIdDoc = gql`
         node {
           id
           name
+          description
+          imageId
+          thumbnailId
           ageOfAdulthood
           lifeExpectancy
           alignment

@@ -4,6 +4,9 @@ query races {
 			node {
 				id
 				name
+				description
+				imageId
+				thumbnailId
 				ageOfAdulthood
 				lifeExpectancy
 				alignment
@@ -12,6 +15,9 @@ query races {
 				baseRace {
 					id
 					name
+					description
+					imageId
+					thumbnailId
 					ageOfAdulthood
 					lifeExpectancy
 					alignment
@@ -23,6 +29,9 @@ query races {
 						node {
 							id
 							name
+							description
+							imageId
+							thumbnailId
 							ageOfAdulthood
 							lifeExpectancy
 							alignment
@@ -61,6 +70,9 @@ query raceById($id: ID!) {
 	race(id: $id) {
 		id
 		name
+		description
+		imageId
+		thumbnailId
 		ageOfAdulthood
 		lifeExpectancy
 		alignment
@@ -69,6 +81,9 @@ query raceById($id: ID!) {
 		baseRace {
 			id
 			name
+			description
+			imageId
+			thumbnailId
 			ageOfAdulthood
 			lifeExpectancy
 			alignment
@@ -80,6 +95,9 @@ query raceById($id: ID!) {
 				node {
 					id
 					name
+					description
+					imageId
+					thumbnailId
 					ageOfAdulthood
 					lifeExpectancy
 					alignment

@@ -83,9 +83,11 @@ export type ArtifactNode = Node & {
   description?: Maybe<Scalars['String']>;
   /** The ID of the object */
   id: Scalars['ID'];
+  imageId?: Maybe<Scalars['String']>;
   items: ItemNodeConnection;
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
   notes?: Maybe<Scalars['String']>;
+  thumbnailId?: Maybe<Scalars['String']>;
   updated: Scalars['DateTime'];
 };
 
@@ -130,7 +132,9 @@ export type AssociationConnection = {
 export type AssociationCreateMutationInput = {
   clientMutationId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
+  imageId?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
 };
 
 export type AssociationCreateMutationPayload = {
@@ -169,7 +173,9 @@ export type AssociationNode = Node & {
   description?: Maybe<Scalars['String']>;
   /** The ID of the object */
   id: Scalars['ID'];
+  imageId?: Maybe<Scalars['String']>;
   name: Scalars['String'];
+  thumbnailId?: Maybe<Scalars['String']>;
   updated: Scalars['DateTime'];
 };
 
@@ -194,7 +200,9 @@ export type AssociationPatchMutationInput = {
   clientMutationId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
+  imageId?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
 };
 
 export type AssociationPatchMutationPayload = {
@@ -209,7 +217,9 @@ export type AssociationUpdateMutationInput = {
   clientMutationId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
+  imageId?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
 };
 
 export type AssociationUpdateMutationPayload = {
@@ -497,7 +507,9 @@ export type ItemCreateMutationInput = {
   clientMutationId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   equipment?: InputMaybe<EquipmentInput>;
+  imageId?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
   weapon?: InputMaybe<WeaponInput>;
 };
 
@@ -529,7 +541,9 @@ export type ItemNode = Node & {
   equipment?: Maybe<EquipmentTraitsNode>;
   /** The ID of the object */
   id: Scalars['ID'];
+  imageId?: Maybe<Scalars['String']>;
   name: Scalars['String'];
+  thumbnailId?: Maybe<Scalars['String']>;
   updated: Scalars['DateTime'];
   weapon?: Maybe<WeaponTraitsNode>;
 };
@@ -558,7 +572,9 @@ export type ItemPatchMutationInput = {
   description?: InputMaybe<Scalars['String']>;
   equipment?: InputMaybe<EquipmentInput>;
   id?: InputMaybe<Scalars['ID']>;
+  imageId?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
   weapon?: InputMaybe<WeaponInput>;
 };
 
@@ -577,7 +593,9 @@ export type ItemUpdateMutationInput = {
   description?: InputMaybe<Scalars['String']>;
   equipment?: InputMaybe<EquipmentInput>;
   id?: InputMaybe<Scalars['ID']>;
+  imageId?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
   weapon?: InputMaybe<WeaponInput>;
 };
 
@@ -955,12 +973,14 @@ export type NpcNode = Node & {
   featuresAndTraits?: Maybe<FeaturesAndTraitConnection>;
   /** The ID of the object */
   id: Scalars['ID'];
+  imageId?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   proficiencies: ProficiencyNodeConnection;
   profiencies?: Maybe<ProficiencyConnection>;
   race?: Maybe<RaceNode>;
   size?: Maybe<CharacterNpcSizeChoices>;
   slug: Scalars['String'];
+  thumbnailId?: Maybe<Scalars['String']>;
   updated: Scalars['DateTime'];
 };
 
@@ -1036,11 +1056,13 @@ export type PlaceCreateMutationInput = {
   clientMutationId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   exports?: InputMaybe<Array<InputMaybe<PlaceExportInput>>>;
+  imageId?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   parent?: InputMaybe<Scalars['UUID']>;
   placeType?: InputMaybe<Scalars['String']>;
   population?: InputMaybe<Scalars['Int']>;
   races?: InputMaybe<Array<InputMaybe<PlaceRaceInput>>>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
 };
 
 export type PlaceCreateMutationPayload = {
@@ -1078,10 +1100,12 @@ export type PlaceNode = Node & {
   exports?: Maybe<ExportConnection>;
   /** The ID of the object */
   id: Scalars['ID'];
+  imageId?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   parent?: Maybe<PlaceNode>;
   placeType: PlacePlacePlaceTypeChoices;
   population: Scalars['Int'];
+  thumbnailId?: Maybe<Scalars['String']>;
   updated: Scalars['DateTime'];
 };
 
@@ -1146,11 +1170,13 @@ export type PlacePatchMutationInput = {
   description?: InputMaybe<Scalars['String']>;
   exports?: InputMaybe<Array<InputMaybe<PlaceExportInput>>>;
   id?: InputMaybe<Scalars['ID']>;
+  imageId?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   parent?: InputMaybe<Scalars['UUID']>;
   placeType?: InputMaybe<Scalars['String']>;
   population?: InputMaybe<Scalars['Int']>;
   races?: InputMaybe<Array<InputMaybe<PlaceRaceInput>>>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
 };
 
 export type PlacePatchMutationPayload = {
@@ -1191,11 +1217,13 @@ export type PlaceUpdateMutationInput = {
   description?: InputMaybe<Scalars['String']>;
   exports?: InputMaybe<Array<InputMaybe<PlaceExportInput>>>;
   id?: InputMaybe<Scalars['ID']>;
+  imageId?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   parent?: InputMaybe<Scalars['UUID']>;
   placeType?: InputMaybe<Scalars['String']>;
   population?: InputMaybe<Scalars['Int']>;
   races?: InputMaybe<Array<InputMaybe<PlaceRaceInput>>>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
 };
 
 export type PlaceUpdateMutationPayload = {
@@ -1599,12 +1627,15 @@ export type RaceCreateMutationInput = {
   alignment?: InputMaybe<Scalars['String']>;
   baseRace?: InputMaybe<Scalars['String']>;
   clientMutationId?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  imageId?: InputMaybe<Scalars['String']>;
   languages?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   lifeExpectancy?: InputMaybe<Scalars['Int']>;
   name: Scalars['String'];
   size?: InputMaybe<Scalars['String']>;
   speed?: InputMaybe<Scalars['Int']>;
   subraces?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
   traits?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
@@ -1653,14 +1684,17 @@ export type RaceNode = Node & {
   ageOfAdulthood?: Maybe<Scalars['Int']>;
   alignment?: Maybe<RaceRaceAlignmentChoices>;
   baseRace?: Maybe<RaceNode>;
+  description?: Maybe<Scalars['String']>;
   /** The ID of the object */
   id: Scalars['ID'];
+  imageId?: Maybe<Scalars['String']>;
   languages: LanguageNodeConnection;
   lifeExpectancy?: Maybe<Scalars['Int']>;
   name: Scalars['String'];
   size?: Maybe<RaceRaceSizeChoices>;
   speed?: Maybe<Scalars['Int']>;
   subraces: RaceNodeConnection;
+  thumbnailId?: Maybe<Scalars['String']>;
   traits: TraitNodeConnection;
 };
 
@@ -1725,13 +1759,16 @@ export type RacePatchMutationInput = {
   alignment?: InputMaybe<Scalars['String']>;
   baseRace?: InputMaybe<Scalars['String']>;
   clientMutationId?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
+  imageId?: InputMaybe<Scalars['String']>;
   languages?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   lifeExpectancy?: InputMaybe<Scalars['Int']>;
   name: Scalars['String'];
   size?: InputMaybe<Scalars['String']>;
   speed?: InputMaybe<Scalars['Int']>;
   subraces?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
   traits?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
@@ -1786,13 +1823,16 @@ export type RaceUpdateMutationInput = {
   alignment?: InputMaybe<Scalars['String']>;
   baseRace?: InputMaybe<Scalars['String']>;
   clientMutationId?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
+  imageId?: InputMaybe<Scalars['String']>;
   languages?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   lifeExpectancy?: InputMaybe<Scalars['Int']>;
   name: Scalars['String'];
   size?: InputMaybe<Scalars['String']>;
   speed?: InputMaybe<Scalars['Int']>;
   subraces?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
   traits?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 

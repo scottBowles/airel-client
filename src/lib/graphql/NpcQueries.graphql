@@ -5,10 +5,15 @@ query npcs {
 				id
 				name
 				description
+				imageId
+				thumbnailId
 				size
 				race {
 					id
 					name
+					description
+					imageId
+					thumbnailId
 					ageOfAdulthood
 					lifeExpectancy
 					alignment
@@ -43,10 +48,15 @@ query npcById($id: ID!) {
 		id
 		name
 		description
+		imageId
+		thumbnailId
 		size
 		race {
 			id
 			name
+			description
+			imageId
+			thumbnailId
 			ageOfAdulthood
 			lifeExpectancy
 			alignment

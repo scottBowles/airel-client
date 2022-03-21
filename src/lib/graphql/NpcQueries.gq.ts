@@ -7,14 +7,14 @@ import gql from 'graphql-tag';
 export type NpcsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type NpcsQuery = { __typename?: 'Query', npcs?: { __typename?: 'NPCNodeConnection', edges: Array<{ __typename?: 'NPCNodeEdge', node?: { __typename?: 'NPCNode', id: string, name: string, description?: string | null, size?: Types.CharacterNpcSizeChoices | null, race?: { __typename?: 'RaceNode', id: string, name: string, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: Types.RaceRaceAlignmentChoices | null, size?: Types.RaceRaceSizeChoices | null, speed?: number | null } | null, featuresAndTraits?: { __typename?: 'FeaturesAndTraitConnection', edges: Array<{ __typename?: 'FeaturesAndTraitEdge', node?: { __typename?: 'FeatureNode', id: string, name: string, description: string } | null } | null> } | null, proficiencies: { __typename?: 'ProficiencyNodeConnection', edges: Array<{ __typename?: 'ProficiencyNodeEdge', node?: { __typename?: 'ProficiencyNode', id: string, name: string, description: string, proficiencyType: Types.CharacterProficiencyProficiencyTypeChoices } | null } | null> } } | null } | null> } | null };
+export type NpcsQuery = { __typename?: 'Query', npcs?: { __typename?: 'NPCNodeConnection', edges: Array<{ __typename?: 'NPCNodeEdge', node?: { __typename?: 'NPCNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, size?: Types.CharacterNpcSizeChoices | null, race?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: Types.RaceRaceAlignmentChoices | null, size?: Types.RaceRaceSizeChoices | null, speed?: number | null } | null, featuresAndTraits?: { __typename?: 'FeaturesAndTraitConnection', edges: Array<{ __typename?: 'FeaturesAndTraitEdge', node?: { __typename?: 'FeatureNode', id: string, name: string, description: string } | null } | null> } | null, proficiencies: { __typename?: 'ProficiencyNodeConnection', edges: Array<{ __typename?: 'ProficiencyNodeEdge', node?: { __typename?: 'ProficiencyNode', id: string, name: string, description: string, proficiencyType: Types.CharacterProficiencyProficiencyTypeChoices } | null } | null> } } | null } | null> } | null };
 
 export type NpcByIdQueryVariables = Types.Exact<{
   id: Types.Scalars['ID'];
 }>;
 
 
-export type NpcByIdQuery = { __typename?: 'Query', npc?: { __typename?: 'NPCNode', id: string, name: string, description?: string | null, size?: Types.CharacterNpcSizeChoices | null, race?: { __typename?: 'RaceNode', id: string, name: string, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: Types.RaceRaceAlignmentChoices | null, size?: Types.RaceRaceSizeChoices | null, speed?: number | null } | null, featuresAndTraits?: { __typename?: 'FeaturesAndTraitConnection', edges: Array<{ __typename?: 'FeaturesAndTraitEdge', node?: { __typename?: 'FeatureNode', id: string, name: string, description: string } | null } | null> } | null, proficiencies: { __typename?: 'ProficiencyNodeConnection', edges: Array<{ __typename?: 'ProficiencyNodeEdge', node?: { __typename?: 'ProficiencyNode', id: string, name: string, description: string, proficiencyType: Types.CharacterProficiencyProficiencyTypeChoices } | null } | null> } } | null };
+export type NpcByIdQuery = { __typename?: 'Query', npc?: { __typename?: 'NPCNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, size?: Types.CharacterNpcSizeChoices | null, race?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: Types.RaceRaceAlignmentChoices | null, size?: Types.RaceRaceSizeChoices | null, speed?: number | null } | null, featuresAndTraits?: { __typename?: 'FeaturesAndTraitConnection', edges: Array<{ __typename?: 'FeaturesAndTraitEdge', node?: { __typename?: 'FeatureNode', id: string, name: string, description: string } | null } | null> } | null, proficiencies: { __typename?: 'ProficiencyNodeConnection', edges: Array<{ __typename?: 'ProficiencyNodeEdge', node?: { __typename?: 'ProficiencyNode', id: string, name: string, description: string, proficiencyType: Types.CharacterProficiencyProficiencyTypeChoices } | null } | null> } } | null };
 
 
 type SubscribeWrapperArgs<T> = {
@@ -34,10 +34,15 @@ export const NpcsDoc = gql`
         id
         name
         description
+        imageId
+        thumbnailId
         size
         race {
           id
           name
+          description
+          imageId
+          thumbnailId
           ageOfAdulthood
           lifeExpectancy
           alignment
@@ -74,10 +79,15 @@ export const NpcByIdDoc = gql`
     id
     name
     description
+    imageId
+    thumbnailId
     size
     race {
       id
       name
+      description
+      imageId
+      thumbnailId
       ageOfAdulthood
       lifeExpectancy
       alignment

@@ -7,14 +7,14 @@ import gql from 'graphql-tag';
 export type AssociationsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type AssociationsQuery = { __typename?: 'Query', associations?: { __typename?: 'AssociationNodeConnection', edges: Array<{ __typename?: 'AssociationNodeEdge', node?: { __typename?: 'AssociationNode', id: string, name: string, description?: string | null } | null } | null> } | null };
+export type AssociationsQuery = { __typename?: 'Query', associations?: { __typename?: 'AssociationNodeConnection', edges: Array<{ __typename?: 'AssociationNodeEdge', node?: { __typename?: 'AssociationNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null } | null } | null> } | null };
 
 export type AssociationByIdQueryVariables = Types.Exact<{
   id: Types.Scalars['ID'];
 }>;
 
 
-export type AssociationByIdQuery = { __typename?: 'Query', association?: { __typename?: 'AssociationNode', id: string, name: string, description?: string | null } | null };
+export type AssociationByIdQuery = { __typename?: 'Query', association?: { __typename?: 'AssociationNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null } | null };
 
 
 type SubscribeWrapperArgs<T> = {
@@ -34,6 +34,8 @@ export const AssociationsDoc = gql`
         id
         name
         description
+        imageId
+        thumbnailId
       }
     }
   }
@@ -45,6 +47,8 @@ export const AssociationByIdDoc = gql`
     id
     name
     description
+    imageId
+    thumbnailId
   }
 }
     `;

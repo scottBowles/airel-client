@@ -5,6 +5,8 @@ query items {
 				id
 				name
 				description
+				imageId
+				thumbnailId
 				armor {
 					acBonus
 				}
@@ -24,6 +26,8 @@ query itemById($id: ID!) {
 		id
 		name
 		description
+		imageId
+		thumbnailId
 		armor {
 			acBonus
 		}
