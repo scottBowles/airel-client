@@ -47,19 +47,13 @@
 		</Anchor>
 	</Omni.Header>
 
-	<Omni.Section>
+	<Omni.Footer>
 		<Menu.Container orientation="horizontal" sizing="tiny">
 			{#each links as link}
 				<a href={link.href} sveltekit:prefetch>
 					<Menu.Button active={link === activeLink}>{link.label}</Menu.Button>
 				</a>
 			{/each}
-		</Menu.Container>
-	</Omni.Section>
-
-	<Omni.Footer>
-		<Menu.Container orientation="horizontal" sizing="tiny">
-			<Menu.Button>GitHub</Menu.Button>
 		</Menu.Container>
 	</Omni.Footer>
 </Omni.Container>
