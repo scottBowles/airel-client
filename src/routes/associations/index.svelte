@@ -3,17 +3,15 @@
 		getAssociations,
 		associations as queriedAssociations
 	} from '$lib/graphql/AssociationQueries.gq';
-
-	export async function load({ fetch }) {
-		await getAssociations({ fetch });
-		return {};
-	}
+	export const load = async ({ fetch }) => await getAssociations({ fetch });
 </script>
 
 <script>
-	import { Container } from '@kahi-ui/framework';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
+	import { Container } from '@kahi-ui/framework';
+
 	import BannerImage from '$lib/components/BannerImage.svelte';
+	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 
 	$: associations = $queriedAssociations?.associations.edges?.map(({ node }) => node);
 	$: console.log({ associations });
@@ -29,12 +27,13 @@
 <div class="spacer" />
 
 <Container>
-	<dl>
+	<div class="cards-container">
 		{#each associations as association}
-			<dt><a href={`associations/${association.id}`}>{association.name}</a></dt>
-			<dd>{association.description}</dd>
+			{@const { id, name, description } = association}
+			{@const href = `associations/${id}`}
+			<ListDetailCard {name} {description} {href} />
 		{/each}
-	</dl>
+	</div>
 </Container>
 
 <style>
@@ -42,19 +41,8 @@
 		height: 2rem;
 	}
 
-	a {
-		color: #908149;
-	}
-
-	a:hover {
-		text-decoration: underline;
-	}
-
-	dt {
-		font-weight: bold;
-	}
-
-	dt:not(:first-child) {
-		margin-top: 1rem;
+	.cards-container {
+		display: grid;
+		row-gap: 1rem;
 	}
 </style>

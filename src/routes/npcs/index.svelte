@@ -1,23 +1,39 @@
 <script context="module" lang="ts">
 	import { getNpcs, npcs as queriedNpcs } from '$lib/graphql/NpcQueries.gq';
-
-	export async function load({ fetch }) {
-		await getNpcs({ fetch });
-		return {};
-	}
+	export const load = async ({ fetch }) => await getNpcs({ fetch });
 </script>
 
 <script>
-	import { Anchor, Heading } from '@kahi-ui/framework';
+	import { Container } from '@kahi-ui/framework';
+
+	import BannerImage from '$lib/components/BannerImage.svelte';
+	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 
 	$: npcs = $queriedNpcs?.npcs.edges?.map(({ node }) => node);
 	$: console.log({ npcs });
 </script>
 
-<Heading>NPCs:</Heading>
-<dl>
-	{#each npcs as npc}
-		<dt><Anchor href={`npcs/${npc.id}`}>Name: {npc.name}</Anchor></dt>
-		<dd>Description: {npc.description}</dd>
-	{/each}
-</dl>
+<BannerImage overlay="NPCs" imageId="dnd/places-banner_bwv6ut" alt="places banner" />
+
+<div class="spacer" />
+
+<Container>
+	<div class="cards-container">
+		{#each npcs as npc}
+			{@const { id, name, description } = npc}
+			{@const href = `npcs/${id}`}
+			<ListDetailCard {name} {description} {href} />
+		{/each}
+	</div>
+</Container>
+
+<style>
+	.cards-container {
+		display: grid;
+		row-gap: 1rem;
+	}
+
+	.spacer {
+		height: 2rem;
+	}
+</style>

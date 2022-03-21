@@ -1,17 +1,15 @@
 <script context="module" lang="ts">
 	import { getItems, items as queriedItems } from '$lib/graphql/ItemQueries.gq';
-
-	export async function load({ fetch }) {
-		await getItems({ fetch });
-		return {};
-	}
+	export const load = async ({ fetch }) => await getItems({ fetch });
 </script>
 
 <script>
-	import { Icon } from 'svelte-awesome';
-	import { Anchor, Container, Heading } from '@kahi-ui/framework';
-	import Thumbnail from '$lib/components/Thumbnail.svelte';
-	import { Item } from '@kahi-ui/framework/components/display/list';
+	import { Container, Heading } from '@kahi-ui/framework';
+	import GiBroadsword from 'svelte-icons/gi/GiBroadsword.svelte';
+	import GiCheckedShield from 'svelte-icons/gi/GiCheckedShield.svelte';
+	import GiRoundBottomFlask from 'svelte-icons/gi/GiRoundBottomFlask.svelte';
+
+	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 
 	$: items = $queriedItems?.items.edges?.map(({ node }) => node);
 	$: console.log({ items });
@@ -24,42 +22,43 @@
 <Container>
 	<div class="cards-container">
 		{#each items as item}
-			<div class="item-card">
-				<Thumbnail />
-				<div class="item-details">
-					<p class="item-title"><a href={`items/${item.id}`}>{item.name}</a></p>
-					<p class="item-description">{item.description}</p>
-					{#if item.armor}
-						<!-- need good icons. not sure the packages I have so far offer what I need. -->
-						<p>item.armor is true</p>
-					{:else}
-						<p>item.armor is false</p>
+			<ListDetailCard description={item.description}>
+				<svelte:fragment slot="title">
+					<a href={`items/${item.id}`}>{item.name}</a>
+					{#if item.weapon}
+						<span class="icon">
+							<GiBroadsword />
+						</span>
 					{/if}
-				</div>
-			</div>
+					{#if item.armor}
+						<span class="icon">
+							<GiCheckedShield />
+						</span>
+					{/if}
+					{#if item.equipment}
+						<span class="icon">
+							<GiRoundBottomFlask />
+						</span>
+					{/if}
+				</svelte:fragment>
+			</ListDetailCard>
 		{/each}
 	</div>
 </Container>
 
 <style>
-	.item-title {
-		font-size: 1rem;
-		font-weight: bold;
+	.icon {
+		display: inline-block;
+		height: 1em;
+		width: 1em;
+		color: #908149;
 	}
-	.item-description {
-		color: #999;
-	}
+
 	.cards-container {
 		display: grid;
 		row-gap: 1rem;
 	}
-	.item-card {
-		display: flex;
-		column-gap: 1rem;
-		/* flex-direction: column;
-		align-items: center;
-		margin: 1rem; */
-	}
+
 	.spacer {
 		height: 2rem;
 	}
@@ -70,13 +69,5 @@
 
 	a:hover {
 		text-decoration: underline;
-	}
-
-	dt {
-		font-weight: bold;
-	}
-
-	dt:not(:first-child) {
-		margin-top: 1rem;
 	}
 </style>

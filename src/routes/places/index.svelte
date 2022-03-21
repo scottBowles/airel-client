@@ -1,15 +1,13 @@
 <script context="module" lang="ts">
 	import { getPlaces, places as queriedPlaces } from '$lib/graphql/PlaceQueries.gq';
-
-	export async function load({ fetch }) {
-		await getPlaces({ fetch });
-		return {};
-	}
+	export const load = async ({ fetch }) => await getPlaces({ fetch });
 </script>
 
 <script>
+	import { Container } from '@kahi-ui/framework';
+
 	import BannerImage from '$lib/components/BannerImage.svelte';
-	import { Anchor, Container, Heading } from '@kahi-ui/framework';
+	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 
 	$: places = $queriedPlaces?.places.edges?.map(({ node }) => node).filter(Boolean);
 	$: console.log({ places });
@@ -24,32 +22,22 @@
 <!-- Show places in order of most to least recently updated -->
 
 <Container>
-	<dl>
+	<div class="cards-container">
 		{#each places as place}
-			<dt><a href={`places/${place.id}`}>{place.name}</a></dt>
-			<dd>{place.description}</dd>
+			{@const { id, name, description } = place}
+			{@const href = `places/${id}`}
+			<ListDetailCard {name} {description} {href} />
 		{/each}
-	</dl>
+	</div>
 </Container>
 
 <style>
+	.cards-container {
+		display: grid;
+		row-gap: 1rem;
+	}
+
 	.spacer {
 		height: 2rem;
-	}
-
-	a {
-		color: #908149;
-	}
-
-	a:hover {
-		text-decoration: underline;
-	}
-
-	dt {
-		font-weight: bold;
-	}
-
-	dt:not(:first-child) {
-		margin-top: 1rem;
 	}
 </style>

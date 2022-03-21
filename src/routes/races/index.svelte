@@ -1,23 +1,45 @@
 <script context="module" lang="ts">
 	import { getRaces, races as queriedRaces } from '$lib/graphql/RaceQueries.gq';
-
-	export async function load({ fetch }) {
-		await getRaces({ fetch });
-		return {};
-	}
+	export const load = async ({ fetch }) => await getRaces({ fetch });
 </script>
 
 <script>
-	import { Anchor, Heading } from '@kahi-ui/framework';
+	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
+	import { Container } from '@kahi-ui/framework';
+
+	import BannerImage from '$lib/components/BannerImage.svelte';
+	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 
 	$: races = $queriedRaces?.races.edges?.map(({ node }) => node);
 	$: console.log({ races });
 </script>
 
-<Heading>Races:</Heading>
-<dl>
-	{#each races as race}
-		<dt><Anchor href={`races/${race.id}`}>Name: {race.name}</Anchor></dt>
-		<dd>Size: {race.size}</dd>
-	{/each}
-</dl>
+<BannerImage
+	overlay="Races"
+	imageId={'dnd/City_guard_and_magister-5e_uk2sr0'}
+	alt="associations banner"
+	gravity={compass('north_east')}
+/>
+
+<div class="spacer" />
+
+<Container>
+	<div class="cards-container">
+		{#each races as race}
+			{@const { id, name } = race}
+			{@const href = `races/${id}`}
+			<ListDetailCard {name} {href} />
+		{/each}
+	</div>
+</Container>
+
+<style>
+	.spacer {
+		height: 2rem;
+	}
+
+	.cards-container {
+		display: grid;
+		row-gap: 1rem;
+	}
+</style>
