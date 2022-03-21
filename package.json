@@ -32,11 +32,9 @@
   "dependencies": {
     "@cloudinary/html": "^1.2.0",
     "@cloudinary/url-gen": "^1.7.0",
-    "@fortawesome/free-regular-svg-icons": "^6.1.0",
-    "@fortawesome/free-solid-svg-icons": "^6.1.0",
     "@kahi-ui/framework": "^0.6.3",
     "@leveluptuts/g-query": "^0.2.3",
     "graphql-tag": "^2.12.6",
-    "svelte-awesome": "^2.4.6"
+    "svelte-icons": "^2.1.0"
   }
 }
