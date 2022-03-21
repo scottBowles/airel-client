@@ -24,5 +24,14 @@ query itemById($id: ID!) {
 		id
 		name
 		description
+		armor {
+			acBonus
+		}
+		weapon {
+			attackBonus
+		}
+		equipment {
+			briefDescription
+		}
 	}
 }

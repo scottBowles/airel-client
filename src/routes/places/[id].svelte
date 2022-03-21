@@ -1,18 +1,26 @@
 <script context="module" lang="ts">
 	import { getPlaceById, placeById as queriedPlace } from '$lib/graphql/PlaceQueries.gq';
 
-	export async function load({ fetch, params }) {
-		const { id } = params;
-		const a = await getPlaceById({ fetch, variables: { id } });
-		return {};
-	}
+	export const load = async ({ fetch, params }) =>
+		await getPlaceById({ fetch, variables: { id: params.id } });
 </script>
 
 <script>
-	import { Heading, Text } from '@kahi-ui/framework';
+	import { Layout } from '$lib/components/DetailPage';
+	import { capitalize } from '$lib/utils';
+
+	let place;
+	let name;
+	let properties;
 
 	$: place = $queriedPlace?.place;
+	$: name = place.name;
+	$: properties = {
+		Description: place.description,
+		Type: capitalize(place.placeType),
+		Population: place.population
+	};
+	$: console.log({ place });
 </script>
 
-<Heading is="h1">{place.name}</Heading>
-<Text>Description: {place.description}</Text>
+<Layout {name} {properties} />

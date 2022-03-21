@@ -14,7 +14,7 @@ export type ItemByIdQueryVariables = Types.Exact<{
 }>;
 
 
-export type ItemByIdQuery = { __typename?: 'Query', item?: { __typename?: 'ItemNode', id: string, name: string, description?: string | null } | null };
+export type ItemByIdQuery = { __typename?: 'Query', item?: { __typename?: 'ItemNode', id: string, name: string, description?: string | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null };
 
 
 type SubscribeWrapperArgs<T> = {
@@ -54,6 +54,15 @@ export const ItemByIdDoc = gql`
     id
     name
     description
+    armor {
+      acBonus
+    }
+    weapon {
+      attackBonus
+    }
+    equipment {
+      briefDescription
+    }
   }
 }
     `;

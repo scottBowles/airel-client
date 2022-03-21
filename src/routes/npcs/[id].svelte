@@ -1,18 +1,32 @@
 <script context="module" lang="ts">
 	import { getNpcById, npcById as queriedNpc } from '$lib/graphql/NpcQueries.gq';
 
-	export async function load({ fetch, params }) {
-		const { id } = params;
-		const a = await getNpcById({ fetch, variables: { id } });
-		return {};
-	}
+	export const load = async ({ fetch, params }) =>
+		await getNpcById({ fetch, variables: { id: params.id } });
 </script>
 
 <script>
-	import { Heading, Text } from '@kahi-ui/framework';
+	import { Layout, BasicProperty } from '$lib/components/DetailPage';
 
 	$: npc = $queriedNpc?.npc;
+	$: console.log({ npc });
 </script>
 
-<Heading is="h1">{npc.name}</Heading>
-<Text>Description: {npc.description}</Text>
+<Layout name={npc.name}>
+	<svelte:fragment slot="properties">
+		<BasicProperty name="Description" value={npc.description} />
+		<BasicProperty name="Race">
+			<a href={`/races/${npc.race.id}`}>{npc.race.name}</a>
+		</BasicProperty>
+	</svelte:fragment>
+</Layout>
+
+<style>
+	a {
+		color: #908149;
+	}
+
+	a:hover {
+		text-decoration: underline;
+	}
+</style>
