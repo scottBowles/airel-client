@@ -1,0 +1,61 @@
+query artifacts {
+	artifacts {
+		edges {
+			node {
+				id
+				name
+				description
+				imageId
+				thumbnailId
+				created
+				updated
+				items {
+					edges {
+						node {
+							id
+							name
+							weapon {
+								attackBonus
+							}
+							armor {
+								acBonus
+							}
+							equipment {
+								briefDescription
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+query artifactById($id: ID!) {
+	artifact(id: $id) {
+		id
+		name
+		description
+		imageId
+		thumbnailId
+		created
+		updated
+		items {
+			edges {
+				node {
+					id
+					name
+					weapon {
+						attackBonus
+					}
+					armor {
+						acBonus
+					}
+					equipment {
+						briefDescription
+					}
+				}
+			}
+		}
+	}
+}

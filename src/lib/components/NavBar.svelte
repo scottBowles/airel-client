@@ -14,6 +14,10 @@
 			href: '/items'
 		},
 		{
+			label: 'Artifacts',
+			href: '/artifacts'
+		},
+		{
 			label: 'NPCs',
 			href: '/npcs'
 		},

@@ -1,0 +1,83 @@
+<script context="module" lang="ts">
+	import { getArtifacts, artifacts as queriedArtifacts } from '$lib/graphql/ArtifactQueries.gq';
+	export const load = async ({ fetch }) => await getArtifacts({ fetch });
+</script>
+
+<script>
+	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
+
+	import BannerImage from '$lib/components/BannerImage.svelte';
+	import { Container } from '@kahi-ui/framework';
+	import GiBroadsword from 'svelte-icons/gi/GiBroadsword.svelte';
+	import GiCheckedShield from 'svelte-icons/gi/GiCheckedShield.svelte';
+	import GiRoundBottomFlask from 'svelte-icons/gi/GiRoundBottomFlask.svelte';
+
+	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
+
+	$: artifacts = $queriedArtifacts?.artifacts.edges?.map(({ node }) => node);
+	$: console.log({ artifacts });
+</script>
+
+<BannerImage
+	overlay="Artifacts"
+	imageId={'dnd/City_guard_and_magister-5e_uk2sr0'}
+	alt="artifacts banner"
+	gravity={compass('north_east')}
+/>
+
+<div class="spacer" />
+
+<Container>
+	<div class="cards-container">
+		{#each artifacts as artifact}
+			{@const { id, name, description, thumbnailId, items } = artifact}
+			{@const href = `artifacts/${id}`}
+			<ListDetailCard {name} {description} {thumbnailId} {href}>
+				<!-- <svelte:fragment slot="title">
+					<a {href}>{name}</a>
+					{#if weapon}
+						<span class="icon">
+							<GiBroadsword />
+						</span>
+					{/if}
+					{#if armor}
+						<span class="icon">
+							<GiCheckedShield />
+						</span>
+					{/if}
+					{#if equipment}
+						<span class="icon">
+							<GiRoundBottomFlask />
+						</span>
+					{/if}
+				</svelte:fragment> -->
+			</ListDetailCard>
+		{/each}
+	</div>
+</Container>
+
+<style>
+	.icon {
+		display: inline-block;
+		height: 1em;
+		width: 1em;
+		color: #908149;
+	}
+
+	.cards-container {
+		display: grid;
+		row-gap: 1rem;
+	}
+
+	.spacer {
+		height: 2rem;
+	}
+
+	a {
+		color: #908149;
+	}
+
+	a:hover {
+		text-decoration: underline;
+	}
+</style>
