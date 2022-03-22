@@ -20,9 +20,9 @@
 <Container>
 	<div class="cards-container">
 		{#each npcs as npc}
-			{@const { id, name, description } = npc}
+			{@const { id, name, description, thumbnailId } = npc}
 			{@const href = `npcs/${id}`}
-			<ListDetailCard {name} {description} {href} />
+			<ListDetailCard {name} {description} {thumbnailId} {href} />
 		{/each}
 	</div>
 </Container>

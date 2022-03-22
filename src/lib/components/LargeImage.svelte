@@ -6,7 +6,7 @@
 	/** Cloudinary instance store */
 	import cloudinary from '$lib/stores/cloudinary';
 
-	export let imageId = 'dnd/sfaedxiltuowlw7whb0c';
+	export let imageId;
 	export let width = 400;
 	export let radius = 0;
 	export let alt = '';

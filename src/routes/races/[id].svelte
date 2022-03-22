@@ -13,7 +13,7 @@
 	$: console.log({ race });
 </script>
 
-<Layout name={race.name}>
+<Layout name={race.name} imageId={race.imageId}>
 	<svelte:fragment slot="properties">
 		{#if race.baseRace}
 			<BasicProperty name="Base Race">

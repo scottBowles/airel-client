@@ -26,9 +26,9 @@
 <Container>
 	<div class="cards-container">
 		{#each races as race}
-			{@const { id, name } = race}
+			{@const { id, name, thumbnailId } = race}
 			{@const href = `races/${id}`}
-			<ListDetailCard {name} {href} />
+			<ListDetailCard {name} {href} {thumbnailId} />
 		{/each}
 	</div>
 </Container>

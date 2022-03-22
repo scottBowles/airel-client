@@ -5,7 +5,7 @@
 </script>
 
 <h1 class="uppercase">Home</h1>
-<Thumbnail />
+<Thumbnail thumbnailId="sample" />
 <form class="form">
 	<textarea
 		type="text"

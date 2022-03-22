@@ -12,7 +12,7 @@
 	$: console.log({ npc });
 </script>
 
-<Layout name={npc.name}>
+<Layout name={npc.name} imageId={npc.imageId}>
 	<svelte:fragment slot="properties">
 		<BasicProperty name="Description" value={npc.description} />
 		<BasicProperty name="Race">

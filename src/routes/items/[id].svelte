@@ -12,7 +12,7 @@
 	$: console.log({ item });
 </script>
 
-<Layout name={item.name}>
+<Layout name={item.name} imageId={item.imageId}>
 	<svelte:fragment slot="properties">
 		<BasicProperty name="Description" value={item.description} />
 

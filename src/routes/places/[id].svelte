@@ -15,6 +15,7 @@
 
 	$: place = $queriedPlace?.place;
 	$: name = place.name;
+	$: imageId = place.imageId;
 	$: properties = {
 		Description: place.description,
 		Type: capitalize(place.placeType),
@@ -23,4 +24,4 @@
 	$: console.log({ place });
 </script>
 
-<Layout {name} {properties} />
+<Layout {name} {imageId} {properties} />

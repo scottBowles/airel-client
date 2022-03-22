@@ -8,7 +8,7 @@
 <Heading is="h3">{name}</Heading>
 <div class="spacer-sm" />
 <slot>
-	<Text>{value}</Text>
+	<Text>{value || ''}</Text>
 </slot>
 <div class="spacer" />
 

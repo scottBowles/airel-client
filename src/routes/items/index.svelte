@@ -4,7 +4,10 @@
 </script>
 
 <script>
-	import { Container, Heading } from '@kahi-ui/framework';
+	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
+
+	import BannerImage from '$lib/components/BannerImage.svelte';
+	import { Container } from '@kahi-ui/framework';
 	import GiBroadsword from 'svelte-icons/gi/GiBroadsword.svelte';
 	import GiCheckedShield from 'svelte-icons/gi/GiCheckedShield.svelte';
 	import GiRoundBottomFlask from 'svelte-icons/gi/GiRoundBottomFlask.svelte';
@@ -15,27 +18,34 @@
 	$: console.log({ items });
 </script>
 
-<Heading>Replace with an Items Banner</Heading>
+<BannerImage
+	overlay="Items"
+	imageId={'dnd/City_guard_and_magister-5e_uk2sr0'}
+	alt="items banner"
+	gravity={compass('north_east')}
+/>
 
 <div class="spacer" />
 
 <Container>
 	<div class="cards-container">
 		{#each items as item}
-			<ListDetailCard description={item.description}>
+			{@const { id, name, description, thumbnailId, weapon, armor, equipment } = item}
+			{@const href = `items/${id}`}
+			<ListDetailCard {description} {thumbnailId}>
 				<svelte:fragment slot="title">
-					<a href={`items/${item.id}`}>{item.name}</a>
-					{#if item.weapon}
+					<a {href}>{name}</a>
+					{#if weapon}
 						<span class="icon">
 							<GiBroadsword />
 						</span>
 					{/if}
-					{#if item.armor}
+					{#if armor}
 						<span class="icon">
 							<GiCheckedShield />
 						</span>
 					{/if}
-					{#if item.equipment}
+					{#if equipment}
 						<span class="icon">
 							<GiRoundBottomFlask />
 						</span>

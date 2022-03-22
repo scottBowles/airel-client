@@ -1,7 +1,7 @@
 <script>
 	import Thumbnail from '$lib/components/Thumbnail.svelte';
 
-	export let imageId = undefined;
+	export let thumbnailId;
 	export let name = '';
 	export let description = '';
 	export let href = '';
@@ -9,7 +9,9 @@
 
 <div class="_card">
 	<slot name="thumbnail">
-		<Thumbnail {imageId} />
+		{#if thumbnailId}
+			<Thumbnail {thumbnailId} />
+		{/if}
 	</slot>
 	<div>
 		<p class="title">

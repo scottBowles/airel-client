@@ -14,4 +14,8 @@
 	$: association = $queriedAssociation?.association;
 </script>
 
-<Layout name={association.name} properties={{ Description: association.description }} />
+<Layout
+	name={association.name}
+	properties={{ Description: association.description }}
+	imageId={association.imageId}
+/>

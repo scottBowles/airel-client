@@ -6,7 +6,7 @@
 
 	export let name = 'No name or header slot provided';
 	export let properties = {};
-	export let imageId = 'dnd/sfaedxiltuowlw7whb0c';
+	export let imageId;
 </script>
 
 <div class="spacer" />
