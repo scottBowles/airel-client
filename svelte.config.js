@@ -16,7 +16,7 @@ const config = {
 				gQueryCodegen({
 					// Required
 					// schema: 'http://localhost:3001/graphql' // this can also be a url to a graphql api
-					schema: 'http://127.0.0.1:8000/graphql/', // path to schema, schema is required
+					schema: 'http://127.0.0.1:8000/graphql/schema/', // path to schema, schema is required
 					// schema: './src/lib/config/schema.graphql', // path to schema, schema is required
 					out: './src/lib/graphql', // Where you want the general schema types to output
 					gPath: '$lib/config/g', // Path to g, created in step 1.
