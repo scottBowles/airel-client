@@ -1,5 +1,5 @@
 {
-  "name": "sk-gq-dnd-client",
+  "name": "airel-client",
   "version": "0.0.1",
   "scripts": {
     "dev": "svelte-kit dev",
@@ -34,6 +34,7 @@
     "@cloudinary/url-gen": "^1.7.0",
     "@kahi-ui/framework": "^0.6.3",
     "@leveluptuts/g-query": "^0.2.3",
+    "graphql": "^16.3.0",
     "graphql-tag": "^2.12.6",
     "svelte-icons": "^2.1.0"
   }
