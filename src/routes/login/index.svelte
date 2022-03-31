@@ -11,9 +11,12 @@
 </script>
 
 <script lang="ts">
+	import { Button, Heading, TextInput } from '@kahi-ui/framework';
+
 	import { goto } from '$app/navigation';
-	import { post } from '$lib/utils';
 	import { session } from '$app/stores';
+
+	import { post } from '$lib/utils';
 
 	let username;
 	let password;
@@ -50,12 +53,34 @@
 	// }
 </script>
 
-<div>
-	<form on:submit|preventDefault={loginUser}>
-		<input type="text" name="username" placeholder="Username" bind:value={username} />
-		<input type="password" name="password" placeholder="Password" bind:value={password} />
-		<button type="submit">Login</button>
-	</form>
-	<h4>{errors}</h4>
-	<h4>User: {user}</h4>
+<div class="container_">
+	<div class="card_">
+		<Heading is="h1">Welcome to Airel</Heading>
+		<form on:submit|preventDefault={loginUser}>
+			<TextInput type="text" name="username" placeholder="Username" bind:value={username} />
+			<TextInput type="password" name="password" placeholder="Password" bind:value={password} />
+			<Button is="input" type="submit" value="Login" />
+		</form>
+	</div>
 </div>
+
+<style>
+	.container_ {
+		display: grid;
+		place-items: center;
+		height: 100vh;
+		width: 100vw;
+	}
+
+	.card_ {
+		display: grid;
+		place-items: center;
+		gap: 16px;
+		width: 320px;
+	}
+	form {
+		width: 320px;
+		display: grid;
+		gap: 8px;
+	}
+</style>
