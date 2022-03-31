@@ -3,8 +3,9 @@
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import { browser } from '$app/env';
 	import fetchBanner from '$lib/fetchBanner';
+	import { withToken } from '$lib/utils';
 
-	export async function load({ fetch }) {
+	export async function load({ fetch, session }) {
 		if (browser) {
 			const [bannerUrl, _] = await Promise.all([
 				fetchBanner({
@@ -13,37 +14,38 @@
 					overlay: 'Artifacts',
 					gravity: compass('north_east')
 				}),
-				getArtifacts({ fetch })
+				getArtifacts({ fetch: withToken(fetch, session) })
 			]);
 			return { props: { bannerUrl } };
 		} else {
-			await getArtifacts({ fetch });
+			await getArtifacts({ fetch: withToken(fetch, session) });
 			return {};
 		}
 	}
 </script>
 
 <script>
-	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
-
-	import BannerImage from '$lib/components/BannerImage.svelte';
 	import { Container } from '@kahi-ui/framework';
-	import GiBroadsword from 'svelte-icons/gi/GiBroadsword.svelte';
-	import GiCheckedShield from 'svelte-icons/gi/GiCheckedShield.svelte';
-	import GiRoundBottomFlask from 'svelte-icons/gi/GiRoundBottomFlask.svelte';
 
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
+	import BannerImage from '$lib/components/BannerImage.svelte';
+
+	export let bannerUrl = undefined;
 
 	$: artifacts = $queriedArtifacts?.artifacts.edges?.map(({ node }) => node);
 	$: console.log({ artifacts });
 </script>
 
-<BannerImage
-	overlay="Artifacts"
-	imageId={'dnd/City_guard_and_magister-5e_uk2sr0'}
-	alt="artifacts banner"
-	gravity={compass('north_east')}
-/>
+{#if bannerUrl}
+	<img src={bannerUrl} alt="Artifacts" />
+{:else}
+	<BannerImage
+		overlay="Artifacts"
+		imageId={'dnd/City_guard_and_magister-5e_uk2sr0'}
+		alt="artifacts banner"
+		gravity={compass('north_east')}
+	/>
+{/if}
 
 <div class="spacer" />
 

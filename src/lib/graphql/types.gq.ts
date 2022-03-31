@@ -17,6 +17,12 @@ export type Scalars = {
    */
   DateTime: any;
   /**
+   * The `GenericScalar` scalar type represents a generic
+   * GraphQL scalar value that could be:
+   * String, Boolean, Int, Float, List or Object.
+   */
+  GenericScalar: any;
+  /**
    * Leverages the internal Python implementation of UUID (uuid.UUID) to provide native UUID objects
    * in fields, resolvers and input.
    */
@@ -727,6 +733,7 @@ export type Mutation = {
   raceDelete?: Maybe<RaceDeleteMutationPayload>;
   racePatch?: Maybe<RacePatchMutationPayload>;
   raceUpdate?: Maybe<RaceUpdateMutationPayload>;
+  refreshToken?: Maybe<RefreshPayload>;
   scriptCreate?: Maybe<ScriptCreateMutationPayload>;
   scriptDelete?: Maybe<ScriptDeleteMutationPayload>;
   scriptPatch?: Maybe<ScriptPatchMutationPayload>;
@@ -735,10 +742,13 @@ export type Mutation = {
   skillDelete?: Maybe<SkillDeleteMutationPayload>;
   skillPatch?: Maybe<SkillPatchMutationPayload>;
   skillUpdate?: Maybe<SkillUpdateMutationPayload>;
+  /** Obtain JSON Web Token mutation */
+  tokenAuth?: Maybe<ObtainJsonWebTokenPayload>;
   traitCreate?: Maybe<TraitCreateMutationPayload>;
   traitDelete?: Maybe<TraitDeleteMutationPayload>;
   traitPatch?: Maybe<TraitPatchMutationPayload>;
   traitUpdate?: Maybe<TraitUpdateMutationPayload>;
+  verifyToken?: Maybe<VerifyPayload>;
 };
 
 
@@ -907,6 +917,11 @@ export type MutationRaceUpdateArgs = {
 };
 
 
+export type MutationRefreshTokenArgs = {
+  input: RefreshInput;
+};
+
+
 export type MutationScriptCreateArgs = {
   input: ScriptCreateMutationInput;
 };
@@ -947,6 +962,11 @@ export type MutationSkillUpdateArgs = {
 };
 
 
+export type MutationTokenAuthArgs = {
+  input: ObtainJsonWebTokenInput;
+};
+
+
 export type MutationTraitCreateArgs = {
   input: TraitCreateMutationInput;
 };
@@ -964,6 +984,11 @@ export type MutationTraitPatchArgs = {
 
 export type MutationTraitUpdateArgs = {
   input: TraitUpdateMutationInput;
+};
+
+
+export type MutationVerifyTokenArgs = {
+  input: VerifyInput;
 };
 
 export type NpcNode = Node & {
@@ -1031,6 +1056,21 @@ export type NpcNodeEdge = {
 export type Node = {
   /** The ID of the object */
   id: Scalars['ID'];
+};
+
+export type ObtainJsonWebTokenInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  password: Scalars['String'];
+  username: Scalars['String'];
+};
+
+/** Obtain JSON Web Token mutation */
+export type ObtainJsonWebTokenPayload = {
+  __typename?: 'ObtainJSONWebTokenPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  payload: Scalars['GenericScalar'];
+  refreshExpiresIn: Scalars['Int'];
+  token: Scalars['String'];
 };
 
 /** The Relay compliant `PageInfo` type, containing data necessary to paginate this connection. */
@@ -1363,6 +1403,7 @@ export type Query = {
   items?: Maybe<ItemNodeConnection>;
   language?: Maybe<LanguageNode>;
   languages?: Maybe<LanguageNodeConnection>;
+  me?: Maybe<UserNode>;
   npc?: Maybe<NpcNode>;
   npcs?: Maybe<NpcNodeConnection>;
   place?: Maybe<PlaceNode>;
@@ -1377,6 +1418,8 @@ export type Query = {
   skills?: Maybe<SkillNodeConnection>;
   trait?: Maybe<TraitNode>;
   traits?: Maybe<TraitNodeConnection>;
+  user?: Maybe<UserNode>;
+  users?: Maybe<UserNodeConnection>;
 };
 
 
@@ -1595,6 +1638,21 @@ export type QueryTraitsArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryUserArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryUsersArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  isDM?: InputMaybe<Scalars['Boolean']>;
+  last?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
 };
 
@@ -1844,6 +1902,19 @@ export type RaceUpdateMutationPayload = {
   race?: Maybe<RaceNode>;
 };
 
+export type RefreshInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  token?: InputMaybe<Scalars['String']>;
+};
+
+export type RefreshPayload = {
+  __typename?: 'RefreshPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  payload: Scalars['GenericScalar'];
+  refreshExpiresIn: Scalars['Int'];
+  token: Scalars['String'];
+};
+
 export type ScriptCreateMutationInput = {
   clientMutationId?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
@@ -2089,6 +2160,46 @@ export type TraitUpdateMutationPayload = {
   errors?: Maybe<Scalars['String']>;
   ok?: Maybe<Scalars['Boolean']>;
   trait?: Maybe<TraitNode>;
+};
+
+export type UserNode = Node & {
+  __typename?: 'UserNode';
+  email: Scalars['String'];
+  firstName: Scalars['String'];
+  /** The ID of the object */
+  id: Scalars['ID'];
+  isDM: Scalars['Boolean'];
+  lastName: Scalars['String'];
+  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
+  username: Scalars['String'];
+};
+
+export type UserNodeConnection = {
+  __typename?: 'UserNodeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<UserNodeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+};
+
+/** A Relay edge containing a `UserNode` and its cursor. */
+export type UserNodeEdge = {
+  __typename?: 'UserNodeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge */
+  node?: Maybe<UserNode>;
+};
+
+export type VerifyInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  token?: InputMaybe<Scalars['String']>;
+};
+
+export type VerifyPayload = {
+  __typename?: 'VerifyPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  payload: Scalars['GenericScalar'];
 };
 
 export type WeaponInput = {

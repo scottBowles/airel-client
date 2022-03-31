@@ -1,6 +1,8 @@
 <script context="module" lang="ts">
 	import { getPlaces, places as queriedPlaces } from '$lib/graphql/PlaceQueries.gq';
-	export const load = async ({ fetch }) => await getPlaces({ fetch });
+	import { withToken } from '$lib/utils';
+	export const load = async ({ fetch, session }) =>
+		await getPlaces({ fetch: withToken(fetch, session) });
 </script>
 
 <script>

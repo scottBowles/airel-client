@@ -3,7 +3,14 @@
 		getAssociations,
 		associations as queriedAssociations
 	} from '$lib/graphql/AssociationQueries.gq';
-	export const load = async ({ fetch }) => await getAssociations({ fetch });
+	import { withToken } from '$lib/utils';
+
+	export const load = async ({ fetch, session }) => {
+		console.log('ASSOCIATIONS LOAD FUNCTION RUNNING');
+		console.log('SESSION: ', session);
+		await getAssociations({ fetch: withToken(fetch, session) });
+		return {};
+	};
 </script>
 
 <script>

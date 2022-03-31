@@ -35,11 +35,17 @@
 		}
 	];
 
-	$: activeLink = links.find((link) => link.href === currentHref);
+	// TODO: should actually handle bad url requests, but this keeps us from crashing for now
+	const defaultLink = {
+		label: 'Airel',
+		href: '/404'
+	};
+
+	$: activeLink = links.find((link) => link.href === currentHref) || defaultLink;
 </script>
 
 <svelte:head>
-	<title>{activeLink.label}</title>
+	<title>{activeLink.label || 'Airel'}</title>
 </svelte:head>
 
 <Omni.Container palette="dark" width="100">

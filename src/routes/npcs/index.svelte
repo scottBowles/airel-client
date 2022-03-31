@@ -1,6 +1,8 @@
 <script context="module" lang="ts">
 	import { getNpcs, npcs as queriedNpcs } from '$lib/graphql/NpcQueries.gq';
-	export const load = async ({ fetch }) => await getNpcs({ fetch });
+	import { withToken } from '$lib/utils';
+	export const load = async ({ fetch, session }) =>
+		await getNpcs({ fetch: withToken(fetch, session) });
 </script>
 
 <script>

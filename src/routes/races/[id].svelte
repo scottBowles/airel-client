@@ -1,8 +1,9 @@
 <script context="module" lang="ts">
 	import { getRaceById, raceById as queriedRace } from '$lib/graphql/RaceQueries.gq';
+	import { withToken } from '$lib/utils';
 
-	export const load = async ({ fetch, params }) =>
-		await getRaceById({ fetch, variables: { id: params.id } });
+	export const load = async ({ fetch, params, session }) =>
+		await getRaceById({ fetch: withToken(fetch, session), variables: { id: params.id } });
 </script>
 
 <script>

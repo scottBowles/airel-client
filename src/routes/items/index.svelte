@@ -1,6 +1,8 @@
 <script context="module" lang="ts">
 	import { getItems, items as queriedItems } from '$lib/graphql/ItemQueries.gq';
-	export const load = async ({ fetch }) => await getItems({ fetch });
+	import { withToken } from '$lib/utils';
+	export const load = async ({ fetch, session }) =>
+		await getItems({ fetch: withToken(fetch, session) });
 </script>
 
 <script>
