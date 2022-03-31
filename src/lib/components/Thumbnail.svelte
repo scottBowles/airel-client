@@ -7,7 +7,7 @@
 	import { FocusOn } from '@cloudinary/url-gen/qualifiers/focusOn';
 
 	/** Cloudinary instance store */
-	import cloudinary from '$lib/stores/cloudinary';
+	import cloudinary from '$lib/cloudinary';
 
 	export let thumbnailId;
 	export let width = 75;
@@ -16,7 +16,7 @@
 
 	let src;
 
-	const image = $cloudinary.image(thumbnailId);
+	const image = cloudinary.image(thumbnailId);
 	image
 		.resize(thumbnail().width(width).height(height).gravity(focusOn(FocusOn.face())))
 		.roundCorners(byRadius(radius));

@@ -4,7 +4,7 @@
 	import { byRadius } from '@cloudinary/url-gen/actions/roundCorners';
 
 	/** Cloudinary instance store */
-	import cloudinary from '$lib/stores/cloudinary';
+	import cloudinary from '$lib/cloudinary';
 
 	export let imageId;
 	export let width = 400;
@@ -13,7 +13,7 @@
 
 	let src;
 
-	const image = $cloudinary.image(imageId);
+	const image = cloudinary.image(imageId);
 	image.resize(thumbnail().width(width)).roundCorners(byRadius(radius));
 	src = image.toURL();
 </script>

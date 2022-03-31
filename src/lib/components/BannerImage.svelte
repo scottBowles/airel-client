@@ -1,4 +1,6 @@
 <script>
+	import { onMount } from 'svelte';
+
 	/** Cloudinary actions */
 	import { thumbnail, fill } from '@cloudinary/url-gen/actions/resize';
 	import { byRadius } from '@cloudinary/url-gen/actions/roundCorners';
@@ -7,7 +9,7 @@
 	import { FocusOn } from '@cloudinary/url-gen/qualifiers/focusOn';
 
 	/** Cloudinary instance store */
-	import cloudinary from '$lib/stores/cloudinary';
+	import cloudinary from '$lib/cloudinary';
 	import { artisticFilter, colorize } from '@cloudinary/url-gen/actions/effect';
 	import { opacity } from '@cloudinary/url-gen/actions/adjust';
 	import { source } from '@cloudinary/url-gen/actions/overlay';
@@ -17,15 +19,25 @@
 	import Transformation from '@cloudinary/url-gen/backwards/transformation';
 
 	export let imageId = 'dnd/City_guard_and_magister-5e_uk2sr0';
-	export let width = 1600;
-	export let height = 200;
+	export let width = 2400;
+	export let height = 300;
 	export let overlay = '';
 	export let alt = '';
 	export let gravity = undefined;
 
 	let src;
+	let loaded;
+	let imgElement;
 
-	const image = $cloudinary.image(imageId);
+	$: heightToWeightRatio = height / width;
+
+	onMount(() => {
+		imgElement.onload = () => {
+			loaded = true;
+		};
+	});
+
+	const image = cloudinary.image(imageId);
 	let resize = fill().width(width).height(height);
 	if (gravity) {
 		resize = resize.gravity(gravity);
@@ -50,4 +62,24 @@
 	src = image.toURL();
 </script>
 
-<img {src} {alt} />
+<img
+	{src}
+	{alt}
+	bind:this={imgElement}
+	class:loaded
+	style={`--height-to-weight-ratio:${heightToWeightRatio}`}
+/>
+
+<style>
+	img {
+		opacity: 1;
+		/**
+		 * We set height explicitly here so content below the banner gets
+		 * pushed down while banner is loading
+		 */
+		height: calc(100vw * var(--height-to-weight-ratio));
+	}
+	img.loaded {
+		opacity: 1;
+	}
+</style>

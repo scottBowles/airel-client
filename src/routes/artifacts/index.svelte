@@ -1,6 +1,26 @@
 <script context="module" lang="ts">
 	import { getArtifacts, artifacts as queriedArtifacts } from '$lib/graphql/ArtifactQueries.gq';
-	export const load = async ({ fetch }) => await getArtifacts({ fetch });
+	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
+	import { browser } from '$app/env';
+	import fetchBanner from '$lib/fetchBanner';
+
+	export async function load({ fetch }) {
+		if (browser) {
+			const [bannerUrl, _] = await Promise.all([
+				fetchBanner({
+					fetch,
+					imageId: 'dnd/City_guard_and_magister-5e_uk2sr0',
+					overlay: 'Artifacts',
+					gravity: compass('north_east')
+				}),
+				getArtifacts({ fetch })
+			]);
+			return { props: { bannerUrl } };
+		} else {
+			await getArtifacts({ fetch });
+			return {};
+		}
+	}
 </script>
 
 <script>
