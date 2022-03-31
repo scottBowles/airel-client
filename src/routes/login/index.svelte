@@ -1,3 +1,15 @@
+<script context="module" lang="ts">
+	export async function load({ session }) {
+		if (session.isLoggedIn) {
+			return {
+				status: 302,
+				redirect: '/'
+			};
+		}
+		return {};
+	}
+</script>
+
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { post } from '$lib/utils';
@@ -13,6 +25,7 @@
 		const response = await post(`endpoints/login`, { username, password });
 		console.log({ response });
 		$session.token = response.token;
+		$session.isLoggedIn = true;
 		goto('/');
 		// const res = await login({ variables: { username, password } });
 		// const {

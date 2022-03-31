@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { Anchor, Divider, Menu, Omni, Text } from '@kahi-ui/framework';
 	import { page } from '$app/stores';
-
-	$: currentHref = '/' + $page.url.pathname.split('/')[1];
+	import { goto } from '$app/navigation';
+	import { session } from '$app/stores';
+	import { post } from '$lib/utils';
 
 	const links = [
 		{
@@ -41,7 +42,16 @@
 		href: '/404'
 	};
 
+	$: currentHref = '/' + $page.url.pathname.split('/')[1];
 	$: activeLink = links.find((link) => link.href === currentHref) || defaultLink;
+
+	async function logout() {
+		await post('/endpoints/logout');
+		$session.token = null;
+		$session.isLoggedIn = false;
+		goto('/login');
+		console.log('logged out');
+	}
 </script>
 
 <svelte:head>
@@ -64,6 +74,9 @@
 					<Menu.Button active={link === activeLink}>{link.label}</Menu.Button>
 				</a>
 			{/each}
+			<a href={'#'} on:click={logout}>
+				<Menu.Button>Logout</Menu.Button>
+			</a>
 		</Menu.Container>
 	</Omni.Footer>
 </Omni.Container>

@@ -1,6 +1,6 @@
 export const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 
-export function post(endpoint, data) {
+export function post(endpoint: string, data = {}) {
 	return fetch(endpoint, {
 		method: 'POST',
 		credentials: 'include',
@@ -11,16 +11,19 @@ export function post(endpoint, data) {
 	}).then((r) => r.json());
 }
 
-export const withToken = (fetch, session) =>
-	session.token
-		? (path, opts = {}) => {
-				const headers = {
-					...opts.headers,
-					Authorization: `JWT ${session.token}`
-				};
-				return fetch(path, {
-					...opts,
-					headers
-				});
-		  }
-		: fetch;
+export function withToken(fetch, session) {
+	function fetchWithToken(path: RequestInfo, opts: RequestInit = {}): Promise<Response> {
+		const headers = {
+			...opts.headers,
+			Authorization: `JWT ${session.token}`
+		};
+		return fetch(path, {
+			...opts,
+			headers
+		});
+	}
+	if (session.token) {
+		return fetchWithToken;
+	}
+	return fetch;
+}
