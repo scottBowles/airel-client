@@ -16,21 +16,25 @@ export async function post(event) {
 
 	/* Send request to GraphQL server */
 	const res = await login({ variables: { username, password } });
-	const {
-		tokenAuth: { payload, token },
-		errors
-	} = res;
+	const { tokenAuth, errors } = res;
+
+	const body = JSON.stringify({ tokenAuth, errors });
 
 	/* Send response to client from SvelteKit backend, setting cookies */
 	if (errors) {
-		return { status: 400, body: JSON.stringify(errors) };
+		return {
+			status: 401,
+			body,
+			headers: {
+				'set-cookie': 'token=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+			}
+		};
 	}
-
 	return {
 		status: 200,
-		body: JSON.stringify({ payload, token }),
+		body,
 		headers: {
-			'set-cookie': `token=${token}; Path=/; HttpOnly`
+			'set-cookie': 'token=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
 		}
 	};
 }

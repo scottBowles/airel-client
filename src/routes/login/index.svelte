@@ -20,16 +20,22 @@
 
 	let username;
 	let password;
-	let errors;
+	let errors = [];
 	let token;
 	let user;
 
 	async function loginUser() {
 		const response = await post(`endpoints/login`, { username, password });
 		console.log({ response });
-		$session.token = response.token;
-		$session.isLoggedIn = true;
-		goto('/');
+		if (response.errors) {
+			$session.token = null;
+			$session.isLoggedIn = false;
+			errors = response.errors.map((error) => error.message);
+		} else {
+			$session.token = response.tokenAuth.token;
+			$session.isLoggedIn = true;
+			goto('/');
+		}
 		// const res = await login({ variables: { username, password } });
 		// const {
 		// 	tokenAuth: { payload, token },
@@ -61,15 +67,18 @@
 			<TextInput type="password" name="password" placeholder="Password" bind:value={password} />
 			<Button is="input" type="submit" value="Login" />
 		</form>
+		{#each errors as error}
+			<pre>{error}</pre>
+		{/each}
 	</div>
 </div>
 
 <style>
 	.container_ {
-		display: grid;
-		place-items: center;
 		height: 100vh;
 		width: 100vw;
+		display: grid;
+		place-items: center;
 	}
 
 	.card_ {
@@ -77,9 +86,10 @@
 		place-items: center;
 		gap: 16px;
 		width: 320px;
+		max-width: 76%;
 	}
 	form {
-		width: 320px;
+		width: 100%;
 		display: grid;
 		gap: 8px;
 	}
