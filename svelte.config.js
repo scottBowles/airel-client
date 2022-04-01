@@ -4,7 +4,7 @@ import preprocess from 'svelte-preprocess';
 import gQueryCodegen from '@leveluptuts/g-query/codegen';
 
 const isProd = process.env.NODE_ENV === 'production';
-const PROD_SCHEMA_PATH = 'https://airel.onrender.com/graphql/schema';
+const PROD_SCHEMA_PATH = 'https://apirel.onrender.com/graphql/schema';
 const DEV_SCHEMA_PATH = 'http://127.0.0.1:8000/graphql/schema/';
 const SCHEMA_PATH = isProd ? PROD_SCHEMA_PATH : DEV_SCHEMA_PATH;
 
