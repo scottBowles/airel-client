@@ -34,7 +34,7 @@ export async function post(event) {
 		status: 200,
 		body,
 		headers: {
-			'set-cookie': 'token=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+			'set-cookie': `token=${tokenAuth.token}; Path=/; HttpOnly`
 		}
 	};
 }

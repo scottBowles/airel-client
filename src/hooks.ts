@@ -6,12 +6,12 @@ export async function handle({ event, resolve }) {
 	event.locals.token = cookies.token;
 	event.locals.isLoggedIn = !!cookies.token;
 
+	// Redirect to login page if appropriate
 	if (
 		!event.locals.isLoggedIn &&
 		!event.url.pathname.startsWith('/endpoints') &&
 		!PUBLIC_PAGES.includes(event.url.pathname)
 	) {
-		// Redirect to login page
 		return new Response('', {
 			status: 302,
 			headers: {
