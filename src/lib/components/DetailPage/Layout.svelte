@@ -6,7 +6,7 @@
 
 	export let name = 'No name or header slot provided';
 	export let properties = {};
-	export let imageId;
+	export let imageId = '';
 </script>
 
 <div class="spacer" />
@@ -19,7 +19,9 @@
 	<div class="spacer" />
 	<div class="img-container">
 		<slot name="mainImage">
-			<LargeImage {imageId} alt={name} />
+			{#if imageId}
+				<LargeImage {imageId} alt={name} />
+			{/if}
 		</slot>
 	</div>
 	<slot name="properties">
