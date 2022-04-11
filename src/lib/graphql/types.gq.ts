@@ -79,8 +79,52 @@ export type ArmorTraitsNode = Node & {
   id: Scalars['ID'];
 };
 
-export type ArtifactInput = {
+export type ArtifactCreateMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  imageId?: InputMaybe<Scalars['String']>;
+  items?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
   notes?: InputMaybe<Scalars['String']>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
+};
+
+export type ArtifactCreateMutationPayload = {
+  __typename?: 'ArtifactCreateMutationPayload';
+  artifact?: Maybe<ArtifactNode>;
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
+export type ArtifactDeleteMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type ArtifactDeleteMutationPayload = {
+  __typename?: 'ArtifactDeleteMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
+export type ArtifactInput = {
+  markdownNotes?: InputMaybe<Scalars['String']>;
+  notes?: InputMaybe<Scalars['String']>;
+};
+
+export type ArtifactLockMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type ArtifactLockMutationPayload = {
+  __typename?: 'ArtifactLockMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
 };
 
 export type ArtifactNode = Node & {
@@ -91,6 +135,9 @@ export type ArtifactNode = Node & {
   id: Scalars['ID'];
   imageId?: Maybe<Scalars['String']>;
   items: ItemNodeConnection;
+  lockTime?: Maybe<Scalars['DateTime']>;
+  lockUser?: Maybe<UserNode>;
+  markdownNotes: Scalars['String'];
   name: Scalars['String'];
   notes?: Maybe<Scalars['String']>;
   thumbnailId?: Maybe<Scalars['String']>;
@@ -127,6 +174,58 @@ export type ArtifactNodeEdge = {
   node?: Maybe<ArtifactNode>;
 };
 
+export type ArtifactPatchMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  imageId?: InputMaybe<Scalars['String']>;
+  items?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  notes?: InputMaybe<Scalars['String']>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
+};
+
+export type ArtifactPatchMutationPayload = {
+  __typename?: 'ArtifactPatchMutationPayload';
+  artifact?: Maybe<ArtifactNode>;
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
+export type ArtifactReleaseLockMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type ArtifactReleaseLockMutationPayload = {
+  __typename?: 'ArtifactReleaseLockMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
+export type ArtifactUpdateMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  imageId?: InputMaybe<Scalars['String']>;
+  items?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  notes?: InputMaybe<Scalars['String']>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
+};
+
+export type ArtifactUpdateMutationPayload = {
+  __typename?: 'ArtifactUpdateMutationPayload';
+  artifact?: Maybe<ArtifactNode>;
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
 export type AssociationConnection = {
   __typename?: 'AssociationConnection';
   /** Contains the nodes in this connection. */
@@ -139,6 +238,7 @@ export type AssociationCreateMutationInput = {
   clientMutationId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   imageId?: InputMaybe<Scalars['String']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   thumbnailId?: InputMaybe<Scalars['String']>;
 };
@@ -173,6 +273,18 @@ export type AssociationEdge = {
   notes?: Maybe<Scalars['String']>;
 };
 
+export type AssociationLockMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type AssociationLockMutationPayload = {
+  __typename?: 'AssociationLockMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
 export type AssociationNode = Node & {
   __typename?: 'AssociationNode';
   created: Scalars['DateTime'];
@@ -180,6 +292,9 @@ export type AssociationNode = Node & {
   /** The ID of the object */
   id: Scalars['ID'];
   imageId?: Maybe<Scalars['String']>;
+  lockTime?: Maybe<Scalars['DateTime']>;
+  lockUser?: Maybe<UserNode>;
+  markdownNotes: Scalars['String'];
   name: Scalars['String'];
   thumbnailId?: Maybe<Scalars['String']>;
   updated: Scalars['DateTime'];
@@ -207,6 +322,7 @@ export type AssociationPatchMutationInput = {
   description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
   imageId?: InputMaybe<Scalars['String']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   thumbnailId?: InputMaybe<Scalars['String']>;
 };
@@ -219,11 +335,24 @@ export type AssociationPatchMutationPayload = {
   ok?: Maybe<Scalars['Boolean']>;
 };
 
+export type AssociationReleaseLockMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type AssociationReleaseLockMutationPayload = {
+  __typename?: 'AssociationReleaseLockMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
 export type AssociationUpdateMutationInput = {
   clientMutationId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
   imageId?: InputMaybe<Scalars['String']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   thumbnailId?: InputMaybe<Scalars['String']>;
 };
@@ -308,6 +437,7 @@ export type ExportConnection = {
 export type ExportCreateMutationInput = {
   clientMutationId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
 };
 
@@ -341,12 +471,27 @@ export type ExportEdge = {
   significance?: Maybe<Scalars['String']>;
 };
 
+export type ExportLockMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type ExportLockMutationPayload = {
+  __typename?: 'ExportLockMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
 export type ExportNode = Node & {
   __typename?: 'ExportNode';
   created: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
   /** The ID of the object */
   id: Scalars['ID'];
+  lockTime?: Maybe<Scalars['DateTime']>;
+  lockUser?: Maybe<UserNode>;
+  markdownNotes: Scalars['String'];
   name: Scalars['String'];
   updated: Scalars['DateTime'];
 };
@@ -372,6 +517,7 @@ export type ExportPatchMutationInput = {
   clientMutationId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
 };
 
@@ -383,10 +529,23 @@ export type ExportPatchMutationPayload = {
   ok?: Maybe<Scalars['Boolean']>;
 };
 
+export type ExportReleaseLockMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type ExportReleaseLockMutationPayload = {
+  __typename?: 'ExportReleaseLockMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
 export type ExportUpdateMutationInput = {
   clientMutationId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
 };
 
@@ -514,6 +673,7 @@ export type ItemCreateMutationInput = {
   description?: InputMaybe<Scalars['String']>;
   equipment?: InputMaybe<EquipmentInput>;
   imageId?: InputMaybe<Scalars['String']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   thumbnailId?: InputMaybe<Scalars['String']>;
   weapon?: InputMaybe<WeaponInput>;
@@ -539,6 +699,18 @@ export type ItemDeleteMutationPayload = {
   ok?: Maybe<Scalars['Boolean']>;
 };
 
+export type ItemLockMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type ItemLockMutationPayload = {
+  __typename?: 'ItemLockMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
 export type ItemNode = Node & {
   __typename?: 'ItemNode';
   armor?: Maybe<ArmorTraitsNode>;
@@ -548,6 +720,9 @@ export type ItemNode = Node & {
   /** The ID of the object */
   id: Scalars['ID'];
   imageId?: Maybe<Scalars['String']>;
+  lockTime?: Maybe<Scalars['DateTime']>;
+  lockUser?: Maybe<UserNode>;
+  markdownNotes: Scalars['String'];
   name: Scalars['String'];
   thumbnailId?: Maybe<Scalars['String']>;
   updated: Scalars['DateTime'];
@@ -579,6 +754,7 @@ export type ItemPatchMutationInput = {
   equipment?: InputMaybe<EquipmentInput>;
   id?: InputMaybe<Scalars['ID']>;
   imageId?: InputMaybe<Scalars['String']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   thumbnailId?: InputMaybe<Scalars['String']>;
   weapon?: InputMaybe<WeaponInput>;
@@ -592,6 +768,18 @@ export type ItemPatchMutationPayload = {
   ok?: Maybe<Scalars['Boolean']>;
 };
 
+export type ItemReleaseLockMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type ItemReleaseLockMutationPayload = {
+  __typename?: 'ItemReleaseLockMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
 export type ItemUpdateMutationInput = {
   armor?: InputMaybe<ArmorInput>;
   artifact?: InputMaybe<ArtifactInput>;
@@ -600,6 +788,7 @@ export type ItemUpdateMutationInput = {
   equipment?: InputMaybe<EquipmentInput>;
   id?: InputMaybe<Scalars['ID']>;
   imageId?: InputMaybe<Scalars['String']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   thumbnailId?: InputMaybe<Scalars['String']>;
   weapon?: InputMaybe<WeaponInput>;
@@ -701,13 +890,23 @@ export type LanguageUpdateMutationPayload = {
 export type Mutation = {
   __typename?: 'Mutation';
   abilityScoreIncreaseCreate?: Maybe<AbilityscoreincreaseCreateMutationPayload>;
+  artifactCreate?: Maybe<ArtifactCreateMutationPayload>;
+  artifactDelete?: Maybe<ArtifactDeleteMutationPayload>;
+  artifactLock?: Maybe<ArtifactLockMutationPayload>;
+  artifactPatch?: Maybe<ArtifactPatchMutationPayload>;
+  artifactReleaseLock?: Maybe<ArtifactReleaseLockMutationPayload>;
+  artifactUpdate?: Maybe<ArtifactUpdateMutationPayload>;
   associationCreate?: Maybe<AssociationCreateMutationPayload>;
   associationDelete?: Maybe<AssociationDeleteMutationPayload>;
+  associationLock?: Maybe<AssociationLockMutationPayload>;
   associationPatch?: Maybe<AssociationPatchMutationPayload>;
+  associationReleaseLock?: Maybe<AssociationReleaseLockMutationPayload>;
   associationUpdate?: Maybe<AssociationUpdateMutationPayload>;
   exportCreate?: Maybe<ExportCreateMutationPayload>;
   exportDelete?: Maybe<ExportDeleteMutationPayload>;
+  exportLock?: Maybe<ExportLockMutationPayload>;
   exportPatch?: Maybe<ExportPatchMutationPayload>;
+  exportReleaseLock?: Maybe<ExportReleaseLockMutationPayload>;
   exportUpdate?: Maybe<ExportUpdateMutationPayload>;
   featureCreate?: Maybe<FeatureCreateMutationPayload>;
   featureDelete?: Maybe<FeatureDeleteMutationPayload>;
@@ -715,15 +914,25 @@ export type Mutation = {
   featureUpdate?: Maybe<FeatureUpdateMutationPayload>;
   itemCreate?: Maybe<ItemCreateMutationPayload>;
   itemDelete?: Maybe<ItemDeleteMutationPayload>;
+  itemLock?: Maybe<ItemLockMutationPayload>;
   itemPatch?: Maybe<ItemPatchMutationPayload>;
+  itemReleaseLock?: Maybe<ItemReleaseLockMutationPayload>;
   itemUpdate?: Maybe<ItemUpdateMutationPayload>;
   languageCreate?: Maybe<LanguageCreateMutationPayload>;
   languageDelete?: Maybe<LanguageDeleteMutationPayload>;
   languagePatch?: Maybe<LanguagePatchMutationPayload>;
   languageUpdate?: Maybe<LanguageUpdateMutationPayload>;
+  npcCreate?: Maybe<NpcCreateMutationPayload>;
+  npcDelete?: Maybe<NpcDeleteMutationPayload>;
+  npcLock?: Maybe<NpcLockMutationPayload>;
+  npcPatch?: Maybe<NpcPatchMutationPayload>;
+  npcReleaseLock?: Maybe<NpcReleaseLockMutationPayload>;
+  npcUpdate?: Maybe<NpcUpdateMutationPayload>;
   placeCreate?: Maybe<PlaceCreateMutationPayload>;
   placeDelete?: Maybe<PlaceDeleteMutationPayload>;
+  placeLock?: Maybe<PlaceLockMutationPayload>;
   placePatch?: Maybe<PlacePatchMutationPayload>;
+  placeReleaseLock?: Maybe<PlaceReleaseLockMutationPayload>;
   placeUpdate?: Maybe<PlaceUpdateMutationPayload>;
   proficiencyCreate?: Maybe<ProficiencyCreateMutationPayload>;
   proficiencyDelete?: Maybe<ProficiencyDeleteMutationPayload>;
@@ -731,7 +940,9 @@ export type Mutation = {
   proficiencyUpdate?: Maybe<ProficiencyUpdateMutationPayload>;
   raceCreate?: Maybe<RaceCreateMutationPayload>;
   raceDelete?: Maybe<RaceDeleteMutationPayload>;
+  raceLock?: Maybe<RaceLockMutationPayload>;
   racePatch?: Maybe<RacePatchMutationPayload>;
+  raceReleaseLock?: Maybe<RaceReleaseLockMutationPayload>;
   raceUpdate?: Maybe<RaceUpdateMutationPayload>;
   refreshToken?: Maybe<RefreshPayload>;
   scriptCreate?: Maybe<ScriptCreateMutationPayload>;
@@ -757,6 +968,36 @@ export type MutationAbilityScoreIncreaseCreateArgs = {
 };
 
 
+export type MutationArtifactCreateArgs = {
+  input: ArtifactCreateMutationInput;
+};
+
+
+export type MutationArtifactDeleteArgs = {
+  input: ArtifactDeleteMutationInput;
+};
+
+
+export type MutationArtifactLockArgs = {
+  input: ArtifactLockMutationInput;
+};
+
+
+export type MutationArtifactPatchArgs = {
+  input: ArtifactPatchMutationInput;
+};
+
+
+export type MutationArtifactReleaseLockArgs = {
+  input: ArtifactReleaseLockMutationInput;
+};
+
+
+export type MutationArtifactUpdateArgs = {
+  input: ArtifactUpdateMutationInput;
+};
+
+
 export type MutationAssociationCreateArgs = {
   input: AssociationCreateMutationInput;
 };
@@ -767,8 +1008,18 @@ export type MutationAssociationDeleteArgs = {
 };
 
 
+export type MutationAssociationLockArgs = {
+  input: AssociationLockMutationInput;
+};
+
+
 export type MutationAssociationPatchArgs = {
   input: AssociationPatchMutationInput;
+};
+
+
+export type MutationAssociationReleaseLockArgs = {
+  input: AssociationReleaseLockMutationInput;
 };
 
 
@@ -787,8 +1038,18 @@ export type MutationExportDeleteArgs = {
 };
 
 
+export type MutationExportLockArgs = {
+  input: ExportLockMutationInput;
+};
+
+
 export type MutationExportPatchArgs = {
   input: ExportPatchMutationInput;
+};
+
+
+export type MutationExportReleaseLockArgs = {
+  input: ExportReleaseLockMutationInput;
 };
 
 
@@ -827,8 +1088,18 @@ export type MutationItemDeleteArgs = {
 };
 
 
+export type MutationItemLockArgs = {
+  input: ItemLockMutationInput;
+};
+
+
 export type MutationItemPatchArgs = {
   input: ItemPatchMutationInput;
+};
+
+
+export type MutationItemReleaseLockArgs = {
+  input: ItemReleaseLockMutationInput;
 };
 
 
@@ -857,6 +1128,36 @@ export type MutationLanguageUpdateArgs = {
 };
 
 
+export type MutationNpcCreateArgs = {
+  input: NpcCreateMutationInput;
+};
+
+
+export type MutationNpcDeleteArgs = {
+  input: NpcDeleteMutationInput;
+};
+
+
+export type MutationNpcLockArgs = {
+  input: NpcLockMutationInput;
+};
+
+
+export type MutationNpcPatchArgs = {
+  input: NpcPatchMutationInput;
+};
+
+
+export type MutationNpcReleaseLockArgs = {
+  input: NpcReleaseLockMutationInput;
+};
+
+
+export type MutationNpcUpdateArgs = {
+  input: NpcUpdateMutationInput;
+};
+
+
 export type MutationPlaceCreateArgs = {
   input: PlaceCreateMutationInput;
 };
@@ -867,8 +1168,18 @@ export type MutationPlaceDeleteArgs = {
 };
 
 
+export type MutationPlaceLockArgs = {
+  input: PlaceLockMutationInput;
+};
+
+
 export type MutationPlacePatchArgs = {
   input: PlacePatchMutationInput;
+};
+
+
+export type MutationPlaceReleaseLockArgs = {
+  input: PlaceReleaseLockMutationInput;
 };
 
 
@@ -907,8 +1218,18 @@ export type MutationRaceDeleteArgs = {
 };
 
 
+export type MutationRaceLockArgs = {
+  input: RaceLockMutationInput;
+};
+
+
 export type MutationRacePatchArgs = {
   input: RacePatchMutationInput;
+};
+
+
+export type MutationRaceReleaseLockArgs = {
+  input: RaceReleaseLockMutationInput;
 };
 
 
@@ -999,6 +1320,9 @@ export type NpcNode = Node & {
   /** The ID of the object */
   id: Scalars['ID'];
   imageId?: Maybe<Scalars['String']>;
+  lockTime?: Maybe<Scalars['DateTime']>;
+  lockUser?: Maybe<UserNode>;
+  markdownNotes: Scalars['String'];
   name: Scalars['String'];
   proficiencies: ProficiencyNodeConnection;
   profiencies?: Maybe<ProficiencyConnection>;
@@ -1058,6 +1382,95 @@ export type Node = {
   id: Scalars['ID'];
 };
 
+export type NpcCreateMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  imageId?: InputMaybe<Scalars['String']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
+};
+
+export type NpcCreateMutationPayload = {
+  __typename?: 'NpcCreateMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  npc?: Maybe<NpcNode>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
+export type NpcDeleteMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type NpcDeleteMutationPayload = {
+  __typename?: 'NpcDeleteMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
+export type NpcLockMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type NpcLockMutationPayload = {
+  __typename?: 'NpcLockMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
+export type NpcPatchMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  imageId?: InputMaybe<Scalars['String']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
+};
+
+export type NpcPatchMutationPayload = {
+  __typename?: 'NpcPatchMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  npc?: Maybe<NpcNode>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
+export type NpcReleaseLockMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type NpcReleaseLockMutationPayload = {
+  __typename?: 'NpcReleaseLockMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
+export type NpcUpdateMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  imageId?: InputMaybe<Scalars['String']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
+};
+
+export type NpcUpdateMutationPayload = {
+  __typename?: 'NpcUpdateMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  npc?: Maybe<NpcNode>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
 export type ObtainJsonWebTokenInput = {
   clientMutationId?: InputMaybe<Scalars['String']>;
   password: Scalars['String'];
@@ -1097,6 +1510,7 @@ export type PlaceCreateMutationInput = {
   description?: InputMaybe<Scalars['String']>;
   exports?: InputMaybe<Array<InputMaybe<PlaceExportInput>>>;
   imageId?: InputMaybe<Scalars['String']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   parent?: InputMaybe<Scalars['UUID']>;
   placeType?: InputMaybe<Scalars['String']>;
@@ -1130,6 +1544,18 @@ export type PlaceExportInput = {
   significance?: InputMaybe<Scalars['Int']>;
 };
 
+export type PlaceLockMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type PlaceLockMutationPayload = {
+  __typename?: 'PlaceLockMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
 export type PlaceNode = Node & {
   __typename?: 'PlaceNode';
   associations?: Maybe<AssociationConnection>;
@@ -1141,6 +1567,9 @@ export type PlaceNode = Node & {
   /** The ID of the object */
   id: Scalars['ID'];
   imageId?: Maybe<Scalars['String']>;
+  lockTime?: Maybe<Scalars['DateTime']>;
+  lockUser?: Maybe<UserNode>;
+  markdownNotes: Scalars['String'];
   name: Scalars['String'];
   parent?: Maybe<PlaceNode>;
   placeType: PlacePlacePlaceTypeChoices;
@@ -1211,6 +1640,7 @@ export type PlacePatchMutationInput = {
   exports?: InputMaybe<Array<InputMaybe<PlaceExportInput>>>;
   id?: InputMaybe<Scalars['ID']>;
   imageId?: InputMaybe<Scalars['String']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   parent?: InputMaybe<Scalars['UUID']>;
   placeType?: InputMaybe<Scalars['String']>;
@@ -1251,6 +1681,18 @@ export type PlaceRaceInput = {
   race?: InputMaybe<RaceInput>;
 };
 
+export type PlaceReleaseLockMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type PlaceReleaseLockMutationPayload = {
+  __typename?: 'PlaceReleaseLockMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
 export type PlaceUpdateMutationInput = {
   associations?: InputMaybe<Array<InputMaybe<PlaceAssociationInput>>>;
   clientMutationId?: InputMaybe<Scalars['String']>;
@@ -1258,6 +1700,7 @@ export type PlaceUpdateMutationInput = {
   exports?: InputMaybe<Array<InputMaybe<PlaceExportInput>>>;
   id?: InputMaybe<Scalars['ID']>;
   imageId?: InputMaybe<Scalars['String']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   parent?: InputMaybe<Scalars['UUID']>;
   placeType?: InputMaybe<Scalars['String']>;
@@ -1689,6 +2132,7 @@ export type RaceCreateMutationInput = {
   imageId?: InputMaybe<Scalars['String']>;
   languages?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   lifeExpectancy?: InputMaybe<Scalars['Int']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   size?: InputMaybe<Scalars['String']>;
   speed?: InputMaybe<Scalars['Int']>;
@@ -1736,6 +2180,18 @@ export type RaceInput = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+export type RaceLockMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type RaceLockMutationPayload = {
+  __typename?: 'RaceLockMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
 export type RaceNode = Node & {
   __typename?: 'RaceNode';
   abilityScoreIncreases: AbilityScoreIncreaseNodeConnection;
@@ -1748,6 +2204,9 @@ export type RaceNode = Node & {
   imageId?: Maybe<Scalars['String']>;
   languages: LanguageNodeConnection;
   lifeExpectancy?: Maybe<Scalars['Int']>;
+  lockTime?: Maybe<Scalars['DateTime']>;
+  lockUser?: Maybe<UserNode>;
+  markdownNotes: Scalars['String'];
   name: Scalars['String'];
   size?: Maybe<RaceRaceSizeChoices>;
   speed?: Maybe<Scalars['Int']>;
@@ -1822,6 +2281,7 @@ export type RacePatchMutationInput = {
   imageId?: InputMaybe<Scalars['String']>;
   languages?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   lifeExpectancy?: InputMaybe<Scalars['Int']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   size?: InputMaybe<Scalars['String']>;
   speed?: InputMaybe<Scalars['Int']>;
@@ -1876,6 +2336,18 @@ export enum RaceRaceSizeChoices {
   Tiny = 'TINY'
 }
 
+export type RaceReleaseLockMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type RaceReleaseLockMutationPayload = {
+  __typename?: 'RaceReleaseLockMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
+};
+
 export type RaceUpdateMutationInput = {
   ageOfAdulthood?: InputMaybe<Scalars['Int']>;
   alignment?: InputMaybe<Scalars['String']>;
@@ -1886,6 +2358,7 @@ export type RaceUpdateMutationInput = {
   imageId?: InputMaybe<Scalars['String']>;
   languages?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   lifeExpectancy?: InputMaybe<Scalars['Int']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   size?: InputMaybe<Scalars['String']>;
   speed?: InputMaybe<Scalars['Int']>;
