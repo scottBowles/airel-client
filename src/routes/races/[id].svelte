@@ -15,7 +15,7 @@
 </script>
 
 <StatusHandler status={gQueryStatus} {errors} value={race} entityName="race">
-	<Layout name={race.name} imageId={race.imageId}>
+	<Layout name={race.name} imageId={race.imageId} markdownNotes={race.markdownNotes}>
 		<svelte:fragment slot="properties">
 			{#if race.baseRace}
 				<BasicProperty name="Base Race">

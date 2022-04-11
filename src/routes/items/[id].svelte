@@ -14,7 +14,7 @@
 </script>
 
 <StatusHandler status={gQueryStatus} {errors} value={item} entityName="item">
-	<Layout name={item.name} imageId={item.imageId}>
+	<Layout name={item.name} imageId={item.imageId} markdownNotes={item.markdownNotes}>
 		<svelte:fragment slot="properties">
 			<BasicProperty name="Description" value={item.description} />
 

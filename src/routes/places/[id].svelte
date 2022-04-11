@@ -26,5 +26,5 @@
 </script>
 
 <StatusHandler status={gQueryStatus} {errors} value={place} entityName="place">
-	<Layout {name} {imageId} {properties} />
+	<Layout {name} {imageId} {properties} markdownNotes={place.markdownNotes} />
 </StatusHandler>

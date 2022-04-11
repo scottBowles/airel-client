@@ -13,6 +13,9 @@
 <script>
 	import '@kahi-ui/framework/dist/kahi-ui.framework.min.css';
 	import '@kahi-ui/framework/dist/kahi-ui.theme.default.min.css';
+	// https://github.com/sindresorhus/github-markdown-css
+	// Run `npm run make` to update the CSS. (From github's repo, presumably?)
+	import 'github-markdown-css/github-markdown.css';
 
 	import { navigating } from '$app/stores';
 

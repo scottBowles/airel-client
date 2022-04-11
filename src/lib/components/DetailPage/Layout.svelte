@@ -3,10 +3,12 @@
 
 	import LargeImage from '$lib/components/LargeImage.svelte';
 	import { BasicProperty } from '$lib/components/DetailPage';
+	import EditableMarkdown from '$lib/components/EditableMarkdown.svelte';
 
 	export let name = 'No name or header slot provided';
 	export let properties = {};
 	export let imageId = '';
+	export let markdownNotes;
 </script>
 
 <div class="spacer" />
@@ -21,6 +23,13 @@
 		<slot name="mainImage">
 			{#if imageId}
 				<LargeImage {imageId} alt={name} />
+			{/if}
+		</slot>
+	</div>
+	<div class="markdown-container">
+		<slot name="markdown-notes">
+			{#if markdownNotes || markdownNotes === ''}
+				<EditableMarkdown value={markdownNotes || 'Write some notes here...'} />
 			{/if}
 		</slot>
 	</div>
@@ -45,6 +54,9 @@
 		float: right;
 		width: clamp(40%, (120px - 40%) * 1000, 100%);
 		margin-left: 0.5em;
-		margin-bottom: 0.5em;
+		/* margin-bottom: 0.5em; */
+	}
+	.markdown-container {
+		width: clamp(56%, (120px - 40%) * 1000, 100%);
 	}
 </style>

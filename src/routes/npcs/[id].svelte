@@ -13,7 +13,7 @@
 </script>
 
 <StatusHandler status={gQueryStatus} {errors} value={npc} entityName="NPC">
-	<Layout name={npc.name} imageId={npc.imageId}>
+	<Layout name={npc.name} imageId={npc.imageId} markdownNotes={npc.markdownNotes}>
 		<svelte:fragment slot="properties">
 			<BasicProperty name="Description" value={npc.description} />
 			<BasicProperty name="Race">
