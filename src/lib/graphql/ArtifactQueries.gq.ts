@@ -7,14 +7,14 @@ import gql from 'graphql-tag';
 export type ArtifactsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type ArtifactsQuery = { __typename?: 'Query', artifacts?: { __typename?: 'ArtifactNodeConnection', edges: Array<{ __typename?: 'ArtifactNodeEdge', node?: { __typename?: 'ArtifactNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, items: { __typename?: 'ItemNodeConnection', edges: Array<{ __typename?: 'ItemNodeEdge', node?: { __typename?: 'ItemNode', id: string, name: string, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null } | null> } } | null } | null> } | null };
+export type ArtifactsQuery = { __typename?: 'Query', artifacts?: { __typename?: 'ArtifactNodeConnection', edges: Array<{ __typename?: 'ArtifactNodeEdge', node?: { __typename?: 'ArtifactNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, markdownNotes: string, lockTime?: any | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, items: { __typename?: 'ItemNodeConnection', edges: Array<{ __typename?: 'ItemNodeEdge', node?: { __typename?: 'ItemNode', id: string, name: string, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null } | null> } } | null } | null> } | null };
 
 export type ArtifactByIdQueryVariables = Types.Exact<{
   id: Types.Scalars['ID'];
 }>;
 
 
-export type ArtifactByIdQuery = { __typename?: 'Query', artifact?: { __typename?: 'ArtifactNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, items: { __typename?: 'ItemNodeConnection', edges: Array<{ __typename?: 'ItemNodeEdge', node?: { __typename?: 'ItemNode', id: string, name: string, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null } | null> } } | null };
+export type ArtifactByIdQuery = { __typename?: 'Query', artifact?: { __typename?: 'ArtifactNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, markdownNotes: string, lockTime?: any | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, items: { __typename?: 'ItemNodeConnection', edges: Array<{ __typename?: 'ItemNodeEdge', node?: { __typename?: 'ItemNode', id: string, name: string, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null } | null> } } | null };
 
 
 type SubscribeWrapperArgs<T> = {
@@ -38,6 +38,12 @@ export const ArtifactsDoc = gql`
         thumbnailId
         created
         updated
+        markdownNotes
+        lockUser {
+          id
+          username
+        }
+        lockTime
         items {
           edges {
             node {
@@ -70,6 +76,12 @@ export const ArtifactByIdDoc = gql`
     thumbnailId
     created
     updated
+    markdownNotes
+    lockUser {
+      id
+      username
+    }
+    lockTime
     items {
       edges {
         node {

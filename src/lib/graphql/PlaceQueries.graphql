@@ -7,6 +7,12 @@ query places {
 				description
 				imageId
 				thumbnailId
+				markdownNotes
+				lockUser {
+					id
+					username
+				}
+				lockTime
 				created
 				updated
 				placeType
@@ -45,6 +51,12 @@ query placeById($id: ID!) {
 		description
 		imageId
 		thumbnailId
+		markdownNotes
+		lockUser {
+			id
+			username
+		}
+		lockTime
 		created
 		updated
 		placeType

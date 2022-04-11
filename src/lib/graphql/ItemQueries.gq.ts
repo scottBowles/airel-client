@@ -7,14 +7,14 @@ import gql from 'graphql-tag';
 export type ItemsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type ItemsQuery = { __typename?: 'Query', items?: { __typename?: 'ItemNodeConnection', edges: Array<{ __typename?: 'ItemNodeEdge', node?: { __typename?: 'ItemNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null } | null> } | null };
+export type ItemsQuery = { __typename?: 'Query', items?: { __typename?: 'ItemNodeConnection', edges: Array<{ __typename?: 'ItemNodeEdge', node?: { __typename?: 'ItemNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null } | null> } | null };
 
 export type ItemByIdQueryVariables = Types.Exact<{
   id: Types.Scalars['ID'];
 }>;
 
 
-export type ItemByIdQuery = { __typename?: 'Query', item?: { __typename?: 'ItemNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null };
+export type ItemByIdQuery = { __typename?: 'Query', item?: { __typename?: 'ItemNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null };
 
 
 type SubscribeWrapperArgs<T> = {
@@ -36,6 +36,12 @@ export const ItemsDoc = gql`
         description
         imageId
         thumbnailId
+        markdownNotes
+        lockUser {
+          id
+          username
+        }
+        lockTime
         armor {
           acBonus
         }
@@ -58,6 +64,12 @@ export const ItemByIdDoc = gql`
     description
     imageId
     thumbnailId
+    markdownNotes
+    lockUser {
+      id
+      username
+    }
+    lockTime
     armor {
       acBonus
     }

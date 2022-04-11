@@ -7,14 +7,14 @@ import gql from 'graphql-tag';
 export type PlacesQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type PlacesQuery = { __typename?: 'Query', places?: { __typename?: 'PlaceNodeConnection', edges: Array<{ __typename?: 'PlaceNodeEdge', node?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number } | null } | null } | null } | null> } | null };
+export type PlacesQuery = { __typename?: 'Query', places?: { __typename?: 'PlaceNodeConnection', edges: Array<{ __typename?: 'PlaceNodeEdge', node?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number } | null } | null } | null } | null> } | null };
 
 export type PlaceByIdQueryVariables = Types.Exact<{
   id: Types.Scalars['ID'];
 }>;
 
 
-export type PlaceByIdQuery = { __typename?: 'Query', place?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number } | null } | null } | null };
+export type PlaceByIdQuery = { __typename?: 'Query', place?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageId?: string | null, thumbnailId?: string | null, created: any, updated: any, placeType: Types.PlacePlacePlaceTypeChoices, population: number } | null } | null } | null };
 
 
 type SubscribeWrapperArgs<T> = {
@@ -36,6 +36,12 @@ export const PlacesDoc = gql`
         description
         imageId
         thumbnailId
+        markdownNotes
+        lockUser {
+          id
+          username
+        }
+        lockTime
         created
         updated
         placeType
@@ -75,6 +81,12 @@ export const PlaceByIdDoc = gql`
     description
     imageId
     thumbnailId
+    markdownNotes
+    lockUser {
+      id
+      username
+    }
+    lockTime
     created
     updated
     placeType

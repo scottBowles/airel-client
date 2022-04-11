@@ -9,6 +9,12 @@ query artifacts {
 				thumbnailId
 				created
 				updated
+				markdownNotes
+				lockUser {
+					id
+					username
+				}
+				lockTime
 				items {
 					edges {
 						node {
@@ -40,6 +46,12 @@ query artifactById($id: ID!) {
 		thumbnailId
 		created
 		updated
+		markdownNotes
+		lockUser {
+			id
+			username
+		}
+		lockTime
 		items {
 			edges {
 				node {

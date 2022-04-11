@@ -7,6 +7,12 @@ query races {
 				description
 				imageId
 				thumbnailId
+				markdownNotes
+				lockUser {
+					id
+					username
+				}
+				lockTime
 				ageOfAdulthood
 				lifeExpectancy
 				alignment
@@ -73,6 +79,12 @@ query raceById($id: ID!) {
 		description
 		imageId
 		thumbnailId
+		markdownNotes
+		lockUser {
+			id
+			username
+		}
+		lockTime
 		ageOfAdulthood
 		lifeExpectancy
 		alignment

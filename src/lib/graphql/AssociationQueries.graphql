@@ -7,6 +7,12 @@ query associations {
 				description
 				imageId
 				thumbnailId
+				markdownNotes
+				lockUser {
+					id
+					username
+				}
+				lockTime
 			}
 		}
 	}
@@ -19,5 +25,11 @@ query associationById($id: ID!) {
 		description
 		imageId
 		thumbnailId
+		markdownNotes
+		lockUser {
+			id
+			username
+		}
+		lockTime
 	}
 }

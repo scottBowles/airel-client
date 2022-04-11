@@ -7,6 +7,12 @@ query npcs {
 				description
 				imageId
 				thumbnailId
+				markdownNotes
+				lockUser {
+					id
+					username
+				}
+				lockTime
 				size
 				race {
 					id
@@ -50,6 +56,12 @@ query npcById($id: ID!) {
 		description
 		imageId
 		thumbnailId
+		markdownNotes
+		lockUser {
+			id
+			username
+		}
+		lockTime
 		size
 		race {
 			id

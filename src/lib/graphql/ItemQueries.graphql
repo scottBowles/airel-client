@@ -7,6 +7,12 @@ query items {
 				description
 				imageId
 				thumbnailId
+				markdownNotes
+				lockUser {
+					id
+					username
+				}
+				lockTime
 				armor {
 					acBonus
 				}
@@ -28,6 +34,12 @@ query itemById($id: ID!) {
 		description
 		imageId
 		thumbnailId
+		markdownNotes
+		lockUser {
+			id
+			username
+		}
+		lockTime
 		armor {
 			acBonus
 		}
