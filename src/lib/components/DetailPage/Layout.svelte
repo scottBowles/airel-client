@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { Container, Heading } from '@kahi-ui/framework';
 
 	import LargeImage from '$lib/components/LargeImage.svelte';

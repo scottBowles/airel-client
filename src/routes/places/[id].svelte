@@ -7,14 +7,14 @@
 </script>
 
 <script>
-	import { Layout } from '$lib/components/DetailPage';
+	import { Layout, StatusHandler } from '$lib/components/DetailPage';
 	import { capitalize } from '$lib/utils';
 
 	let place;
 	let name;
 	let properties;
 
-	$: place = $queriedPlace?.place;
+	$: ({ gQueryStatus, place, errors } = $queriedPlace);
 	$: name = place.name;
 	$: imageId = place.imageId;
 	$: properties = {
@@ -25,4 +25,6 @@
 	$: console.log({ place });
 </script>
 
-<Layout {name} {imageId} {properties} />
+<StatusHandler status={gQueryStatus} {errors} value={place} entityName="place">
+	<Layout {name} {imageId} {properties} />
+</StatusHandler>

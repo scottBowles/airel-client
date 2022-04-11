@@ -10,30 +10,32 @@
 </script>
 
 <script>
-	import { Layout, BasicProperty } from '$lib/components/DetailPage';
+	import { Layout, BasicProperty, StatusHandler } from '$lib/components/DetailPage';
 
-	$: artifact = $queriedArtifact?.artifact;
+	$: ({ gQueryStatus, artifact, errors } = $queriedArtifact);
 	$: console.log({ artifact });
 </script>
 
-<Layout name={artifact.name} imageId={artifact.imageId}>
-	<svelte:fragment slot="properties">
-		<BasicProperty name="Description" value={artifact.description} />
-		<BasicProperty
-			name="Related Items"
-			value={artifact.items.edges.map((edge) => edge.node.name).join(', ')}
-		/>
+<StatusHandler status={gQueryStatus} {errors} value={artifact} entityName="artifact">
+	<Layout name={artifact.name} imageId={artifact.imageId}>
+		<svelte:fragment slot="properties">
+			<BasicProperty name="Description" value={artifact.description} />
+			<BasicProperty
+				name="Related Items"
+				value={artifact.items.edges.map((edge) => edge.node.name).join(', ')}
+			/>
 
-		<!-- {#if artifact.weapon}
-			<BasicProperty name="Weapon" value={`Attack Bonus ${artifact.weapon.attackBonus}`} />
-		{/if}
+			<!-- {#if artifact.weapon}
+				<BasicProperty name="Weapon" value={`Attack Bonus ${artifact.weapon.attackBonus}`} />
+			{/if}
 
-		{#if artifact.armor}
-			<BasicProperty name="Armor" value={`AC Bonus ${artifact.armor.acBonus}`} />
-		{/if}
+			{#if artifact.armor}
+				<BasicProperty name="Armor" value={`AC Bonus ${artifact.armor.acBonus}`} />
+			{/if}
 
-		{#if artifact.equipment}
-			<BasicProperty name="Equipment" value={artifact.equipment.briefDescription} />
-		{/if} -->
-	</svelte:fragment>
-</Layout>
+			{#if artifact.equipment}
+				<BasicProperty name="Equipment" value={artifact.equipment.briefDescription} />
+			{/if} -->
+		</svelte:fragment>
+	</Layout>
+</StatusHandler>

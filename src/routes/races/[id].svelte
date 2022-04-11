@@ -7,34 +7,36 @@
 </script>
 
 <script>
-	import { Layout, BasicProperty } from '$lib/components/DetailPage';
+	import { Layout, BasicProperty, StatusHandler } from '$lib/components/DetailPage';
 	import { capitalize } from '$lib/utils';
 
-	$: race = $queriedRace?.race;
+	$: ({ gQueryStatus, race, errors } = $queriedRace);
 	$: console.log({ race });
 </script>
 
-<Layout name={race.name} imageId={race.imageId}>
-	<svelte:fragment slot="properties">
-		{#if race.baseRace}
-			<BasicProperty name="Base Race">
-				<a href={`/races/${race.baseRace.id}`}>{race.baseRace.name}</a>
-			</BasicProperty>
-		{/if}
-		{#if race.subraces}
-			<BasicProperty name="Subraces">
-				{#each race.subraces.edges as subrace}
-					<div><a href={`/races/${subrace.node.id}`}>{subrace.node.name}</a></div>
-				{/each}
-			</BasicProperty>
-		{/if}
-		<!-- <BasicProperty name="Description" value={race.description} /> -->
-		<BasicProperty name="Alignment" value={race.alignment} />
-		<BasicProperty name="Life Expectancy" value={race.lifeExpectancy} />
-		<BasicProperty name="Size" value={capitalize(race.size)} />
-		<BasicProperty name="Speed" value={race.speed} />
-	</svelte:fragment>
-</Layout>
+<StatusHandler status={gQueryStatus} {errors} value={race} entityName="race">
+	<Layout name={race.name} imageId={race.imageId}>
+		<svelte:fragment slot="properties">
+			{#if race.baseRace}
+				<BasicProperty name="Base Race">
+					<a href={`/races/${race.baseRace.id}`}>{race.baseRace.name}</a>
+				</BasicProperty>
+			{/if}
+			{#if race.subraces}
+				<BasicProperty name="Subraces">
+					{#each race.subraces.edges as subrace}
+						<div><a href={`/races/${subrace.node.id}`}>{subrace.node.name}</a></div>
+					{/each}
+				</BasicProperty>
+			{/if}
+			<!-- <BasicProperty name="Description" value={race.description} /> -->
+			<BasicProperty name="Alignment" value={race.alignment} />
+			<BasicProperty name="Life Expectancy" value={race.lifeExpectancy} />
+			<BasicProperty name="Size" value={capitalize(race.size)} />
+			<BasicProperty name="Speed" value={race.speed} />
+		</svelte:fragment>
+	</Layout>
+</StatusHandler>
 
 <style>
 	a {

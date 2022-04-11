@@ -7,26 +7,28 @@
 </script>
 
 <script>
-	import { Layout, BasicProperty } from '$lib/components/DetailPage';
+	import { Layout, BasicProperty, StatusHandler } from '$lib/components/DetailPage';
 
-	$: item = $queriedItem?.item;
+	$: ({ gQueryStatus, item, errors } = $queriedItem);
 	$: console.log({ item });
 </script>
 
-<Layout name={item.name} imageId={item.imageId}>
-	<svelte:fragment slot="properties">
-		<BasicProperty name="Description" value={item.description} />
+<StatusHandler status={gQueryStatus} {errors} value={item} entityName="item">
+	<Layout name={item.name} imageId={item.imageId}>
+		<svelte:fragment slot="properties">
+			<BasicProperty name="Description" value={item.description} />
 
-		{#if item.weapon}
-			<BasicProperty name="Weapon" value={`Attack Bonus ${item.weapon.attackBonus}`} />
-		{/if}
+			{#if item.weapon}
+				<BasicProperty name="Weapon" value={`Attack Bonus ${item.weapon.attackBonus}`} />
+			{/if}
 
-		{#if item.armor}
-			<BasicProperty name="Armor" value={`AC Bonus ${item.armor.acBonus}`} />
-		{/if}
+			{#if item.armor}
+				<BasicProperty name="Armor" value={`AC Bonus ${item.armor.acBonus}`} />
+			{/if}
 
-		{#if item.equipment}
-			<BasicProperty name="Equipment" value={item.equipment.briefDescription} />
-		{/if}
-	</svelte:fragment>
-</Layout>
+			{#if item.equipment}
+				<BasicProperty name="Equipment" value={item.equipment.briefDescription} />
+			{/if}
+		</svelte:fragment>
+	</Layout>
+</StatusHandler>

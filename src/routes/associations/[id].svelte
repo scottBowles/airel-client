@@ -13,13 +13,15 @@
 </script>
 
 <script>
-	import { Layout } from '$lib/components/DetailPage';
+	import { Layout, StatusHandler } from '$lib/components/DetailPage';
 
-	$: association = $queriedAssociation?.association;
+	$: ({ gQueryStatus, association, errors } = $queriedAssociation);
 </script>
 
-<Layout
-	name={association.name}
-	properties={{ Description: association.description }}
-	imageId={association.imageId}
-/>
+<StatusHandler status={gQueryStatus} {errors} value={association} entityName="association">
+	<Layout
+		name={association.name}
+		properties={{ Description: association.description }}
+		imageId={association.imageId}
+	/>
+</StatusHandler>
