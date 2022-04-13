@@ -1,4 +1,4 @@
-import { login } from '$lib/graphql/Auth.gq';
+import api from './_api.js';
 
 /**
  * Login endpoint
@@ -11,16 +11,29 @@ import { login } from '$lib/graphql/Auth.gq';
 export async function post(event) {
 	/* Receive request from client in SvelteKit backend */
 	const requestFromClient = event.request;
-	const json = await requestFromClient.json();
-	const { username, password } = json;
+	const { username, password } = await requestFromClient.json();
+
+	const query = `
+		mutation login($username: String!, $password: String!) {
+			tokenAuth(input: { username: $username, password: $password }) {
+				token
+				payload
+			}
+		}
+	`;
+	const variables = { username, password };
+	const payload = { query, variables };
 
 	/* Send request to GraphQL server */
-	const res = await login({ variables: { username, password } });
-	const { tokenAuth, errors } = res;
-
+	const res = await api({ payload });
+	const json = await res.json();
+	const {
+		data: { tokenAuth },
+		errors
+	} = json;
 	const body = JSON.stringify({ tokenAuth, errors });
 
-	/* Send response to client from SvelteKit backend, setting cookies */
+	/* Send appropriate response to client from SvelteKit backend, setting cookies */
 	if (errors) {
 		return {
 			status: 401,

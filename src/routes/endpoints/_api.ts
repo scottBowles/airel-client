@@ -1,0 +1,26 @@
+import { API_PATH } from '$lib/config/settings';
+
+type Input = {
+	payload:
+		| string
+		| {
+				query: string;
+				variables?: Record<string, unknown>;
+		  };
+	token?: string;
+	opts?: HeadersInit;
+};
+
+async function api({ payload, token, opts }: Input): Promise<Response> {
+	return fetch(API_PATH, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			...(token && { Authorization: `JWT ${token}` }),
+			...opts
+		},
+		body: JSON.stringify(payload)
+	});
+}
+
+export default api;

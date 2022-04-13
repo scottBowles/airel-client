@@ -1,17 +1,9 @@
-import { API_PATH } from '$lib/config/settings';
+import api from './_api.js';
 
 export async function post({ request, locals }) {
 	const token = locals.token;
 	const payload = await request.json();
-
-	const res = await fetch(API_PATH, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `JWT ${token}`
-		},
-		body: JSON.stringify(payload)
-	});
+	const res = await api({ payload, token });
 
 	return {
 		status: res.status,
