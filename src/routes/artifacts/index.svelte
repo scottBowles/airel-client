@@ -3,9 +3,8 @@
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import { browser } from '$app/env';
 	import fetchBanner from '$lib/fetchBanner';
-	import { withToken } from '$lib/utils';
 
-	export async function load({ fetch, session }) {
+	export async function load({ fetch }) {
 		if (browser) {
 			const [bannerUrl, _] = await Promise.all([
 				fetchBanner({
@@ -14,11 +13,11 @@
 					overlay: 'Artifacts',
 					gravity: compass('north_east')
 				}),
-				getArtifacts({ fetch: withToken(fetch, session) })
+				getArtifacts({ fetch })
 			]);
 			return { props: { bannerUrl } };
 		} else {
-			await getArtifacts({ fetch: withToken(fetch, session) });
+			await getArtifacts({ fetch });
 			return {};
 		}
 	}

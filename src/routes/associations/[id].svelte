@@ -3,12 +3,11 @@
 		getAssociationById,
 		associationById as queriedAssociation
 	} from '$lib/graphql/AssociationQueries.gq';
-	import { withToken } from '$lib/utils';
 
-	export const load = async ({ fetch, session, params }) =>
+	export const load = async ({ fetch, params }) =>
 		await getAssociationById({
-			fetch: withToken(fetch, session),
-			variables: { id: params.id }
+			variables: { id: params.id },
+			fetch
 		});
 </script>
 

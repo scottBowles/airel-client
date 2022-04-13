@@ -1,9 +1,8 @@
 <script context="module" lang="ts">
 	import { getPlaceById, placeById as queriedPlace } from '$lib/graphql/PlaceQueries.gq';
-	import { withToken } from '$lib/utils';
 
-	export const load = async ({ fetch, params, session }) =>
-		await getPlaceById({ fetch: withToken(fetch, session), variables: { id: params.id } });
+	export const load = async ({ fetch, params }) =>
+		await getPlaceById({ fetch, variables: { id: params.id } });
 </script>
 
 <script>

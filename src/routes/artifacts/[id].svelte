@@ -3,10 +3,9 @@
 		getArtifactById,
 		artifactById as queriedArtifact
 	} from '$lib/graphql/ArtifactQueries.gq';
-	import { withToken } from '$lib/utils';
 
-	export const load = async ({ fetch, params, session }) =>
-		await getArtifactById({ fetch: withToken(fetch, session), variables: { id: params.id } });
+	export const load = async ({ fetch, params }) =>
+		await getArtifactById({ fetch, variables: { id: params.id } });
 </script>
 
 <script>
