@@ -1,21 +1,43 @@
-<script>
+<script lang="ts">
 	import { Editor, Viewer } from 'bytemd';
 	import 'bytemd/dist/index.css';
 	import gfm from '@bytemd/plugin-gfm';
 
 	const plugins = [gfm()];
 	export let value = '';
-	let editMode = false;
+	export let isLockedByAnotherUser = false;
+	export let onSave: (value: string) => void;
+	export let onEditClick: () => void;
 
-	function toggleEditMode() {
-		editMode = !editMode;
+	let editing = false;
+
+	async function handleEditClick() {
+		console.log('handleEditClick');
+		try {
+			await onEditClick();
+			editing = true;
+		} catch (e) {
+			console.error(e);
+		}
+	}
+
+	async function handleSave() {
+		try {
+			await onSave(value);
+			editing = false;
+		} catch (e) {
+			console.error(e);
+		}
 	}
 </script>
 
-<button on:click={toggleEditMode}>
-	{editMode ? 'View' : 'Edit'}
-</button>
-{#if editMode}
+{#if editing}
+	<button on:click={handleSave}>Save Changes</button>
+{:else}
+	<button disabled={isLockedByAnotherUser} on:click={handleEditClick}>Edit me pls</button>
+{/if}
+
+{#if editing}
 	<Editor
 		locale="en.json"
 		maxLength={10000}
@@ -31,7 +53,6 @@
 {/if}
 
 <style>
-	/* set .byte-md styles globally */
 	:global(.byte-md) {
 		height: 500px;
 		width: auto;

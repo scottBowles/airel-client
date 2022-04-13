@@ -33,3 +33,53 @@ query associationById($id: ID!) {
 		lockTime
 	}
 }
+
+mutation associationLock($id: ID!) {
+	associationLock(input: { id: $id }) {
+		ok
+		errors
+	}
+}
+
+mutation associationReleaseLock($id: ID!) {
+	associationReleaseLock(input: { id: $id }) {
+		ok
+		errors
+	}
+}
+
+mutation associationPatch(
+	$id: ID!
+	$name: String
+	$description: String
+	$imageId: String
+	$thumbnailId: String
+	$markdownNotes: String
+) {
+	associationPatch(
+		input: {
+			id: $id
+			name: $name
+			description: $description
+			imageId: $imageId
+			thumbnailId: $thumbnailId
+			markdownNotes: $markdownNotes
+		}
+	) {
+		ok
+		errors
+		association {
+			id
+			name
+			description
+			imageId
+			thumbnailId
+			markdownNotes
+			lockUser {
+				id
+				username
+			}
+			lockTime
+		}
+	}
+}

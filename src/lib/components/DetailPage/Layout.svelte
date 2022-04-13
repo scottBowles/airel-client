@@ -3,12 +3,10 @@
 
 	import LargeImage from '$lib/components/LargeImage.svelte';
 	import { BasicProperty } from '$lib/components/DetailPage';
-	import EditableMarkdown from '$lib/components/EditableMarkdown.svelte';
 
 	export let name = 'No name or header slot provided';
 	export let properties = {};
 	export let imageId = '';
-	export let markdownNotes;
 </script>
 
 <div class="spacer" />
@@ -27,11 +25,7 @@
 		</slot>
 	</div>
 	<div class="markdown-container">
-		<slot name="markdown-notes">
-			{#if markdownNotes || markdownNotes === ''}
-				<EditableMarkdown value={markdownNotes || 'Write some notes here...'} />
-			{/if}
-		</slot>
+		<slot name="markdown-notes" />
 	</div>
 	<slot name="properties">
 		{#each Object.entries(properties) as [name, value]}
