@@ -1,0 +1,69 @@
+query raceById($id: ID!) {
+	race(id: $id) {
+		id
+		name
+		description
+		imageId
+		thumbnailId
+		markdownNotes
+		lockUser {
+			id
+			username
+		}
+		lockTime
+		ageOfAdulthood
+		lifeExpectancy
+		alignment
+		size
+		speed
+		baseRace {
+			id
+			name
+			description
+			imageId
+			thumbnailId
+			ageOfAdulthood
+			lifeExpectancy
+			alignment
+			size
+			speed
+		}
+		subraces {
+			edges {
+				node {
+					id
+					name
+					description
+					imageId
+					thumbnailId
+					ageOfAdulthood
+					lifeExpectancy
+					alignment
+					size
+					speed
+				}
+			}
+		}
+		languages {
+			edges {
+				node {
+					id
+					name
+					description
+					script {
+						name
+					}
+				}
+			}
+		}
+		traits {
+			edges {
+				node {
+					id
+					name
+					description
+				}
+			}
+		}
+	}
+}

@@ -13,6 +13,7 @@ export async function post(event) {
 	const requestFromClient = event.request;
 	const { username, password } = await requestFromClient.json();
 
+	/* Construct payload */
 	const query = `
 		mutation login($username: String!, $password: String!) {
 			tokenAuth(input: { username: $username, password: $password }) {
@@ -33,7 +34,7 @@ export async function post(event) {
 	} = json;
 	const body = JSON.stringify({ tokenAuth, errors });
 
-	/* Send appropriate response to client from SvelteKit backend, setting cookies */
+	/* If there are errors, remove the token cookie from the client */
 	if (errors) {
 		return {
 			status: 401,
@@ -43,6 +44,7 @@ export async function post(event) {
 			}
 		};
 	}
+	/* On a successful login, at a token cookie to the client */
 	return {
 		status: 200,
 		body,

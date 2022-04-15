@@ -10,14 +10,14 @@
 	export let value;
 </script>
 
-{#if status === 'LOADED' && value}
-	<slot />
-{:else if status === 'LOADED' && !value}
-	<NotFound {entityName} />
-{:else if status === 'LOADING'}
+{#if status === 'LOADING'}
 	<Loading />
-{:else if status === 'ERROR'}
+{:else if status === 'DONE' && errors}
 	<Error {errors} />
+{:else if status === 'DONE' && value}
+	<slot />
+{:else if status === 'DONE' && !value}
+	<NotFound {entityName} />
 {:else}
 	<SomethingWentWrong />
 {/if}

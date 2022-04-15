@@ -1,17 +1,20 @@
 <script context="module" lang="ts">
-	import { getNpcById, npcById as queriedNpc } from '$lib/graphql/NpcQueries.gq';
+	import { KQL_NpcById } from '$lib/graphql/_kitql/graphqlStores';
 
-	export const load = async ({ fetch, params }) =>
-		await getNpcById({ fetch, variables: { id: params.id } });
+	export const load = async ({ fetch, params }) => {
+		await KQL_NpcById.queryLoad({ fetch, variables: { id: params.id } });
+		return {};
+	};
 </script>
 
 <script>
 	import { Layout, BasicProperty, StatusHandler } from '$lib/components/DetailPage';
 
-	$: ({ gQueryStatus, npc, errors } = $queriedNpc);
+	$: ({ status, errors, data } = $KQL_NpcById);
+	$: ({ npc } = data || {});
 </script>
 
-<StatusHandler status={gQueryStatus} {errors} value={npc} entityName="NPC">
+<StatusHandler {status} {errors} value={npc} entityName="NPC">
 	<Layout name={npc.name} imageId={npc.imageId} markdownNotes={npc.markdownNotes}>
 		<svelte:fragment slot="properties">
 			<BasicProperty name="Description" value={npc.description} />

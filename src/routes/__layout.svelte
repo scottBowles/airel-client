@@ -1,4 +1,6 @@
 <script context="module" lang="ts">
+	import { kitQLClient } from '$lib/graphql/kitQLClient';
+
 	export async function load({ session, url }) {
 		if (!session.isLoggedIn && url.pathname !== '/login') {
 			return {
@@ -6,6 +8,7 @@
 				redirect: '/login'
 			};
 		}
+		kitQLClient.setHeaders({ Authorization: `JWT ${session.token}` });
 		return {};
 	}
 </script>

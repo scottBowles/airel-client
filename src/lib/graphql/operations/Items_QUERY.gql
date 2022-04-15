@@ -26,28 +26,3 @@ query items {
 		}
 	}
 }
-
-query itemById($id: ID!) {
-	item(id: $id) {
-		id
-		name
-		description
-		imageId
-		thumbnailId
-		markdownNotes
-		lockUser {
-			id
-			username
-		}
-		lockTime
-		armor {
-			acBonus
-		}
-		weapon {
-			attackBonus
-		}
-		equipment {
-			briefDescription
-		}
-	}
-}

@@ -1,6 +1,9 @@
 <script context="module" lang="ts">
-	import { getRaces, races as queriedRaces } from '$lib/graphql/RaceQueries.gq';
-	export const load = async ({ fetch }) => await getRaces({ fetch });
+	import { KQL_Races } from '$lib/graphql/_kitql/graphqlStores';
+	export const load = async ({ fetch }) => {
+		await KQL_Races.queryLoad({ fetch });
+		return {};
+	};
 </script>
 
 <script>
@@ -10,7 +13,8 @@
 	import BannerImage from '$lib/components/BannerImage.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 
-	$: races = $queriedRaces?.races.edges?.map(({ node }) => node);
+	$: races = $KQL_Races.data?.races.edges?.map(({ node }) => node) || [];
+	$: ({ status } = $KQL_Races);
 	$: console.log({ races });
 </script>
 

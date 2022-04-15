@@ -1,0 +1,19 @@
+query associations {
+	associations {
+		edges {
+			node {
+				id
+				name
+				description
+				imageId
+				thumbnailId
+				markdownNotes
+				lockUser {
+					id
+					username
+				}
+				lockTime
+			}
+		}
+	}
+}

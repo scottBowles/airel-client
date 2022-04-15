@@ -1,6 +1,9 @@
 <script context="module" lang="ts">
-	import { getItems, items as queriedItems } from '$lib/graphql/ItemQueries.gq';
-	export const load = async ({ fetch }) => await getItems({ fetch });
+	import { KQL_Items } from '$lib/graphql/_kitql/graphqlStores';
+	export const load = async ({ fetch }) => {
+		await KQL_Items.queryLoad({ fetch });
+		return {};
+	};
 </script>
 
 <script>
@@ -14,7 +17,8 @@
 
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 
-	$: items = $queriedItems?.items.edges?.map(({ node }) => node);
+	$: items = $KQL_Items.data?.items.edges?.map(({ node }) => node) || [];
+	$: ({ status } = $KQL_Items);
 	$: console.log({ items });
 </script>
 
@@ -34,7 +38,7 @@
 			{@const href = `items/${id}`}
 			<ListDetailCard {description} {thumbnailId}>
 				<svelte:fragment slot="title">
-					<a {href}>{name}</a>
+					<a {href} sveltekit:prefetch>{name}</a>
 					{#if weapon}
 						<span class="icon">
 							<GiBroadsword />

@@ -1,6 +1,9 @@
 <script context="module" lang="ts">
-	import { getPlaces, places as queriedPlaces } from '$lib/graphql/PlaceQueries.gq';
-	export const load = async ({ fetch }) => await getPlaces({ fetch });
+	import { KQL_Places } from '$lib/graphql/_kitql/graphqlStores';
+	export const load = async ({ fetch }) => {
+		await KQL_Places.queryLoad({ fetch });
+		return {};
+	};
 </script>
 
 <script>
@@ -9,7 +12,8 @@
 	import BannerImage from '$lib/components/BannerImage.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 
-	$: places = $queriedPlaces?.places.edges?.map(({ node }) => node).filter(Boolean);
+	$: places = $KQL_Places.data?.places.edges?.map(({ node }) => node) || [];
+	$: ({ status } = $KQL_Places);
 	$: console.log({ places });
 </script>
 

@@ -11,6 +11,11 @@ type Input = {
 	opts?: HeadersInit;
 };
 
+/**
+ * Helper to make requests to the graphql backend
+ * Most of the time requests should be made through KitQl, but this is here for
+ * exceptions
+ */
 async function api({ payload, token, opts }: Input): Promise<Response> {
 	return fetch(API_PATH, {
 		method: 'POST',

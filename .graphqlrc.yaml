@@ -1,0 +1,34 @@
+projects:
+  default:
+    schema:
+      - http://127.0.0.1:8000/graphql/ # or https://countries.trevorblades.com/graphql
+        # headers:
+        #   Authorization: 'Bearer ${TOKEN}'
+    documents:
+      - '**/*.gql'
+    extensions:
+      endpoints:
+        default:
+          url: http://127.0.0.1:8000/graphql/
+      codegen:
+        generates:
+          # ./src/lib/graphql/schema.json:
+          #   plugins:
+          #     - introspection
+
+          ./src/lib/graphql/_kitql/graphqlTypes.ts:
+            plugins:
+              - typescript
+              - typescript-operations
+              - typed-document-node
+              - typescript-document-nodes
+
+          ./src/lib/graphql/_kitql/graphqlStores.ts:
+            plugins:
+              - '@kitql/graphql-codegen'
+            config:
+              importBaseTypesFrom: $lib/graphql/_kitql/graphqlTypes
+              operationPrefix: 'KQL_'
+
+        config:
+          useTypeImports: true

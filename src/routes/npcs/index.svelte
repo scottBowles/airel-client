@@ -1,6 +1,9 @@
 <script context="module" lang="ts">
-	import { getNpcs, npcs as queriedNpcs } from '$lib/graphql/NpcQueries.gq';
-	export const load = async ({ fetch }) => await getNpcs({ fetch });
+	import { KQL_Npcs } from '$lib/graphql/_kitql/graphqlStores';
+	export const load = async ({ fetch }) => {
+		await KQL_Npcs.queryLoad({ fetch });
+		return {};
+	};
 </script>
 
 <script>
@@ -9,7 +12,8 @@
 	import BannerImage from '$lib/components/BannerImage.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 
-	$: npcs = $queriedNpcs?.npcs.edges?.map(({ node }) => node);
+	$: npcs = $KQL_Npcs.data?.npcs.edges?.map(({ node }) => node) || [];
+	$: ({ status } = $KQL_Npcs);
 	$: console.log({ npcs });
 </script>
 
