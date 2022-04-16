@@ -21,13 +21,15 @@
 		<svelte:fragment slot="properties">
 			{#if race.baseRace}
 				<BasicProperty name="Base Race">
-					<a href={`/races/${race.baseRace.id}`}>{race.baseRace.name}</a>
+					<a href={`/races/${race.baseRace.id}`} sveltekit:prefetch>{race.baseRace.name}</a>
 				</BasicProperty>
 			{/if}
 			{#if race.subraces}
 				<BasicProperty name="Subraces">
 					{#each race.subraces.edges as subrace}
-						<div><a href={`/races/${subrace.node.id}`}>{subrace.node.name}</a></div>
+						<div>
+							<a href={`/races/${subrace.node.id}`} sveltekit:prefetch>{subrace.node.name}</a>
+						</div>
 					{/each}
 				</BasicProperty>
 			{/if}

@@ -19,7 +19,7 @@
 		<svelte:fragment slot="properties">
 			<BasicProperty name="Description" value={npc.description} />
 			<BasicProperty name="Race">
-				<a href={`/races/${npc.race.id}`}>{npc.race.name}</a>
+				<a href={`/races/${npc.race.id}`} sveltekit:prefetch>{npc.race.name}</a>
 			</BasicProperty>
 		</svelte:fragment>
 	</Layout>
