@@ -16,7 +16,7 @@
 	<div>
 		<p class="title">
 			<slot name="title">
-				<a {href}>{name}</a>
+				<a {href} sveltekit:prefetch>{name}</a>
 			</slot>
 		</p>
 		<p class="description">

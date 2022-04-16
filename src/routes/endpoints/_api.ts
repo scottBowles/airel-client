@@ -1,4 +1,4 @@
-import { API_PATH } from '$lib/config/settings';
+import settings from '$lib/settings';
 
 type Input = {
 	payload:
@@ -11,8 +11,13 @@ type Input = {
 	opts?: HeadersInit;
 };
 
+/**
+ * Helper to make requests to the graphql backend
+ * Most of the time requests should be made through KitQl, but this is here for
+ * exceptions
+ */
 async function api({ payload, token, opts }: Input): Promise<Response> {
-	return fetch(API_PATH, {
+	return fetch(settings.API_PATH, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

@@ -1,8 +1,8 @@
 <script context="module" lang="ts">
-	import { getArtifacts, artifacts as queriedArtifacts } from '$lib/graphql/ArtifactQueries.gq';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import { browser } from '$app/env';
 	import fetchBanner from '$lib/fetchBanner';
+	import { KQL_Artifacts } from '$lib/graphql/_kitql/graphqlStores';
 
 	export async function load({ fetch }) {
 		if (browser) {
@@ -13,11 +13,11 @@
 					overlay: 'Artifacts',
 					gravity: compass('north_east')
 				}),
-				getArtifacts({ fetch })
+				KQL_Artifacts.queryLoad({ fetch })
 			]);
 			return { props: { bannerUrl } };
 		} else {
-			await getArtifacts({ fetch });
+			await KQL_Artifacts.queryLoad({ fetch });
 			return {};
 		}
 	}
@@ -28,33 +28,39 @@
 
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import BannerImage from '$lib/components/BannerImage.svelte';
+	import Loading from '$lib/components/DetailPage/StatusHandling/Loading.svelte';
 
 	export let bannerUrl = undefined;
 
-	$: artifacts = $queriedArtifacts?.artifacts.edges?.map(({ node }) => node);
-	$: console.log({ artifacts });
+	$: artifacts = $KQL_Artifacts.data?.artifacts.edges?.map(({ node }) => node) || [];
+	$: ({ status } = $KQL_Artifacts);
+	// $: artifacts = $queriedArtifacts?.artifacts.edges?.map(({ node }) => node);
+	$: console.log({ KQL_Artifacts: $KQL_Artifacts });
 </script>
 
-{#if bannerUrl}
-	<img src={bannerUrl} alt="Artifacts" />
+{#if status === 'LOADING'}
+	<span> Loading... </span>
 {:else}
-	<BannerImage
-		overlay="Artifacts"
-		imageId={'dnd/City_guard_and_magister-5e_uk2sr0'}
-		alt="artifacts banner"
-		gravity={compass('north_east')}
-	/>
-{/if}
+	{#if bannerUrl}
+		<img src={bannerUrl} alt="Artifacts" />
+	{:else}
+		<BannerImage
+			overlay="Artifacts"
+			imageId={'dnd/City_guard_and_magister-5e_uk2sr0'}
+			alt="artifacts banner"
+			gravity={compass('north_east')}
+		/>
+	{/if}
 
-<div class="spacer" />
+	<div class="spacer" />
 
-<Container>
-	<div class="cards-container">
-		{#each artifacts as artifact}
-			{@const { id, name, description, thumbnailId, items } = artifact}
-			{@const href = `artifacts/${id}`}
-			<ListDetailCard {name} {description} {thumbnailId} {href}>
-				<!-- <svelte:fragment slot="title">
+	<Container>
+		<div class="cards-container">
+			{#each artifacts as artifact}
+				{@const { id, name, description, thumbnailId, items } = artifact}
+				{@const href = `artifacts/${id}`}
+				<ListDetailCard {name} {description} {thumbnailId} {href}>
+					<!-- <svelte:fragment slot="title">
 					<a {href}>{name}</a>
 					{#if weapon}
 						<span class="icon">
@@ -72,10 +78,11 @@
 						</span>
 					{/if}
 				</svelte:fragment> -->
-			</ListDetailCard>
-		{/each}
-	</div>
-</Container>
+				</ListDetailCard>
+			{/each}
+		</div>
+	</Container>
+{/if}
 
 <style>
 	.icon {

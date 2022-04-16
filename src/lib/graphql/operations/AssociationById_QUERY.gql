@@ -1,0 +1,15 @@
+query associationById($id: ID!) {
+	association(id: $id) {
+		id
+		name
+		description
+		imageId
+		thumbnailId
+		markdownNotes
+		lockUser {
+			id
+			username
+		}
+		lockTime
+	}
+}

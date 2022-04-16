@@ -1,12 +1,10 @@
 <script context="module" lang="ts">
-	import {
-		getAssociations,
-		associations as queriedAssociations
-	} from '$lib/graphql/AssociationQueries.gq';
+	import { KQL_Associations } from '$lib/graphql/_kitql/graphqlStores';
+	import { KitQLInfo } from '@kitql/all-in';
 
 	export const load = async ({ fetch }) => {
 		console.log('ASSOCIATIONS LOAD FUNCTION RUNNING');
-		await getAssociations({ fetch });
+		await KQL_Associations.queryLoad({ fetch });
 		return {};
 	};
 </script>
@@ -18,7 +16,8 @@
 	import BannerImage from '$lib/components/BannerImage.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 
-	$: associations = $queriedAssociations?.associations.edges?.map(({ node }) => node);
+	$: associations = $KQL_Associations.data?.associations.edges?.map(({ node }) => node) || [];
+	$: ({ status } = $KQL_Associations);
 	$: console.log({ associations });
 </script>
 
@@ -40,6 +39,7 @@
 		{/each}
 	</div>
 </Container>
+<KitQLInfo store={KQL_Associations} />
 
 <style>
 	.spacer {

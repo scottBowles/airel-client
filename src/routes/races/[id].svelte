@@ -1,30 +1,35 @@
 <script context="module" lang="ts">
-	import { getRaceById, raceById as queriedRace } from '$lib/graphql/RaceQueries.gq';
+	import { KQL_RaceById } from '$lib/graphql/_kitql/graphqlStores';
 
-	export const load = async ({ fetch, params }) =>
-		await getRaceById({ fetch, variables: { id: params.id } });
+	export const load = async ({ fetch, params }) => {
+		await KQL_RaceById.queryLoad({ fetch, variables: { id: params.id } });
+		return {};
+	};
 </script>
 
 <script>
 	import { Layout, BasicProperty, StatusHandler } from '$lib/components/DetailPage';
 	import { capitalize } from '$lib/utils';
 
-	$: ({ gQueryStatus, race, errors } = $queriedRace);
+	$: ({ status, errors, data } = $KQL_RaceById);
+	$: ({ race } = data || {});
 	$: console.log({ race });
 </script>
 
-<StatusHandler status={gQueryStatus} {errors} value={race} entityName="race">
+<StatusHandler {status} {errors} value={race} entityName="race">
 	<Layout name={race.name} imageId={race.imageId} markdownNotes={race.markdownNotes}>
 		<svelte:fragment slot="properties">
 			{#if race.baseRace}
 				<BasicProperty name="Base Race">
-					<a href={`/races/${race.baseRace.id}`}>{race.baseRace.name}</a>
+					<a href={`/races/${race.baseRace.id}`} sveltekit:prefetch>{race.baseRace.name}</a>
 				</BasicProperty>
 			{/if}
 			{#if race.subraces}
 				<BasicProperty name="Subraces">
 					{#each race.subraces.edges as subrace}
-						<div><a href={`/races/${subrace.node.id}`}>{subrace.node.name}</a></div>
+						<div>
+							<a href={`/races/${subrace.node.id}`} sveltekit:prefetch>{subrace.node.name}</a>
+						</div>
 					{/each}
 				</BasicProperty>
 			{/if}

@@ -1,21 +1,20 @@
 <script context="module" lang="ts">
-	import {
-		getArtifactById,
-		artifactById as queriedArtifact
-	} from '$lib/graphql/ArtifactQueries.gq';
-
-	export const load = async ({ fetch, params }) =>
-		await getArtifactById({ fetch, variables: { id: params.id } });
+	import { KQL_ArtifactById } from '$lib/graphql/_kitql/graphqlStores';
+	export const load = async ({ fetch, params }) => {
+		await KQL_ArtifactById.queryLoad({ fetch, variables: { id: params.id } });
+		return {};
+	};
 </script>
 
 <script>
 	import { Layout, BasicProperty, StatusHandler } from '$lib/components/DetailPage';
 
-	$: ({ gQueryStatus, artifact, errors } = $queriedArtifact);
+	$: ({ status, errors, data } = $KQL_ArtifactById);
+	$: ({ artifact } = data || {});
 	$: console.log({ artifact });
 </script>
 
-<StatusHandler status={gQueryStatus} {errors} value={artifact} entityName="artifact">
+<StatusHandler {status} {errors} value={artifact} entityName="artifact">
 	<Layout name={artifact.name} imageId={artifact.imageId} markdownNotes={artifact.markdownNotes}>
 		<svelte:fragment slot="properties">
 			<BasicProperty name="Description" value={artifact.description} />

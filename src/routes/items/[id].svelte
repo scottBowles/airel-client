@@ -1,18 +1,21 @@
 <script context="module" lang="ts">
-	import { getItemById, itemById as queriedItem } from '$lib/graphql/ItemQueries.gq';
+	import { KQL_ItemById } from '$lib/graphql/_kitql/graphqlStores';
 
-	export const load = async ({ fetch, params }) =>
-		await getItemById({ fetch, variables: { id: params.id } });
+	export const load = async ({ fetch, params }) => {
+		await KQL_ItemById.queryLoad({ fetch, variables: { id: params.id } });
+		return {};
+	};
 </script>
 
 <script>
 	import { Layout, BasicProperty, StatusHandler } from '$lib/components/DetailPage';
 
-	$: ({ gQueryStatus, item, errors } = $queriedItem);
+	$: ({ status, errors, data } = $KQL_ItemById);
+	$: ({ item } = data || {});
 	$: console.log({ item });
 </script>
 
-<StatusHandler status={gQueryStatus} {errors} value={item} entityName="item">
+<StatusHandler {status} {errors} value={item} entityName="item">
 	<Layout name={item.name} imageId={item.imageId} markdownNotes={item.markdownNotes}>
 		<svelte:fragment slot="properties">
 			<BasicProperty name="Description" value={item.description} />

@@ -1,0 +1,47 @@
+query npcById($id: ID!) {
+	npc(id: $id) {
+		id
+		name
+		description
+		imageId
+		thumbnailId
+		markdownNotes
+		lockUser {
+			id
+			username
+		}
+		lockTime
+		size
+		race {
+			id
+			name
+			description
+			imageId
+			thumbnailId
+			ageOfAdulthood
+			lifeExpectancy
+			alignment
+			size
+			speed
+		}
+		featuresAndTraits {
+			edges {
+				node {
+					id
+					name
+					description
+				}
+			}
+		}
+		proficiencies {
+			edges {
+				node {
+					id
+					name
+					description
+					proficiencyType
+				}
+			}
+		}
+	}
+}

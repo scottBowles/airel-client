@@ -1,8 +1,10 @@
 <script context="module" lang="ts">
-	import { getPlaceById, placeById as queriedPlace } from '$lib/graphql/PlaceQueries.gq';
+	import { KQL_PlaceById } from '$lib/graphql/_kitql/graphqlStores';
 
-	export const load = async ({ fetch, params }) =>
-		await getPlaceById({ fetch, variables: { id: params.id } });
+	export const load = async ({ fetch, params }) => {
+		await KQL_PlaceById.queryLoad({ fetch, variables: { id: params.id } });
+		return {};
+	};
 </script>
 
 <script>
@@ -13,9 +15,9 @@
 	let name;
 	let properties;
 
-	$: ({ gQueryStatus, place, errors } = $queriedPlace);
-	$: name = place.name;
-	$: imageId = place.imageId;
+	$: ({ status, errors, data } = $KQL_PlaceById);
+	$: ({ place } = data || {});
+	$: ({ name, imageId } = place || {});
 	$: properties = {
 		Description: place.description,
 		Type: capitalize(place.placeType),
@@ -24,6 +26,6 @@
 	$: console.log({ place });
 </script>
 
-<StatusHandler status={gQueryStatus} {errors} value={place} entityName="place">
+<StatusHandler {status} {errors} value={place} entityName="place">
 	<Layout {name} {imageId} {properties} markdownNotes={place.markdownNotes} />
 </StatusHandler>
