@@ -1,13 +1,13 @@
 import { KitQLClient } from '@kitql/client';
-import { API_PATH, CACHE_MS } from '$lib/config/settings';
+import settings from '$lib/settings';
 
 export type AppHeaders = {
 	Authorization?: `JWT ${string}`;
 };
 
 export const kitQLClient = new KitQLClient<AppHeaders>({
-	url: API_PATH,
+	url: settings.API_PATH,
 	headersContentType: 'application/json',
 	logType: ['client', 'server', 'operationAndvariables'],
-	cacheMs: CACHE_MS
+	cacheMs: settings.CACHE_MS
 });

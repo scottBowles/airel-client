@@ -1,4 +1,4 @@
-import { API_PATH } from '$lib/config/settings';
+import settings from '$lib/settings';
 
 type Input = {
 	payload:
@@ -17,7 +17,7 @@ type Input = {
  * exceptions
  */
 async function api({ payload, token, opts }: Input): Promise<Response> {
-	return fetch(API_PATH, {
+	return fetch(settings.API_PATH, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
