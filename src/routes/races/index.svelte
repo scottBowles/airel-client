@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	import { getRaces, races as queriedRaces } from '$lib/graphql/RaceQueries.gq';
+	import { getRaces, races as queriedRaces } from '$lib/_graphql/RaceQueries.gq';
 	export const load = async ({ fetch }) => await getRaces({ fetch });
 </script>
 

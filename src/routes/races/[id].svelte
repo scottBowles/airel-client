@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	import { getRaceById, raceById as queriedRace } from '$lib/graphql/RaceQueries.gq';
+	import { getRaceById, raceById as queriedRace } from '$lib/_graphql/RaceQueries.gq';
 
 	export const load = async ({ fetch, params }) =>
 		await getRaceById({ fetch, variables: { id: params.id } });

@@ -2,7 +2,7 @@
 	import {
 		getAssociations,
 		associations as queriedAssociations
-	} from '$lib/graphql/AssociationQueries.gq';
+	} from '$lib/_graphql/AssociationQueries.gq';
 
 	export const load = async ({ fetch }) => {
 		console.log('ASSOCIATIONS LOAD FUNCTION RUNNING');

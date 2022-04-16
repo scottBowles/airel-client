@@ -1,6 +1,11 @@
 <script context="module" lang="ts">
-	import { getItems, items as queriedItems } from '$lib/graphql/ItemQueries.gq';
-	export const load = async ({ fetch }) => await getItems({ fetch });
+	import { kitQLClient } from '$lib/graphql/kitQLClient';
+	import { KQL_Items } from '$lib/graphql/_kitql/graphqlStores';
+	export const load = async ({ fetch, session }) => {
+		kitQLClient.setHeaders({ Authorization: `JWT ${session.token}` });
+		await KQL_Items.queryLoad({ fetch });
+		return {};
+	};
 </script>
 
 <script>
@@ -14,7 +19,8 @@
 
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 
-	$: items = $queriedItems?.items.edges?.map(({ node }) => node);
+	$: console.log({ KQL_Items: $KQL_Items });
+	$: items = $KQL_Items?.data?.items.edges?.map(({ node }) => node);
 	$: console.log({ items });
 </script>
 

@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	import { getArtifacts, artifacts as queriedArtifacts } from '$lib/graphql/ArtifactQueries.gq';
+	import { getArtifacts, artifacts as queriedArtifacts } from '$lib/_graphql/ArtifactQueries.gq';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import { browser } from '$app/env';
 	import fetchBanner from '$lib/fetchBanner';
