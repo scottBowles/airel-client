@@ -14,6 +14,7 @@ export async function handle({ event, resolve }) {
 		!event.url.pathname.startsWith('/endpoints') &&
 		!PUBLIC_PAGES.includes(event.url.pathname)
 	) {
+		console.log('redirecting in handle hook to /login');
 		return new Response(null, {
 			status: 302,
 			headers: {
