@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { Editor, Viewer } from 'bytemd';
 	import 'bytemd/dist/index.css';
-	import gfm from '@bytemd/plugin-gfm';
+	// import gfm from '@bytemd/plugin-gfm';
 
-	const plugins = [gfm()];
+	// const plugins = [gfm()];
+	const plugins = [];
 	export let value = '';
 	export let isLockedByAnotherUser = false;
 	export let onSave: (value: string) => void;
