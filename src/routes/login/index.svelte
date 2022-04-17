@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
 	export async function load({ session }) {
-		console.log({ session });
+		console.log('login page', { session });
 		if (session.isLoggedIn) {
 			return {
 				status: 302,
