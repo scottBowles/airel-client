@@ -3,7 +3,7 @@
 
 	export async function load({ session, url }) {
 		console.log({ session, url });
-		if (!session.isLoggedIn && url.pathname !== '/login') {
+		if (!session.isLoggedIn) {
 			return {
 				status: 302,
 				redirect: '/login'
