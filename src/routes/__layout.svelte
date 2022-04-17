@@ -2,6 +2,7 @@
 	import { kitQLClient } from '$lib/graphql/kitQLClient';
 
 	export async function load({ session, url }) {
+		console.log({ session, url });
 		if (!session.isLoggedIn && url.pathname !== '/login') {
 			return {
 				status: 302,
