@@ -23,6 +23,17 @@ export async function handle({ event, resolve }) {
 		});
 	}
 
+	// Redirect away from login page if logged in
+	if (event.locals.isLoggedIn && event.url.pathname === '/login') {
+		console.log('redirecting in handle hook to /');
+		return new Response(null, {
+			status: 302,
+			headers: {
+				Location: '/'
+			}
+		});
+	}
+
 	return await resolve(event);
 }
 

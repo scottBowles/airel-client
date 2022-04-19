@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<!-- <script context="module" lang="ts">
 	export async function load({ session }) {
 		console.log('login page', { session });
 		if (session.isLoggedIn) {
@@ -9,8 +9,7 @@
 		}
 		return {};
 	}
-</script>
-
+</script> -->
 <script lang="ts">
 	import { Button, Heading, TextInput } from '@kahi-ui/framework';
 
