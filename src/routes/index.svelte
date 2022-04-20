@@ -1,6 +1,8 @@
 <script>
 	import Thumbnail from '$lib/components/Thumbnail.svelte';
 
+	console.log('index.svelte script');
+
 	let rawData = '';
 </script>
 
