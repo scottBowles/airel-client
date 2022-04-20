@@ -1,14 +1,14 @@
 <script context="module" lang="ts">
 	import { kitQLClient } from '$lib/graphql/kitQLClient';
+	import { PUBLIC_PAGES } from '$lib/constants';
 
-	export async function load({ session }) {
-		console.log('__layout', { session });
-		// if (!session.isLoggedIn) {
-		// 	return {
-		// 		status: 302,
-		// 		redirect: '/login'
-		// 	};
-		// }
+	export async function load({ session, url }) {
+		if (!session.isLoggedIn && !PUBLIC_PAGES.includes(url.pathname)) {
+			return {
+				status: 302,
+				redirect: '/login'
+			};
+		}
 		kitQLClient.setHeaders({ Authorization: `JWT ${session.token}` });
 		return {};
 	}

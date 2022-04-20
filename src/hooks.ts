@@ -1,5 +1,5 @@
 import * as cookie from 'cookie';
-import { PUBLIC_PAGES } from '$lib/constants';
+// import { PUBLIC_PAGES } from '$lib/constants';
 
 export async function handle({ event, resolve }) {
 	console.log('enter handle hook');
