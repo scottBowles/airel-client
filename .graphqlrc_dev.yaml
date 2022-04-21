@@ -1,7 +1,7 @@
 projects:
   default:
     schema:
-      - https://apirel.onrender.com/graphql/ # or a local file
+      - http://127.0.0.1:8000/graphql/ # or a local file
         # headers:
         #   Authorization: 'Bearer ${TOKEN}'
     documents:
@@ -9,7 +9,7 @@ projects:
     extensions:
       endpoints:
         default:
-          url: https://apirel.onrender.com/graphql/
+          url: http://127.0.0.1:8000/graphql/
       codegen:
         generates:
           ./src/lib/graphql/schema.json:
