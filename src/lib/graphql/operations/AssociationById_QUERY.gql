@@ -11,5 +11,6 @@ query associationById($id: ID!) {
 			username
 		}
 		lockTime
+		lockedBySelf
 	}
 }

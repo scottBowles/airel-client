@@ -2,5 +2,19 @@ mutation associationReleaseLock($id: ID!) {
 	associationReleaseLock(input: { id: $id }) {
 		ok
 		errors
+		association {
+			id
+			name
+			description
+			imageId
+			thumbnailId
+			markdownNotes
+			lockUser {
+				id
+				username
+			}
+			lockTime
+			lockedBySelf
+		}
 	}
 }

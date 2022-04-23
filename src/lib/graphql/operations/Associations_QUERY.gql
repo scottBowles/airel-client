@@ -13,6 +13,7 @@ query associations {
 					username
 				}
 				lockTime
+				lockedBySelf
 			}
 		}
 	}

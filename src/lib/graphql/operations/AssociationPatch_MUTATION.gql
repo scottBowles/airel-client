@@ -30,6 +30,7 @@ mutation associationPatch(
 				username
 			}
 			lockTime
+			lockedBySelf
 		}
 	}
 }
