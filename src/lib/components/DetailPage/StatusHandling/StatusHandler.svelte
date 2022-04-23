@@ -12,7 +12,7 @@
 
 {#if status === 'LOADING'}
 	<Loading />
-{:else if status === 'DONE' && errors}
+{:else if status === 'DONE' && errors?.length > 0}
 	<Error {errors} />
 {:else if status === 'DONE' && value}
 	<slot />

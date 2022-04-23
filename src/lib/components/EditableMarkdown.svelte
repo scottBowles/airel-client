@@ -6,37 +6,37 @@
 	// const plugins = [gfm()];
 	const plugins = [];
 	export let value = '';
-	export let isLockedByAnotherUser = false;
-	export let onSave: (value: string) => void;
-	export let onEditClick: () => void;
+	// export let isLockedByAnotherUser = false;
+	// export let onSave: (value: string) => void;
+	// export let onEditClick: () => void;
 
-	let editing = false;
+	export let editing = false;
 
-	async function handleEditClick() {
-		console.log('handleEditClick');
-		try {
-			await onEditClick();
-			editing = true;
-		} catch (e) {
-			console.error(e);
-		}
-	}
+	// async function handleEditClick() {
+	// 	console.log('handleEditClick');
+	// 	try {
+	// 		await onEditClick();
+	// 		editing = true;
+	// 	} catch (e) {
+	// 		console.error(e);
+	// 	}
+	// }
 
-	async function handleSave() {
-		try {
-			await onSave(value);
-			editing = false;
-		} catch (e) {
-			console.error(e);
-		}
-	}
+	// async function handleSave() {
+	// 	try {
+	// 		await onSave(value);
+	// 		editing = false;
+	// 	} catch (e) {
+	// 		console.error(e);
+	// 	}
+	// }
 </script>
 
-{#if editing}
+<!-- {#if editing}
 	<button on:click={handleSave}>Save Changes</button>
 {:else}
 	<button disabled={isLockedByAnotherUser} on:click={handleEditClick}>Edit me pls</button>
-{/if}
+{/if} -->
 
 {#if editing}
 	<Editor
