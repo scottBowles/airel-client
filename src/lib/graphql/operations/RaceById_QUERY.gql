@@ -3,7 +3,7 @@ query raceById($id: ID!) {
 		id
 		name
 		description
-		imageId
+		imageIds
 		thumbnailId
 		markdownNotes
 		lockUser {
@@ -20,7 +20,7 @@ query raceById($id: ID!) {
 			id
 			name
 			description
-			imageId
+			imageIds
 			thumbnailId
 			ageOfAdulthood
 			lifeExpectancy
@@ -34,7 +34,7 @@ query raceById($id: ID!) {
 					id
 					name
 					description
-					imageId
+					imageIds
 					thumbnailId
 					ageOfAdulthood
 					lifeExpectancy

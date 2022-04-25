@@ -3,7 +3,7 @@ query npcById($id: ID!) {
 		id
 		name
 		description
-		imageId
+		imageIds
 		thumbnailId
 		markdownNotes
 		lockUser {
@@ -16,7 +16,7 @@ query npcById($id: ID!) {
 			id
 			name
 			description
-			imageId
+			imageIds
 			thumbnailId
 			ageOfAdulthood
 			lifeExpectancy

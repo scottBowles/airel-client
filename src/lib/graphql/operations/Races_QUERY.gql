@@ -5,7 +5,7 @@ query races {
 				id
 				name
 				description
-				imageId
+				imageIds
 				thumbnailId
 				markdownNotes
 				lockUser {
@@ -22,7 +22,7 @@ query races {
 					id
 					name
 					description
-					imageId
+					imageIds
 					thumbnailId
 					ageOfAdulthood
 					lifeExpectancy
@@ -36,7 +36,7 @@ query races {
 							id
 							name
 							description
-							imageId
+							imageIds
 							thumbnailId
 							ageOfAdulthood
 							lifeExpectancy

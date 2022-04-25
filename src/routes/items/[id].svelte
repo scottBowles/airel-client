@@ -16,7 +16,7 @@
 </script>
 
 <StatusHandler {status} {errors} value={item} entityName="item">
-	<Layout name={item.name} imageId={item.imageId} markdownNotes={item.markdownNotes}>
+	<Layout name={item.name} imageId={item.imageIds[0]} markdownNotes={item.markdownNotes}>
 		<svelte:fragment slot="properties">
 			<BasicProperty name="Description" value={item.description} />
 

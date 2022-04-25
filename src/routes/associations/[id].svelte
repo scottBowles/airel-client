@@ -82,7 +82,7 @@
 		properties={{
 			Description: association.description
 		}}
-		imageId={association.imageId || 'dnd/sfaedxiltuowlw7whb0c'}
+		imageId={association.imageIds[0] || 'dnd/sfaedxiltuowlw7whb0c'}
 		{lockUser}
 		{lockedBySelf}
 		onEditClick={handleEditClick}

@@ -6,7 +6,7 @@ mutation associationReleaseLock($id: ID!) {
 			id
 			name
 			description
-			imageId
+			imageIds
 			thumbnailId
 			markdownNotes
 			lockUser {

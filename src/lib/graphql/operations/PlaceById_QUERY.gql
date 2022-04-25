@@ -3,7 +3,7 @@ query placeById($id: ID!) {
 		id
 		name
 		description
-		imageId
+		imageIds
 		thumbnailId
 		markdownNotes
 		lockUser {
@@ -19,7 +19,7 @@ query placeById($id: ID!) {
 			id
 			name
 			description
-			imageId
+			imageIds
 			thumbnailId
 			created
 			updated
@@ -29,7 +29,7 @@ query placeById($id: ID!) {
 				id
 				name
 				description
-				imageId
+				imageIds
 				thumbnailId
 				created
 				updated

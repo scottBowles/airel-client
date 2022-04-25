@@ -17,7 +17,7 @@
 </script>
 
 <StatusHandler {status} {errors} value={race} entityName="race">
-	<Layout name={race.name} imageId={race.imageId} markdownNotes={race.markdownNotes}>
+	<Layout name={race.name} imageId={race.imageIds[0]} markdownNotes={race.markdownNotes}>
 		<svelte:fragment slot="properties">
 			{#if race.baseRace}
 				<BasicProperty name="Base Race">

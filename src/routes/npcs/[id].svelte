@@ -15,7 +15,7 @@
 </script>
 
 <StatusHandler {status} {errors} value={npc} entityName="NPC">
-	<Layout name={npc.name} imageId={npc.imageId} markdownNotes={npc.markdownNotes}>
+	<Layout name={npc.name} imageId={npc.imageIds[0]} markdownNotes={npc.markdownNotes}>
 		<svelte:fragment slot="properties">
 			<BasicProperty name="Description" value={npc.description} />
 			<BasicProperty name="Race">

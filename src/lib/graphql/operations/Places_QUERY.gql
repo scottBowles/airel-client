@@ -5,7 +5,7 @@ query places {
 				id
 				name
 				description
-				imageId
+				imageIds
 				thumbnailId
 				markdownNotes
 				lockUser {
@@ -21,7 +21,7 @@ query places {
 					id
 					name
 					description
-					imageId
+					imageIds
 					thumbnailId
 					created
 					updated
@@ -31,7 +31,7 @@ query places {
 						id
 						name
 						description
-						imageId
+						imageIds
 						thumbnailId
 						created
 						updated

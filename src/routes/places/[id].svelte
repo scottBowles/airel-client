@@ -17,7 +17,7 @@
 
 	$: ({ status, errors, data } = $KQL_PlaceById);
 	$: ({ place } = data || {});
-	$: ({ name, imageId } = place || {});
+	$: ({ name, imageIds } = place || {});
 	$: properties = {
 		Description: place.description,
 		Type: capitalize(place.placeType),
@@ -27,5 +27,5 @@
 </script>
 
 <StatusHandler {status} {errors} value={place} entityName="place">
-	<Layout {name} {imageId} {properties} markdownNotes={place.markdownNotes} />
+	<Layout {name} imageId={imageIds[0]} {properties} markdownNotes={place.markdownNotes} />
 </StatusHandler>
