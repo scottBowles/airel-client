@@ -26,9 +26,9 @@
 
 	$: ({ status, errors, data } = $KQL_AssociationById);
 	$: ({ association } = data || {});
-	$: ({ lockUser, lockedBySelf } = association);
+	$: ({ lockUser, lockedBySelf } = association || {});
 	$: console.log({ data });
-	$: console.log('asdf', Object.values(data)[0]);
+	$: console.log('asdf', Object.values(data || {})[0]);
 
 	let { markdownNotes } = association || {};
 
