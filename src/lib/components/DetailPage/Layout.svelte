@@ -1,19 +1,22 @@
 <script lang="ts">
 	import { Container, Heading } from '@kahi-ui/framework';
 
-	import LargeImage from '$lib/components/LargeImage.svelte';
+	import CloudinaryUpload from '$lib/components/CloudinaryUpload.svelte';
 	import { BasicProperty } from '$lib/components/DetailPage';
+	import LargeImage from '$lib/components/LargeImage.svelte';
+	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
 
 	export let name = 'No name or header slot provided';
 	export let properties = {};
-	export let imageId;
+	export let imageIds;
 	export let onEditClick;
 	export let onSaveClick;
 	export let lockUser;
 	export let lockedBySelf;
+	export let handleImageUpload;
 
 	$: editing = lockedBySelf;
-	console.log({ imageId });
+	console.log({ imageIds });
 </script>
 
 <div class="spacer" />
@@ -41,9 +44,15 @@
 		<div class="spacer" />
 		<div class="img-container">
 			<slot name="mainImage">
-				<!-- {#if imageId} -->
-				<LargeImage {imageId} alt={name} />
-				<!-- {/if} -->
+				{#if imageIds?.length}
+					<CloudinaryUpload {handleImageUpload}>
+						<ImageCarousel {imageIds} />
+					</CloudinaryUpload>
+				{:else}
+					<CloudinaryUpload {handleImageUpload}>
+						<LargeImage imageId={'dnd/sfaedxiltuowlw7whb0c'} alt={name} />
+					</CloudinaryUpload>
+				{/if}
 			</slot>
 		</div>
 		<div class="markdown-container">

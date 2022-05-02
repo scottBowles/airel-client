@@ -2,7 +2,8 @@
 	import {
 		KQL_AssociationById,
 		KQL_AssociationLock,
-		KQL_AssociationPatch
+		KQL_AssociationPatch,
+		KQL_AssociationAddImage
 	} from '$lib/graphql/_kitql/graphqlStores';
 	import { KitQLInfo } from '@kitql/all-in';
 
@@ -74,6 +75,30 @@
 		}
 		// handle errors
 	}
+
+	async function handleImageUpload(error, result) {
+		if (error) {
+			// handle error
+			console.log('handleImageUpload', { error });
+		}
+		if (result?.event === 'success') {
+			const { data, errors: resErrors } = await KQL_AssociationAddImage.mutate({
+				variables: {
+					id,
+					imageId: result.info.public_id
+				}
+			});
+			if (resErrors) {
+				// handle resErrors
+			}
+			const { association, errors, ok } = data.associationAddImage;
+			if (ok) {
+				console.log({ association });
+				patchAssociationStore(association);
+				console.log('post patch', $KQL_AssociationById);
+			}
+		}
+	}
 </script>
 
 <StatusHandler {status} {errors} value={association} entityName="association">
@@ -82,11 +107,12 @@
 		properties={{
 			Description: association.description
 		}}
-		imageId={association.imageIds[0] || 'dnd/sfaedxiltuowlw7whb0c'}
+		imageIds={association.imageIds}
 		{lockUser}
 		{lockedBySelf}
 		onEditClick={handleEditClick}
 		onSaveClick={handleFormSubmit}
+		{handleImageUpload}
 	>
 		<EditableMarkdown
 			value={markdownNotes}

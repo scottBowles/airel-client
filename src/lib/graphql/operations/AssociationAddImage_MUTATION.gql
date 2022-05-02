@@ -1,0 +1,20 @@
+mutation associationAddImage($id: ID!, $imageId: String) {
+	associationAddImage(input: { id: $id, imageId: $imageId }) {
+		ok
+		errors
+		association {
+			id
+			name
+			description
+			imageIds
+			thumbnailId
+			markdownNotes
+			lockUser {
+				id
+				username
+			}
+			lockTime
+			lockedBySelf
+		}
+	}
+}

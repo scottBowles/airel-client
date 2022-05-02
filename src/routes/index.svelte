@@ -1,7 +1,11 @@
 <script>
 	import Thumbnail from '$lib/components/Thumbnail.svelte';
+	import CloudinaryUpload from '$lib/components/CloudinaryUpload.svelte';
 
 	console.log('index.svelte script');
+	function handleImageUpload(error, result) {
+		console.log('handleImageUpload', { error, result });
+	}
 
 	let rawData = '';
 </script>
@@ -17,3 +21,6 @@
 	/>
 	<button class="show-btn" on:click={() => ({})}> Show Preview </button>
 </form>
+<CloudinaryUpload {handleImageUpload}>
+	<button type="button">Upload an image</button>
+</CloudinaryUpload>
