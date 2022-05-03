@@ -2,7 +2,6 @@ mutation associationPatch(
 	$id: ID!
 	$name: String
 	$description: String
-	$imageIds: [String]
 	$thumbnailId: String
 	$markdownNotes: String
 ) {
@@ -11,7 +10,6 @@ mutation associationPatch(
 			id: $id
 			name: $name
 			description: $description
-			imageIds: $imageIds
 			thumbnailId: $thumbnailId
 			markdownNotes: $markdownNotes
 		}
@@ -19,18 +17,7 @@ mutation associationPatch(
 		ok
 		errors
 		association {
-			id
-			name
-			description
-			imageIds
-			thumbnailId
-			markdownNotes
-			lockUser {
-				id
-				username
-			}
-			lockTime
-			lockedBySelf
+			...AssociationFields
 		}
 	}
 }

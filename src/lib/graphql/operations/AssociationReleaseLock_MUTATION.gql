@@ -3,18 +3,7 @@ mutation associationReleaseLock($id: ID!) {
 		ok
 		errors
 		association {
-			id
-			name
-			description
-			imageIds
-			thumbnailId
-			markdownNotes
-			lockUser {
-				id
-				username
-			}
-			lockTime
-			lockedBySelf
+			...AssociationFields
 		}
 	}
 }

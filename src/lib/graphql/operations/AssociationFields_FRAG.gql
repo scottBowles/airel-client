@@ -1,0 +1,14 @@
+fragment AssociationFields on Association {
+	id
+	name
+	description
+	imageIds
+	thumbnailId
+	markdownNotes
+	lockUser {
+		id
+		username
+	}
+	lockTime
+	lockedBySelf
+}

@@ -2,18 +2,7 @@ query associations {
 	associations {
 		edges {
 			node {
-				id
-				name
-				description
-				imageIds
-				thumbnailId
-				markdownNotes
-				lockUser {
-					id
-					username
-				}
-				lockTime
-				lockedBySelf
+				...AssociationFields
 			}
 		}
 	}
