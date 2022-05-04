@@ -14,11 +14,10 @@
 </script>
 
 <script>
-	import { Container, Heading, Text } from '@kahi-ui/framework';
+	import { Text } from '@kahi-ui/framework';
 	import { page } from '$app/stores';
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
 	import { LockFailedError } from '$lib/errors';
-	import EditableMarkdown from '$lib/components/EditableMarkdown.svelte';
 	import BasicProperty from '$lib/components/DetailPage/BasicProperty.svelte';
 
 	const { id } = $page.params;
@@ -26,60 +25,56 @@
 
 	$: ({ status, errors, data } = $KQL_AssociationById);
 	$: ({ association } = data || {});
-	$: ({ lockUser, lockedBySelf } = association || {});
-	$: console.log({ data });
-	$: console.log('asdf', Object.values(data || {})[0]);
+	$: ({ name, imageIds, description, markdownNotes, lockUser, lockedBySelf } = association || {});
 
-	let { markdownNotes } = association || {};
-
-	function patchAssociationStore(patch) {
+	function patchStore(patch) {
 		const update = { association: { ...association, ...patch } };
 		KQL_AssociationById.patch(update, variables);
 	}
 
-	function refreshAssociationFromNetwork() {
+	function refreshFromNetwork() {
 		KQL_AssociationById.query({ variables, settings: { policy: 'cache-and-network' } });
 	}
 
-	async function handleEditClick() {
-		console.log('handleEditClick');
+	async function onEditClick() {
 		const lockRes = await KQL_AssociationLock.mutate({ variables });
 		if (lockRes.errors) {
-			refreshAssociationFromNetwork();
+			refreshFromNetwork();
+			// notify error rather than throwing error
+			// return;
 			throw new LockFailedError(lockRes.errors[0].message);
 		}
-		patchAssociationStore(lockRes.data.associationLock.association);
+		patchStore(lockRes.data.associationLock.association);
 		return;
 	}
 
-	async function handleFormSubmit(e) {
-		console.log('handleFormSubmit');
-		console.log({ e });
-		const {
-			name: { value: name },
-			description: { value: description }
-		} = e.target.elements;
+	async function onFormSubmit(e) {
+		const form = e.target;
+		const formData = new FormData(form);
+		const patch = {};
+		formData.forEach((value, key) => {
+			patch[key] = value;
+		});
+		console.log({ patch });
 
 		const { data, errors: resErrors } = await KQL_AssociationPatch.mutate({
-			variables: { id, name, description }
+			variables: { id, ...patch }
 		});
 
 		if (resErrors) {
 			// handle resErrors
 		}
-		const { association, errors, ok } = data.associationPatch;
+		const { association: updatedAssociation, errors, ok } = data.associationPatch;
 		if (ok) {
-			console.log({ association });
-			patchAssociationStore(association);
-			console.log('post patch', $KQL_AssociationById);
+			patchStore(updatedAssociation);
 		}
 		// handle errors
 	}
 
-	async function handleImageUpload(error, result) {
+	async function onImageUpload(error, result) {
 		if (error) {
 			// handle error
-			console.log('handleImageUpload', { error });
+			// console.log('handleImageUpload', { error });
 		}
 		if (result?.event === 'success') {
 			const { data, errors: resErrors } = await KQL_AssociationAddImage.mutate({
@@ -93,9 +88,9 @@
 			}
 			const { association, errors, ok } = data.associationAddImage;
 			if (ok) {
-				console.log({ association });
-				patchAssociationStore(association);
-				console.log('post patch', $KQL_AssociationById);
+				// console.log({ association });
+				patchStore(association);
+				// console.log('post patch', $KQL_AssociationById);
 			}
 		}
 	}
@@ -103,22 +98,18 @@
 
 <StatusHandler {status} {errors} value={association} entityName="association">
 	<Layout
-		name={association.name}
-		properties={{
-			Description: association.description
-		}}
-		imageIds={association.imageIds}
+		{name}
+		{imageIds}
+		{markdownNotes}
 		{lockUser}
 		{lockedBySelf}
-		onEditClick={handleEditClick}
-		onSaveClick={handleFormSubmit}
-		{handleImageUpload}
+		properties={{
+			Description: description
+		}}
+		{onEditClick}
+		{onFormSubmit}
+		{onImageUpload}
 	>
-		<EditableMarkdown
-			value={markdownNotes}
-			editing={association.lockedBySelf}
-			slot="markdown-notes"
-		/>
 		<svelte:fragment slot="properties">
 			<BasicProperty name="Description">
 				<Text>
@@ -131,6 +122,5 @@
 			</BasicProperty>
 		</svelte:fragment>
 	</Layout>
-	<!-- {/if} -->
 </StatusHandler>
 <!-- <KitQLInfo store={KQL_AssociationById} /> -->

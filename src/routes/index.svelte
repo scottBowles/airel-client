@@ -3,7 +3,7 @@
 	import CloudinaryUpload from '$lib/components/CloudinaryUpload.svelte';
 
 	console.log('index.svelte script');
-	function handleImageUpload(error, result) {
+	function onImageUpload(error, result) {
 		console.log('handleImageUpload', { error, result });
 	}
 
@@ -21,6 +21,6 @@
 	/>
 	<button class="show-btn" on:click={() => ({})}> Show Preview </button>
 </form>
-<CloudinaryUpload {handleImageUpload}>
+<CloudinaryUpload {onImageUpload}>
 	<button type="button">Upload an image</button>
 </CloudinaryUpload>

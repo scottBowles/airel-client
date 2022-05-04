@@ -5,15 +5,23 @@
 	import { BasicProperty } from '$lib/components/DetailPage';
 	import LargeImage from '$lib/components/LargeImage.svelte';
 	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
+	import EditableMarkdown from '$lib/components/EditableMarkdown.svelte';
+	import { onMount } from 'svelte';
 
 	export let name = 'No name or header slot provided';
-	export let properties = {};
+	export let properties: { [key: string]: string | number } = {};
 	export let imageIds;
 	export let onEditClick;
-	export let onSaveClick;
+	export let onFormSubmit;
 	export let lockUser;
 	export let lockedBySelf;
-	export let handleImageUpload;
+	export let onImageUpload;
+	export let markdownNotes;
+
+	let isMounted = false;
+	onMount(() => {
+		isMounted = true;
+	});
 
 	$: editing = lockedBySelf;
 	console.log({ imageIds });
@@ -21,8 +29,10 @@
 
 <div class="spacer" />
 <Container>
-	<form on:submit|preventDefault={onSaveClick}>
+	<form on:submit|preventDefault={onFormSubmit}>
+		<!-- TOP ROW -->
 		<div class="top-row">
+			<!-- NAME -->
 			<Heading is="h1">
 				{#if editing}
 					<input name="name" value={name} required />
@@ -30,34 +40,48 @@
 					{name}
 				{/if}
 			</Heading>
+
+			<!-- EDIT / SAVE + LOCKED BY {USER} -->
 			<span>
 				{lockUser?.username ? `Locked by ${lockUser.username}` : ''}
-				{#if editing}
-					<input type="submit" value="Save" />
-				{:else}
-					<button type="button" on:click={onEditClick}>Edit</button>
+				{#if isMounted}
+					{#if editing}
+						<button type="submit">Save</button>
+					{:else}
+						<button type="button" on:click={onEditClick}>Edit</button>
+					{/if}
 				{/if}
 			</span>
 		</div>
+
+		<!-- HR -->
 		<div class="spacer-xs" />
 		<hr />
 		<div class="spacer" />
+
+		<!-- IMAGES -->
 		<div class="img-container">
 			<slot name="mainImage">
 				{#if imageIds?.length}
-					<CloudinaryUpload {handleImageUpload}>
+					<CloudinaryUpload {onImageUpload}>
 						<ImageCarousel {imageIds} />
 					</CloudinaryUpload>
 				{:else}
-					<CloudinaryUpload {handleImageUpload}>
+					<CloudinaryUpload {onImageUpload}>
 						<LargeImage imageId={'dnd/sfaedxiltuowlw7whb0c'} alt={name} />
 					</CloudinaryUpload>
 				{/if}
 			</slot>
 		</div>
+
+		<!-- MARKDOWN NOTES -->
 		<div class="markdown-container">
-			<slot name="markdown-notes" />
+			<slot name="markdown-notes">
+				<EditableMarkdown bind:value={markdownNotes} {editing} asInput slot="markdown-notes" />
+			</slot>
 		</div>
+
+		<!-- PROPERTIES -->
 		<slot name="properties">
 			{#each Object.entries(properties) as [name, value]}
 				<BasicProperty {name} {value} />

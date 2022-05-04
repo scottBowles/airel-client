@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	export let handleImageUpload;
+	export let onImageUpload;
 	let uploadWidget;
 	let openWidget;
 
@@ -11,7 +11,7 @@
 				cloudName: 'scottBowles',
 				uploadPreset: 'ubste3oi'
 			},
-			handleImageUpload
+			onImageUpload
 		);
 
 		openWidget = () => uploadWidget && uploadWidget.open();
