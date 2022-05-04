@@ -1,0 +1,9 @@
+mutation npcLock($id: ID!) {
+	npcLock(input: { id: $id }) {
+		ok
+		errors
+		npc {
+			...NpcFields
+		}
+	}
+}

@@ -1,0 +1,22 @@
+fragment ItemFields on Item {
+	id
+	name
+	description
+	imageIds
+	thumbnailId
+	markdownNotes
+	lockUser {
+		id
+		username
+	}
+	lockTime
+	armor {
+		acBonus
+	}
+	weapon {
+		attackBonus
+	}
+	equipment {
+		briefDescription
+	}
+}

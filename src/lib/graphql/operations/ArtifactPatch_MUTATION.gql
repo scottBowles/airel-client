@@ -1,0 +1,23 @@
+mutation artifactPatch(
+	$id: ID!
+	$name: String
+	$description: String
+	$thumbnailId: String
+	$markdownNotes: String
+) {
+	artifactPatch(
+		input: {
+			id: $id
+			name: $name
+			description: $description
+			thumbnailId: $thumbnailId
+			markdownNotes: $markdownNotes
+		}
+	) {
+		ok
+		errors
+		artifact {
+			...ArtifactFields
+		}
+	}
+}

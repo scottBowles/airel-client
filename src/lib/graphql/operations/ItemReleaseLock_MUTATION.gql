@@ -1,0 +1,9 @@
+mutation itemReleaseLock($id: ID!) {
+	itemReleaseLock(input: { id: $id }) {
+		ok
+		errors
+		item {
+			...ItemFields
+		}
+	}
+}

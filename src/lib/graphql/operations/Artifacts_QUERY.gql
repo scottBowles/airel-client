@@ -2,36 +2,7 @@ query artifacts {
 	artifacts {
 		edges {
 			node {
-				id
-				name
-				description
-				imageIds
-				thumbnailId
-				created
-				updated
-				markdownNotes
-				lockUser {
-					id
-					username
-				}
-				lockTime
-				items {
-					edges {
-						node {
-							id
-							name
-							weapon {
-								attackBonus
-							}
-							armor {
-								acBonus
-							}
-							equipment {
-								briefDescription
-							}
-						}
-					}
-				}
+				...ArtifactFields
 			}
 		}
 	}

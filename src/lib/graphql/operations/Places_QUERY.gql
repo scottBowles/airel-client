@@ -2,43 +2,7 @@ query places {
 	places {
 		edges {
 			node {
-				id
-				name
-				description
-				imageIds
-				thumbnailId
-				markdownNotes
-				lockUser {
-					id
-					username
-				}
-				lockTime
-				created
-				updated
-				placeType
-				population
-				parent {
-					id
-					name
-					description
-					imageIds
-					thumbnailId
-					created
-					updated
-					placeType
-					population
-					parent {
-						id
-						name
-						description
-						imageIds
-						thumbnailId
-						created
-						updated
-						placeType
-						population
-					}
-				}
+				...PlaceFields
 			}
 		}
 	}

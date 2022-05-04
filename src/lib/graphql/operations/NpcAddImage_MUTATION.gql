@@ -1,0 +1,9 @@
+mutation npcAddImage($id: ID!, $imageId: String) {
+	npcAddImage(input: { id: $id, imageId: $imageId }) {
+		ok
+		errors
+		npc {
+			...NpcFields
+		}
+	}
+}

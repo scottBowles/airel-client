@@ -1,0 +1,23 @@
+mutation placePatch(
+	$id: ID!
+	$name: String
+	$description: String
+	$thumbnailId: String
+	$markdownNotes: String
+) {
+	placePatch(
+		input: {
+			id: $id
+			name: $name
+			description: $description
+			thumbnailId: $thumbnailId
+			markdownNotes: $markdownNotes
+		}
+	) {
+		ok
+		errors
+		place {
+			...PlaceFields
+		}
+	}
+}

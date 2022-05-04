@@ -1,0 +1,9 @@
+mutation raceReleaseLock($id: ID!) {
+	raceReleaseLock(input: { id: $id }) {
+		ok
+		errors
+		race {
+			...RaceFields
+		}
+	}
+}

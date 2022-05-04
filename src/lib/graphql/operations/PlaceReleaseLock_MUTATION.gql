@@ -1,0 +1,9 @@
+mutation placeReleaseLock($id: ID!) {
+	placeReleaseLock(input: { id: $id }) {
+		ok
+		errors
+		place {
+			...PlaceFields
+		}
+	}
+}

@@ -1,0 +1,9 @@
+mutation raceAddImage($id: ID!, $imageId: String) {
+	raceAddImage(input: { id: $id, imageId: $imageId }) {
+		ok
+		errors
+		race {
+			...RaceFields
+		}
+	}
+}

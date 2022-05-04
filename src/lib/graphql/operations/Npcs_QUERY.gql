@@ -2,49 +2,7 @@ query npcs {
 	npcs {
 		edges {
 			node {
-				id
-				name
-				description
-				imageIds
-				thumbnailId
-				markdownNotes
-				lockUser {
-					id
-					username
-				}
-				lockTime
-				size
-				race {
-					id
-					name
-					description
-					imageIds
-					thumbnailId
-					ageOfAdulthood
-					lifeExpectancy
-					alignment
-					size
-					speed
-				}
-				featuresAndTraits {
-					edges {
-						node {
-							id
-							name
-							description
-						}
-					}
-				}
-				proficiencies {
-					edges {
-						node {
-							id
-							name
-							description
-							proficiencyType
-						}
-					}
-				}
+				...NpcFields
 			}
 		}
 	}

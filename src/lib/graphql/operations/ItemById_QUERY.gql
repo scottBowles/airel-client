@@ -1,24 +1,5 @@
 query itemById($id: ID!) {
 	item(id: $id) {
-		id
-		name
-		description
-		imageIds
-		thumbnailId
-		markdownNotes
-		lockUser {
-			id
-			username
-		}
-		lockTime
-		armor {
-			acBonus
-		}
-		weapon {
-			attackBonus
-		}
-		equipment {
-			briefDescription
-		}
+		...ItemFields
 	}
 }
