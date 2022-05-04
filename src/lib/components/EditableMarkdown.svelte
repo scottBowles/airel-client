@@ -6,6 +6,7 @@
 	// const plugins = [gfm()];
 	const plugins = [];
 	export let value = '';
+	export let asInput: boolean = false;
 	// export let isLockedByAnotherUser = false;
 	// export let onSave: (value: string) => void;
 	// export let onEditClick: () => void;
@@ -49,6 +50,9 @@
 			value = e.detail.value;
 		}}
 	/>
+	{#if asInput}
+		<input type="hidden" name="markdownNotes" {value} />
+	{/if}
 {:else}
 	<Viewer {value} />
 {/if}
