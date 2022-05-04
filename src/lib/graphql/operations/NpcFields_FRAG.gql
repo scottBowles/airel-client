@@ -1,4 +1,4 @@
-fragment NpcFields on Npc {
+fragment NpcFields on NPCNode {
 	id
 	name
 	description

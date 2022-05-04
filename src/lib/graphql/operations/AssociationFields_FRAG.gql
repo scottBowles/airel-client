@@ -1,4 +1,4 @@
-fragment AssociationFields on Association {
+fragment AssociationFields on AssociationNode {
 	id
 	name
 	description

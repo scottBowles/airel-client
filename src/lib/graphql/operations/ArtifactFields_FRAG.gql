@@ -1,4 +1,4 @@
-fragment ArtifactFields on Artifact {
+fragment ArtifactFields on ArtifactNode {
 	id
 	name
 	description

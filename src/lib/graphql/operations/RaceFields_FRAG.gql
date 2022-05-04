@@ -1,4 +1,4 @@
-fragment RaceFields on Race {
+fragment RaceFields on RaceNode {
 	id
 	name
 	description

@@ -1,4 +1,4 @@
-fragment PlaceFields on Place {
+fragment PlaceFields on PlaceNode {
 	id
 	name
 	description

@@ -1,4 +1,4 @@
-fragment ItemFields on Item {
+fragment ItemFields on ItemNode {
 	id
 	name
 	description

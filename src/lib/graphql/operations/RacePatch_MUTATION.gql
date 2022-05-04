@@ -1,6 +1,6 @@
 mutation racePatch(
 	$id: ID!
-	$name: String
+	$name: String!
 	$description: String
 	$thumbnailId: String
 	$markdownNotes: String

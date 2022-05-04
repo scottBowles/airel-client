@@ -39,6 +39,55 @@ export function KQL__ResetAllCaches() {
 }
  
 /* Operations 👇 */
+function KQL_ArtifactAddImageStore() {
+	const operationName = 'KQL_ArtifactAddImage';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.ArtifactAddImageMutation, Types.ArtifactAddImageMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.ArtifactAddImageMutationVariables>
+		): Promise<RequestResult<Types.ArtifactAddImageMutation, Types.ArtifactAddImageMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_ArtifactAddImage).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.ArtifactAddImageMutation, Types.ArtifactAddImageMutationVariables>({
+				skFetch: fetch,
+				document: Types.ArtifactAddImageDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `ArtifactAddImage` Operation
+ */
+export const KQL_ArtifactAddImage = KQL_ArtifactAddImageStore();
+
 function KQL_ArtifactByIdStore() {
 	const operationName = 'KQL_ArtifactById';
 	const operationType = ResponseResultType.Query;
@@ -159,6 +208,153 @@ function KQL_ArtifactByIdStore() {
  * KitQL Svelte Store with the latest `ArtifactById` Operation
  */
 export const KQL_ArtifactById = KQL_ArtifactByIdStore();
+
+function KQL_ArtifactLockStore() {
+	const operationName = 'KQL_ArtifactLock';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.ArtifactLockMutation, Types.ArtifactLockMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.ArtifactLockMutationVariables>
+		): Promise<RequestResult<Types.ArtifactLockMutation, Types.ArtifactLockMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_ArtifactLock).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.ArtifactLockMutation, Types.ArtifactLockMutationVariables>({
+				skFetch: fetch,
+				document: Types.ArtifactLockDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `ArtifactLock` Operation
+ */
+export const KQL_ArtifactLock = KQL_ArtifactLockStore();
+
+function KQL_ArtifactPatchStore() {
+	const operationName = 'KQL_ArtifactPatch';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.ArtifactPatchMutation, Types.ArtifactPatchMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.ArtifactPatchMutationVariables>
+		): Promise<RequestResult<Types.ArtifactPatchMutation, Types.ArtifactPatchMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_ArtifactPatch).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.ArtifactPatchMutation, Types.ArtifactPatchMutationVariables>({
+				skFetch: fetch,
+				document: Types.ArtifactPatchDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `ArtifactPatch` Operation
+ */
+export const KQL_ArtifactPatch = KQL_ArtifactPatchStore();
+
+function KQL_ArtifactReleaseLockStore() {
+	const operationName = 'KQL_ArtifactReleaseLock';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.ArtifactReleaseLockMutation, Types.ArtifactReleaseLockMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.ArtifactReleaseLockMutationVariables>
+		): Promise<RequestResult<Types.ArtifactReleaseLockMutation, Types.ArtifactReleaseLockMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_ArtifactReleaseLock).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.ArtifactReleaseLockMutation, Types.ArtifactReleaseLockMutationVariables>({
+				skFetch: fetch,
+				document: Types.ArtifactReleaseLockDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `ArtifactReleaseLock` Operation
+ */
+export const KQL_ArtifactReleaseLock = KQL_ArtifactReleaseLockStore();
 
 function KQL_ArtifactsStore() {
 	const operationName = 'KQL_Artifacts';
@@ -719,6 +915,55 @@ function KQL_AssociationsStore() {
  */
 export const KQL_Associations = KQL_AssociationsStore();
 
+function KQL_ItemAddImageStore() {
+	const operationName = 'KQL_ItemAddImage';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.ItemAddImageMutation, Types.ItemAddImageMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.ItemAddImageMutationVariables>
+		): Promise<RequestResult<Types.ItemAddImageMutation, Types.ItemAddImageMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_ItemAddImage).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.ItemAddImageMutation, Types.ItemAddImageMutationVariables>({
+				skFetch: fetch,
+				document: Types.ItemAddImageDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `ItemAddImage` Operation
+ */
+export const KQL_ItemAddImage = KQL_ItemAddImageStore();
+
 function KQL_ItemByIdStore() {
 	const operationName = 'KQL_ItemById';
 	const operationType = ResponseResultType.Query;
@@ -839,6 +1084,153 @@ function KQL_ItemByIdStore() {
  * KitQL Svelte Store with the latest `ItemById` Operation
  */
 export const KQL_ItemById = KQL_ItemByIdStore();
+
+function KQL_ItemLockStore() {
+	const operationName = 'KQL_ItemLock';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.ItemLockMutation, Types.ItemLockMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.ItemLockMutationVariables>
+		): Promise<RequestResult<Types.ItemLockMutation, Types.ItemLockMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_ItemLock).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.ItemLockMutation, Types.ItemLockMutationVariables>({
+				skFetch: fetch,
+				document: Types.ItemLockDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `ItemLock` Operation
+ */
+export const KQL_ItemLock = KQL_ItemLockStore();
+
+function KQL_ItemPatchStore() {
+	const operationName = 'KQL_ItemPatch';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.ItemPatchMutation, Types.ItemPatchMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.ItemPatchMutationVariables>
+		): Promise<RequestResult<Types.ItemPatchMutation, Types.ItemPatchMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_ItemPatch).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.ItemPatchMutation, Types.ItemPatchMutationVariables>({
+				skFetch: fetch,
+				document: Types.ItemPatchDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `ItemPatch` Operation
+ */
+export const KQL_ItemPatch = KQL_ItemPatchStore();
+
+function KQL_ItemReleaseLockStore() {
+	const operationName = 'KQL_ItemReleaseLock';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.ItemReleaseLockMutation, Types.ItemReleaseLockMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.ItemReleaseLockMutationVariables>
+		): Promise<RequestResult<Types.ItemReleaseLockMutation, Types.ItemReleaseLockMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_ItemReleaseLock).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.ItemReleaseLockMutation, Types.ItemReleaseLockMutationVariables>({
+				skFetch: fetch,
+				document: Types.ItemReleaseLockDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `ItemReleaseLock` Operation
+ */
+export const KQL_ItemReleaseLock = KQL_ItemReleaseLockStore();
 
 function KQL_ItemsStore() {
 	const operationName = 'KQL_Items';
@@ -1131,6 +1523,55 @@ function KQL_MeStore() {
  */
 export const KQL_Me = KQL_MeStore();
 
+function KQL_NpcAddImageStore() {
+	const operationName = 'KQL_NpcAddImage';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.NpcAddImageMutation, Types.NpcAddImageMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.NpcAddImageMutationVariables>
+		): Promise<RequestResult<Types.NpcAddImageMutation, Types.NpcAddImageMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_NpcAddImage).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.NpcAddImageMutation, Types.NpcAddImageMutationVariables>({
+				skFetch: fetch,
+				document: Types.NpcAddImageDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `NpcAddImage` Operation
+ */
+export const KQL_NpcAddImage = KQL_NpcAddImageStore();
+
 function KQL_NpcByIdStore() {
 	const operationName = 'KQL_NpcById';
 	const operationType = ResponseResultType.Query;
@@ -1251,6 +1692,153 @@ function KQL_NpcByIdStore() {
  * KitQL Svelte Store with the latest `NpcById` Operation
  */
 export const KQL_NpcById = KQL_NpcByIdStore();
+
+function KQL_NpcLockStore() {
+	const operationName = 'KQL_NpcLock';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.NpcLockMutation, Types.NpcLockMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.NpcLockMutationVariables>
+		): Promise<RequestResult<Types.NpcLockMutation, Types.NpcLockMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_NpcLock).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.NpcLockMutation, Types.NpcLockMutationVariables>({
+				skFetch: fetch,
+				document: Types.NpcLockDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `NpcLock` Operation
+ */
+export const KQL_NpcLock = KQL_NpcLockStore();
+
+function KQL_NpcPatchStore() {
+	const operationName = 'KQL_NpcPatch';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.NpcPatchMutation, Types.NpcPatchMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.NpcPatchMutationVariables>
+		): Promise<RequestResult<Types.NpcPatchMutation, Types.NpcPatchMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_NpcPatch).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.NpcPatchMutation, Types.NpcPatchMutationVariables>({
+				skFetch: fetch,
+				document: Types.NpcPatchDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `NpcPatch` Operation
+ */
+export const KQL_NpcPatch = KQL_NpcPatchStore();
+
+function KQL_NpcReleaseLockStore() {
+	const operationName = 'KQL_NpcReleaseLock';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.NpcReleaseLockMutation, Types.NpcReleaseLockMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.NpcReleaseLockMutationVariables>
+		): Promise<RequestResult<Types.NpcReleaseLockMutation, Types.NpcReleaseLockMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_NpcReleaseLock).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.NpcReleaseLockMutation, Types.NpcReleaseLockMutationVariables>({
+				skFetch: fetch,
+				document: Types.NpcReleaseLockDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `NpcReleaseLock` Operation
+ */
+export const KQL_NpcReleaseLock = KQL_NpcReleaseLockStore();
 
 function KQL_NpcsStore() {
 	const operationName = 'KQL_Npcs';
@@ -1373,6 +1961,55 @@ function KQL_NpcsStore() {
  */
 export const KQL_Npcs = KQL_NpcsStore();
 
+function KQL_PlaceAddImageStore() {
+	const operationName = 'KQL_PlaceAddImage';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.PlaceAddImageMutation, Types.PlaceAddImageMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.PlaceAddImageMutationVariables>
+		): Promise<RequestResult<Types.PlaceAddImageMutation, Types.PlaceAddImageMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_PlaceAddImage).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.PlaceAddImageMutation, Types.PlaceAddImageMutationVariables>({
+				skFetch: fetch,
+				document: Types.PlaceAddImageDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `PlaceAddImage` Operation
+ */
+export const KQL_PlaceAddImage = KQL_PlaceAddImageStore();
+
 function KQL_PlaceByIdStore() {
 	const operationName = 'KQL_PlaceById';
 	const operationType = ResponseResultType.Query;
@@ -1493,6 +2130,153 @@ function KQL_PlaceByIdStore() {
  * KitQL Svelte Store with the latest `PlaceById` Operation
  */
 export const KQL_PlaceById = KQL_PlaceByIdStore();
+
+function KQL_PlaceLockStore() {
+	const operationName = 'KQL_PlaceLock';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.PlaceLockMutation, Types.PlaceLockMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.PlaceLockMutationVariables>
+		): Promise<RequestResult<Types.PlaceLockMutation, Types.PlaceLockMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_PlaceLock).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.PlaceLockMutation, Types.PlaceLockMutationVariables>({
+				skFetch: fetch,
+				document: Types.PlaceLockDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `PlaceLock` Operation
+ */
+export const KQL_PlaceLock = KQL_PlaceLockStore();
+
+function KQL_PlacePatchStore() {
+	const operationName = 'KQL_PlacePatch';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.PlacePatchMutation, Types.PlacePatchMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.PlacePatchMutationVariables>
+		): Promise<RequestResult<Types.PlacePatchMutation, Types.PlacePatchMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_PlacePatch).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.PlacePatchMutation, Types.PlacePatchMutationVariables>({
+				skFetch: fetch,
+				document: Types.PlacePatchDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `PlacePatch` Operation
+ */
+export const KQL_PlacePatch = KQL_PlacePatchStore();
+
+function KQL_PlaceReleaseLockStore() {
+	const operationName = 'KQL_PlaceReleaseLock';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.PlaceReleaseLockMutation, Types.PlaceReleaseLockMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.PlaceReleaseLockMutationVariables>
+		): Promise<RequestResult<Types.PlaceReleaseLockMutation, Types.PlaceReleaseLockMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_PlaceReleaseLock).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.PlaceReleaseLockMutation, Types.PlaceReleaseLockMutationVariables>({
+				skFetch: fetch,
+				document: Types.PlaceReleaseLockDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `PlaceReleaseLock` Operation
+ */
+export const KQL_PlaceReleaseLock = KQL_PlaceReleaseLockStore();
 
 function KQL_PlacesStore() {
 	const operationName = 'KQL_Places';
@@ -1615,6 +2399,55 @@ function KQL_PlacesStore() {
  */
 export const KQL_Places = KQL_PlacesStore();
 
+function KQL_RaceAddImageStore() {
+	const operationName = 'KQL_RaceAddImage';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.RaceAddImageMutation, Types.RaceAddImageMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.RaceAddImageMutationVariables>
+		): Promise<RequestResult<Types.RaceAddImageMutation, Types.RaceAddImageMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_RaceAddImage).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.RaceAddImageMutation, Types.RaceAddImageMutationVariables>({
+				skFetch: fetch,
+				document: Types.RaceAddImageDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `RaceAddImage` Operation
+ */
+export const KQL_RaceAddImage = KQL_RaceAddImageStore();
+
 function KQL_RaceByIdStore() {
 	const operationName = 'KQL_RaceById';
 	const operationType = ResponseResultType.Query;
@@ -1735,6 +2568,153 @@ function KQL_RaceByIdStore() {
  * KitQL Svelte Store with the latest `RaceById` Operation
  */
 export const KQL_RaceById = KQL_RaceByIdStore();
+
+function KQL_RaceLockStore() {
+	const operationName = 'KQL_RaceLock';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.RaceLockMutation, Types.RaceLockMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.RaceLockMutationVariables>
+		): Promise<RequestResult<Types.RaceLockMutation, Types.RaceLockMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_RaceLock).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.RaceLockMutation, Types.RaceLockMutationVariables>({
+				skFetch: fetch,
+				document: Types.RaceLockDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `RaceLock` Operation
+ */
+export const KQL_RaceLock = KQL_RaceLockStore();
+
+function KQL_RacePatchStore() {
+	const operationName = 'KQL_RacePatch';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.RacePatchMutation, Types.RacePatchMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.RacePatchMutationVariables>
+		): Promise<RequestResult<Types.RacePatchMutation, Types.RacePatchMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_RacePatch).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.RacePatchMutation, Types.RacePatchMutationVariables>({
+				skFetch: fetch,
+				document: Types.RacePatchDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `RacePatch` Operation
+ */
+export const KQL_RacePatch = KQL_RacePatchStore();
+
+function KQL_RaceReleaseLockStore() {
+	const operationName = 'KQL_RaceReleaseLock';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.RaceReleaseLockMutation, Types.RaceReleaseLockMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.RaceReleaseLockMutationVariables>
+		): Promise<RequestResult<Types.RaceReleaseLockMutation, Types.RaceReleaseLockMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_RaceReleaseLock).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.RaceReleaseLockMutation, Types.RaceReleaseLockMutationVariables>({
+				skFetch: fetch,
+				document: Types.RaceReleaseLockDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `RaceReleaseLock` Operation
+ */
+export const KQL_RaceReleaseLock = KQL_RaceReleaseLockStore();
 
 function KQL_RacesStore() {
 	const operationName = 'KQL_Races';

@@ -89,7 +89,7 @@ export type ArtifactAddImageMutationInput = {
 
 export type ArtifactAddImageMutationPayload = {
   __typename?: 'ArtifactAddImageMutationPayload';
-  Artifact?: Maybe<ArtifactNode>;
+  artifact?: Maybe<ArtifactNode>;
   clientMutationId?: Maybe<Scalars['String']>;
   errors?: Maybe<Scalars['String']>;
   ok?: Maybe<Scalars['Boolean']>;
@@ -459,6 +459,20 @@ export type EquipmentTraitsNode = Node & {
   briefDescription: Scalars['String'];
   /** The ID of the object */
   id: Scalars['ID'];
+};
+
+export type ExportAddImageMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  imageId?: InputMaybe<Scalars['String']>;
+};
+
+export type ExportAddImageMutationPayload = {
+  __typename?: 'ExportAddImageMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  export?: Maybe<ExportNode>;
+  ok?: Maybe<Scalars['Boolean']>;
 };
 
 export type ExportConnection = {
@@ -942,9 +956,8 @@ export type LanguageUpdateMutationPayload = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  ArtifactAddImage?: Maybe<ArtifactAddImageMutationPayload>;
-  RaceAddImage?: Maybe<RaceAddImageMutationPayload>;
   abilityScoreIncreaseCreate?: Maybe<AbilityscoreincreaseCreateMutationPayload>;
+  artifactAddImage?: Maybe<ArtifactAddImageMutationPayload>;
   artifactCreate?: Maybe<ArtifactCreateMutationPayload>;
   artifactDelete?: Maybe<ArtifactDeleteMutationPayload>;
   artifactLock?: Maybe<ArtifactLockMutationPayload>;
@@ -958,6 +971,7 @@ export type Mutation = {
   associationPatch?: Maybe<AssociationPatchMutationPayload>;
   associationReleaseLock?: Maybe<AssociationReleaseLockMutationPayload>;
   associationUpdate?: Maybe<AssociationUpdateMutationPayload>;
+  exportAddImage?: Maybe<ExportAddImageMutationPayload>;
   exportCreate?: Maybe<ExportCreateMutationPayload>;
   exportDelete?: Maybe<ExportDeleteMutationPayload>;
   exportLock?: Maybe<ExportLockMutationPayload>;
@@ -986,6 +1000,7 @@ export type Mutation = {
   npcPatch?: Maybe<NpcPatchMutationPayload>;
   npcReleaseLock?: Maybe<NpcReleaseLockMutationPayload>;
   npcUpdate?: Maybe<NpcUpdateMutationPayload>;
+  placeAddImage?: Maybe<PlaceAddImageMutationPayload>;
   placeCreate?: Maybe<PlaceCreateMutationPayload>;
   placeDelete?: Maybe<PlaceDeleteMutationPayload>;
   placeLock?: Maybe<PlaceLockMutationPayload>;
@@ -996,6 +1011,7 @@ export type Mutation = {
   proficiencyDelete?: Maybe<ProficiencyDeleteMutationPayload>;
   proficiencyPatch?: Maybe<ProficiencyPatchMutationPayload>;
   proficiencyUpdate?: Maybe<ProficiencyUpdateMutationPayload>;
+  raceAddImage?: Maybe<RaceAddImageMutationPayload>;
   raceCreate?: Maybe<RaceCreateMutationPayload>;
   raceDelete?: Maybe<RaceDeleteMutationPayload>;
   raceLock?: Maybe<RaceLockMutationPayload>;
@@ -1021,18 +1037,13 @@ export type Mutation = {
 };
 
 
-export type MutationArtifactAddImageArgs = {
-  input: ArtifactAddImageMutationInput;
-};
-
-
-export type MutationRaceAddImageArgs = {
-  input: RaceAddImageMutationInput;
-};
-
-
 export type MutationAbilityScoreIncreaseCreateArgs = {
   input: AbilityscoreincreaseCreateMutationInput;
+};
+
+
+export type MutationArtifactAddImageArgs = {
+  input: ArtifactAddImageMutationInput;
 };
 
 
@@ -1098,6 +1109,11 @@ export type MutationAssociationReleaseLockArgs = {
 
 export type MutationAssociationUpdateArgs = {
   input: AssociationUpdateMutationInput;
+};
+
+
+export type MutationExportAddImageArgs = {
+  input: ExportAddImageMutationInput;
 };
 
 
@@ -1241,6 +1257,11 @@ export type MutationNpcUpdateArgs = {
 };
 
 
+export type MutationPlaceAddImageArgs = {
+  input: PlaceAddImageMutationInput;
+};
+
+
 export type MutationPlaceCreateArgs = {
   input: PlaceCreateMutationInput;
 };
@@ -1288,6 +1309,11 @@ export type MutationProficiencyPatchArgs = {
 
 export type MutationProficiencyUpdateArgs = {
   input: ProficiencyUpdateMutationInput;
+};
+
+
+export type MutationRaceAddImageArgs = {
+  input: RaceAddImageMutationInput;
 };
 
 
@@ -1596,6 +1622,20 @@ export type PageInfo = {
   hasPreviousPage: Scalars['Boolean'];
   /** When paginating backwards, the cursor to continue. */
   startCursor?: Maybe<Scalars['String']>;
+};
+
+export type PlaceAddImageMutationInput = {
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  imageId?: InputMaybe<Scalars['String']>;
+};
+
+export type PlaceAddImageMutationPayload = {
+  __typename?: 'PlaceAddImageMutationPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
+  errors?: Maybe<Scalars['String']>;
+  ok?: Maybe<Scalars['Boolean']>;
+  place?: Maybe<PlaceNode>;
 };
 
 export type PlaceAssociationInput = {
@@ -2224,10 +2264,10 @@ export type RaceAddImageMutationInput = {
 
 export type RaceAddImageMutationPayload = {
   __typename?: 'RaceAddImageMutationPayload';
-  Race?: Maybe<RaceNode>;
   clientMutationId?: Maybe<Scalars['String']>;
   errors?: Maybe<Scalars['String']>;
   ok?: Maybe<Scalars['Boolean']>;
+  race?: Maybe<RaceNode>;
 };
 
 export type RaceConnection = {
@@ -2803,12 +2843,47 @@ export type WeaponTraitsNode = Node & {
   id: Scalars['ID'];
 };
 
+export type ArtifactAddImageMutationVariables = Exact<{
+  id: Scalars['ID'];
+  imageId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type ArtifactAddImageMutation = { __typename?: 'Mutation', artifactAddImage?: { __typename?: 'ArtifactAddImageMutationPayload', ok?: boolean | null, errors?: string | null, artifact?: { __typename?: 'ArtifactNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, markdownNotes: string, lockTime?: any | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, items: { __typename?: 'ItemNodeConnection', edges: Array<{ __typename?: 'ItemNodeEdge', node?: { __typename?: 'ItemNode', id: string, name: string, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null } | null> } } | null } | null };
+
 export type ArtifactByIdQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
 export type ArtifactByIdQuery = { __typename?: 'Query', artifact?: { __typename?: 'ArtifactNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, markdownNotes: string, lockTime?: any | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, items: { __typename?: 'ItemNodeConnection', edges: Array<{ __typename?: 'ItemNodeEdge', node?: { __typename?: 'ItemNode', id: string, name: string, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null } | null> } } | null };
+
+export type ArtifactFieldsFragment = { __typename?: 'ArtifactNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, markdownNotes: string, lockTime?: any | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, items: { __typename?: 'ItemNodeConnection', edges: Array<{ __typename?: 'ItemNodeEdge', node?: { __typename?: 'ItemNode', id: string, name: string, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null } | null> } };
+
+export type ArtifactLockMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type ArtifactLockMutation = { __typename?: 'Mutation', artifactLock?: { __typename?: 'ArtifactLockMutationPayload', ok?: boolean | null, errors?: string | null, artifact?: { __typename?: 'ArtifactNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, markdownNotes: string, lockTime?: any | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, items: { __typename?: 'ItemNodeConnection', edges: Array<{ __typename?: 'ItemNodeEdge', node?: { __typename?: 'ItemNode', id: string, name: string, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null } | null> } } | null } | null };
+
+export type ArtifactPatchMutationVariables = Exact<{
+  id: Scalars['ID'];
+  name?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type ArtifactPatchMutation = { __typename?: 'Mutation', artifactPatch?: { __typename?: 'ArtifactPatchMutationPayload', ok?: boolean | null, errors?: string | null, artifact?: { __typename?: 'ArtifactNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, markdownNotes: string, lockTime?: any | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, items: { __typename?: 'ItemNodeConnection', edges: Array<{ __typename?: 'ItemNodeEdge', node?: { __typename?: 'ItemNode', id: string, name: string, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null } | null> } } | null } | null };
+
+export type ArtifactReleaseLockMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type ArtifactReleaseLockMutation = { __typename?: 'Mutation', artifactReleaseLock?: { __typename?: 'ArtifactReleaseLockMutationPayload', ok?: boolean | null, errors?: string | null, artifact?: { __typename?: 'ArtifactNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, markdownNotes: string, lockTime?: any | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, items: { __typename?: 'ItemNodeConnection', edges: Array<{ __typename?: 'ItemNodeEdge', node?: { __typename?: 'ItemNode', id: string, name: string, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null } | null> } } | null } | null };
 
 export type ArtifactsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2829,6 +2904,8 @@ export type AssociationByIdQueryVariables = Exact<{
 
 
 export type AssociationByIdQuery = { __typename?: 'Query', association?: { __typename?: 'AssociationNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, lockedBySelf?: boolean | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null } | null };
+
+export type AssociationFieldsFragment = { __typename?: 'AssociationNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, lockedBySelf?: boolean | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null };
 
 export type AssociationLockMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -2860,12 +2937,47 @@ export type AssociationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AssociationsQuery = { __typename?: 'Query', associations?: { __typename?: 'AssociationNodeConnection', edges: Array<{ __typename?: 'AssociationNodeEdge', node?: { __typename?: 'AssociationNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, lockedBySelf?: boolean | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null } | null } | null> } | null };
 
+export type ItemAddImageMutationVariables = Exact<{
+  id: Scalars['ID'];
+  imageId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type ItemAddImageMutation = { __typename?: 'Mutation', itemAddImage?: { __typename?: 'ItemAddImageMutationPayload', ok?: boolean | null, errors?: string | null, item?: { __typename?: 'ItemNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null } | null };
+
 export type ItemByIdQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
 export type ItemByIdQuery = { __typename?: 'Query', item?: { __typename?: 'ItemNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null };
+
+export type ItemFieldsFragment = { __typename?: 'ItemNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null };
+
+export type ItemLockMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type ItemLockMutation = { __typename?: 'Mutation', itemLock?: { __typename?: 'ItemLockMutationPayload', ok?: boolean | null, errors?: string | null, item?: { __typename?: 'ItemNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null } | null };
+
+export type ItemPatchMutationVariables = Exact<{
+  id: Scalars['ID'];
+  name?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type ItemPatchMutation = { __typename?: 'Mutation', itemPatch?: { __typename?: 'ItemPatchMutationPayload', ok?: boolean | null, errors?: string | null, item?: { __typename?: 'ItemNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null } | null };
+
+export type ItemReleaseLockMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type ItemReleaseLockMutation = { __typename?: 'Mutation', itemReleaseLock?: { __typename?: 'ItemReleaseLockMutationPayload', ok?: boolean | null, errors?: string | null, item?: { __typename?: 'ItemNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, armor?: { __typename?: 'ArmorTraitsNode', acBonus: number } | null, weapon?: { __typename?: 'WeaponTraitsNode', attackBonus: number } | null, equipment?: { __typename?: 'EquipmentTraitsNode', briefDescription: string } | null } | null } | null };
 
 export type ItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2885,6 +2997,14 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'UserNode', username: string, firstName: string, lastName: string, email: string, isDM: boolean, id: string } | null };
 
+export type NpcAddImageMutationVariables = Exact<{
+  id: Scalars['ID'];
+  imageId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type NpcAddImageMutation = { __typename?: 'Mutation', npcAddImage?: { __typename?: 'NpcAddImageMutationPayload', ok?: boolean | null, errors?: string | null, npc?: { __typename?: 'NPCNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, size?: CharacterNpcSizeChoices | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, race?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null, featuresAndTraits?: { __typename?: 'FeaturesAndTraitConnection', edges: Array<{ __typename?: 'FeaturesAndTraitEdge', node?: { __typename?: 'FeatureNode', id: string, name: string, description: string } | null } | null> } | null, proficiencies: { __typename?: 'ProficiencyNodeConnection', edges: Array<{ __typename?: 'ProficiencyNodeEdge', node?: { __typename?: 'ProficiencyNode', id: string, name: string, description: string, proficiencyType: CharacterProficiencyProficiencyTypeChoices } | null } | null> } } | null } | null };
+
 export type NpcByIdQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -2892,10 +3012,45 @@ export type NpcByIdQueryVariables = Exact<{
 
 export type NpcByIdQuery = { __typename?: 'Query', npc?: { __typename?: 'NPCNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, size?: CharacterNpcSizeChoices | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, race?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null, featuresAndTraits?: { __typename?: 'FeaturesAndTraitConnection', edges: Array<{ __typename?: 'FeaturesAndTraitEdge', node?: { __typename?: 'FeatureNode', id: string, name: string, description: string } | null } | null> } | null, proficiencies: { __typename?: 'ProficiencyNodeConnection', edges: Array<{ __typename?: 'ProficiencyNodeEdge', node?: { __typename?: 'ProficiencyNode', id: string, name: string, description: string, proficiencyType: CharacterProficiencyProficiencyTypeChoices } | null } | null> } } | null };
 
+export type NpcFieldsFragment = { __typename?: 'NPCNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, size?: CharacterNpcSizeChoices | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, race?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null, featuresAndTraits?: { __typename?: 'FeaturesAndTraitConnection', edges: Array<{ __typename?: 'FeaturesAndTraitEdge', node?: { __typename?: 'FeatureNode', id: string, name: string, description: string } | null } | null> } | null, proficiencies: { __typename?: 'ProficiencyNodeConnection', edges: Array<{ __typename?: 'ProficiencyNodeEdge', node?: { __typename?: 'ProficiencyNode', id: string, name: string, description: string, proficiencyType: CharacterProficiencyProficiencyTypeChoices } | null } | null> } };
+
+export type NpcLockMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type NpcLockMutation = { __typename?: 'Mutation', npcLock?: { __typename?: 'NpcLockMutationPayload', ok?: boolean | null, errors?: string | null, npc?: { __typename?: 'NPCNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, size?: CharacterNpcSizeChoices | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, race?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null, featuresAndTraits?: { __typename?: 'FeaturesAndTraitConnection', edges: Array<{ __typename?: 'FeaturesAndTraitEdge', node?: { __typename?: 'FeatureNode', id: string, name: string, description: string } | null } | null> } | null, proficiencies: { __typename?: 'ProficiencyNodeConnection', edges: Array<{ __typename?: 'ProficiencyNodeEdge', node?: { __typename?: 'ProficiencyNode', id: string, name: string, description: string, proficiencyType: CharacterProficiencyProficiencyTypeChoices } | null } | null> } } | null } | null };
+
+export type NpcPatchMutationVariables = Exact<{
+  id: Scalars['ID'];
+  name?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type NpcPatchMutation = { __typename?: 'Mutation', npcPatch?: { __typename?: 'NpcPatchMutationPayload', ok?: boolean | null, errors?: string | null, npc?: { __typename?: 'NPCNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, size?: CharacterNpcSizeChoices | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, race?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null, featuresAndTraits?: { __typename?: 'FeaturesAndTraitConnection', edges: Array<{ __typename?: 'FeaturesAndTraitEdge', node?: { __typename?: 'FeatureNode', id: string, name: string, description: string } | null } | null> } | null, proficiencies: { __typename?: 'ProficiencyNodeConnection', edges: Array<{ __typename?: 'ProficiencyNodeEdge', node?: { __typename?: 'ProficiencyNode', id: string, name: string, description: string, proficiencyType: CharacterProficiencyProficiencyTypeChoices } | null } | null> } } | null } | null };
+
+export type NpcReleaseLockMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type NpcReleaseLockMutation = { __typename?: 'Mutation', npcReleaseLock?: { __typename?: 'NpcReleaseLockMutationPayload', ok?: boolean | null, errors?: string | null, npc?: { __typename?: 'NPCNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, size?: CharacterNpcSizeChoices | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, race?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null, featuresAndTraits?: { __typename?: 'FeaturesAndTraitConnection', edges: Array<{ __typename?: 'FeaturesAndTraitEdge', node?: { __typename?: 'FeatureNode', id: string, name: string, description: string } | null } | null> } | null, proficiencies: { __typename?: 'ProficiencyNodeConnection', edges: Array<{ __typename?: 'ProficiencyNodeEdge', node?: { __typename?: 'ProficiencyNode', id: string, name: string, description: string, proficiencyType: CharacterProficiencyProficiencyTypeChoices } | null } | null> } } | null } | null };
+
 export type NpcsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type NpcsQuery = { __typename?: 'Query', npcs?: { __typename?: 'NPCNodeConnection', edges: Array<{ __typename?: 'NPCNodeEdge', node?: { __typename?: 'NPCNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, size?: CharacterNpcSizeChoices | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, race?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null, featuresAndTraits?: { __typename?: 'FeaturesAndTraitConnection', edges: Array<{ __typename?: 'FeaturesAndTraitEdge', node?: { __typename?: 'FeatureNode', id: string, name: string, description: string } | null } | null> } | null, proficiencies: { __typename?: 'ProficiencyNodeConnection', edges: Array<{ __typename?: 'ProficiencyNodeEdge', node?: { __typename?: 'ProficiencyNode', id: string, name: string, description: string, proficiencyType: CharacterProficiencyProficiencyTypeChoices } | null } | null> } } | null } | null> } | null };
+
+export type PlaceAddImageMutationVariables = Exact<{
+  id: Scalars['ID'];
+  imageId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type PlaceAddImageMutation = { __typename?: 'Mutation', placeAddImage?: { __typename?: 'PlaceAddImageMutationPayload', ok?: boolean | null, errors?: string | null, place?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number } | null } | null } | null } | null };
 
 export type PlaceByIdQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -2904,10 +3059,45 @@ export type PlaceByIdQueryVariables = Exact<{
 
 export type PlaceByIdQuery = { __typename?: 'Query', place?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number } | null } | null } | null };
 
+export type PlaceFieldsFragment = { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number } | null } | null };
+
+export type PlaceLockMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type PlaceLockMutation = { __typename?: 'Mutation', placeLock?: { __typename?: 'PlaceLockMutationPayload', ok?: boolean | null, errors?: string | null, place?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number } | null } | null } | null } | null };
+
+export type PlacePatchMutationVariables = Exact<{
+  id: Scalars['ID'];
+  name?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type PlacePatchMutation = { __typename?: 'Mutation', placePatch?: { __typename?: 'PlacePatchMutationPayload', ok?: boolean | null, errors?: string | null, place?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number } | null } | null } | null } | null };
+
+export type PlaceReleaseLockMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type PlaceReleaseLockMutation = { __typename?: 'Mutation', placeReleaseLock?: { __typename?: 'PlaceReleaseLockMutationPayload', ok?: boolean | null, errors?: string | null, place?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number } | null } | null } | null } | null };
+
 export type PlacesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type PlacesQuery = { __typename?: 'Query', places?: { __typename?: 'PlaceNodeConnection', edges: Array<{ __typename?: 'PlaceNodeEdge', node?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number, parent?: { __typename?: 'PlaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, created: any, updated: any, placeType: PlacePlacePlaceTypeChoices, population: number } | null } | null } | null } | null> } | null };
+
+export type RaceAddImageMutationVariables = Exact<{
+  id: Scalars['ID'];
+  imageId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type RaceAddImageMutation = { __typename?: 'Mutation', raceAddImage?: { __typename?: 'RaceAddImageMutationPayload', ok?: boolean | null, errors?: string | null, race?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, baseRace?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null, subraces: { __typename?: 'RaceNodeConnection', edges: Array<{ __typename?: 'RaceNodeEdge', node?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null } | null> }, languages: { __typename?: 'LanguageNodeConnection', edges: Array<{ __typename?: 'LanguageNodeEdge', node?: { __typename?: 'LanguageNode', id: string, name: string, description: string, script?: { __typename?: 'ScriptNode', name: string } | null } | null } | null> }, traits: { __typename?: 'TraitNodeConnection', edges: Array<{ __typename?: 'TraitNodeEdge', node?: { __typename?: 'TraitNode', id: string, name: string, description?: string | null } | null } | null> } } | null } | null };
 
 export type RaceByIdQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -2916,284 +3106,107 @@ export type RaceByIdQueryVariables = Exact<{
 
 export type RaceByIdQuery = { __typename?: 'Query', race?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, baseRace?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null, subraces: { __typename?: 'RaceNodeConnection', edges: Array<{ __typename?: 'RaceNodeEdge', node?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null } | null> }, languages: { __typename?: 'LanguageNodeConnection', edges: Array<{ __typename?: 'LanguageNodeEdge', node?: { __typename?: 'LanguageNode', id: string, name: string, description: string, script?: { __typename?: 'ScriptNode', name: string } | null } | null } | null> }, traits: { __typename?: 'TraitNodeConnection', edges: Array<{ __typename?: 'TraitNodeEdge', node?: { __typename?: 'TraitNode', id: string, name: string, description?: string | null } | null } | null> } } | null };
 
+export type RaceFieldsFragment = { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, baseRace?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null, subraces: { __typename?: 'RaceNodeConnection', edges: Array<{ __typename?: 'RaceNodeEdge', node?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null } | null> }, languages: { __typename?: 'LanguageNodeConnection', edges: Array<{ __typename?: 'LanguageNodeEdge', node?: { __typename?: 'LanguageNode', id: string, name: string, description: string, script?: { __typename?: 'ScriptNode', name: string } | null } | null } | null> }, traits: { __typename?: 'TraitNodeConnection', edges: Array<{ __typename?: 'TraitNodeEdge', node?: { __typename?: 'TraitNode', id: string, name: string, description?: string | null } | null } | null> } };
+
+export type RaceLockMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type RaceLockMutation = { __typename?: 'Mutation', raceLock?: { __typename?: 'RaceLockMutationPayload', ok?: boolean | null, errors?: string | null, race?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, baseRace?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null, subraces: { __typename?: 'RaceNodeConnection', edges: Array<{ __typename?: 'RaceNodeEdge', node?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null } | null> }, languages: { __typename?: 'LanguageNodeConnection', edges: Array<{ __typename?: 'LanguageNodeEdge', node?: { __typename?: 'LanguageNode', id: string, name: string, description: string, script?: { __typename?: 'ScriptNode', name: string } | null } | null } | null> }, traits: { __typename?: 'TraitNodeConnection', edges: Array<{ __typename?: 'TraitNodeEdge', node?: { __typename?: 'TraitNode', id: string, name: string, description?: string | null } | null } | null> } } | null } | null };
+
+export type RacePatchMutationVariables = Exact<{
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
+  thumbnailId?: InputMaybe<Scalars['String']>;
+  markdownNotes?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type RacePatchMutation = { __typename?: 'Mutation', racePatch?: { __typename?: 'RacePatchMutationPayload', ok?: boolean | null, errors?: string | null, race?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, baseRace?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null, subraces: { __typename?: 'RaceNodeConnection', edges: Array<{ __typename?: 'RaceNodeEdge', node?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null } | null> }, languages: { __typename?: 'LanguageNodeConnection', edges: Array<{ __typename?: 'LanguageNodeEdge', node?: { __typename?: 'LanguageNode', id: string, name: string, description: string, script?: { __typename?: 'ScriptNode', name: string } | null } | null } | null> }, traits: { __typename?: 'TraitNodeConnection', edges: Array<{ __typename?: 'TraitNodeEdge', node?: { __typename?: 'TraitNode', id: string, name: string, description?: string | null } | null } | null> } } | null } | null };
+
+export type RaceReleaseLockMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type RaceReleaseLockMutation = { __typename?: 'Mutation', raceReleaseLock?: { __typename?: 'RaceReleaseLockMutationPayload', ok?: boolean | null, errors?: string | null, race?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, baseRace?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null, subraces: { __typename?: 'RaceNodeConnection', edges: Array<{ __typename?: 'RaceNodeEdge', node?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null } | null> }, languages: { __typename?: 'LanguageNodeConnection', edges: Array<{ __typename?: 'LanguageNodeEdge', node?: { __typename?: 'LanguageNode', id: string, name: string, description: string, script?: { __typename?: 'ScriptNode', name: string } | null } | null } | null> }, traits: { __typename?: 'TraitNodeConnection', edges: Array<{ __typename?: 'TraitNodeEdge', node?: { __typename?: 'TraitNode', id: string, name: string, description?: string | null } | null } | null> } } | null } | null };
+
 export type RacesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type RacesQuery = { __typename?: 'Query', races?: { __typename?: 'RaceNodeConnection', edges: Array<{ __typename?: 'RaceNodeEdge', node?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, markdownNotes: string, lockTime?: any | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null, lockUser?: { __typename?: 'UserNode', id: string, username: string } | null, baseRace?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null, subraces: { __typename?: 'RaceNodeConnection', edges: Array<{ __typename?: 'RaceNodeEdge', node?: { __typename?: 'RaceNode', id: string, name: string, description?: string | null, imageIds: Array<string>, thumbnailId?: string | null, ageOfAdulthood?: number | null, lifeExpectancy?: number | null, alignment?: RaceRaceAlignmentChoices | null, size?: RaceRaceSizeChoices | null, speed?: number | null } | null } | null> }, languages: { __typename?: 'LanguageNodeConnection', edges: Array<{ __typename?: 'LanguageNodeEdge', node?: { __typename?: 'LanguageNode', id: string, name: string, description: string, script?: { __typename?: 'ScriptNode', name: string } | null } | null } | null> }, traits: { __typename?: 'TraitNodeConnection', edges: Array<{ __typename?: 'TraitNodeEdge', node?: { __typename?: 'TraitNode', id: string, name: string, description?: string | null } | null } | null> } } | null } | null> } | null };
 
-
-export const ArtifactByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"artifactById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"artifact"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"updated"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"weapon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attackBonus"}}]}},{"kind":"Field","name":{"kind":"Name","value":"armor"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"acBonus"}}]}},{"kind":"Field","name":{"kind":"Name","value":"equipment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"briefDescription"}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<ArtifactByIdQuery, ArtifactByIdQueryVariables>;
-export const ArtifactsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"artifacts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"artifacts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"updated"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"weapon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attackBonus"}}]}},{"kind":"Field","name":{"kind":"Name","value":"armor"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"acBonus"}}]}},{"kind":"Field","name":{"kind":"Name","value":"equipment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"briefDescription"}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<ArtifactsQuery, ArtifactsQueryVariables>;
-export const AssociationAddImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"associationAddImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"imageId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"associationAddImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"imageId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"imageId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"association"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"lockedBySelf"}}]}}]}}]}}]} as unknown as DocumentNode<AssociationAddImageMutation, AssociationAddImageMutationVariables>;
-export const AssociationByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"associationById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"association"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"lockedBySelf"}}]}}]}}]} as unknown as DocumentNode<AssociationByIdQuery, AssociationByIdQueryVariables>;
-export const AssociationLockDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"associationLock"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"associationLock"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"association"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"lockedBySelf"}}]}}]}}]}}]} as unknown as DocumentNode<AssociationLockMutation, AssociationLockMutationVariables>;
-export const AssociationPatchDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"associationPatch"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"description"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"thumbnailId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"markdownNotes"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"associationPatch"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"description"},"value":{"kind":"Variable","name":{"kind":"Name","value":"description"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"thumbnailId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"thumbnailId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"markdownNotes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"markdownNotes"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"association"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"lockedBySelf"}}]}}]}}]}}]} as unknown as DocumentNode<AssociationPatchMutation, AssociationPatchMutationVariables>;
-export const AssociationReleaseLockDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"associationReleaseLock"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"associationReleaseLock"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"association"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"lockedBySelf"}}]}}]}}]}}]} as unknown as DocumentNode<AssociationReleaseLockMutation, AssociationReleaseLockMutationVariables>;
-export const AssociationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"associations"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"associations"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"lockedBySelf"}}]}}]}}]}}]}}]} as unknown as DocumentNode<AssociationsQuery, AssociationsQueryVariables>;
-export const ItemByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"itemById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"item"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"armor"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"acBonus"}}]}},{"kind":"Field","name":{"kind":"Name","value":"weapon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attackBonus"}}]}},{"kind":"Field","name":{"kind":"Name","value":"equipment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"briefDescription"}}]}}]}}]}}]} as unknown as DocumentNode<ItemByIdQuery, ItemByIdQueryVariables>;
-export const ItemsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"armor"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"acBonus"}}]}},{"kind":"Field","name":{"kind":"Name","value":"weapon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attackBonus"}}]}},{"kind":"Field","name":{"kind":"Name","value":"equipment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"briefDescription"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<ItemsQuery, ItemsQueryVariables>;
+export const ArtifactFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ArtifactFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ArtifactNode"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"updated"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"weapon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attackBonus"}}]}},{"kind":"Field","name":{"kind":"Name","value":"armor"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"acBonus"}}]}},{"kind":"Field","name":{"kind":"Name","value":"equipment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"briefDescription"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<ArtifactFieldsFragment, unknown>;
+export const AssociationFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"AssociationFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"AssociationNode"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"lockedBySelf"}}]}}]} as unknown as DocumentNode<AssociationFieldsFragment, unknown>;
+export const ItemFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ItemFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ItemNode"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"armor"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"acBonus"}}]}},{"kind":"Field","name":{"kind":"Name","value":"weapon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attackBonus"}}]}},{"kind":"Field","name":{"kind":"Name","value":"equipment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"briefDescription"}}]}}]}}]} as unknown as DocumentNode<ItemFieldsFragment, unknown>;
+export const NpcFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NpcFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"NPCNode"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"race"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"ageOfAdulthood"}},{"kind":"Field","name":{"kind":"Name","value":"lifeExpectancy"}},{"kind":"Field","name":{"kind":"Name","value":"alignment"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"speed"}}]}},{"kind":"Field","name":{"kind":"Name","value":"featuresAndTraits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"proficiencies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"proficiencyType"}}]}}]}}]}}]}}]} as unknown as DocumentNode<NpcFieldsFragment, unknown>;
+export const PlaceFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PlaceFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PlaceNode"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"updated"}},{"kind":"Field","name":{"kind":"Name","value":"placeType"}},{"kind":"Field","name":{"kind":"Name","value":"population"}},{"kind":"Field","name":{"kind":"Name","value":"parent"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"updated"}},{"kind":"Field","name":{"kind":"Name","value":"placeType"}},{"kind":"Field","name":{"kind":"Name","value":"population"}},{"kind":"Field","name":{"kind":"Name","value":"parent"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"updated"}},{"kind":"Field","name":{"kind":"Name","value":"placeType"}},{"kind":"Field","name":{"kind":"Name","value":"population"}}]}}]}}]}}]} as unknown as DocumentNode<PlaceFieldsFragment, unknown>;
+export const RaceFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"RaceFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"RaceNode"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"ageOfAdulthood"}},{"kind":"Field","name":{"kind":"Name","value":"lifeExpectancy"}},{"kind":"Field","name":{"kind":"Name","value":"alignment"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"speed"}},{"kind":"Field","name":{"kind":"Name","value":"baseRace"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"ageOfAdulthood"}},{"kind":"Field","name":{"kind":"Name","value":"lifeExpectancy"}},{"kind":"Field","name":{"kind":"Name","value":"alignment"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"speed"}}]}},{"kind":"Field","name":{"kind":"Name","value":"subraces"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"ageOfAdulthood"}},{"kind":"Field","name":{"kind":"Name","value":"lifeExpectancy"}},{"kind":"Field","name":{"kind":"Name","value":"alignment"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"speed"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"languages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"script"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"traits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]}}]}}]} as unknown as DocumentNode<RaceFieldsFragment, unknown>;
+export const ArtifactAddImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"artifactAddImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"imageId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"artifactAddImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"imageId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"imageId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"artifact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ArtifactFields"}}]}}]}}]}},...ArtifactFieldsFragmentDoc.definitions]} as unknown as DocumentNode<ArtifactAddImageMutation, ArtifactAddImageMutationVariables>;
+export const ArtifactByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"artifactById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"artifact"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ArtifactFields"}}]}}]}},...ArtifactFieldsFragmentDoc.definitions]} as unknown as DocumentNode<ArtifactByIdQuery, ArtifactByIdQueryVariables>;
+export const ArtifactLockDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"artifactLock"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"artifactLock"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"artifact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ArtifactFields"}}]}}]}}]}},...ArtifactFieldsFragmentDoc.definitions]} as unknown as DocumentNode<ArtifactLockMutation, ArtifactLockMutationVariables>;
+export const ArtifactPatchDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"artifactPatch"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"description"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"thumbnailId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"markdownNotes"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"artifactPatch"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"description"},"value":{"kind":"Variable","name":{"kind":"Name","value":"description"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"thumbnailId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"thumbnailId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"markdownNotes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"markdownNotes"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"artifact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ArtifactFields"}}]}}]}}]}},...ArtifactFieldsFragmentDoc.definitions]} as unknown as DocumentNode<ArtifactPatchMutation, ArtifactPatchMutationVariables>;
+export const ArtifactReleaseLockDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"artifactReleaseLock"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"artifactReleaseLock"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"artifact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ArtifactFields"}}]}}]}}]}},...ArtifactFieldsFragmentDoc.definitions]} as unknown as DocumentNode<ArtifactReleaseLockMutation, ArtifactReleaseLockMutationVariables>;
+export const ArtifactsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"artifacts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"artifacts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ArtifactFields"}}]}}]}}]}}]}},...ArtifactFieldsFragmentDoc.definitions]} as unknown as DocumentNode<ArtifactsQuery, ArtifactsQueryVariables>;
+export const AssociationAddImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"associationAddImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"imageId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"associationAddImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"imageId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"imageId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"association"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"AssociationFields"}}]}}]}}]}},...AssociationFieldsFragmentDoc.definitions]} as unknown as DocumentNode<AssociationAddImageMutation, AssociationAddImageMutationVariables>;
+export const AssociationByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"associationById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"association"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"AssociationFields"}}]}}]}},...AssociationFieldsFragmentDoc.definitions]} as unknown as DocumentNode<AssociationByIdQuery, AssociationByIdQueryVariables>;
+export const AssociationLockDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"associationLock"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"associationLock"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"association"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"AssociationFields"}}]}}]}}]}},...AssociationFieldsFragmentDoc.definitions]} as unknown as DocumentNode<AssociationLockMutation, AssociationLockMutationVariables>;
+export const AssociationPatchDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"associationPatch"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"description"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"thumbnailId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"markdownNotes"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"associationPatch"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"description"},"value":{"kind":"Variable","name":{"kind":"Name","value":"description"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"thumbnailId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"thumbnailId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"markdownNotes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"markdownNotes"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"association"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"AssociationFields"}}]}}]}}]}},...AssociationFieldsFragmentDoc.definitions]} as unknown as DocumentNode<AssociationPatchMutation, AssociationPatchMutationVariables>;
+export const AssociationReleaseLockDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"associationReleaseLock"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"associationReleaseLock"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"association"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"AssociationFields"}}]}}]}}]}},...AssociationFieldsFragmentDoc.definitions]} as unknown as DocumentNode<AssociationReleaseLockMutation, AssociationReleaseLockMutationVariables>;
+export const AssociationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"associations"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"associations"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"AssociationFields"}}]}}]}}]}}]}},...AssociationFieldsFragmentDoc.definitions]} as unknown as DocumentNode<AssociationsQuery, AssociationsQueryVariables>;
+export const ItemAddImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"itemAddImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"imageId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"itemAddImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"imageId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"imageId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"item"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ItemFields"}}]}}]}}]}},...ItemFieldsFragmentDoc.definitions]} as unknown as DocumentNode<ItemAddImageMutation, ItemAddImageMutationVariables>;
+export const ItemByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"itemById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"item"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ItemFields"}}]}}]}},...ItemFieldsFragmentDoc.definitions]} as unknown as DocumentNode<ItemByIdQuery, ItemByIdQueryVariables>;
+export const ItemLockDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"itemLock"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"itemLock"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"item"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ItemFields"}}]}}]}}]}},...ItemFieldsFragmentDoc.definitions]} as unknown as DocumentNode<ItemLockMutation, ItemLockMutationVariables>;
+export const ItemPatchDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"itemPatch"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"description"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"thumbnailId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"markdownNotes"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"itemPatch"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"description"},"value":{"kind":"Variable","name":{"kind":"Name","value":"description"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"thumbnailId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"thumbnailId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"markdownNotes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"markdownNotes"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"item"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ItemFields"}}]}}]}}]}},...ItemFieldsFragmentDoc.definitions]} as unknown as DocumentNode<ItemPatchMutation, ItemPatchMutationVariables>;
+export const ItemReleaseLockDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"itemReleaseLock"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"itemReleaseLock"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"item"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ItemFields"}}]}}]}}]}},...ItemFieldsFragmentDoc.definitions]} as unknown as DocumentNode<ItemReleaseLockMutation, ItemReleaseLockMutationVariables>;
+export const ItemsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ItemFields"}}]}}]}}]}}]}},...ItemFieldsFragmentDoc.definitions]} as unknown as DocumentNode<ItemsQuery, ItemsQueryVariables>;
 export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tokenAuth"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"payload"}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
 export const MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"isDM"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<MeQuery, MeQueryVariables>;
-export const NpcByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"npcById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"npc"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"race"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"ageOfAdulthood"}},{"kind":"Field","name":{"kind":"Name","value":"lifeExpectancy"}},{"kind":"Field","name":{"kind":"Name","value":"alignment"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"speed"}}]}},{"kind":"Field","name":{"kind":"Name","value":"featuresAndTraits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"proficiencies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"proficiencyType"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<NpcByIdQuery, NpcByIdQueryVariables>;
-export const NpcsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"npcs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"npcs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"race"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"ageOfAdulthood"}},{"kind":"Field","name":{"kind":"Name","value":"lifeExpectancy"}},{"kind":"Field","name":{"kind":"Name","value":"alignment"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"speed"}}]}},{"kind":"Field","name":{"kind":"Name","value":"featuresAndTraits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"proficiencies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"proficiencyType"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<NpcsQuery, NpcsQueryVariables>;
-export const PlaceByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"placeById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"place"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"updated"}},{"kind":"Field","name":{"kind":"Name","value":"placeType"}},{"kind":"Field","name":{"kind":"Name","value":"population"}},{"kind":"Field","name":{"kind":"Name","value":"parent"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"updated"}},{"kind":"Field","name":{"kind":"Name","value":"placeType"}},{"kind":"Field","name":{"kind":"Name","value":"population"}},{"kind":"Field","name":{"kind":"Name","value":"parent"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"updated"}},{"kind":"Field","name":{"kind":"Name","value":"placeType"}},{"kind":"Field","name":{"kind":"Name","value":"population"}}]}}]}}]}}]}}]} as unknown as DocumentNode<PlaceByIdQuery, PlaceByIdQueryVariables>;
-export const PlacesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"places"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"places"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"updated"}},{"kind":"Field","name":{"kind":"Name","value":"placeType"}},{"kind":"Field","name":{"kind":"Name","value":"population"}},{"kind":"Field","name":{"kind":"Name","value":"parent"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"updated"}},{"kind":"Field","name":{"kind":"Name","value":"placeType"}},{"kind":"Field","name":{"kind":"Name","value":"population"}},{"kind":"Field","name":{"kind":"Name","value":"parent"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"updated"}},{"kind":"Field","name":{"kind":"Name","value":"placeType"}},{"kind":"Field","name":{"kind":"Name","value":"population"}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<PlacesQuery, PlacesQueryVariables>;
-export const RaceByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"raceById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"race"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"ageOfAdulthood"}},{"kind":"Field","name":{"kind":"Name","value":"lifeExpectancy"}},{"kind":"Field","name":{"kind":"Name","value":"alignment"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"speed"}},{"kind":"Field","name":{"kind":"Name","value":"baseRace"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"ageOfAdulthood"}},{"kind":"Field","name":{"kind":"Name","value":"lifeExpectancy"}},{"kind":"Field","name":{"kind":"Name","value":"alignment"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"speed"}}]}},{"kind":"Field","name":{"kind":"Name","value":"subraces"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"ageOfAdulthood"}},{"kind":"Field","name":{"kind":"Name","value":"lifeExpectancy"}},{"kind":"Field","name":{"kind":"Name","value":"alignment"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"speed"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"languages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"script"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"traits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<RaceByIdQuery, RaceByIdQueryVariables>;
-export const RacesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"races"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"races"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"markdownNotes"}},{"kind":"Field","name":{"kind":"Name","value":"lockUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lockTime"}},{"kind":"Field","name":{"kind":"Name","value":"ageOfAdulthood"}},{"kind":"Field","name":{"kind":"Name","value":"lifeExpectancy"}},{"kind":"Field","name":{"kind":"Name","value":"alignment"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"speed"}},{"kind":"Field","name":{"kind":"Name","value":"baseRace"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"ageOfAdulthood"}},{"kind":"Field","name":{"kind":"Name","value":"lifeExpectancy"}},{"kind":"Field","name":{"kind":"Name","value":"alignment"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"speed"}}]}},{"kind":"Field","name":{"kind":"Name","value":"subraces"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageIds"}},{"kind":"Field","name":{"kind":"Name","value":"thumbnailId"}},{"kind":"Field","name":{"kind":"Name","value":"ageOfAdulthood"}},{"kind":"Field","name":{"kind":"Name","value":"lifeExpectancy"}},{"kind":"Field","name":{"kind":"Name","value":"alignment"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"speed"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"languages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"script"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"traits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<RacesQuery, RacesQueryVariables>;
-
-export const ArtifactById = gql`
-    query artifactById($id: ID!) {
-  artifact(id: $id) {
+export const NpcAddImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"npcAddImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"imageId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"npcAddImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"imageId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"imageId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"npc"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NpcFields"}}]}}]}}]}},...NpcFieldsFragmentDoc.definitions]} as unknown as DocumentNode<NpcAddImageMutation, NpcAddImageMutationVariables>;
+export const NpcByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"npcById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"npc"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NpcFields"}}]}}]}},...NpcFieldsFragmentDoc.definitions]} as unknown as DocumentNode<NpcByIdQuery, NpcByIdQueryVariables>;
+export const NpcLockDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"npcLock"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"npcLock"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"npc"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NpcFields"}}]}}]}}]}},...NpcFieldsFragmentDoc.definitions]} as unknown as DocumentNode<NpcLockMutation, NpcLockMutationVariables>;
+export const NpcPatchDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"npcPatch"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"description"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"thumbnailId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"markdownNotes"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"npcPatch"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"description"},"value":{"kind":"Variable","name":{"kind":"Name","value":"description"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"thumbnailId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"thumbnailId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"markdownNotes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"markdownNotes"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"npc"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NpcFields"}}]}}]}}]}},...NpcFieldsFragmentDoc.definitions]} as unknown as DocumentNode<NpcPatchMutation, NpcPatchMutationVariables>;
+export const NpcReleaseLockDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"npcReleaseLock"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"npcReleaseLock"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"npc"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NpcFields"}}]}}]}}]}},...NpcFieldsFragmentDoc.definitions]} as unknown as DocumentNode<NpcReleaseLockMutation, NpcReleaseLockMutationVariables>;
+export const NpcsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"npcs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"npcs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NpcFields"}}]}}]}}]}}]}},...NpcFieldsFragmentDoc.definitions]} as unknown as DocumentNode<NpcsQuery, NpcsQueryVariables>;
+export const PlaceAddImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"placeAddImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"imageId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"placeAddImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"imageId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"imageId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"place"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PlaceFields"}}]}}]}}]}},...PlaceFieldsFragmentDoc.definitions]} as unknown as DocumentNode<PlaceAddImageMutation, PlaceAddImageMutationVariables>;
+export const PlaceByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"placeById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"place"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PlaceFields"}}]}}]}},...PlaceFieldsFragmentDoc.definitions]} as unknown as DocumentNode<PlaceByIdQuery, PlaceByIdQueryVariables>;
+export const PlaceLockDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"placeLock"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"placeLock"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"place"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PlaceFields"}}]}}]}}]}},...PlaceFieldsFragmentDoc.definitions]} as unknown as DocumentNode<PlaceLockMutation, PlaceLockMutationVariables>;
+export const PlacePatchDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"placePatch"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"description"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"thumbnailId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"markdownNotes"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"placePatch"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"description"},"value":{"kind":"Variable","name":{"kind":"Name","value":"description"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"thumbnailId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"thumbnailId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"markdownNotes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"markdownNotes"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"place"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PlaceFields"}}]}}]}}]}},...PlaceFieldsFragmentDoc.definitions]} as unknown as DocumentNode<PlacePatchMutation, PlacePatchMutationVariables>;
+export const PlaceReleaseLockDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"placeReleaseLock"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"placeReleaseLock"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"place"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PlaceFields"}}]}}]}}]}},...PlaceFieldsFragmentDoc.definitions]} as unknown as DocumentNode<PlaceReleaseLockMutation, PlaceReleaseLockMutationVariables>;
+export const PlacesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"places"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"places"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PlaceFields"}}]}}]}}]}}]}},...PlaceFieldsFragmentDoc.definitions]} as unknown as DocumentNode<PlacesQuery, PlacesQueryVariables>;
+export const RaceAddImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"raceAddImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"imageId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"raceAddImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"imageId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"imageId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"race"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"RaceFields"}}]}}]}}]}},...RaceFieldsFragmentDoc.definitions]} as unknown as DocumentNode<RaceAddImageMutation, RaceAddImageMutationVariables>;
+export const RaceByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"raceById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"race"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"RaceFields"}}]}}]}},...RaceFieldsFragmentDoc.definitions]} as unknown as DocumentNode<RaceByIdQuery, RaceByIdQueryVariables>;
+export const RaceLockDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"raceLock"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"raceLock"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"race"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"RaceFields"}}]}}]}}]}},...RaceFieldsFragmentDoc.definitions]} as unknown as DocumentNode<RaceLockMutation, RaceLockMutationVariables>;
+export const RacePatchDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"racePatch"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"description"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"thumbnailId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"markdownNotes"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"racePatch"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"description"},"value":{"kind":"Variable","name":{"kind":"Name","value":"description"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"thumbnailId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"thumbnailId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"markdownNotes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"markdownNotes"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"race"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"RaceFields"}}]}}]}}]}},...RaceFieldsFragmentDoc.definitions]} as unknown as DocumentNode<RacePatchMutation, RacePatchMutationVariables>;
+export const RaceReleaseLockDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"raceReleaseLock"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"raceReleaseLock"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ok"}},{"kind":"Field","name":{"kind":"Name","value":"errors"}},{"kind":"Field","name":{"kind":"Name","value":"race"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"RaceFields"}}]}}]}}]}},...RaceFieldsFragmentDoc.definitions]} as unknown as DocumentNode<RaceReleaseLockMutation, RaceReleaseLockMutationVariables>;
+export const RacesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"races"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"races"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"RaceFields"}}]}}]}}]}}]}},...RaceFieldsFragmentDoc.definitions]} as unknown as DocumentNode<RacesQuery, RacesQueryVariables>;
+export const ArtifactFields = gql`
+    fragment ArtifactFields on ArtifactNode {
+  id
+  name
+  description
+  imageIds
+  thumbnailId
+  created
+  updated
+  markdownNotes
+  lockUser {
     id
-    name
-    description
-    imageIds
-    thumbnailId
-    created
-    updated
-    markdownNotes
-    lockUser {
-      id
-      username
-    }
-    lockTime
-    items {
-      edges {
-        node {
-          id
-          name
-          weapon {
-            attackBonus
-          }
-          armor {
-            acBonus
-          }
-          equipment {
-            briefDescription
-          }
-        }
-      }
-    }
+    username
   }
-}
-    `;
-export const Artifacts = gql`
-    query artifacts {
-  artifacts {
-    edges {
-      node {
-        id
-        name
-        description
-        imageIds
-        thumbnailId
-        created
-        updated
-        markdownNotes
-        lockUser {
-          id
-          username
-        }
-        lockTime
-        items {
-          edges {
-            node {
-              id
-              name
-              weapon {
-                attackBonus
-              }
-              armor {
-                acBonus
-              }
-              equipment {
-                briefDescription
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const AssociationAddImage = gql`
-    mutation associationAddImage($id: ID!, $imageId: String) {
-  associationAddImage(input: {id: $id, imageId: $imageId}) {
-    ok
-    errors
-    association {
-      id
-      name
-      description
-      imageIds
-      thumbnailId
-      markdownNotes
-      lockUser {
-        id
-        username
-      }
-      lockTime
-      lockedBySelf
-    }
-  }
-}
-    `;
-export const AssociationById = gql`
-    query associationById($id: ID!) {
-  association(id: $id) {
-    id
-    name
-    description
-    imageIds
-    thumbnailId
-    markdownNotes
-    lockUser {
-      id
-      username
-    }
-    lockTime
-    lockedBySelf
-  }
-}
-    `;
-export const AssociationLock = gql`
-    mutation associationLock($id: ID!) {
-  associationLock(input: {id: $id}) {
-    ok
-    errors
-    association {
-      id
-      name
-      description
-      imageIds
-      thumbnailId
-      markdownNotes
-      lockUser {
-        id
-        username
-      }
-      lockTime
-      lockedBySelf
-    }
-  }
-}
-    `;
-export const AssociationPatch = gql`
-    mutation associationPatch($id: ID!, $name: String, $description: String, $thumbnailId: String, $markdownNotes: String) {
-  associationPatch(
-    input: {id: $id, name: $name, description: $description, thumbnailId: $thumbnailId, markdownNotes: $markdownNotes}
-  ) {
-    ok
-    errors
-    association {
-      id
-      name
-      description
-      imageIds
-      thumbnailId
-      markdownNotes
-      lockUser {
-        id
-        username
-      }
-      lockTime
-      lockedBySelf
-    }
-  }
-}
-    `;
-export const AssociationReleaseLock = gql`
-    mutation associationReleaseLock($id: ID!) {
-  associationReleaseLock(input: {id: $id}) {
-    ok
-    errors
-    association {
-      id
-      name
-      description
-      imageIds
-      thumbnailId
-      markdownNotes
-      lockUser {
-        id
-        username
-      }
-      lockTime
-      lockedBySelf
-    }
-  }
-}
-    `;
-export const Associations = gql`
-    query associations {
-  associations {
-    edges {
-      node {
-        id
-        name
-        description
-        imageIds
-        thumbnailId
-        markdownNotes
-        lockUser {
-          id
-          username
-        }
-        lockTime
-        lockedBySelf
-      }
-    }
-  }
-}
-    `;
-export const ItemById = gql`
-    query itemById($id: ID!) {
-  item(id: $id) {
-    id
-    name
-    description
-    imageIds
-    thumbnailId
-    markdownNotes
-    lockUser {
-      id
-      username
-    }
-    lockTime
-    armor {
-      acBonus
-    }
-    weapon {
-      attackBonus
-    }
-    equipment {
-      briefDescription
-    }
-  }
-}
-    `;
-export const Items = gql`
-    query items {
+  lockTime
   items {
     edges {
       node {
         id
         name
-        description
-        imageIds
-        thumbnailId
-        markdownNotes
-        lockUser {
-          id
-          username
-        }
-        lockTime
-        armor {
-          acBonus
-        }
         weapon {
           attackBonus
+        }
+        armor {
+          acBonus
         }
         equipment {
           briefDescription
@@ -3203,6 +3216,395 @@ export const Items = gql`
   }
 }
     `;
+export const AssociationFields = gql`
+    fragment AssociationFields on AssociationNode {
+  id
+  name
+  description
+  imageIds
+  thumbnailId
+  markdownNotes
+  lockUser {
+    id
+    username
+  }
+  lockTime
+  lockedBySelf
+}
+    `;
+export const ItemFields = gql`
+    fragment ItemFields on ItemNode {
+  id
+  name
+  description
+  imageIds
+  thumbnailId
+  markdownNotes
+  lockUser {
+    id
+    username
+  }
+  lockTime
+  armor {
+    acBonus
+  }
+  weapon {
+    attackBonus
+  }
+  equipment {
+    briefDescription
+  }
+}
+    `;
+export const NpcFields = gql`
+    fragment NpcFields on NPCNode {
+  id
+  name
+  description
+  imageIds
+  thumbnailId
+  markdownNotes
+  lockUser {
+    id
+    username
+  }
+  lockTime
+  size
+  race {
+    id
+    name
+    description
+    imageIds
+    thumbnailId
+    ageOfAdulthood
+    lifeExpectancy
+    alignment
+    size
+    speed
+  }
+  featuresAndTraits {
+    edges {
+      node {
+        id
+        name
+        description
+      }
+    }
+  }
+  proficiencies {
+    edges {
+      node {
+        id
+        name
+        description
+        proficiencyType
+      }
+    }
+  }
+}
+    `;
+export const PlaceFields = gql`
+    fragment PlaceFields on PlaceNode {
+  id
+  name
+  description
+  imageIds
+  thumbnailId
+  markdownNotes
+  lockUser {
+    id
+    username
+  }
+  lockTime
+  created
+  updated
+  placeType
+  population
+  parent {
+    id
+    name
+    description
+    imageIds
+    thumbnailId
+    created
+    updated
+    placeType
+    population
+    parent {
+      id
+      name
+      description
+      imageIds
+      thumbnailId
+      created
+      updated
+      placeType
+      population
+    }
+  }
+}
+    `;
+export const RaceFields = gql`
+    fragment RaceFields on RaceNode {
+  id
+  name
+  description
+  imageIds
+  thumbnailId
+  markdownNotes
+  lockUser {
+    id
+    username
+  }
+  lockTime
+  ageOfAdulthood
+  lifeExpectancy
+  alignment
+  size
+  speed
+  baseRace {
+    id
+    name
+    description
+    imageIds
+    thumbnailId
+    ageOfAdulthood
+    lifeExpectancy
+    alignment
+    size
+    speed
+  }
+  subraces {
+    edges {
+      node {
+        id
+        name
+        description
+        imageIds
+        thumbnailId
+        ageOfAdulthood
+        lifeExpectancy
+        alignment
+        size
+        speed
+      }
+    }
+  }
+  languages {
+    edges {
+      node {
+        id
+        name
+        description
+        script {
+          name
+        }
+      }
+    }
+  }
+  traits {
+    edges {
+      node {
+        id
+        name
+        description
+      }
+    }
+  }
+}
+    `;
+export const ArtifactAddImage = gql`
+    mutation artifactAddImage($id: ID!, $imageId: String) {
+  artifactAddImage(input: {id: $id, imageId: $imageId}) {
+    ok
+    errors
+    artifact {
+      ...ArtifactFields
+    }
+  }
+}
+    ${ArtifactFields}`;
+export const ArtifactById = gql`
+    query artifactById($id: ID!) {
+  artifact(id: $id) {
+    ...ArtifactFields
+  }
+}
+    ${ArtifactFields}`;
+export const ArtifactLock = gql`
+    mutation artifactLock($id: ID!) {
+  artifactLock(input: {id: $id}) {
+    ok
+    errors
+    artifact {
+      ...ArtifactFields
+    }
+  }
+}
+    ${ArtifactFields}`;
+export const ArtifactPatch = gql`
+    mutation artifactPatch($id: ID!, $name: String, $description: String, $thumbnailId: String, $markdownNotes: String) {
+  artifactPatch(
+    input: {id: $id, name: $name, description: $description, thumbnailId: $thumbnailId, markdownNotes: $markdownNotes}
+  ) {
+    ok
+    errors
+    artifact {
+      ...ArtifactFields
+    }
+  }
+}
+    ${ArtifactFields}`;
+export const ArtifactReleaseLock = gql`
+    mutation artifactReleaseLock($id: ID!) {
+  artifactReleaseLock(input: {id: $id}) {
+    ok
+    errors
+    artifact {
+      ...ArtifactFields
+    }
+  }
+}
+    ${ArtifactFields}`;
+export const Artifacts = gql`
+    query artifacts {
+  artifacts {
+    edges {
+      node {
+        ...ArtifactFields
+      }
+    }
+  }
+}
+    ${ArtifactFields}`;
+export const AssociationAddImage = gql`
+    mutation associationAddImage($id: ID!, $imageId: String) {
+  associationAddImage(input: {id: $id, imageId: $imageId}) {
+    ok
+    errors
+    association {
+      ...AssociationFields
+    }
+  }
+}
+    ${AssociationFields}`;
+export const AssociationById = gql`
+    query associationById($id: ID!) {
+  association(id: $id) {
+    ...AssociationFields
+  }
+}
+    ${AssociationFields}`;
+export const AssociationLock = gql`
+    mutation associationLock($id: ID!) {
+  associationLock(input: {id: $id}) {
+    ok
+    errors
+    association {
+      ...AssociationFields
+    }
+  }
+}
+    ${AssociationFields}`;
+export const AssociationPatch = gql`
+    mutation associationPatch($id: ID!, $name: String, $description: String, $thumbnailId: String, $markdownNotes: String) {
+  associationPatch(
+    input: {id: $id, name: $name, description: $description, thumbnailId: $thumbnailId, markdownNotes: $markdownNotes}
+  ) {
+    ok
+    errors
+    association {
+      ...AssociationFields
+    }
+  }
+}
+    ${AssociationFields}`;
+export const AssociationReleaseLock = gql`
+    mutation associationReleaseLock($id: ID!) {
+  associationReleaseLock(input: {id: $id}) {
+    ok
+    errors
+    association {
+      ...AssociationFields
+    }
+  }
+}
+    ${AssociationFields}`;
+export const Associations = gql`
+    query associations {
+  associations {
+    edges {
+      node {
+        ...AssociationFields
+      }
+    }
+  }
+}
+    ${AssociationFields}`;
+export const ItemAddImage = gql`
+    mutation itemAddImage($id: ID!, $imageId: String) {
+  itemAddImage(input: {id: $id, imageId: $imageId}) {
+    ok
+    errors
+    item {
+      ...ItemFields
+    }
+  }
+}
+    ${ItemFields}`;
+export const ItemById = gql`
+    query itemById($id: ID!) {
+  item(id: $id) {
+    ...ItemFields
+  }
+}
+    ${ItemFields}`;
+export const ItemLock = gql`
+    mutation itemLock($id: ID!) {
+  itemLock(input: {id: $id}) {
+    ok
+    errors
+    item {
+      ...ItemFields
+    }
+  }
+}
+    ${ItemFields}`;
+export const ItemPatch = gql`
+    mutation itemPatch($id: ID!, $name: String, $description: String, $thumbnailId: String, $markdownNotes: String) {
+  itemPatch(
+    input: {id: $id, name: $name, description: $description, thumbnailId: $thumbnailId, markdownNotes: $markdownNotes}
+  ) {
+    ok
+    errors
+    item {
+      ...ItemFields
+    }
+  }
+}
+    ${ItemFields}`;
+export const ItemReleaseLock = gql`
+    mutation itemReleaseLock($id: ID!) {
+  itemReleaseLock(input: {id: $id}) {
+    ok
+    errors
+    item {
+      ...ItemFields
+    }
+  }
+}
+    ${ItemFields}`;
+export const Items = gql`
+    query items {
+  items {
+    edges {
+      node {
+        ...ItemFields
+      }
+    }
+  }
+}
+    ${ItemFields}`;
 export const Login = gql`
     mutation login($username: String!, $password: String!) {
   tokenAuth(input: {username: $username, password: $password}) {
@@ -3223,341 +3625,195 @@ export const Me = gql`
   }
 }
     `;
-export const NpcById = gql`
-    query npcById($id: ID!) {
-  npc(id: $id) {
-    id
-    name
-    description
-    imageIds
-    thumbnailId
-    markdownNotes
-    lockUser {
-      id
-      username
-    }
-    lockTime
-    size
-    race {
-      id
-      name
-      description
-      imageIds
-      thumbnailId
-      ageOfAdulthood
-      lifeExpectancy
-      alignment
-      size
-      speed
-    }
-    featuresAndTraits {
-      edges {
-        node {
-          id
-          name
-          description
-        }
-      }
-    }
-    proficiencies {
-      edges {
-        node {
-          id
-          name
-          description
-          proficiencyType
-        }
-      }
+export const NpcAddImage = gql`
+    mutation npcAddImage($id: ID!, $imageId: String) {
+  npcAddImage(input: {id: $id, imageId: $imageId}) {
+    ok
+    errors
+    npc {
+      ...NpcFields
     }
   }
 }
-    `;
+    ${NpcFields}`;
+export const NpcById = gql`
+    query npcById($id: ID!) {
+  npc(id: $id) {
+    ...NpcFields
+  }
+}
+    ${NpcFields}`;
+export const NpcLock = gql`
+    mutation npcLock($id: ID!) {
+  npcLock(input: {id: $id}) {
+    ok
+    errors
+    npc {
+      ...NpcFields
+    }
+  }
+}
+    ${NpcFields}`;
+export const NpcPatch = gql`
+    mutation npcPatch($id: ID!, $name: String, $description: String, $thumbnailId: String, $markdownNotes: String) {
+  npcPatch(
+    input: {id: $id, name: $name, description: $description, thumbnailId: $thumbnailId, markdownNotes: $markdownNotes}
+  ) {
+    ok
+    errors
+    npc {
+      ...NpcFields
+    }
+  }
+}
+    ${NpcFields}`;
+export const NpcReleaseLock = gql`
+    mutation npcReleaseLock($id: ID!) {
+  npcReleaseLock(input: {id: $id}) {
+    ok
+    errors
+    npc {
+      ...NpcFields
+    }
+  }
+}
+    ${NpcFields}`;
 export const Npcs = gql`
     query npcs {
   npcs {
     edges {
       node {
-        id
-        name
-        description
-        imageIds
-        thumbnailId
-        markdownNotes
-        lockUser {
-          id
-          username
-        }
-        lockTime
-        size
-        race {
-          id
-          name
-          description
-          imageIds
-          thumbnailId
-          ageOfAdulthood
-          lifeExpectancy
-          alignment
-          size
-          speed
-        }
-        featuresAndTraits {
-          edges {
-            node {
-              id
-              name
-              description
-            }
-          }
-        }
-        proficiencies {
-          edges {
-            node {
-              id
-              name
-              description
-              proficiencyType
-            }
-          }
-        }
+        ...NpcFields
       }
     }
   }
 }
-    `;
+    ${NpcFields}`;
+export const PlaceAddImage = gql`
+    mutation placeAddImage($id: ID!, $imageId: String) {
+  placeAddImage(input: {id: $id, imageId: $imageId}) {
+    ok
+    errors
+    place {
+      ...PlaceFields
+    }
+  }
+}
+    ${PlaceFields}`;
 export const PlaceById = gql`
     query placeById($id: ID!) {
   place(id: $id) {
-    id
-    name
-    description
-    imageIds
-    thumbnailId
-    markdownNotes
-    lockUser {
-      id
-      username
-    }
-    lockTime
-    created
-    updated
-    placeType
-    population
-    parent {
-      id
-      name
-      description
-      imageIds
-      thumbnailId
-      created
-      updated
-      placeType
-      population
-      parent {
-        id
-        name
-        description
-        imageIds
-        thumbnailId
-        created
-        updated
-        placeType
-        population
-      }
+    ...PlaceFields
+  }
+}
+    ${PlaceFields}`;
+export const PlaceLock = gql`
+    mutation placeLock($id: ID!) {
+  placeLock(input: {id: $id}) {
+    ok
+    errors
+    place {
+      ...PlaceFields
     }
   }
 }
-    `;
+    ${PlaceFields}`;
+export const PlacePatch = gql`
+    mutation placePatch($id: ID!, $name: String, $description: String, $thumbnailId: String, $markdownNotes: String) {
+  placePatch(
+    input: {id: $id, name: $name, description: $description, thumbnailId: $thumbnailId, markdownNotes: $markdownNotes}
+  ) {
+    ok
+    errors
+    place {
+      ...PlaceFields
+    }
+  }
+}
+    ${PlaceFields}`;
+export const PlaceReleaseLock = gql`
+    mutation placeReleaseLock($id: ID!) {
+  placeReleaseLock(input: {id: $id}) {
+    ok
+    errors
+    place {
+      ...PlaceFields
+    }
+  }
+}
+    ${PlaceFields}`;
 export const Places = gql`
     query places {
   places {
     edges {
       node {
-        id
-        name
-        description
-        imageIds
-        thumbnailId
-        markdownNotes
-        lockUser {
-          id
-          username
-        }
-        lockTime
-        created
-        updated
-        placeType
-        population
-        parent {
-          id
-          name
-          description
-          imageIds
-          thumbnailId
-          created
-          updated
-          placeType
-          population
-          parent {
-            id
-            name
-            description
-            imageIds
-            thumbnailId
-            created
-            updated
-            placeType
-            population
-          }
-        }
+        ...PlaceFields
       }
     }
   }
 }
-    `;
+    ${PlaceFields}`;
+export const RaceAddImage = gql`
+    mutation raceAddImage($id: ID!, $imageId: String) {
+  raceAddImage(input: {id: $id, imageId: $imageId}) {
+    ok
+    errors
+    race {
+      ...RaceFields
+    }
+  }
+}
+    ${RaceFields}`;
 export const RaceById = gql`
     query raceById($id: ID!) {
   race(id: $id) {
-    id
-    name
-    description
-    imageIds
-    thumbnailId
-    markdownNotes
-    lockUser {
-      id
-      username
-    }
-    lockTime
-    ageOfAdulthood
-    lifeExpectancy
-    alignment
-    size
-    speed
-    baseRace {
-      id
-      name
-      description
-      imageIds
-      thumbnailId
-      ageOfAdulthood
-      lifeExpectancy
-      alignment
-      size
-      speed
-    }
-    subraces {
-      edges {
-        node {
-          id
-          name
-          description
-          imageIds
-          thumbnailId
-          ageOfAdulthood
-          lifeExpectancy
-          alignment
-          size
-          speed
-        }
-      }
-    }
-    languages {
-      edges {
-        node {
-          id
-          name
-          description
-          script {
-            name
-          }
-        }
-      }
-    }
-    traits {
-      edges {
-        node {
-          id
-          name
-          description
-        }
-      }
+    ...RaceFields
+  }
+}
+    ${RaceFields}`;
+export const RaceLock = gql`
+    mutation raceLock($id: ID!) {
+  raceLock(input: {id: $id}) {
+    ok
+    errors
+    race {
+      ...RaceFields
     }
   }
 }
-    `;
+    ${RaceFields}`;
+export const RacePatch = gql`
+    mutation racePatch($id: ID!, $name: String!, $description: String, $thumbnailId: String, $markdownNotes: String) {
+  racePatch(
+    input: {id: $id, name: $name, description: $description, thumbnailId: $thumbnailId, markdownNotes: $markdownNotes}
+  ) {
+    ok
+    errors
+    race {
+      ...RaceFields
+    }
+  }
+}
+    ${RaceFields}`;
+export const RaceReleaseLock = gql`
+    mutation raceReleaseLock($id: ID!) {
+  raceReleaseLock(input: {id: $id}) {
+    ok
+    errors
+    race {
+      ...RaceFields
+    }
+  }
+}
+    ${RaceFields}`;
 export const Races = gql`
     query races {
   races {
     edges {
       node {
-        id
-        name
-        description
-        imageIds
-        thumbnailId
-        markdownNotes
-        lockUser {
-          id
-          username
-        }
-        lockTime
-        ageOfAdulthood
-        lifeExpectancy
-        alignment
-        size
-        speed
-        baseRace {
-          id
-          name
-          description
-          imageIds
-          thumbnailId
-          ageOfAdulthood
-          lifeExpectancy
-          alignment
-          size
-          speed
-        }
-        subraces {
-          edges {
-            node {
-              id
-              name
-              description
-              imageIds
-              thumbnailId
-              ageOfAdulthood
-              lifeExpectancy
-              alignment
-              size
-              speed
-            }
-          }
-        }
-        languages {
-          edges {
-            node {
-              id
-              name
-              description
-              script {
-                name
-              }
-            }
-          }
-        }
-        traits {
-          edges {
-            node {
-              id
-              name
-              description
-            }
-          }
-        }
+        ...RaceFields
       }
     }
   }
 }
-    `;
+    ${RaceFields}`;
