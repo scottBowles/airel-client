@@ -62,15 +62,9 @@
 		<!-- IMAGES -->
 		<div class="img-container">
 			<slot name="mainImage">
-				{#if imageIds?.length}
-					<CloudinaryUpload {onImageUpload}>
-						<ImageCarousel {imageIds} />
-					</CloudinaryUpload>
-				{:else}
-					<CloudinaryUpload {onImageUpload}>
-						<LargeImage imageId={'dnd/sfaedxiltuowlw7whb0c'} alt={name} />
-					</CloudinaryUpload>
-				{/if}
+				<CloudinaryUpload {onImageUpload}>
+					<ImageCarousel {imageIds} />
+				</CloudinaryUpload>
 			</slot>
 		</div>
 
