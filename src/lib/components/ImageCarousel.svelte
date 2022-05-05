@@ -1,36 +1,34 @@
 <script lang="ts">
 	import LargeImage from '$lib/components/LargeImage.svelte';
+	import { onMount } from 'svelte';
+
 	export let imageIds;
+
 	let currentIndex = 0;
+	let hasMounted;
+
 	$: currentImageId = imageIds[Math.abs(currentIndex % imageIds.length)];
-	$: console.log({ imageIds });
-	$: console.log({ currentImageId });
+
+	onMount(() => (hasMounted = true));
+
+	const incrementIndex = () => (currentIndex += 1);
+	const decrementIndex = () => (currentIndex -= 1);
 </script>
 
 <div class="img-container">
-	<div
-		class="carousel-arrow arrow-left"
-		on:click|stopPropagation={() => {
-			currentIndex--;
-			console.log(currentImageId);
-		}}
-	>
-		&#10094;
-	</div>
+	{#if imageIds.length > 1 && hasMounted}
+		<div class="arrow left" on:click|stopPropagation={decrementIndex}>&#10094;</div>
+	{/if}
+
 	<LargeImage imageId={currentImageId} />
-	<div
-		class="carousel-arrow arrow-right"
-		on:click|stopPropagation={() => {
-			currentIndex++;
-			console.log(currentImageId);
-		}}
-	>
-		&#10095;
-	</div>
+
+	{#if imageIds.length > 1 && hasMounted}
+		<div class="arrow right" on:click|stopPropagation={incrementIndex}>&#10095;</div>
+	{/if}
 </div>
 
 <style>
-	.carousel-arrow {
+	.arrow {
 		cursor: pointer;
 		position: absolute;
 		top: 50%;
@@ -47,14 +45,14 @@
 		border-radius: 100%;
 		user-select: none;
 	}
-	.arrow-left {
+	.arrow:hover {
+		background-color: rgba(0, 0, 0, 0.4);
+	}
+	.left {
 		left: 10px;
 	}
-	.arrow-right {
+	.right {
 		right: 10px;
-	}
-	.carousel-arrow:hover {
-		background-color: rgba(0, 0, 0, 0.4);
 	}
 	.img-container {
 		width: fit-content;
