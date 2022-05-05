@@ -1,11 +1,10 @@
 <script lang="ts">
-	import { Container, Heading } from '@kahi-ui/framework';
-
 	import CloudinaryUpload from '$lib/components/CloudinaryUpload.svelte';
 	import { BasicProperty } from '$lib/components/DetailPage';
-	import LargeImage from '$lib/components/LargeImage.svelte';
-	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
 	import EditableMarkdown from '$lib/components/EditableMarkdown.svelte';
+	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
+	import LargeImage from '$lib/components/LargeImage.svelte';
+	import { Container, Heading } from '@kahi-ui/framework';
 	import { onMount } from 'svelte';
 
 	export let name = 'No name or header slot provided';
@@ -43,10 +42,11 @@
 
 			<!-- EDIT / SAVE + LOCKED BY {USER} -->
 			<span>
-				{lockUser?.username ? `Locked by ${lockUser.username}` : ''}
 				{#if isMounted}
-					{#if editing}
-						<button type="submit">Save</button>
+					{#if lockedBySelf}
+						Locked by {lockUser.username} <button type="submit">Save</button>
+					{:else if lockUser}
+						Locked by {lockUser.username} <button type="button" disabled>Edit</button>
 					{:else}
 						<button type="button" on:click={onEditClick}>Edit</button>
 					{/if}
