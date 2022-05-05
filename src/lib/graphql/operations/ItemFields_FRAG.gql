@@ -10,6 +10,7 @@ fragment ItemFields on ItemNode {
 		username
 	}
 	lockTime
+	lockedBySelf
 	armor {
 		acBonus
 	}

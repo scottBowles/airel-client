@@ -709,41 +709,6 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "ArtifactInput",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "markdownNotes",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "notes",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
         "name": "ArtifactLockMutationInput",
         "description": null,
         "fields": null,
@@ -1053,6 +1018,18 @@
             "type": {
               "kind": "OBJECT",
               "name": "UserNode",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lockedBySelf",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
               "ofType": null
             },
             "isDeprecated": false,
@@ -3708,6 +3685,18 @@
             "deprecationReason": null
           },
           {
+            "name": "lockedBySelf",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "markdownNotes",
             "description": null,
             "args": [],
@@ -5122,18 +5111,6 @@
             "deprecationReason": null
           },
           {
-            "name": "artifact",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "ArtifactInput",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "clientMutationId",
             "description": null,
             "type": {
@@ -5595,6 +5572,18 @@
             "deprecationReason": null
           },
           {
+            "name": "lockedBySelf",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "markdownNotes",
             "description": null,
             "args": [],
@@ -5776,18 +5765,6 @@
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "ArmorInput",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "artifact",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "ArtifactInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -6076,18 +6053,6 @@
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "ArmorInput",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "artifact",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "ArtifactInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -9296,6 +9261,18 @@
             "deprecationReason": null
           },
           {
+            "name": "lockedBySelf",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "markdownNotes",
             "description": null,
             "args": [],
@@ -11786,6 +11763,18 @@
             "type": {
               "kind": "OBJECT",
               "name": "UserNode",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lockedBySelf",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
               "ofType": null
             },
             "isDeprecated": false,
@@ -16348,6 +16337,18 @@
             "type": {
               "kind": "OBJECT",
               "name": "UserNode",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lockedBySelf",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
               "ofType": null
             },
             "isDeprecated": false,

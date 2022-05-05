@@ -12,6 +12,7 @@ fragment ArtifactFields on ArtifactNode {
 		username
 	}
 	lockTime
+	lockedBySelf
 	items {
 		edges {
 			node {

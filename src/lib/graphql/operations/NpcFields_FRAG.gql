@@ -10,6 +10,7 @@ fragment NpcFields on NPCNode {
 		username
 	}
 	lockTime
+	lockedBySelf
 	size
 	race {
 		id
