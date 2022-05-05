@@ -1,5 +1,17 @@
 <script context="module" lang="ts">
-	import { KQL_ArtifactById } from '$lib/graphql/_kitql/graphqlStores';
+	import { page } from '$app/stores';
+	import { Layout, StatusHandler } from '$lib/components/DetailPage';
+	import BasicProperty from '$lib/components/DetailPage/BasicProperty.svelte';
+	import { LockFailedError } from '$lib/errors';
+	import {
+		KQL_ArtifactAddImage,
+		KQL_ArtifactById,
+		KQL_ArtifactLock,
+		KQL_ArtifactPatch
+	} from '$lib/graphql/_kitql/graphqlStores';
+	import { Text } from '@kahi-ui/framework';
+	import { KitQLInfo } from '@kitql/all-in';
+
 	export const load = async ({ fetch, params }) => {
 		await KQL_ArtifactById.queryLoad({ fetch, variables: { id: params.id } });
 		return {};
@@ -7,37 +19,107 @@
 </script>
 
 <script>
-	import { Layout, BasicProperty, StatusHandler } from '$lib/components/DetailPage';
+	const { id } = $page.params;
+	const variables = { id }; // for requests
 
 	$: ({ status, errors, data } = $KQL_ArtifactById);
 	$: ({ artifact } = data || {});
-	$: console.log({ artifact });
+	$: ({ name, imageIds, description, markdownNotes, lockUser, lockedBySelf } = artifact || {});
+
+	function patchStore(patch) {
+		const update = { artifact: { ...artifact, ...patch } };
+		KQL_ArtifactById.patch(update, variables);
+	}
+
+	function refreshFromNetwork() {
+		KQL_ArtifactById.query({ variables, settings: { policy: 'cache-and-network' } });
+	}
+
+	async function onEditClick() {
+		const lockRes = await KQL_ArtifactLock.mutate({ variables });
+		if (lockRes.errors) {
+			refreshFromNetwork();
+			// notify error rather than throwing error
+			// return;
+			throw new LockFailedError(lockRes.errors[0].message);
+		}
+		patchStore(lockRes.data.artifactLock.artifact);
+		return;
+	}
+
+	async function onFormSubmit(e) {
+		const form = e.target;
+		const formData = new FormData(form);
+		const patch = {};
+		formData.forEach((value, key) => {
+			patch[key] = value;
+		});
+		console.log({ patch });
+
+		const { data, errors: resErrors } = await KQL_ArtifactPatch.mutate({
+			variables: { id, ...patch }
+		});
+
+		if (resErrors) {
+			// handle resErrors
+		}
+		const { artifact: updatedArtifact, errors, ok } = data.artifactPatch;
+		if (ok) {
+			patchStore(updatedArtifact);
+		}
+		// handle errors
+	}
+
+	async function onImageUpload(error, result) {
+		if (error) {
+			// handle error
+			// console.log('handleImageUpload', { error });
+		}
+		if (result?.event === 'success') {
+			const { data, errors: resErrors } = await KQL_ArtifactAddImage.mutate({
+				variables: {
+					id,
+					imageId: result.info.public_id
+				}
+			});
+			if (resErrors) {
+				// handle resErrors
+			}
+			const { artifact, errors, ok } = data.artifactAddImage;
+			if (ok) {
+				// console.log({ artifact });
+				patchStore(artifact);
+				// console.log('post patch', $KQL_ArtifactById);
+			}
+		}
+	}
 </script>
 
 <StatusHandler {status} {errors} value={artifact} entityName="artifact">
 	<Layout
-		name={artifact.name}
-		imageId={artifact.imageIds[0]}
-		markdownNotes={artifact.markdownNotes}
+		{name}
+		{imageIds}
+		{markdownNotes}
+		{lockUser}
+		{lockedBySelf}
+		properties={{
+			Description: description
+		}}
+		{onEditClick}
+		{onFormSubmit}
+		{onImageUpload}
 	>
 		<svelte:fragment slot="properties">
-			<BasicProperty name="Description" value={artifact.description} />
-			<BasicProperty
-				name="Related Items"
-				value={artifact.items.edges.map((edge) => edge.node.name).join(', ')}
-			/>
-
-			<!-- {#if artifact.weapon}
-				<BasicProperty name="Weapon" value={`Attack Bonus ${artifact.weapon.attackBonus}`} />
-			{/if}
-
-			{#if artifact.armor}
-				<BasicProperty name="Armor" value={`AC Bonus ${artifact.armor.acBonus}`} />
-			{/if}
-
-			{#if artifact.equipment}
-				<BasicProperty name="Equipment" value={artifact.equipment.briefDescription} />
-			{/if} -->
+			<BasicProperty name="Description">
+				<Text>
+					{#if artifact.lockedBySelf}
+						<input name="description" value={artifact.description} />
+					{:else}
+						{artifact.description}
+					{/if}
+				</Text>
+			</BasicProperty>
 		</svelte:fragment>
 	</Layout>
 </StatusHandler>
+<!-- <KitQLInfo store={KQL_ArtifactById} /> -->
