@@ -209,6 +209,55 @@ function KQL_ArtifactByIdStore() {
  */
 export const KQL_ArtifactById = KQL_ArtifactByIdStore();
 
+function KQL_ArtifactCreateStore() {
+	const operationName = 'KQL_ArtifactCreate';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.ArtifactCreateMutation, Types.ArtifactCreateMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.ArtifactCreateMutationVariables>
+		): Promise<RequestResult<Types.ArtifactCreateMutation, Types.ArtifactCreateMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_ArtifactCreate).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.ArtifactCreateMutation, Types.ArtifactCreateMutationVariables>({
+				skFetch: fetch,
+				document: Types.ArtifactCreateDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `ArtifactCreate` Operation
+ */
+export const KQL_ArtifactCreate = KQL_ArtifactCreateStore();
+
 function KQL_ArtifactLockStore() {
 	const operationName = 'KQL_ArtifactLock';
 	const operationType = ResponseResultType.Mutation;
@@ -1134,6 +1183,55 @@ function KQL_ItemByIdStore() {
  */
 export const KQL_ItemById = KQL_ItemByIdStore();
 
+function KQL_ItemCreateStore() {
+	const operationName = 'KQL_ItemCreate';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.ItemCreateMutation, Types.ItemCreateMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.ItemCreateMutationVariables>
+		): Promise<RequestResult<Types.ItemCreateMutation, Types.ItemCreateMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_ItemCreate).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.ItemCreateMutation, Types.ItemCreateMutationVariables>({
+				skFetch: fetch,
+				document: Types.ItemCreateDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `ItemCreate` Operation
+ */
+export const KQL_ItemCreate = KQL_ItemCreateStore();
+
 function KQL_ItemLockStore() {
 	const operationName = 'KQL_ItemLock';
 	const operationType = ResponseResultType.Mutation;
@@ -1742,6 +1840,55 @@ function KQL_NpcByIdStore() {
  */
 export const KQL_NpcById = KQL_NpcByIdStore();
 
+function KQL_NpcCreateStore() {
+	const operationName = 'KQL_NpcCreate';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.NpcCreateMutation, Types.NpcCreateMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.NpcCreateMutationVariables>
+		): Promise<RequestResult<Types.NpcCreateMutation, Types.NpcCreateMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_NpcCreate).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.NpcCreateMutation, Types.NpcCreateMutationVariables>({
+				skFetch: fetch,
+				document: Types.NpcCreateDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `NpcCreate` Operation
+ */
+export const KQL_NpcCreate = KQL_NpcCreateStore();
+
 function KQL_NpcLockStore() {
 	const operationName = 'KQL_NpcLock';
 	const operationType = ResponseResultType.Mutation;
@@ -2180,6 +2327,55 @@ function KQL_PlaceByIdStore() {
  */
 export const KQL_PlaceById = KQL_PlaceByIdStore();
 
+function KQL_PlaceCreateStore() {
+	const operationName = 'KQL_PlaceCreate';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.PlaceCreateMutation, Types.PlaceCreateMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.PlaceCreateMutationVariables>
+		): Promise<RequestResult<Types.PlaceCreateMutation, Types.PlaceCreateMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_PlaceCreate).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.PlaceCreateMutation, Types.PlaceCreateMutationVariables>({
+				skFetch: fetch,
+				document: Types.PlaceCreateDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `PlaceCreate` Operation
+ */
+export const KQL_PlaceCreate = KQL_PlaceCreateStore();
+
 function KQL_PlaceLockStore() {
 	const operationName = 'KQL_PlaceLock';
 	const operationType = ResponseResultType.Mutation;
@@ -2617,6 +2813,55 @@ function KQL_RaceByIdStore() {
  * KitQL Svelte Store with the latest `RaceById` Operation
  */
 export const KQL_RaceById = KQL_RaceByIdStore();
+
+function KQL_RaceCreateStore() {
+	const operationName = 'KQL_RaceCreate';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.RaceCreateMutation, Types.RaceCreateMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.RaceCreateMutationVariables>
+		): Promise<RequestResult<Types.RaceCreateMutation, Types.RaceCreateMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_RaceCreate).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.RaceCreateMutation, Types.RaceCreateMutationVariables>({
+				skFetch: fetch,
+				document: Types.RaceCreateDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `RaceCreate` Operation
+ */
+export const KQL_RaceCreate = KQL_RaceCreateStore();
 
 function KQL_RaceLockStore() {
 	const operationName = 'KQL_RaceLock';

@@ -1,23 +1,23 @@
-mutation racePatch(
-	$id: ID!
+mutation artifactCreate(
 	$name: String
 	$description: String
 	$thumbnailId: String
 	$markdownNotes: String
+	$imageIds: [String]
 ) {
-	racePatch(
+	artifactCreate(
 		input: {
-			id: $id
 			name: $name
 			description: $description
 			thumbnailId: $thumbnailId
 			markdownNotes: $markdownNotes
+			imageIds: $imageIds
 		}
 	) {
 		ok
 		errors
-		race {
-			...RaceFields
+		artifact {
+			...ArtifactFields
 		}
 	}
 }
