@@ -1,0 +1,23 @@
+mutation associationCreate(
+	$name: String
+	$description: String
+	$thumbnailId: String
+	$markdownNotes: String
+	$imageIds: [String]
+) {
+	associationCreate(
+		input: {
+			name: $name
+			description: $description
+			thumbnailId: $thumbnailId
+			markdownNotes: $markdownNotes
+			imageIds: $imageIds
+		}
+	) {
+		ok
+		errors
+		association {
+			...AssociationFields
+		}
+	}
+}

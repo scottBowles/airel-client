@@ -1,11 +1,14 @@
 <script context="module" lang="ts">
+	import { page } from '$app/stores';
+	import { LockFailedError } from '$lib/errors';
 	import {
+		KQL_AssociationAddImage,
 		KQL_AssociationById,
 		KQL_AssociationLock,
-		KQL_AssociationPatch,
-		KQL_AssociationAddImage
+		KQL_AssociationPatch
 	} from '$lib/graphql/_kitql/graphqlStores';
 	import { KitQLInfo } from '@kitql/all-in';
+	import DetailBase from './_DetailBase.svelte';
 
 	export const load = async ({ fetch, params }) => {
 		await KQL_AssociationById.queryLoad({ fetch, variables: { id: params.id } });
@@ -14,18 +17,11 @@
 </script>
 
 <script>
-	import { Text } from '@kahi-ui/framework';
-	import { page } from '$app/stores';
-	import { Layout, StatusHandler } from '$lib/components/DetailPage';
-	import { LockFailedError } from '$lib/errors';
-	import BasicProperty from '$lib/components/DetailPage/BasicProperty.svelte';
-
 	const { id } = $page.params;
 	const variables = { id }; // for requests
 
 	$: ({ status, errors, data } = $KQL_AssociationById);
 	$: ({ association } = data || {});
-	$: ({ name, imageIds, description, markdownNotes, lockUser, lockedBySelf } = association || {});
 
 	function patchStore(patch) {
 		const update = { association: { ...association, ...patch } };
@@ -96,31 +92,5 @@
 	}
 </script>
 
-<StatusHandler {status} {errors} value={association} entityName="association">
-	<Layout
-		{name}
-		{imageIds}
-		{markdownNotes}
-		{lockUser}
-		{lockedBySelf}
-		properties={{
-			Description: description
-		}}
-		{onEditClick}
-		{onFormSubmit}
-		{onImageUpload}
-	>
-		<svelte:fragment slot="properties">
-			<BasicProperty name="Description">
-				<Text>
-					{#if association.lockedBySelf}
-						<input name="description" value={association.description} />
-					{:else}
-						{association.description}
-					{/if}
-				</Text>
-			</BasicProperty>
-		</svelte:fragment>
-	</Layout>
-</StatusHandler>
+<DetailBase {association} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
 <!-- <KitQLInfo store={KQL_AssociationById} /> -->

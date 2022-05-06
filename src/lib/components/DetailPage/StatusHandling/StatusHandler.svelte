@@ -14,7 +14,7 @@
 	<Loading />
 {:else if status === 'DONE' && errors?.length > 0}
 	<Error {errors} />
-{:else if status === 'DONE' && value}
+{:else if (status === 'DONE' && value) || status === undefined}
 	<slot />
 {:else if status === 'DONE' && !value}
 	<NotFound {entityName} />

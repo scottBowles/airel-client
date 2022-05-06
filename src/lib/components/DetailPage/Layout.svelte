@@ -3,26 +3,27 @@
 	import { BasicProperty } from '$lib/components/DetailPage';
 	import EditableMarkdown from '$lib/components/EditableMarkdown.svelte';
 	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
-	import LargeImage from '$lib/components/LargeImage.svelte';
 	import { Container, Heading } from '@kahi-ui/framework';
 	import { onMount } from 'svelte';
 
-	export let name = 'No name or header slot provided';
+	export let name = '';
 	export let properties: { [key: string]: string | number } = {};
-	export let imageIds;
-	export let onEditClick;
-	export let onFormSubmit;
-	export let lockUser;
-	export let lockedBySelf;
-	export let onImageUpload;
-	export let markdownNotes;
+	export let imageIds = [];
+	export let onEditClick = () => {};
+	export let onFormSubmit = () => {};
+	export let lockUser = {};
+	export let lockedBySelf = false;
+	export let creating = false;
+	export let onImageUpload = () => {};
+	export let markdownNotes = '';
+	$: console.log({ name });
 
 	let isMounted = false;
 	onMount(() => {
 		isMounted = true;
 	});
 
-	$: editing = lockedBySelf;
+	$: editing = lockedBySelf || creating;
 	console.log({ imageIds });
 </script>
 
@@ -34,7 +35,7 @@
 			<!-- NAME -->
 			<Heading is="h1">
 				{#if editing}
-					<input name="name" value={name} required />
+					<input name="name" placeholder="Name" value={name} required />
 				{:else}
 					{name}
 				{/if}
@@ -43,7 +44,9 @@
 			<!-- EDIT / SAVE + LOCKED BY {USER} -->
 			<span>
 				{#if isMounted}
-					{#if lockedBySelf}
+					{#if creating}
+						<button type="submit">Save</button>
+					{:else if lockedBySelf}
 						Locked by {lockUser.username} <button type="submit">Save</button>
 					{:else if lockUser}
 						Locked by {lockUser.username} <button type="button" disabled>Edit</button>

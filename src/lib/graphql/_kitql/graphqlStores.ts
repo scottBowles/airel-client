@@ -647,6 +647,55 @@ function KQL_AssociationByIdStore() {
  */
 export const KQL_AssociationById = KQL_AssociationByIdStore();
 
+function KQL_AssociationCreateStore() {
+	const operationName = 'KQL_AssociationCreate';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.AssociationCreateMutation, Types.AssociationCreateMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.AssociationCreateMutationVariables>
+		): Promise<RequestResult<Types.AssociationCreateMutation, Types.AssociationCreateMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_AssociationCreate).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.AssociationCreateMutation, Types.AssociationCreateMutationVariables>({
+				skFetch: fetch,
+				document: Types.AssociationCreateDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `AssociationCreate` Operation
+ */
+export const KQL_AssociationCreate = KQL_AssociationCreateStore();
+
 function KQL_AssociationLockStore() {
 	const operationName = 'KQL_AssociationLock';
 	const operationType = ResponseResultType.Mutation;
