@@ -1,21 +1,21 @@
 <script context="module" lang="ts">
 	import { goto } from '$app/navigation';
-	import { KQL_AssociationCreate } from '$lib/graphql/_kitql/graphqlStores';
+	import { KQL_ItemCreate } from '$lib/graphql/_kitql/graphqlStores';
 	import { KitQLInfo } from '@kitql/all-in';
 	import DetailBase from './_DetailBase.svelte';
 </script>
 
 <script>
-	let association = { imageIds: [] };
+	let item = { imageIds: [] };
 
 	async function onFormSubmit(e) {
-		const variables = { ...association };
+		const variables = { ...item };
 		const formData = new FormData(e.target);
 		formData.forEach((value, key) => {
 			variables[key] = value;
 		});
 
-		const { data, errors: resErrors } = await KQL_AssociationCreate.mutate({
+		const { data, errors: resErrors } = await KQL_ItemCreate.mutate({
 			variables
 		});
 
@@ -23,9 +23,9 @@
 			// handle resErrors
 		}
 
-		const { association: newAssociation, errors, ok } = data.associationCreate;
+		const { item: newItem, errors, ok } = data.itemCreate;
 		if (ok) {
-			goto(`/associations/${newAssociation.id}`);
+			goto(`/items/${newItem.id}`);
 		}
 		// handle errors
 	}
@@ -36,10 +36,10 @@
 			// console.log('handleImageUpload', { error });
 		}
 		if (result?.event === 'success') {
-			association.imageIds = [...association.imageIds, result.info.public_id];
+			item.imageIds = [...item.imageIds, result.info.public_id];
 		}
 	}
 </script>
 
-<DetailBase creating {association} {onFormSubmit} {onImageUpload} />
-<!-- <KitQLInfo store={KQL_AssociationById} /> -->
+<DetailBase creating {item} {onFormSubmit} {onImageUpload} />
+<!-- <KitQLInfo store={KQL_ItemById} /> -->

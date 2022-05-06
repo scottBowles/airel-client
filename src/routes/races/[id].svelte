@@ -11,6 +11,7 @@
 	} from '$lib/graphql/_kitql/graphqlStores';
 	import { Text } from '@kahi-ui/framework';
 	import { KitQLInfo } from '@kitql/all-in';
+	import DetailBase from './_DetailBase.svelte';
 
 	export const load = async ({ fetch, params }) => {
 		await KQL_RaceById.queryLoad({ fetch, variables: { id: params.id } });
@@ -24,7 +25,6 @@
 
 	$: ({ status, errors, data } = $KQL_RaceById);
 	$: ({ race } = data || {});
-	$: ({ name, imageIds, description, markdownNotes, lockUser, lockedBySelf } = race || {});
 
 	function patchStore(patch) {
 		const update = { race: { ...race, ...patch } };
@@ -95,31 +95,5 @@
 	}
 </script>
 
-<StatusHandler {status} {errors} value={race} entityName="race">
-	<Layout
-		{name}
-		{imageIds}
-		{markdownNotes}
-		{lockUser}
-		{lockedBySelf}
-		properties={{
-			Description: description
-		}}
-		{onEditClick}
-		{onFormSubmit}
-		{onImageUpload}
-	>
-		<svelte:fragment slot="properties">
-			<BasicProperty name="Description">
-				<Text>
-					{#if race.lockedBySelf}
-						<input name="description" value={race.description} />
-					{:else}
-						{race.description}
-					{/if}
-				</Text>
-			</BasicProperty>
-		</svelte:fragment>
-	</Layout>
-</StatusHandler>
+<DetailBase {race} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
 <!-- <KitQLInfo store={KQL_RaceById} /> -->
