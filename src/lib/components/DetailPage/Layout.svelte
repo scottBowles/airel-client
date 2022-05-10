@@ -3,7 +3,7 @@
 	import { BasicProperty } from '$lib/components/DetailPage';
 	import EditableMarkdown from '$lib/components/EditableMarkdown.svelte';
 	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
-	import { Container, Heading } from '@kahi-ui/framework';
+	import { Container, Heading, TextInput } from '@kahi-ui/framework';
 	import { onMount } from 'svelte';
 
 	export let name = '';
@@ -33,13 +33,19 @@
 		<!-- TOP ROW -->
 		<div class="top-row">
 			<!-- NAME -->
-			<Heading is="h1">
-				{#if editing}
-					<input name="name" placeholder="Name" value={name} required />
-				{:else}
-					{name}
-				{/if}
-			</Heading>
+
+			{#if editing}
+				<TextInput
+					span_x={'30'}
+					variation="block"
+					name="name"
+					placeholder="Name"
+					value={name}
+					required
+				/>
+			{:else}
+				<Heading is="h1">{name}</Heading>
+			{/if}
 
 			<!-- EDIT / SAVE + LOCKED BY {USER} -->
 			<span>
@@ -77,6 +83,8 @@
 				<EditableMarkdown bind:value={markdownNotes} {editing} asInput slot="markdown-notes" />
 			</slot>
 		</div>
+
+		<div class="spacer" />
 
 		<!-- PROPERTIES -->
 		<slot name="properties">

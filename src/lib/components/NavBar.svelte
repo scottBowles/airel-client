@@ -1,9 +1,17 @@
 <script lang="ts">
-	import { Anchor, Divider, Menu, Omni, Text } from '@kahi-ui/framework';
-	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import { session } from '$app/stores';
+	import { page, session } from '$app/stores';
 	import { post } from '$lib/utils';
+	import {
+		Anchor,
+		Aside,
+		Divider,
+		MediaQueryRender,
+		Menu,
+		Omni,
+		Spacer,
+		Text
+	} from '@kahi-ui/framework';
 
 	const links = [
 		{
@@ -61,10 +69,12 @@
 <Omni.Container palette="dark" width="100">
 	<Omni.Header>
 		<Anchor href="#">Airel</Anchor>
-		<Divider orientation="vertical" />
-		<Anchor href="#">
-			<Text is="small">Between Two Suns</Text>
-		</Anchor>
+		<MediaQueryRender queries="(min-width: 1080px)">
+			<Divider orientation="vertical" />
+			<Anchor href="#">
+				<Text is="small">Between Two Suns</Text>
+			</Anchor>
+		</MediaQueryRender>
 	</Omni.Header>
 
 	<Omni.Footer>
@@ -80,3 +90,23 @@
 		</Menu.Container>
 	</Omni.Footer>
 </Omni.Container>
+
+<!-- <Aside.Container palette="auto" max_width="content-max" height="100">
+	<Aside.Header>
+		<Anchor href="#">Airel</Anchor>
+		<Divider />
+	</Aside.Header>
+
+	<Aside.Section>
+		<Menu.Container>
+			{#each links as link}
+				<a href={link.href} sveltekit:prefetch>
+					<Menu.Button active={link === activeLink}>{link.label}</Menu.Button>
+				</a>
+			{/each}
+			<a href={'#'} on:click={logout}>
+				<Menu.Button>Logout</Menu.Button>
+			</a>
+		</Menu.Container>
+	</Aside.Section>
+</Aside.Container> -->
