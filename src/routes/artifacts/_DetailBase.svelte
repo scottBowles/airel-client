@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
 	import BasicProperty from '$lib/components/DetailPage/BasicProperty.svelte';
-	import { Text } from '@kahi-ui/framework';
+	import { Text, TextInput } from '@kahi-ui/framework';
 
 	export let onEditClick = () => {};
 	export let onFormSubmit;
@@ -41,7 +41,20 @@
 			<BasicProperty name="Description">
 				<Text>
 					{#if editing}
-						<input name="description" value={description} placeholder="Description" />
+						<!-- <TextInput
+					span_x={'30'}
+					variation="block"
+					name="name"
+					placeholder="Name"
+					value={name}
+					required
+				/> -->
+						<TextInput
+							variation="block"
+							name="description"
+							value={description}
+							placeholder="Description"
+						/>
 					{:else}
 						{description}
 					{/if}

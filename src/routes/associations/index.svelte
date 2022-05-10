@@ -1,5 +1,9 @@
 <script context="module" lang="ts">
+	import BannerImage from '$lib/components/BannerImage.svelte';
+	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import { KQL_Associations } from '$lib/graphql/_kitql/graphqlStores';
+	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
+	import { Container } from '@kahi-ui/framework';
 	import { KitQLInfo } from '@kitql/all-in';
 
 	export const load = async ({ fetch }) => {
@@ -10,12 +14,6 @@
 </script>
 
 <script>
-	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
-	import { Container } from '@kahi-ui/framework';
-
-	import BannerImage from '$lib/components/BannerImage.svelte';
-	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
-
 	$: associations = $KQL_Associations.data?.associations.edges?.map(({ node }) => node) || [];
 	$: ({ status } = $KQL_Associations);
 	$: console.log({ associations });
@@ -39,8 +37,8 @@
 		{/each}
 	</div>
 </Container>
-<KitQLInfo store={KQL_Associations} />
 
+<!-- <KitQLInfo store={KQL_Associations} /> -->
 <style>
 	.spacer {
 		height: 2rem;
