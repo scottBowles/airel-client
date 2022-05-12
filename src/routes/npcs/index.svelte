@@ -1,5 +1,9 @@
 <script context="module" lang="ts">
+	import AddLink from '$lib/components/AddLink.svelte';
+	import BannerImage from '$lib/components/BannerImage.svelte';
+	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import { KQL_Npcs } from '$lib/graphql/_kitql/graphqlStores';
+	import { Container } from '@kahi-ui/framework';
 	export const load = async ({ fetch }) => {
 		await KQL_Npcs.queryLoad({ fetch });
 		return {};
@@ -7,11 +11,6 @@
 </script>
 
 <script>
-	import { Container } from '@kahi-ui/framework';
-
-	import BannerImage from '$lib/components/BannerImage.svelte';
-	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
-
 	$: npcs = $KQL_Npcs.data?.npcs.edges?.map(({ node }) => node) || [];
 	$: ({ status } = $KQL_Npcs);
 	$: console.log({ npcs });
@@ -23,6 +22,9 @@
 
 <Container>
 	<div class="cards-container">
+		<div>
+			<AddLink href="npcs/create" />
+		</div>
 		{#each npcs as npc}
 			{@const { id, name, description, thumbnailId } = npc}
 			{@const href = `npcs/${id}`}

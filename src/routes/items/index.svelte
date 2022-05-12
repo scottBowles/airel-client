@@ -1,5 +1,13 @@
 <script context="module" lang="ts">
+	import AddLink from '$lib/components/AddLink.svelte';
+	import BannerImage from '$lib/components/BannerImage.svelte';
+	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import { KQL_Items } from '$lib/graphql/_kitql/graphqlStores';
+	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
+	import { Container } from '@kahi-ui/framework';
+	import GiBroadsword from 'svelte-icons/gi/GiBroadsword.svelte';
+	import GiCheckedShield from 'svelte-icons/gi/GiCheckedShield.svelte';
+	import GiRoundBottomFlask from 'svelte-icons/gi/GiRoundBottomFlask.svelte';
 	export const load = async ({ fetch }) => {
 		await KQL_Items.queryLoad({ fetch });
 		return {};
@@ -7,16 +15,6 @@
 </script>
 
 <script>
-	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
-
-	import BannerImage from '$lib/components/BannerImage.svelte';
-	import { Container } from '@kahi-ui/framework';
-	import GiBroadsword from 'svelte-icons/gi/GiBroadsword.svelte';
-	import GiCheckedShield from 'svelte-icons/gi/GiCheckedShield.svelte';
-	import GiRoundBottomFlask from 'svelte-icons/gi/GiRoundBottomFlask.svelte';
-
-	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
-
 	$: items = $KQL_Items.data?.items.edges?.map(({ node }) => node) || [];
 	$: ({ status } = $KQL_Items);
 	$: console.log({ items });
@@ -33,6 +31,9 @@
 
 <Container>
 	<div class="cards-container">
+		<div>
+			<AddLink href="items/create" />
+		</div>
 		{#each items as item}
 			{@const { id, name, description, thumbnailId, weapon, armor, equipment } = item}
 			{@const href = `items/${id}`}
@@ -75,13 +76,5 @@
 
 	.spacer {
 		height: 2rem;
-	}
-
-	a {
-		color: #908149;
-	}
-
-	a:hover {
-		text-decoration: underline;
 	}
 </style>

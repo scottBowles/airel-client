@@ -1,15 +1,12 @@
 <script context="module" lang="ts">
 	import { page } from '$app/stores';
-	import { Layout, StatusHandler } from '$lib/components/DetailPage';
-	import BasicProperty from '$lib/components/DetailPage/BasicProperty.svelte';
-	import { LockFailedError } from '$lib/errors';
 	import {
 		KQL_ItemAddImage,
 		KQL_ItemById,
 		KQL_ItemLock,
 		KQL_ItemPatch
 	} from '$lib/graphql/_kitql/graphqlStores';
-	import { Text } from '@kahi-ui/framework';
+	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
 	import DetailBase from './_DetailBase.svelte';
 
@@ -39,9 +36,7 @@
 		const lockRes = await KQL_ItemLock.mutate({ variables });
 		if (lockRes.errors) {
 			refreshFromNetwork();
-			// notify error rather than throwing error
-			// return;
-			throw new LockFailedError(lockRes.errors[0].message);
+			somethingWentWrong(lockRes.errors[0].message);
 		}
 		patchStore(lockRes.data.itemLock.item);
 		return;
@@ -54,27 +49,27 @@
 		formData.forEach((value, key) => {
 			patch[key] = value;
 		});
-		console.log({ patch });
 
 		const { data, errors: resErrors } = await KQL_ItemPatch.mutate({
 			variables: { id, ...patch }
 		});
 
 		if (resErrors) {
-			console.log({ resErrors });
-			// handle resErrors
+			somethingWentWrong(resErrors[0].message);
 		}
 		const { item: updatedItem, errors, ok } = data.itemPatch;
 		if (ok) {
 			patchStore(updatedItem);
 		}
-		// handle errors
+		if (errors) {
+			somethingWentWrong(errors);
+		}
 	}
 
 	async function onImageUpload(error, result) {
 		if (error) {
-			// handle error
-			// console.log('handleImageUpload', { error });
+			somethingWentWrong(JSON.stringify(error));
+			return;
 		}
 		if (result?.event === 'success') {
 			const { data, errors: resErrors } = await KQL_ItemAddImage.mutate({
@@ -84,14 +79,11 @@
 				}
 			});
 			if (resErrors) {
-				// handle resErrors
+				somethingWentWrong(resErrors[0].message);
 			}
 			const { item, errors, ok } = data.itemAddImage;
-			if (ok) {
-				// console.log({ item });
-				patchStore(item);
-				// console.log('post patch', $KQL_ItemById);
-			}
+			if (ok) patchStore(item);
+			if (errors) somethingWentWrong(errors);
 		}
 	}
 </script>

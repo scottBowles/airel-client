@@ -1,6 +1,7 @@
 <script context="module" lang="ts">
 	import { goto } from '$app/navigation';
 	import { KQL_NpcCreate } from '$lib/graphql/_kitql/graphqlStores';
+	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
 	import DetailBase from './_DetailBase.svelte';
 </script>
@@ -20,20 +21,22 @@
 		});
 
 		if (resErrors) {
-			// handle resErrors
+			somethingWentWrong(resErrors[0].message);
 		}
 
 		const { npc: newNpc, errors, ok } = data.npcCreate;
 		if (ok) {
 			goto(`/npcs/${newNpc.id}`);
 		}
-		// handle errors
+		if (errors) {
+			somethingWentWrong(errors);
+		}
 	}
 
 	async function onImageUpload(error, result) {
 		if (error) {
-			// handle error
-			// console.log('handleImageUpload', { error });
+			somethingWentWrong(JSON.stringify(error));
+			return;
 		}
 		if (result?.event === 'success') {
 			npc.imageIds = [...npc.imageIds, result.info.public_id];

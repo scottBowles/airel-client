@@ -1,5 +1,9 @@
 <script context="module" lang="ts">
+	import AddLink from '$lib/components/AddLink.svelte';
+	import BannerImage from '$lib/components/BannerImage.svelte';
+	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import { KQL_Places } from '$lib/graphql/_kitql/graphqlStores';
+	import { Container } from '@kahi-ui/framework';
 	export const load = async ({ fetch }) => {
 		await KQL_Places.queryLoad({ fetch });
 		return {};
@@ -7,11 +11,6 @@
 </script>
 
 <script>
-	import { Container } from '@kahi-ui/framework';
-
-	import BannerImage from '$lib/components/BannerImage.svelte';
-	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
-
 	$: places = $KQL_Places.data?.places.edges?.map(({ node }) => node) || [];
 	$: ({ status } = $KQL_Places);
 	$: console.log({ places });
@@ -27,6 +26,9 @@
 
 <Container>
 	<div class="cards-container">
+		<div>
+			<AddLink href="places/create" />
+		</div>
 		{#each places as place}
 			{@const { id, name, description, thumbnailId } = place}
 			{@const href = `places/${id}`}

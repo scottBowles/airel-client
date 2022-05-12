@@ -1,15 +1,12 @@
 <script context="module" lang="ts">
 	import { page } from '$app/stores';
-	import { Layout, StatusHandler } from '$lib/components/DetailPage';
-	import BasicProperty from '$lib/components/DetailPage/BasicProperty.svelte';
-	import { LockFailedError } from '$lib/errors';
 	import {
 		KQL_RaceAddImage,
 		KQL_RaceById,
 		KQL_RaceLock,
 		KQL_RacePatch
 	} from '$lib/graphql/_kitql/graphqlStores';
-	import { Text } from '@kahi-ui/framework';
+	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
 	import DetailBase from './_DetailBase.svelte';
 
@@ -39,9 +36,8 @@
 		const lockRes = await KQL_RaceLock.mutate({ variables });
 		if (lockRes.errors) {
 			refreshFromNetwork();
-			// notify error rather than throwing error
-			// return;
-			throw new LockFailedError(lockRes.errors[0].message);
+			somethingWentWrong(lockRes.errors[0].message);
+			return;
 		}
 		patchStore(lockRes.data.raceLock.race);
 		return;
@@ -54,26 +50,28 @@
 		formData.forEach((value, key) => {
 			patch[key] = value;
 		});
-		console.log({ patch });
 
 		const { data, errors: resErrors } = await KQL_RacePatch.mutate({
 			variables: { id, ...patch }
 		});
 
 		if (resErrors) {
-			// handle resErrors
+			somethingWentWrong(resErrors[0].message);
+			return;
 		}
 		const { race: updatedRace, errors, ok } = data.racePatch;
 		if (ok) {
 			patchStore(updatedRace);
 		}
-		// handle errors
+		if (errors) {
+			somethingWentWrong(errors);
+		}
 	}
 
 	async function onImageUpload(error, result) {
 		if (error) {
-			// handle error
-			// console.log('handleImageUpload', { error });
+			somethingWentWrong(error);
+			return;
 		}
 		if (result?.event === 'success') {
 			const { data, errors: resErrors } = await KQL_RaceAddImage.mutate({
@@ -83,13 +81,15 @@
 				}
 			});
 			if (resErrors) {
-				// handle resErrors
+				somethingWentWrong(resErrors[0].message);
+				return;
 			}
 			const { race, errors, ok } = data.raceAddImage;
 			if (ok) {
-				// console.log({ race });
 				patchStore(race);
-				// console.log('post patch', $KQL_RaceById);
+			}
+			if (errors) {
+				somethingWentWrong(errors);
 			}
 		}
 	}

@@ -1,15 +1,12 @@
 <script context="module" lang="ts">
 	import { page } from '$app/stores';
-	import { Layout, StatusHandler } from '$lib/components/DetailPage';
-	import BasicProperty from '$lib/components/DetailPage/BasicProperty.svelte';
-	import { LockFailedError } from '$lib/errors';
 	import {
 		KQL_NpcAddImage,
 		KQL_NpcById,
 		KQL_NpcLock,
 		KQL_NpcPatch
 	} from '$lib/graphql/_kitql/graphqlStores';
-	import { Text } from '@kahi-ui/framework';
+	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
 	import DetailBase from './_DetailBase.svelte';
 
@@ -39,9 +36,8 @@
 		const lockRes = await KQL_NpcLock.mutate({ variables });
 		if (lockRes.errors) {
 			refreshFromNetwork();
-			// notify error rather than throwing error
-			// return;
-			throw new LockFailedError(lockRes.errors[0].message);
+			somethingWentWrong(lockRes.errors[0].message);
+			return;
 		}
 		patchStore(lockRes.data.npcLock.npc);
 		return;
@@ -54,26 +50,27 @@
 		formData.forEach((value, key) => {
 			patch[key] = value;
 		});
-		console.log({ patch });
 
 		const { data, errors: resErrors } = await KQL_NpcPatch.mutate({
 			variables: { id, ...patch }
 		});
 
 		if (resErrors) {
-			// handle resErrors
+			somethingWentWrong(resErrors[0].message);
 		}
 		const { npc: updatedNpc, errors, ok } = data.npcPatch;
 		if (ok) {
 			patchStore(updatedNpc);
 		}
-		// handle errors
+		if (errors) {
+			somethingWentWrong(errors);
+		}
 	}
 
 	async function onImageUpload(error, result) {
 		if (error) {
-			// handle error
-			// console.log('handleImageUpload', { error });
+			somethingWentWrong(JSON.stringify(error));
+			return;
 		}
 		if (result?.event === 'success') {
 			const { data, errors: resErrors } = await KQL_NpcAddImage.mutate({
@@ -83,13 +80,14 @@
 				}
 			});
 			if (resErrors) {
-				// handle resErrors
+				somethingWentWrong(resErrors[0].message);
 			}
 			const { npc, errors, ok } = data.npcAddImage;
 			if (ok) {
-				// console.log({ npc });
 				patchStore(npc);
-				// console.log('post patch', $KQL_NpcById);
+			}
+			if (errors) {
+				somethingWentWrong(errors);
 			}
 		}
 	}

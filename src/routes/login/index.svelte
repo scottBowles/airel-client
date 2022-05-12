@@ -1,6 +1,5 @@
 <script context="module" lang="ts">
 	export async function load({ session }) {
-		console.log('login page', { session });
 		if (session.isLoggedIn) {
 			return {
 				status: 302,
@@ -12,12 +11,10 @@
 </script>
 
 <script lang="ts">
-	import { Button, Heading, TextInput } from '@kahi-ui/framework';
-
 	import { goto } from '$app/navigation';
 	import { session } from '$app/stores';
-
 	import { post } from '$lib/utils';
+	import { Button, Heading, TextInput } from '@kahi-ui/framework';
 
 	let username;
 	let password;

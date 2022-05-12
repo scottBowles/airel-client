@@ -1,8 +1,14 @@
 <script context="module" lang="ts">
-	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import { browser } from '$app/env';
+	import AddLink from '$lib/components/AddLink.svelte';
+	import BannerImage from '$lib/components/BannerImage.svelte';
+	import Loading from '$lib/components/DetailPage/StatusHandling/Loading.svelte';
+	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import fetchBanner from '$lib/fetchBanner';
 	import { KQL_Artifacts } from '$lib/graphql/_kitql/graphqlStores';
+	import settings from '$lib/settings';
+	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
+	import { Container } from '@kahi-ui/framework';
 
 	export async function load({ fetch }) {
 		if (browser) {
@@ -24,12 +30,6 @@
 </script>
 
 <script>
-	import { Container } from '@kahi-ui/framework';
-
-	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
-	import BannerImage from '$lib/components/BannerImage.svelte';
-	import Loading from '$lib/components/DetailPage/StatusHandling/Loading.svelte';
-
 	export let bannerUrl = undefined;
 
 	$: artifacts = $KQL_Artifacts.data?.artifacts.edges?.map(({ node }) => node) || [];
@@ -56,6 +56,9 @@
 
 	<Container>
 		<div class="cards-container">
+			<div>
+				<AddLink href="artifacts/create" />
+			</div>
 			{#each artifacts as artifact}
 				{@const { id, name, description, thumbnailId, items } = artifact}
 				{@const href = `artifacts/${id}`}
@@ -99,13 +102,5 @@
 
 	.spacer {
 		height: 2rem;
-	}
-
-	a {
-		color: #908149;
-	}
-
-	a:hover {
-		text-decoration: underline;
 	}
 </style>

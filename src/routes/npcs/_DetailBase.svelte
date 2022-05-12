@@ -41,17 +41,12 @@
 			<BasicProperty name="Description">
 				<Text>
 					{#if editing}
-						<div class="description-input">
-							<TextInput
-								variation="block"
-								is="textarea"
-								name="description"
-								value={description}
-								placeholder="Description"
-								resizable
-							/>
-						</div>
-						<!-- <input name="description" value={description} placeholder="Description" /> -->
+						<TextInput
+							variation="block"
+							name="description"
+							value={description}
+							placeholder="Description"
+						/>
 					{:else}
 						{description}
 					{/if}
@@ -60,10 +55,3 @@
 		</svelte:fragment>
 	</Layout>
 </StatusHandler>
-
-<style>
-	.description-input {
-		display: inline-block;
-		width: auto;
-	}
-</style>

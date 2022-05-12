@@ -1,3 +1,4 @@
+import { toast } from '@zerodevx/svelte-toast';
 export const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 
 export function post(endpoint: string, data = {}) {
@@ -26,4 +27,8 @@ export function withToken(fetch, session) {
 		return fetchWithToken;
 	}
 	return fetch;
+}
+
+export function somethingWentWrong(error: string) {
+	toast.push(`<strong>Something went wrong</strong><br />${error}`);
 }

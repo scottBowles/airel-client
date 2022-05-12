@@ -1,15 +1,12 @@
 <script context="module" lang="ts">
 	import { page } from '$app/stores';
-	import { Layout, StatusHandler } from '$lib/components/DetailPage';
-	import BasicProperty from '$lib/components/DetailPage/BasicProperty.svelte';
-	import { LockFailedError } from '$lib/errors';
 	import {
 		KQL_PlaceAddImage,
 		KQL_PlaceById,
 		KQL_PlaceLock,
 		KQL_PlacePatch
 	} from '$lib/graphql/_kitql/graphqlStores';
-	import { Text } from '@kahi-ui/framework';
+	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
 	import DetailBase from './_DetailBase.svelte';
 
@@ -25,7 +22,6 @@
 
 	$: ({ status, errors, data } = $KQL_PlaceById);
 	$: ({ place } = data || {});
-	$: console.log({ place });
 
 	function patchStore(patch) {
 		const update = { place: { ...place, ...patch } };
@@ -40,9 +36,8 @@
 		const lockRes = await KQL_PlaceLock.mutate({ variables });
 		if (lockRes.errors) {
 			refreshFromNetwork();
-			// notify error rather than throwing error
-			// return;
-			throw new LockFailedError(lockRes.errors[0].message);
+			somethingWentWrong(lockRes.errors[0].message);
+			return;
 		}
 		patchStore(lockRes.data.placeLock.place);
 		return;
@@ -55,26 +50,28 @@
 		formData.forEach((value, key) => {
 			patch[key] = value;
 		});
-		console.log({ patch });
 
 		const { data, errors: resErrors } = await KQL_PlacePatch.mutate({
 			variables: { id, ...patch }
 		});
 
 		if (resErrors) {
-			// handle resErrors
+			somethingWentWrong(resErrors[0].message);
+			return;
 		}
 		const { place: updatedPlace, errors, ok } = data.placePatch;
 		if (ok) {
 			patchStore(updatedPlace);
 		}
-		// handle errors
+		if (errors) {
+			somethingWentWrong(errors);
+		}
 	}
 
 	async function onImageUpload(error, result) {
 		if (error) {
-			// handle error
-			// console.log('handleImageUpload', { error });
+			somethingWentWrong(error);
+			return;
 		}
 		if (result?.event === 'success') {
 			const { data, errors: resErrors } = await KQL_PlaceAddImage.mutate({
@@ -84,13 +81,15 @@
 				}
 			});
 			if (resErrors) {
-				// handle resErrors
+				somethingWentWrong(resErrors[0].message);
+				return;
 			}
 			const { place, errors, ok } = data.placeAddImage;
 			if (ok) {
-				// console.log({ place });
 				patchStore(place);
-				// console.log('post patch', $KQL_PlaceById);
+			}
+			if (errors) {
+				somethingWentWrong(errors);
 			}
 		}
 	}

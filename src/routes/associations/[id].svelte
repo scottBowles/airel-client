@@ -1,12 +1,12 @@
 <script context="module" lang="ts">
 	import { page } from '$app/stores';
-	import { LockFailedError } from '$lib/errors';
 	import {
 		KQL_AssociationAddImage,
 		KQL_AssociationById,
 		KQL_AssociationLock,
 		KQL_AssociationPatch
 	} from '$lib/graphql/_kitql/graphqlStores';
+	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
 	import DetailBase from './_DetailBase.svelte';
 
@@ -36,9 +36,8 @@
 		const lockRes = await KQL_AssociationLock.mutate({ variables });
 		if (lockRes.errors) {
 			refreshFromNetwork();
-			// notify error rather than throwing error
-			// return;
-			throw new LockFailedError(lockRes.errors[0].message);
+			somethingWentWrong(lockRes.errors[0].message);
+			return;
 		}
 		patchStore(lockRes.data.associationLock.association);
 		return;
@@ -58,19 +57,21 @@
 		});
 
 		if (resErrors) {
-			// handle resErrors
+			somethingWentWrong(resErrors[0].message);
 		}
 		const { association: updatedAssociation, errors, ok } = data.associationPatch;
 		if (ok) {
 			patchStore(updatedAssociation);
 		}
-		// handle errors
+		if (errors) {
+			somethingWentWrong(errors);
+		}
 	}
 
 	async function onImageUpload(error, result) {
 		if (error) {
-			// handle error
-			// console.log('handleImageUpload', { error });
+			somethingWentWrong(error);
+			return;
 		}
 		if (result?.event === 'success') {
 			const { data, errors: resErrors } = await KQL_AssociationAddImage.mutate({
@@ -80,13 +81,15 @@
 				}
 			});
 			if (resErrors) {
-				// handle resErrors
+				somethingWentWrong(resErrors[0].message);
+				return;
 			}
 			const { association, errors, ok } = data.associationAddImage;
 			if (ok) {
-				// console.log({ association });
 				patchStore(association);
-				// console.log('post patch', $KQL_AssociationById);
+			}
+			if (errors) {
+				somethingWentWrong(errors);
 			}
 		}
 	}

@@ -1,15 +1,12 @@
 <script context="module" lang="ts">
 	import { page } from '$app/stores';
-	import { Layout, StatusHandler } from '$lib/components/DetailPage';
-	import BasicProperty from '$lib/components/DetailPage/BasicProperty.svelte';
-	import { LockFailedError } from '$lib/errors';
 	import {
 		KQL_ArtifactAddImage,
 		KQL_ArtifactById,
 		KQL_ArtifactLock,
 		KQL_ArtifactPatch
 	} from '$lib/graphql/_kitql/graphqlStores';
-	import { Text } from '@kahi-ui/framework';
+	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
 	import DetailBase from './_DetailBase.svelte';
 
@@ -36,12 +33,12 @@
 	}
 
 	async function onEditClick() {
+		somethingWentWrong('hey');
 		const lockRes = await KQL_ArtifactLock.mutate({ variables });
 		if (lockRes.errors) {
 			refreshFromNetwork();
-			// notify error rather than throwing error
-			// return;
-			throw new LockFailedError(lockRes.errors[0].message);
+			somethingWentWrong(lockRes.errors[0].message);
+			return;
 		}
 		patchStore(lockRes.data.artifactLock.artifact);
 		return;
@@ -61,19 +58,20 @@
 		});
 
 		if (resErrors) {
-			// handle resErrors
+			somethingWentWrong(resErrors[0].message);
 		}
 		const { artifact: updatedArtifact, errors, ok } = data.artifactPatch;
 		if (ok) {
 			patchStore(updatedArtifact);
 		}
-		// handle errors
+		if (errors) {
+			somethingWentWrong(errors);
+		}
 	}
 
 	async function onImageUpload(error, result) {
 		if (error) {
-			// handle error
-			// console.log('handleImageUpload', { error });
+			somethingWentWrong(error.message);
 		}
 		if (result?.event === 'success') {
 			const { data, errors: resErrors } = await KQL_ArtifactAddImage.mutate({
@@ -83,13 +81,14 @@
 				}
 			});
 			if (resErrors) {
-				// handle resErrors
+				somethingWentWrong(resErrors[0].message);
 			}
 			const { artifact, errors, ok } = data.artifactAddImage;
 			if (ok) {
-				// console.log({ artifact });
 				patchStore(artifact);
-				// console.log('post patch', $KQL_ArtifactById);
+			}
+			if (errors) {
+				somethingWentWrong(errors);
 			}
 		}
 	}

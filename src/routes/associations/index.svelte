@@ -1,4 +1,5 @@
 <script context="module" lang="ts">
+	import AddLink from '$lib/components/AddLink.svelte';
 	import BannerImage from '$lib/components/BannerImage.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import { KQL_Associations } from '$lib/graphql/_kitql/graphqlStores';
@@ -30,6 +31,9 @@
 
 <Container>
 	<div class="cards-container">
+		<div>
+			<AddLink href="associations/create" />
+		</div>
 		{#each associations as association}
 			{@const { id, name, description, thumbnailId } = association}
 			{@const href = `associations/${id}`}
