@@ -116,7 +116,7 @@
 		margin-left: 0.5em;
 		/* margin-bottom: 0.5em; */
 	}
-	.markdown-container {
+	/* .markdown-container {
 		width: clamp(56%, (120px - 40%) * 1000, 100%);
-	}
+	} */
 </style>
