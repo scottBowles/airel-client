@@ -9,9 +9,6 @@
 	import '@kahi-ui/framework/dist/kahi-ui.framework.min.css';
 	import '@kahi-ui/framework/dist/kahi-ui.theme.default.min.css';
 	import { SvelteToast } from '@zerodevx/svelte-toast';
-	// https://github.com/sindresorhus/github-markdown-css
-	// Run `npm run make` to update the CSS. (From github's repo, presumably?)
-	import 'github-markdown-css/github-markdown.css';
 	import FaBars from 'svelte-icons/fa/FaBars.svelte';
 
 	export async function load({ session, url }) {

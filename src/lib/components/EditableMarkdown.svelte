@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { Editor, Viewer } from 'bytemd';
 	import 'bytemd/dist/index.css';
+	// https://github.com/sindresorhus/github-markdown-css
+	// Run `npm run make` to update the CSS. (From github's repo, presumably?)
+	import 'github-markdown-css/github-markdown.css';
+
 	// import gfm from '@bytemd/plugin-gfm';
 
 	// const plugins = [gfm()];
