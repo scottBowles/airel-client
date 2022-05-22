@@ -66,4 +66,13 @@
 		height: 500px;
 		width: auto;
 	}
+
+	/**
+	 * The .markdown-body class is on the outer div in the Viewer component and
+	 * is subsequently used by the github-markdown-css library to style the
+	 * rendered markdown.
+	 */
+	:global(.markdown-body) {
+		background: inherit;
+	}
 </style>
