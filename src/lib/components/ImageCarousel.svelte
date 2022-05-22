@@ -20,7 +20,7 @@
 		<div class="arrow left" on:click|stopPropagation={decrementIndex}>&#10094;</div>
 	{/if}
 
-	<LargeImage imageId={currentImageId ?? 'dnd/sfaedxiltuowlw7whb0c'} />
+	<LargeImage imageId={currentImageId} />
 
 	{#if imageIds.length > 1 && hasMounted}
 		<div class="arrow right" on:click|stopPropagation={incrementIndex}>&#10095;</div>

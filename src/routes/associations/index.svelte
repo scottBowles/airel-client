@@ -3,6 +3,7 @@
 	import BannerImage from '$lib/components/BannerImage.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import { KQL_Associations } from '$lib/graphql/_kitql/graphqlStores';
+	import { thumbnail } from '@cloudinary/url-gen/actions/resize';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import { Container } from '@kahi-ui/framework';
 	import { KitQLInfo } from '@kitql/all-in';
@@ -35,9 +36,9 @@
 			<AddLink href="associations/create" />
 		</div>
 		{#each associations as association}
-			{@const { id, name, description, thumbnailId } = association}
+			{@const { id, name, description, thumbnailId, imageIds } = association}
 			{@const href = `associations/${id}`}
-			<ListDetailCard {name} {description} {thumbnailId} {href} />
+			<ListDetailCard thumbnailId={thumbnailId || imageIds[0]} {name} {description} {href} />
 		{/each}
 	</div>
 </Container>

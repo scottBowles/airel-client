@@ -9,9 +9,7 @@
 
 <div class="_card">
 	<slot name="thumbnail">
-		{#if thumbnailId}
-			<Thumbnail {thumbnailId} />
-		{/if}
+		<Thumbnail {thumbnailId} />
 	</slot>
 	<div>
 		<p class="title">
