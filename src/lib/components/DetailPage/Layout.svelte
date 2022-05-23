@@ -56,13 +56,13 @@
 			<span class="locked-edit-save-container">
 				{#if isMounted}
 					{#if creating}
-						<button type="submit">Save</button>
+						<button class="lone-btn" type="submit">Save</button>
 					{:else if lockedBySelf}
 						<span>Locked by {lockUser.username}</span> <button type="submit">Save</button>
 					{:else if lockUser}
 						Locked by {lockUser.username} <button type="button" disabled>Edit</button>
 					{:else}
-						<button type="button" on:click={onEditClick}>Edit</button>
+						<button class="lone-btn" type="button" on:click={onEditClick}>Edit</button>
 					{/if}
 				{/if}
 			</span>
@@ -130,7 +130,7 @@
 		gap: 1rem;
 	}
 	.name-container {
-		flex: 3;
+		flex-grow: 3;
 	}
 	.locked-edit-save-container {
 		display: flex;
@@ -139,6 +139,9 @@
 		flex: 1;
 		gap: 2rem;
 		min-width: fit-content;
+	}
+	.lone-btn {
+		margin-left: auto;
 	}
 	hr {
 		color: #ccc;
