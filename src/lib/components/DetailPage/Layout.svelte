@@ -36,27 +36,29 @@
 	<form on:submit|preventDefault={onFormSubmit}>
 		<!-- TOP ROW -->
 		<div class="top-row">
-			<!-- NAME -->
-			{#if editing}
-				<TextInput
-					span_x={'30'}
-					variation="block"
-					name="name"
-					placeholder="Name"
-					value={name}
-					required
-				/>
-			{:else}
-				<Heading is="h1">{name}</Heading>
-			{/if}
+			<span class="name-container">
+				<!-- NAME -->
+				{#if editing}
+					<TextInput
+						span_x={'30'}
+						variation="block"
+						name="name"
+						placeholder="Name"
+						value={name}
+						required
+					/>
+				{:else}
+					<Heading is="h1">{name}</Heading>
+				{/if}
+			</span>
 
 			<!-- EDIT / SAVE + LOCKED BY {USER} -->
-			<span>
+			<span class="locked-edit-save-container">
 				{#if isMounted}
 					{#if creating}
 						<button type="submit">Save</button>
 					{:else if lockedBySelf}
-						Locked by {lockUser.username} <button type="submit">Save</button>
+						<span>Locked by {lockUser.username}</span> <button type="submit">Save</button>
 					{:else if lockUser}
 						Locked by {lockUser.username} <button type="button" disabled>Edit</button>
 					{:else}
@@ -124,6 +126,19 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+	.name-container {
+		flex: 3;
+	}
+	.locked-edit-save-container {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		flex: 1;
+		gap: 2rem;
+		min-width: fit-content;
 	}
 	hr {
 		color: #ccc;
