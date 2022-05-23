@@ -33,6 +33,13 @@
 				position: fixed;
 			}
 		</style>
+	{:else}
+		<style>
+			body {
+				overflow: auto;
+				position: static;
+			}
+		</style>
 	{/if}
 </svelte:head>
 
