@@ -12,13 +12,11 @@
 
 	<Text>Hey check it out. We have a site!</Text>
 	<div class="spacer-sm" />
-	<Text>
-		You can look around and see what's here. Not much just yet. But just think of the possibilities!
-	</Text>
+	<Text>Look around and see what's here. Not much yet. But think of the possibilities!</Text>
 
 	<div class="spacer" />
 
-	<Heading is="h3">Here are ways you can help</Heading>
+	<Heading is="h3">How you can help</Heading>
 
 	<div class="spacer" />
 
@@ -48,8 +46,7 @@
 	</Text>
 	<div class="spacer-sm" />
 	<Text>
-		You're welcome to tell me your ideas, but the best way to make a suggestion is to create an
-		issue on <a
+		The best way to make a suggestion is to create an issue on <a
 			href="https://github.com/scottBowles/airel-client/issues"
 			rel="external"
 			target="_blank">GitHub<span class="gh-icon"><DiGithubBadge /></span></a
