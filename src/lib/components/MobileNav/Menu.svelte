@@ -60,6 +60,7 @@
 <div class="menu-container">
 	<Menu.Container>
 		<Anchor href="/"><Heading is="h1">Airel</Heading></Anchor>
+		<div class="spacer" />
 		{#each links as link}
 			<a href={link.href} sveltekit:prefetch>
 				<Menu.Button active={link === activeLink}>{link.label}</Menu.Button>
@@ -76,11 +77,15 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: 100%;
-		height: 100%;
+		width: 100vw;
+		height: 100vh;
 		background-color: hsla(var(--palette-background-lighter), var(--document-background-opacity));
 		display: grid;
 		place-items: center;
 		z-index: 9998;
+	}
+
+	.spacer {
+		margin-bottom: 1rem;
 	}
 </style>

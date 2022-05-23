@@ -3,6 +3,7 @@
 	import { BasicProperty } from '$lib/components/DetailPage';
 	import EditableMarkdown from '$lib/components/EditableMarkdown.svelte';
 	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
+	import MobileNavSpacer from '$lib/components/MobileNav/Spacer.svelte';
 	import { Container, Heading, Text, TextInput } from '@kahi-ui/framework';
 	import { onMount } from 'svelte';
 
@@ -29,7 +30,8 @@
 	console.log({ imageIds });
 </script>
 
-<div class="spacer" />
+<MobileNavSpacer />
+<div class="spacer-xs" />
 <Container>
 	<form on:submit|preventDefault={onFormSubmit}>
 		<!-- TOP ROW -->
