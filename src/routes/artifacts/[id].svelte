@@ -33,7 +33,6 @@
 	}
 
 	async function onEditClick() {
-		somethingWentWrong('hey');
 		const lockRes = await KQL_ArtifactLock.mutate({ variables });
 		if (lockRes.errors) {
 			refreshFromNetwork();
