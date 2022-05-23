@@ -25,19 +25,17 @@
 <StatusHandler {status} {errors} value={item} entityName="item">
 	<Layout
 		{name}
+		{description}
 		{imageIds}
 		{markdownNotes}
 		{lockUser}
 		{lockedBySelf}
-		properties={{
-			Description: description
-		}}
 		{onEditClick}
 		{onFormSubmit}
 		{onImageUpload}
 		{creating}
 	>
-		<svelte:fragment slot="properties">
+		<!-- <svelte:fragment slot="properties">
 			<BasicProperty name="Description">
 				<Text>
 					{#if editing}
@@ -47,12 +45,11 @@
 							value={description}
 							placeholder="Description"
 						/>
-						<!-- <input name="description" value={description} placeholder="Description" /> -->
 					{:else}
 						{description}
 					{/if}
 				</Text>
 			</BasicProperty>
-		</svelte:fragment>
+		</svelte:fragment> -->
 	</Layout>
 </StatusHandler>

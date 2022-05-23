@@ -25,33 +25,14 @@
 <StatusHandler {status} {errors} value={npc} entityName="npc">
 	<Layout
 		{name}
+		{description}
 		{imageIds}
 		{markdownNotes}
 		{lockUser}
 		{lockedBySelf}
-		properties={{
-			Description: description
-		}}
 		{onEditClick}
 		{onFormSubmit}
 		{onImageUpload}
 		{creating}
-	>
-		<svelte:fragment slot="properties">
-			<BasicProperty name="Description">
-				<Text>
-					{#if editing}
-						<TextInput
-							variation="block"
-							name="description"
-							value={description}
-							placeholder="Description"
-						/>
-					{:else}
-						{description}
-					{/if}
-				</Text>
-			</BasicProperty>
-		</svelte:fragment>
-	</Layout>
+	/>
 </StatusHandler>

@@ -3,10 +3,11 @@
 	import { BasicProperty } from '$lib/components/DetailPage';
 	import EditableMarkdown from '$lib/components/EditableMarkdown.svelte';
 	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
-	import { Container, Heading, TextInput } from '@kahi-ui/framework';
+	import { Container, Heading, Text, TextInput } from '@kahi-ui/framework';
 	import { onMount } from 'svelte';
 
 	export let name = '';
+	export let description = '';
 	export let properties: { [key: string]: string | number } = {};
 	export let imageIds = [];
 	export let onEditClick = () => {};
@@ -16,6 +17,7 @@
 	export let creating = false;
 	export let onImageUpload = () => {};
 	export let markdownNotes = '';
+
 	$: console.log({ name });
 
 	let isMounted = false;
@@ -33,7 +35,6 @@
 		<!-- TOP ROW -->
 		<div class="top-row">
 			<!-- NAME -->
-
 			{#if editing}
 				<TextInput
 					span_x={'30'}
@@ -68,23 +69,30 @@
 		<hr />
 		<div class="spacer" />
 
-		<!-- IMAGES -->
-		<div class="img-container">
-			<slot name="mainImage">
-				<CloudinaryUpload {onImageUpload}>
-					<ImageCarousel {imageIds} />
-				</CloudinaryUpload>
-			</slot>
-		</div>
+		<div class:clearfix={editing}>
+			<!-- IMAGES -->
+			<div class="img-container">
+				<slot name="mainImage">
+					<CloudinaryUpload {onImageUpload}>
+						<ImageCarousel {imageIds} />
+					</CloudinaryUpload>
+				</slot>
+			</div>
 
-		<!-- MARKDOWN NOTES -->
-		<div class="markdown-container">
-			<slot name="markdown-notes">
-				<EditableMarkdown bind:value={markdownNotes} {editing} asInput slot="markdown-notes" />
-			</slot>
+			<!-- DESCRIPTION -->
+			{#if editing}
+				<TextInput
+					span_x={'30'}
+					is="textarea"
+					variation="block"
+					name="description"
+					placeholder="Brief Description"
+					value={description}
+				/>
+			{:else}
+				<Text class="description-text">{description}</Text>
+			{/if}
 		</div>
-
-		<div class="spacer" />
 
 		<!-- PROPERTIES -->
 		<slot name="properties">
@@ -92,10 +100,24 @@
 				<BasicProperty {name} {value} />
 			{/each}
 		</slot>
+
+		<div class="spacer" />
+
+		<!-- MARKDOWN NOTES -->
+		<!-- <div class:markdown-container={false}> -->
+		<slot name="markdown-notes">
+			<EditableMarkdown bind:value={markdownNotes} {editing} asInput slot="markdown-notes" />
+		</slot>
+		<!-- </div> -->
 	</form>
 </Container>
 
 <style>
+	.clearfix::after {
+		content: '';
+		clear: both;
+		display: table;
+	}
 	.top-row {
 		display: flex;
 		align-items: center;
@@ -119,4 +141,7 @@
 	/* .markdown-container {
 		width: clamp(56%, (120px - 40%) * 1000, 100%);
 	} */
+	:global(.description-text) {
+		font-style: italic;
+	}
 </style>
