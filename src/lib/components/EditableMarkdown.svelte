@@ -11,43 +11,15 @@
 	const plugins = [];
 	export let value = '';
 	export let asInput: boolean = false;
-	// export let isLockedByAnotherUser = false;
-	// export let onSave: (value: string) => void;
-	// export let onEditClick: () => void;
 
 	export let editing = false;
-
-	// async function handleEditClick() {
-	// 	console.log('handleEditClick');
-	// 	try {
-	// 		await onEditClick();
-	// 		editing = true;
-	// 	} catch (e) {
-	// 		console.error(e);
-	// 	}
-	// }
-
-	// async function handleSave() {
-	// 	try {
-	// 		await onSave(value);
-	// 		editing = false;
-	// 	} catch (e) {
-	// 		console.error(e);
-	// 	}
-	// }
 </script>
-
-<!-- {#if editing}
-	<button on:click={handleSave}>Save Changes</button>
-{:else}
-	<button disabled={isLockedByAnotherUser} on:click={handleEditClick}>Edit me pls</button>
-{/if} -->
 
 {#if editing}
 	<Editor
 		locale="en.json"
 		maxLength={10000}
-		placeholder="Start typing!"
+		placeholder="Type at will! Markdown is supported (click the question mark for some examples). If the page gets refreshed, changes will not be saved, so save frequently or copy and paste from another editor for big changes."
 		{plugins}
 		{value}
 		on:change={(e) => {
@@ -62,7 +34,7 @@
 {/if}
 
 <style>
-	:global(.byte-md) {
+	:global(.bytemd) {
 		height: 500px;
 		width: auto;
 	}
