@@ -3,22 +3,17 @@
 	import { KQL_ArtifactCreate } from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
+	import { writable } from 'svelte/store';
 	import DetailBase from './_DetailBase.svelte';
+	import { emptyArtifact } from './_utils';
 </script>
 
 <script>
-	let artifact = { imageIds: [] };
+	const artifact = writable(emptyArtifact);
 
-	async function onFormSubmit(e) {
-		const variables = { ...artifact };
-		const formData = new FormData(e.target);
-		formData.forEach((value, key) => {
-			variables[key] = value;
-		});
-
-		const { data, errors: resErrors } = await KQL_ArtifactCreate.mutate({
-			variables
-		});
+	async function onFormSubmit() {
+		const variables = $artifact;
+		const { data, errors: resErrors } = await KQL_ArtifactCreate.mutate({ variables });
 
 		if (resErrors) {
 			somethingWentWrong(resErrors[0].message);
@@ -40,7 +35,7 @@
 			return;
 		}
 		if (result?.event === 'success') {
-			artifact.imageIds = [...artifact.imageIds, result.info.public_id];
+			$artifact.imageIds = [...$artifact.imageIds, result.info.public_id];
 		}
 	}
 </script>

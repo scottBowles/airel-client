@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
-	import BasicProperty from '$lib/components/DetailPage/BasicProperty.svelte';
-	import { Text, TextInput } from '@kahi-ui/framework';
 
 	export let onEditClick = () => {};
 	export let onFormSubmit;
@@ -11,23 +9,15 @@
 	export let errors = [];
 	export let creating = false;
 
-	$: ({
-		name = '',
-		imageIds = [],
-		description = '',
-		markdownNotes = '',
-		lockUser,
-		lockedBySelf
-	} = place || {});
-	$: editing = lockedBySelf || creating;
+	$: ({ imageIds = [], lockUser, lockedBySelf } = $place || {});
 </script>
 
-<StatusHandler {status} {errors} value={place} entityName="place">
+<StatusHandler {status} {errors} value={$place} entityName="place">
 	<Layout
-		{name}
-		{description}
+		bind:name={$place.name}
+		bind:description={$place.description}
+		bind:markdownNotes={$place.markdownNotes}
 		{imageIds}
-		{markdownNotes}
 		{lockUser}
 		{lockedBySelf}
 		{onEditClick}

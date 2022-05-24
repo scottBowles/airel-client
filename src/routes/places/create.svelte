@@ -1,24 +1,17 @@
-<script context="module" lang="ts">
+<script>
 	import { goto } from '$app/navigation';
 	import { KQL_PlaceCreate } from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
+	import { writable } from 'svelte/store';
 	import DetailBase from './_DetailBase.svelte';
-</script>
+	import { emptyPlace } from './_utils';
 
-<script>
-	let place = { imageIds: [] };
+	const place = writable(emptyPlace);
 
 	async function onFormSubmit(e) {
-		const variables = { ...place };
-		const formData = new FormData(e.target);
-		formData.forEach((value, key) => {
-			variables[key] = value;
-		});
-
-		const { data, errors: resErrors } = await KQL_PlaceCreate.mutate({
-			variables
-		});
+		const variables = $place;
+		const { data, errors: resErrors } = await KQL_PlaceCreate.mutate({ variables });
 
 		if (resErrors) {
 			somethingWentWrong(resErrors[0].message);
@@ -26,12 +19,8 @@
 		}
 
 		const { place: newPlace, errors, ok } = data.placeCreate;
-		if (ok) {
-			goto(`/places/${newPlace.id}`);
-		}
-		if (errors) {
-			somethingWentWrong(errors);
-		}
+		if (ok) goto(`/places/${newPlace.id}`);
+		if (errors) somethingWentWrong(errors);
 	}
 
 	async function onImageUpload(error, result) {
@@ -40,7 +29,7 @@
 			return;
 		}
 		if (result?.event === 'success') {
-			place.imageIds = [...place.imageIds, result.info.public_id];
+			$place.imageIds = [...$place.imageIds, result.info.public_id];
 		}
 	}
 </script>

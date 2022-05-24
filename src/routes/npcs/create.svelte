@@ -1,36 +1,26 @@
-<script context="module" lang="ts">
+<script>
 	import { goto } from '$app/navigation';
 	import { KQL_NpcCreate } from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
+	import { writable } from 'svelte/store';
 	import DetailBase from './_DetailBase.svelte';
-</script>
+	import { emptyNpc } from './_utils';
 
-<script>
-	let npc = { imageIds: [] };
+	const npc = writable(emptyNpc);
 
 	async function onFormSubmit(e) {
-		const variables = { ...npc };
-		const formData = new FormData(e.target);
-		formData.forEach((value, key) => {
-			variables[key] = value;
-		});
-
-		const { data, errors: resErrors } = await KQL_NpcCreate.mutate({
-			variables
-		});
+		const variables = $npc;
+		const { data, errors: resErrors } = await KQL_NpcCreate.mutate({ variables });
 
 		if (resErrors) {
 			somethingWentWrong(resErrors[0].message);
+			return;
 		}
 
 		const { npc: newNpc, errors, ok } = data.npcCreate;
-		if (ok) {
-			goto(`/npcs/${newNpc.id}`);
-		}
-		if (errors) {
-			somethingWentWrong(errors);
-		}
+		if (ok) goto(`/npcs/${newNpc.id}`);
+		if (errors) somethingWentWrong(errors);
 	}
 
 	async function onImageUpload(error, result) {
@@ -39,7 +29,7 @@
 			return;
 		}
 		if (result?.event === 'success') {
-			npc.imageIds = [...npc.imageIds, result.info.public_id];
+			$npc.imageIds = [...$npc.imageIds, result.info.public_id];
 		}
 	}
 </script>

@@ -8,7 +8,9 @@
 	} from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
+	import { writable } from 'svelte/store';
 	import DetailBase from './_DetailBase.svelte';
+	import { emptyNpc } from './_utils';
 
 	export const load = async ({ fetch, params }) => {
 		await KQL_NpcById.queryLoad({ fetch, variables: { id: params.id } });
@@ -21,10 +23,16 @@
 	const variables = { id }; // for requests
 
 	$: ({ status, errors, data } = $KQL_NpcById);
-	$: ({ npc } = data || {});
+
+	const npc = writable(emptyNpc);
+	$: {
+		if (data?.npc) {
+			$npc = data.npc;
+		}
+	}
 
 	function patchStore(patch) {
-		const update = { npc: { ...npc, ...patch } };
+		const update = { npc: { ...$npc, ...patch } };
 		KQL_NpcById.patch(update, variables);
 	}
 
@@ -43,13 +51,8 @@
 		return;
 	}
 
-	async function onFormSubmit(e) {
-		const form = e.target;
-		const formData = new FormData(form);
-		const patch = {};
-		formData.forEach((value, key) => {
-			patch[key] = value;
-		});
+	async function onFormSubmit() {
+		const patch = $npc;
 
 		const { data, errors: resErrors } = await KQL_NpcPatch.mutate({
 			variables: { id, ...patch }
@@ -57,14 +60,12 @@
 
 		if (resErrors) {
 			somethingWentWrong(resErrors[0].message);
+			return;
 		}
+
 		const { npc: updatedNpc, errors, ok } = data.npcPatch;
-		if (ok) {
-			patchStore(updatedNpc);
-		}
-		if (errors) {
-			somethingWentWrong(errors);
-		}
+		if (ok) patchStore(updatedNpc);
+		if (errors) somethingWentWrong(errors);
 	}
 
 	async function onImageUpload(error, result) {
@@ -74,21 +75,16 @@
 		}
 		if (result?.event === 'success') {
 			const { data, errors: resErrors } = await KQL_NpcAddImage.mutate({
-				variables: {
-					id,
-					imageId: result.info.public_id
-				}
+				variables: { id, imageId: result.info.public_id }
 			});
 			if (resErrors) {
 				somethingWentWrong(resErrors[0].message);
+				return;
 			}
+
 			const { npc, errors, ok } = data.npcAddImage;
-			if (ok) {
-				patchStore(npc);
-			}
-			if (errors) {
-				somethingWentWrong(errors);
-			}
+			if (ok) patchStore(npc);
+			if (errors) somethingWentWrong(errors);
 		}
 	}
 </script>

@@ -1,24 +1,18 @@
-<script context="module" lang="ts">
+<script>
 	import { goto } from '$app/navigation';
 	import { KQL_RaceCreate } from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
+	import { writable } from 'svelte/store';
 	import DetailBase from './_DetailBase.svelte';
-</script>
+	import { emptyRace } from './_utils';
 
-<script>
-	let race = { imageIds: [] };
+	const race = writable(emptyRace);
 
 	async function onFormSubmit(e) {
-		const variables = { ...race };
-		const formData = new FormData(e.target);
-		formData.forEach((value, key) => {
-			variables[key] = value;
-		});
+		const variables = $race;
 
-		const { data, errors: resErrors } = await KQL_RaceCreate.mutate({
-			variables
-		});
+		const { data, errors: resErrors } = await KQL_RaceCreate.mutate({ variables });
 
 		if (resErrors) {
 			somethingWentWrong(resErrors[0].message);
@@ -26,12 +20,8 @@
 		}
 
 		const { race: newRace, errors, ok } = data.raceCreate;
-		if (ok) {
-			goto(`/races/${newRace.id}`);
-		}
-		if (errors) {
-			somethingWentWrong(errors);
-		}
+		if (ok) goto(`/races/${newRace.id}`);
+		if (errors) somethingWentWrong(errors);
 	}
 
 	async function onImageUpload(error, result) {
@@ -40,7 +30,7 @@
 			return;
 		}
 		if (result?.event === 'success') {
-			race.imageIds = [...race.imageIds, result.info.public_id];
+			$race.imageIds = [...$race.imageIds, result.info.public_id];
 		}
 	}
 </script>

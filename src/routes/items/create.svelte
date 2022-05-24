@@ -1,24 +1,17 @@
-<script context="module" lang="ts">
+<script>
 	import { goto } from '$app/navigation';
 	import { KQL_ItemCreate } from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
+	import { writable } from 'svelte/store';
 	import DetailBase from './_DetailBase.svelte';
-</script>
+	import { emptyItem } from './_utils';
 
-<script>
-	let item = { imageIds: [] };
+	const item = writable(emptyItem);
 
-	async function onFormSubmit(e) {
-		const variables = { ...item };
-		const formData = new FormData(e.target);
-		formData.forEach((value, key) => {
-			variables[key] = value;
-		});
-
-		const { data, errors: resErrors } = await KQL_ItemCreate.mutate({
-			variables
-		});
+	async function onFormSubmit() {
+		const variables = $item;
+		const { data, errors: resErrors } = await KQL_ItemCreate.mutate({ variables });
 
 		if (resErrors) {
 			somethingWentWrong(resErrors[0].message);
@@ -26,12 +19,8 @@
 		}
 
 		const { item: newItem, errors, ok } = data.itemCreate;
-		if (ok) {
-			goto(`/items/${newItem.id}`);
-		}
-		if (errors) {
-			somethingWentWrong(errors);
-		}
+		if (ok) goto(`/items/${newItem.id}`);
+		if (errors) somethingWentWrong(errors);
 	}
 
 	async function onImageUpload(error, result) {
@@ -40,7 +29,7 @@
 			return;
 		}
 		if (result?.event === 'success') {
-			item.imageIds = [...item.imageIds, result.info.public_id];
+			$item.imageIds = [...$item.imageIds, result.info.public_id];
 		}
 	}
 </script>

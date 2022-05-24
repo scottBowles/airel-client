@@ -8,7 +8,9 @@
 	} from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
+	import { writable } from 'svelte/store';
 	import DetailBase from './_DetailBase.svelte';
+	import { emptyAssociation } from './_utils';
 
 	export const load = async ({ fetch, params }) => {
 		await KQL_AssociationById.queryLoad({ fetch, variables: { id: params.id } });
@@ -21,10 +23,16 @@
 	const variables = { id }; // for requests
 
 	$: ({ status, errors, data } = $KQL_AssociationById);
-	$: ({ association } = data || {});
+
+	const association = writable(emptyAssociation);
+	$: {
+		if (data?.association) {
+			$association = data.association;
+		}
+	}
 
 	function patchStore(patch) {
-		const update = { association: { ...association, ...patch } };
+		const update = { association: { ...$association, ...patch } };
 		KQL_AssociationById.patch(update, variables);
 	}
 
@@ -43,29 +51,17 @@
 		return;
 	}
 
-	async function onFormSubmit(e) {
-		const form = e.target;
-		const formData = new FormData(form);
-		const patch = {};
-		formData.forEach((value, key) => {
-			patch[key] = value;
-		});
-		console.log({ patch });
-
+	async function onFormSubmit() {
+		const patch = $association;
 		const { data, errors: resErrors } = await KQL_AssociationPatch.mutate({
 			variables: { id, ...patch }
 		});
 
-		if (resErrors) {
-			somethingWentWrong(resErrors[0].message);
-		}
+		if (resErrors) somethingWentWrong(resErrors[0].message);
+
 		const { association: updatedAssociation, errors, ok } = data.associationPatch;
-		if (ok) {
-			patchStore(updatedAssociation);
-		}
-		if (errors) {
-			somethingWentWrong(errors);
-		}
+		if (ok) patchStore(updatedAssociation);
+		if (errors) somethingWentWrong(errors);
 	}
 
 	async function onImageUpload(error, result) {
@@ -75,22 +71,15 @@
 		}
 		if (result?.event === 'success') {
 			const { data, errors: resErrors } = await KQL_AssociationAddImage.mutate({
-				variables: {
-					id,
-					imageId: result.info.public_id
-				}
+				variables: { id, imageId: result.info.public_id }
 			});
 			if (resErrors) {
 				somethingWentWrong(resErrors[0].message);
 				return;
 			}
 			const { association, errors, ok } = data.associationAddImage;
-			if (ok) {
-				patchStore(association);
-			}
-			if (errors) {
-				somethingWentWrong(errors);
-			}
+			if (ok) patchStore(association);
+			if (errors) somethingWentWrong(errors);
 		}
 	}
 </script>

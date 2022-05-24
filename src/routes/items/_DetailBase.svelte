@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
-	import BasicProperty from '$lib/components/DetailPage/BasicProperty.svelte';
-	import { Text, TextInput } from '@kahi-ui/framework';
+	import ArmorBlock from './_ArmorBlock.svelte';
+	import EquipmentBlock from './_EquipmentBlock.svelte';
+	import WeaponBlock from './_WeaponBlock.svelte';
 
 	export let onEditClick = () => {};
 	export let onFormSubmit;
@@ -11,23 +12,15 @@
 	export let errors = [];
 	export let creating = false;
 
-	$: ({
-		name = '',
-		imageIds = [],
-		description = '',
-		markdownNotes = '',
-		lockUser,
-		lockedBySelf
-	} = item || {});
-	$: editing = lockedBySelf || creating;
+	$: ({ imageIds = [], lockUser, lockedBySelf, armor, equipment, weapon } = $item || {});
 </script>
 
-<StatusHandler {status} {errors} value={item} entityName="item">
+<StatusHandler {status} {errors} value={$item} entityName="item">
 	<Layout
-		{name}
-		{description}
+		bind:name={$item.name}
+		bind:description={$item.description}
+		bind:markdownNotes={$item.markdownNotes}
 		{imageIds}
-		{markdownNotes}
 		{lockUser}
 		{lockedBySelf}
 		{onEditClick}
@@ -35,21 +28,37 @@
 		{onImageUpload}
 		{creating}
 	>
-		<!-- <svelte:fragment slot="properties">
-			<BasicProperty name="Description">
-				<Text>
-					{#if editing}
-						<TextInput
-							variation="block"
-							name="description"
-							value={description}
-							placeholder="Description"
-						/>
-					{:else}
-						{description}
-					{/if}
-				</Text>
-			</BasicProperty>
-		</svelte:fragment> -->
+		<svelte:fragment slot="properties">
+			<div class="spacer" />
+			<div class="stat-block-container">
+				{#if armor}
+					<div class="stat-block">
+						<ArmorBlock {...armor} />
+					</div>
+				{/if}
+				{#if weapon}
+					<div class="stat-block">
+						<WeaponBlock {...weapon} />
+					</div>
+				{/if}
+				{#if equipment}
+					<div class="stat-block">
+						<EquipmentBlock {...equipment} />
+					</div>
+				{/if}
+			</div>
+		</svelte:fragment>
 	</Layout>
 </StatusHandler>
+
+<style>
+	.spacer {
+		height: 1rem;
+	}
+	.stat-block-container {
+		display: flex;
+	}
+	.stat-block {
+		flex: 1;
+	}
+</style>

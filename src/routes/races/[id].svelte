@@ -8,7 +8,9 @@
 	} from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
+	import { writable } from 'svelte/store';
 	import DetailBase from './_DetailBase.svelte';
+	import { emptyRace } from './_utils';
 
 	export const load = async ({ fetch, params }) => {
 		await KQL_RaceById.queryLoad({ fetch, variables: { id: params.id } });
@@ -21,10 +23,16 @@
 	const variables = { id }; // for requests
 
 	$: ({ status, errors, data } = $KQL_RaceById);
-	$: ({ race } = data || {});
+
+	const race = writable(emptyRace);
+	$: {
+		if (data?.race && data.race !== emptyRace) {
+			$race = data.race;
+		}
+	}
 
 	function patchStore(patch) {
-		const update = { race: { ...race, ...patch } };
+		const update = { race: { ...$race, ...patch } };
 		KQL_RaceById.patch(update, variables);
 	}
 
@@ -43,29 +51,19 @@
 		return;
 	}
 
-	async function onFormSubmit(e) {
-		const form = e.target;
-		const formData = new FormData(form);
-		const patch = {};
-		formData.forEach((value, key) => {
-			patch[key] = value;
-		});
+	async function onFormSubmit() {
+		const patch = $race;
 
-		const { data, errors: resErrors } = await KQL_RacePatch.mutate({
-			variables: { id, ...patch }
-		});
+		const { data, errors: resErrors } = await KQL_RacePatch.mutate({ variables: { id, ...patch } });
 
 		if (resErrors) {
 			somethingWentWrong(resErrors[0].message);
 			return;
 		}
+
 		const { race: updatedRace, errors, ok } = data.racePatch;
-		if (ok) {
-			patchStore(updatedRace);
-		}
-		if (errors) {
-			somethingWentWrong(errors);
-		}
+		if (ok) patchStore(updatedRace);
+		if (errors) somethingWentWrong(errors);
 	}
 
 	async function onImageUpload(error, result) {
@@ -75,22 +73,17 @@
 		}
 		if (result?.event === 'success') {
 			const { data, errors: resErrors } = await KQL_RaceAddImage.mutate({
-				variables: {
-					id,
-					imageId: result.info.public_id
-				}
+				variables: { id, imageId: result.info.public_id }
 			});
+
 			if (resErrors) {
 				somethingWentWrong(resErrors[0].message);
 				return;
 			}
+
 			const { race, errors, ok } = data.raceAddImage;
-			if (ok) {
-				patchStore(race);
-			}
-			if (errors) {
-				somethingWentWrong(errors);
-			}
+			if (ok) patchStore(race);
+			if (errors) somethingWentWrong(errors);
 		}
 	}
 </script>

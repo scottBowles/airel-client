@@ -8,7 +8,9 @@
 	} from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
+	import { writable } from 'svelte/store';
 	import DetailBase from './_DetailBase.svelte';
+	import { emptyPlace } from './_utils';
 
 	export const load = async ({ fetch, params }) => {
 		await KQL_PlaceById.queryLoad({ fetch, variables: { id: params.id } });
@@ -21,10 +23,16 @@
 	const variables = { id }; // for requests
 
 	$: ({ status, errors, data } = $KQL_PlaceById);
-	$: ({ place } = data || {});
+
+	const place = writable(emptyPlace);
+	$: {
+		if (data?.place) {
+			$place = data.place;
+		}
+	}
 
 	function patchStore(patch) {
-		const update = { place: { ...place, ...patch } };
+		const update = { place: { ...$place, ...patch } };
 		KQL_PlaceById.patch(update, variables);
 	}
 
@@ -44,13 +52,7 @@
 	}
 
 	async function onFormSubmit(e) {
-		const form = e.target;
-		const formData = new FormData(form);
-		const patch = {};
-		formData.forEach((value, key) => {
-			patch[key] = value;
-		});
-
+		const patch = $place;
 		const { data, errors: resErrors } = await KQL_PlacePatch.mutate({
 			variables: { id, ...patch }
 		});
@@ -59,13 +61,10 @@
 			somethingWentWrong(resErrors[0].message);
 			return;
 		}
+
 		const { place: updatedPlace, errors, ok } = data.placePatch;
-		if (ok) {
-			patchStore(updatedPlace);
-		}
-		if (errors) {
-			somethingWentWrong(errors);
-		}
+		if (ok) patchStore(updatedPlace);
+		if (errors) somethingWentWrong(errors);
 	}
 
 	async function onImageUpload(error, result) {
@@ -75,22 +74,17 @@
 		}
 		if (result?.event === 'success') {
 			const { data, errors: resErrors } = await KQL_PlaceAddImage.mutate({
-				variables: {
-					id,
-					imageId: result.info.public_id
-				}
+				variables: { id, imageId: result.info.public_id }
 			});
+
 			if (resErrors) {
 				somethingWentWrong(resErrors[0].message);
 				return;
 			}
+
 			const { place, errors, ok } = data.placeAddImage;
-			if (ok) {
-				patchStore(place);
-			}
-			if (errors) {
-				somethingWentWrong(errors);
-			}
+			if (ok) patchStore(place);
+			if (errors) somethingWentWrong(errors);
 		}
 	}
 </script>

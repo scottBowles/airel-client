@@ -13,13 +13,11 @@
 	export let imageIds = [];
 	export let onEditClick = () => {};
 	export let onFormSubmit = () => {};
-	export let lockUser = {};
+	export let lockUser;
 	export let lockedBySelf = false;
 	export let creating = false;
 	export let onImageUpload = () => {};
 	export let markdownNotes = '';
-
-	$: console.log({ name });
 
 	let isMounted = false;
 	onMount(() => {
@@ -28,6 +26,7 @@
 
 	$: editing = lockedBySelf || creating;
 	console.log({ imageIds });
+	console.log({ lockedBySelf });
 </script>
 
 <MobileNavSpacer />
@@ -44,7 +43,7 @@
 						variation="block"
 						name="name"
 						placeholder="Name"
-						value={name}
+						bind:value={name}
 						required
 					/>
 				{:else}
@@ -77,9 +76,13 @@
 			<!-- IMAGES -->
 			<div class="img-container">
 				<slot name="mainImage">
-					<CloudinaryUpload {onImageUpload}>
+					{#if editing}
 						<ImageCarousel {imageIds} />
-					</CloudinaryUpload>
+					{:else}
+						<CloudinaryUpload {onImageUpload}>
+							<ImageCarousel {imageIds} />
+						</CloudinaryUpload>
+					{/if}
 				</slot>
 			</div>
 
@@ -91,7 +94,7 @@
 					variation="block"
 					name="description"
 					placeholder="Brief Description"
-					value={description}
+					bind:value={description}
 				/>
 			{:else}
 				<Text class="description-text">{description}</Text>
