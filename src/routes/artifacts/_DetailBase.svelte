@@ -4,19 +4,21 @@
 	export let onEditClick = () => {};
 	export let onFormSubmit;
 	export let onImageUpload;
-	export let artifact;
+	export let artifact = {};
+	export let form;
 	export let status = undefined;
 	export let errors = [];
 	export let creating = false;
 
-	$: ({ imageIds = [], lockUser, lockedBySelf } = $artifact || {});
+	$: ({ name, description, markdownNotes, imageIds = [], lockUser, lockedBySelf } = artifact);
 </script>
 
-<StatusHandler {status} {errors} value={$artifact} entityName="artifact">
+<StatusHandler {status} {errors} value={artifact} entityName="artifact">
 	<Layout
-		bind:name={$artifact.name}
-		bind:description={$artifact.description}
-		bind:markdownNotes={$artifact.markdownNotes}
+		{form}
+		{name}
+		{description}
+		{markdownNotes}
 		{imageIds}
 		{lockUser}
 		{lockedBySelf}

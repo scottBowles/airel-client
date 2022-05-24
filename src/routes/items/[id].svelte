@@ -9,6 +9,7 @@
 	} from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
+	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 	import DetailBase from './_DetailBase.svelte';
 	import { emptyItem } from './_utils';
@@ -24,16 +25,22 @@
 	const variables = { id }; // for requests
 
 	$: ({ status, errors, data } = $KQL_ItemById);
+	$: ({ item } = data || {});
+	$: console.log({ item });
 
-	const item = writable(emptyItem);
-	$: {
-		if (data?.item) {
-			$item = data.item;
-		}
+	// TODO: hold form state in storage
+	const form = writable(emptyItem);
+
+	onMount(setForm);
+
+	$: console.log({ form: $form });
+
+	function setForm() {
+		$form = item;
 	}
 
 	function patchStore(patch) {
-		const update = { item: { ...$item, ...patch } };
+		const update = { item: { ...item, ...patch } };
 		KQL_ItemById.patch(update, variables);
 	}
 
@@ -49,17 +56,18 @@
 			return;
 		}
 		patchStore(lockRes.data.itemLock.item);
+		setForm();
 		return;
 	}
 
 	async function onFormSubmit() {
 		const patch = {
-			name: $item.name,
-			description: $item.description,
-			markdownNotes: $item.markdownNotes,
-			...($item.armor && { armor: { acBonus: $item.armor.acBonus } }),
-			...($item.equipment && { equipment: { briefDescription: $item.equipment.briefDescription } }),
-			...($item.weapon && { weapon: { attackBonus: $item.weapon.attackBonus } })
+			name: $form.name,
+			description: $form.description,
+			markdownNotes: $form.markdownNotes,
+			...($form.armor && { armor: { acBonus: $form.armor.acBonus } }),
+			...($form.equipment && { equipment: { briefDescription: $form.equipment.briefDescription } }),
+			...($form.weapon && { weapon: { attackBonus: $form.weapon.attackBonus } })
 		};
 
 		const { data, errors: resErrors } = await KQL_ItemPatch.mutate({ variables: { id, ...patch } });
@@ -91,10 +99,11 @@
 
 			const { item, errors, ok } = data.itemAddImage;
 			if (ok) patchStore(item);
+			if (ok && item.lockedBySelf) $form.imageIds = item.imageIds;
 			if (errors) somethingWentWrong(errors);
 		}
 	}
 </script>
 
-<DetailBase {item} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
+<DetailBase {item} {form} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
 <!-- <KitQLInfo store={KQL_ItemById} /> -->

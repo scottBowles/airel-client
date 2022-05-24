@@ -7,19 +7,31 @@
 	export let onEditClick = () => {};
 	export let onFormSubmit;
 	export let onImageUpload;
-	export let item;
+	export let item = {};
+	export let form;
 	export let status = undefined;
 	export let errors = [];
 	export let creating = false;
 
-	$: ({ imageIds = [], lockUser, lockedBySelf, armor, equipment, weapon } = $item || {});
+	$: ({
+		name,
+		description,
+		markdownNotes,
+		imageIds = [],
+		lockUser,
+		lockedBySelf,
+		armor,
+		equipment,
+		weapon
+	} = item);
 </script>
 
-<StatusHandler {status} {errors} value={$item} entityName="item">
+<StatusHandler {status} {errors} value={item} entityName="item">
 	<Layout
-		bind:name={$item.name}
-		bind:description={$item.description}
-		bind:markdownNotes={$item.markdownNotes}
+		{form}
+		{name}
+		{description}
+		{markdownNotes}
 		{imageIds}
 		{lockUser}
 		{lockedBySelf}

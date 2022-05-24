@@ -1,12 +1,14 @@
 <script lang="ts">
 	import CloudinaryUpload from '$lib/components/CloudinaryUpload.svelte';
 	import { BasicProperty } from '$lib/components/DetailPage';
-	import EditableMarkdown from '$lib/components/EditableMarkdown.svelte';
 	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
 	import MobileNavSpacer from '$lib/components/MobileNav/Spacer.svelte';
 	import { Container, Heading, Text, TextInput } from '@kahi-ui/framework';
 	import { onMount } from 'svelte';
+	import MdEditor from '../EditableMarkdown/MdEditor.svelte';
+	import MdViewer from '../EditableMarkdown/MdViewer.svelte';
 
+	export let form;
 	export let name = '';
 	export let description = '';
 	export let properties: { [key: string]: string | number } = {};
@@ -43,7 +45,7 @@
 						variation="block"
 						name="name"
 						placeholder="Name"
-						bind:value={name}
+						bind:value={$form.name}
 						required
 					/>
 				{:else}
@@ -76,13 +78,9 @@
 			<!-- IMAGES -->
 			<div class="img-container">
 				<slot name="mainImage">
-					{#if editing}
-						<ImageCarousel {imageIds} />
-					{:else}
-						<CloudinaryUpload {onImageUpload}>
-							<ImageCarousel {imageIds} />
-						</CloudinaryUpload>
-					{/if}
+					<CloudinaryUpload {onImageUpload}>
+						<ImageCarousel imageIds={editing ? $form.imageIds : imageIds} />
+					</CloudinaryUpload>
 				</slot>
 			</div>
 
@@ -94,7 +92,7 @@
 					variation="block"
 					name="description"
 					placeholder="Brief Description"
-					bind:value={description}
+					bind:value={$form.description}
 				/>
 			{:else}
 				<Text class="description-text">{description}</Text>
@@ -113,7 +111,11 @@
 		<!-- MARKDOWN NOTES -->
 		<!-- <div class:markdown-container={false}> -->
 		<slot name="markdown-notes">
-			<EditableMarkdown bind:value={markdownNotes} {editing} asInput slot="markdown-notes" />
+			{#if editing}
+				<MdEditor bind:value={$form.markdownNotes} asInput />
+			{:else}
+				<MdViewer value={markdownNotes} />
+			{/if}
 		</slot>
 		<!-- </div> -->
 	</form>

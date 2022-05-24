@@ -7,10 +7,10 @@
 	import DetailBase from './_DetailBase.svelte';
 	import { emptyPlace } from './_utils';
 
-	const place = writable(emptyPlace);
+	const form = writable(emptyPlace);
 
-	async function onFormSubmit(e) {
-		const variables = $place;
+	async function onFormSubmit() {
+		const variables = $form;
 		const { data, errors: resErrors } = await KQL_PlaceCreate.mutate({ variables });
 
 		if (resErrors) {
@@ -29,10 +29,10 @@
 			return;
 		}
 		if (result?.event === 'success') {
-			$place.imageIds = [...$place.imageIds, result.info.public_id];
+			$form.imageIds = [...$form.imageIds, result.info.public_id];
 		}
 	}
 </script>
 
-<DetailBase creating {place} {onFormSubmit} {onImageUpload} />
+<DetailBase creating {form} {onFormSubmit} {onImageUpload} />
 <!-- <KitQLInfo store={KQL_PlaceById} /> -->

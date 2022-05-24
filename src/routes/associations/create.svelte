@@ -7,10 +7,10 @@
 	import DetailBase from './_DetailBase.svelte';
 	import { emptyAssociation } from './_utils';
 
-	const association = writable(emptyAssociation);
+	const form = writable(emptyAssociation);
 
 	async function onFormSubmit(e) {
-		const variables = $association;
+		const variables = $form;
 		const { data, errors: resErrors } = await KQL_AssociationCreate.mutate({ variables });
 
 		if (resErrors) {
@@ -29,10 +29,10 @@
 			return;
 		}
 		if (result?.event === 'success') {
-			$association.imageIds = [...$association.imageIds, result.info.public_id];
+			$form.imageIds = [...$form.imageIds, result.info.public_id];
 		}
 	}
 </script>
 
-<DetailBase creating {association} {onFormSubmit} {onImageUpload} />
+<DetailBase creating {form} {onFormSubmit} {onImageUpload} />
 <!-- <KitQLInfo store={KQL_AssociationById} /> -->

@@ -7,10 +7,10 @@
 	import DetailBase from './_DetailBase.svelte';
 	import { emptyNpc } from './_utils';
 
-	const npc = writable(emptyNpc);
+	const form = writable(emptyNpc);
 
-	async function onFormSubmit(e) {
-		const variables = $npc;
+	async function onFormSubmit() {
+		const variables = $form;
 		const { data, errors: resErrors } = await KQL_NpcCreate.mutate({ variables });
 
 		if (resErrors) {
@@ -29,10 +29,10 @@
 			return;
 		}
 		if (result?.event === 'success') {
-			$npc.imageIds = [...$npc.imageIds, result.info.public_id];
+			$form.imageIds = [...$form.imageIds, result.info.public_id];
 		}
 	}
 </script>
 
-<DetailBase creating {npc} {onFormSubmit} {onImageUpload} />
+<DetailBase creating {form} {onFormSubmit} {onImageUpload} />
 <!-- <KitQLInfo store={KQL_NpcById} /> -->

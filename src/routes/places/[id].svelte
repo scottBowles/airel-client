@@ -8,6 +8,7 @@
 	} from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
+	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 	import DetailBase from './_DetailBase.svelte';
 	import { emptyPlace } from './_utils';
@@ -23,16 +24,17 @@
 	const variables = { id }; // for requests
 
 	$: ({ status, errors, data } = $KQL_PlaceById);
+	$: ({ place } = data || {});
 
-	const place = writable(emptyPlace);
-	$: {
-		if (data?.place) {
-			$place = data.place;
-		}
+	const form = writable(emptyPlace);
+	onMount(setForm);
+
+	function setForm() {
+		$form = place;
 	}
 
 	function patchStore(patch) {
-		const update = { place: { ...$place, ...patch } };
+		const update = { place: { ...place, ...patch } };
 		KQL_PlaceById.patch(update, variables);
 	}
 
@@ -48,11 +50,17 @@
 			return;
 		}
 		patchStore(lockRes.data.placeLock.place);
+		setForm();
 		return;
 	}
 
-	async function onFormSubmit(e) {
-		const patch = $place;
+	async function onFormSubmit() {
+		const patch = {
+			name: $form.name,
+			description: $form.description,
+			markdownNotes: $form.markdownNotes
+		};
+
 		const { data, errors: resErrors } = await KQL_PlacePatch.mutate({
 			variables: { id, ...patch }
 		});
@@ -84,10 +92,11 @@
 
 			const { place, errors, ok } = data.placeAddImage;
 			if (ok) patchStore(place);
+			if (ok && place.lockedBySelf) $form.imageIds = place.imageIds;
 			if (errors) somethingWentWrong(errors);
 		}
 	}
 </script>
 
-<DetailBase {place} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
+<DetailBase {place} {form} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
 <!-- <KitQLInfo store={KQL_PlaceById} /> -->

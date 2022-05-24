@@ -6,9 +6,9 @@
 		KQL_ArtifactLock,
 		KQL_ArtifactPatch
 	} from '$lib/graphql/_kitql/graphqlStores';
-	import type { ArtifactNode, UserNode } from '$lib/graphql/_kitql/graphqlTypes';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
+	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 	import DetailBase from './_DetailBase.svelte';
 	import { emptyArtifact } from './_utils';
@@ -24,16 +24,17 @@
 	const variables = { id }; // for requests
 
 	$: ({ status, errors, data } = $KQL_ArtifactById);
+	$: ({ artifact } = data || {});
 
-	const artifact = writable(emptyArtifact);
-	$: {
-		if (data?.artifact) {
-			$artifact = data.artifact;
-		}
+	const form = writable(emptyArtifact);
+	onMount(setForm);
+
+	function setForm() {
+		$form = artifact;
 	}
 
 	function patchStore(patch) {
-		const update = { artifact: { ...$artifact, ...patch } };
+		const update = { artifact: { ...artifact, ...patch } };
 		KQL_ArtifactById.patch(update, variables);
 	}
 
@@ -49,11 +50,16 @@
 			return;
 		}
 		patchStore(lockRes.data.artifactLock.artifact);
+		setForm();
 		return;
 	}
 
 	async function onFormSubmit() {
-		const patch = $artifact;
+		const patch = {
+			name: $form.name,
+			description: $form.description,
+			markdownNotes: $form.markdownNotes
+		};
 
 		const { data, errors: resErrors } = await KQL_ArtifactPatch.mutate({
 			variables: { id, ...patch }
@@ -82,15 +88,12 @@
 				somethingWentWrong(resErrors[0].message);
 			}
 			const { artifact, errors, ok } = data.artifactAddImage;
-			if (ok) {
-				patchStore(artifact);
-			}
-			if (errors) {
-				somethingWentWrong(errors);
-			}
+			if (ok) patchStore(artifact);
+			if (ok && artifact.lockedBySelf) $form.imageIds = artifact.imageIds;
+			if (errors) somethingWentWrong(errors);
 		}
 	}
 </script>
 
-<DetailBase {artifact} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
+<DetailBase {artifact} {form} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
 <!-- <KitQLInfo store={KQL_ArtifactById} /> -->

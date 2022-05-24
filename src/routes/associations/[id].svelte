@@ -8,6 +8,7 @@
 	} from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
+	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 	import DetailBase from './_DetailBase.svelte';
 	import { emptyAssociation } from './_utils';
@@ -23,16 +24,17 @@
 	const variables = { id }; // for requests
 
 	$: ({ status, errors, data } = $KQL_AssociationById);
+	$: ({ association } = data || {});
 
-	const association = writable(emptyAssociation);
-	$: {
-		if (data?.association) {
-			$association = data.association;
-		}
+	const form = writable(emptyAssociation);
+	onMount(setForm);
+
+	function setForm() {
+		$form = association;
 	}
 
 	function patchStore(patch) {
-		const update = { association: { ...$association, ...patch } };
+		const update = { association: { ...association, ...patch } };
 		KQL_AssociationById.patch(update, variables);
 	}
 
@@ -48,11 +50,16 @@
 			return;
 		}
 		patchStore(lockRes.data.associationLock.association);
+		setForm();
 		return;
 	}
 
 	async function onFormSubmit() {
-		const patch = $association;
+		const patch = {
+			name: $form.name,
+			description: $form.description,
+			markdownNotes: $form.markdownNotes
+		};
 		const { data, errors: resErrors } = await KQL_AssociationPatch.mutate({
 			variables: { id, ...patch }
 		});
@@ -79,10 +86,11 @@
 			}
 			const { association, errors, ok } = data.associationAddImage;
 			if (ok) patchStore(association);
+			if (ok && association.lockedBySelf) $form.imageIds = association.imageIds;
 			if (errors) somethingWentWrong(errors);
 		}
 	}
 </script>
 
-<DetailBase {association} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
+<DetailBase {association} {form} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
 <!-- <KitQLInfo store={KQL_AssociationById} /> -->

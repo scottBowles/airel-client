@@ -4,19 +4,28 @@
 	export let onEditClick = () => {};
 	export let onFormSubmit;
 	export let onImageUpload;
-	export let association;
+	export let association = {};
+	export let form;
 	export let status = undefined;
 	export let errors = [];
 	export let creating = false;
 
-	$: ({ imageIds = [], lockUser, lockedBySelf } = $association || {});
+	$: ({
+		name,
+		description,
+		markdownNotes,
+		imageIds = [],
+		lockUser,
+		lockedBySelf
+	} = association || {});
 </script>
 
-<StatusHandler {status} {errors} value={$association} entityName="association">
+<StatusHandler {status} {errors} value={association} entityName="association">
 	<Layout
-		bind:name={$association.name}
-		bind:description={$association.description}
-		bind:markdownNotes={$association.markdownNotes}
+		{form}
+		{name}
+		{description}
+		{markdownNotes}
 		{imageIds}
 		{lockUser}
 		{lockedBySelf}

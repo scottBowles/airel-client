@@ -8,6 +8,7 @@
 	} from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
+	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 	import DetailBase from './_DetailBase.svelte';
 	import { emptyRace } from './_utils';
@@ -23,16 +24,17 @@
 	const variables = { id }; // for requests
 
 	$: ({ status, errors, data } = $KQL_RaceById);
+	$: ({ race } = data || {});
 
-	const race = writable(emptyRace);
-	$: {
-		if (data?.race && data.race !== emptyRace) {
-			$race = data.race;
-		}
+	const form = writable(emptyRace);
+	onMount(setForm);
+
+	function setForm() {
+		$form = race;
 	}
 
 	function patchStore(patch) {
-		const update = { race: { ...$race, ...patch } };
+		const update = { race: { ...race, ...patch } };
 		KQL_RaceById.patch(update, variables);
 	}
 
@@ -48,11 +50,16 @@
 			return;
 		}
 		patchStore(lockRes.data.raceLock.race);
+		setForm();
 		return;
 	}
 
 	async function onFormSubmit() {
-		const patch = $race;
+		const patch = {
+			name: $form.name,
+			description: $form.description,
+			markdownNotes: $form.markdownNotes
+		};
 
 		const { data, errors: resErrors } = await KQL_RacePatch.mutate({ variables: { id, ...patch } });
 
@@ -83,10 +90,11 @@
 
 			const { race, errors, ok } = data.raceAddImage;
 			if (ok) patchStore(race);
+			if (ok && race.lockedBySelf) $form.imageIds = race.imageIds;
 			if (errors) somethingWentWrong(errors);
 		}
 	}
 </script>
 
-<DetailBase {race} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
+<DetailBase {race} {form} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
 <!-- <KitQLInfo store={KQL_RaceById} /> -->

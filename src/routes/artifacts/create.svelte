@@ -9,10 +9,10 @@
 </script>
 
 <script>
-	const artifact = writable(emptyArtifact);
+	const form = writable(emptyArtifact);
 
 	async function onFormSubmit() {
-		const variables = $artifact;
+		const variables = $form;
 		const { data, errors: resErrors } = await KQL_ArtifactCreate.mutate({ variables });
 
 		if (resErrors) {
@@ -21,12 +21,8 @@
 		}
 
 		const { artifact: newArtifact, errors, ok } = data.artifactCreate;
-		if (ok) {
-			goto(`/artifacts/${newArtifact.id}`);
-		}
-		if (errors) {
-			somethingWentWrong(errors);
-		}
+		if (ok) goto(`/artifacts/${newArtifact.id}`);
+		if (errors) somethingWentWrong(errors);
 	}
 
 	async function onImageUpload(error, result) {
@@ -35,10 +31,10 @@
 			return;
 		}
 		if (result?.event === 'success') {
-			$artifact.imageIds = [...$artifact.imageIds, result.info.public_id];
+			$form.imageIds = [...$form.imageIds, result.info.public_id];
 		}
 	}
 </script>
 
-<DetailBase creating {artifact} {onFormSubmit} {onImageUpload} />
+<DetailBase creating {form} {onFormSubmit} {onImageUpload} />
 <!-- <KitQLInfo store={KQL_ArtifactById} /> -->

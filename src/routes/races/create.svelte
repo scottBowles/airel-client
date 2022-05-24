@@ -7,10 +7,10 @@
 	import DetailBase from './_DetailBase.svelte';
 	import { emptyRace } from './_utils';
 
-	const race = writable(emptyRace);
+	const form = writable(emptyRace);
 
-	async function onFormSubmit(e) {
-		const variables = $race;
+	async function onFormSubmit() {
+		const variables = $form;
 
 		const { data, errors: resErrors } = await KQL_RaceCreate.mutate({ variables });
 
@@ -30,10 +30,10 @@
 			return;
 		}
 		if (result?.event === 'success') {
-			$race.imageIds = [...$race.imageIds, result.info.public_id];
+			$form.imageIds = [...$form.imageIds, result.info.public_id];
 		}
 	}
 </script>
 
-<DetailBase creating {race} {onFormSubmit} {onImageUpload} />
+<DetailBase creating {form} {onFormSubmit} {onImageUpload} />
 <!-- <KitQLInfo store={KQL_RaceById} /> -->

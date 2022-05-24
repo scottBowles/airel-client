@@ -7,10 +7,12 @@
 	import DetailBase from './_DetailBase.svelte';
 	import { emptyItem } from './_utils';
 
-	const item = writable(emptyItem);
+	const form = writable(emptyItem);
+
+	$: console.log({ form: $form });
 
 	async function onFormSubmit() {
-		const variables = $item;
+		const variables = $form;
 		const { data, errors: resErrors } = await KQL_ItemCreate.mutate({ variables });
 
 		if (resErrors) {
@@ -29,10 +31,10 @@
 			return;
 		}
 		if (result?.event === 'success') {
-			$item.imageIds = [...$item.imageIds, result.info.public_id];
+			$form.imageIds = [...$form.imageIds, result.info.public_id];
 		}
 	}
 </script>
 
-<DetailBase creating {item} {onFormSubmit} {onImageUpload} />
+<DetailBase creating {form} {onFormSubmit} {onImageUpload} />
 <!-- <KitQLInfo store={KQL_ItemById} /> -->
