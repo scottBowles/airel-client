@@ -3,22 +3,17 @@
 	import { KQL_ArtifactCreate } from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
+	import { writable } from 'svelte/store';
 	import DetailBase from './_DetailBase.svelte';
+	import { emptyArtifact } from './_utils';
 </script>
 
 <script>
-	let artifact = { imageIds: [] };
+	const form = writable(emptyArtifact);
 
-	async function onFormSubmit(e) {
-		const variables = { ...artifact };
-		const formData = new FormData(e.target);
-		formData.forEach((value, key) => {
-			variables[key] = value;
-		});
-
-		const { data, errors: resErrors } = await KQL_ArtifactCreate.mutate({
-			variables
-		});
+	async function onFormSubmit() {
+		const variables = $form;
+		const { data, errors: resErrors } = await KQL_ArtifactCreate.mutate({ variables });
 
 		if (resErrors) {
 			somethingWentWrong(resErrors[0].message);
@@ -26,12 +21,8 @@
 		}
 
 		const { artifact: newArtifact, errors, ok } = data.artifactCreate;
-		if (ok) {
-			goto(`/artifacts/${newArtifact.id}`);
-		}
-		if (errors) {
-			somethingWentWrong(errors);
-		}
+		if (ok) goto(`/artifacts/${newArtifact.id}`);
+		if (errors) somethingWentWrong(errors);
 	}
 
 	async function onImageUpload(error, result) {
@@ -40,10 +31,10 @@
 			return;
 		}
 		if (result?.event === 'success') {
-			artifact.imageIds = [...artifact.imageIds, result.info.public_id];
+			$form.imageIds = [...$form.imageIds, result.info.public_id];
 		}
 	}
 </script>
 
-<DetailBase creating {artifact} {onFormSubmit} {onImageUpload} />
+<DetailBase creating {form} {onFormSubmit} {onImageUpload} />
 <!-- <KitQLInfo store={KQL_ArtifactById} /> -->

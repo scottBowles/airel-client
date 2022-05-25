@@ -4,6 +4,9 @@ mutation itemPatch(
 	$description: String
 	$thumbnailId: String
 	$markdownNotes: String
+	$armor: ArmorInput
+	$equipment: EquipmentInput
+	$weapon: WeaponInput
 ) {
 	itemPatch(
 		input: {
@@ -12,6 +15,9 @@ mutation itemPatch(
 			description: $description
 			thumbnailId: $thumbnailId
 			markdownNotes: $markdownNotes
+			armor: $armor
+			equipment: $equipment
+			weapon: $weapon
 		}
 	) {
 		ok

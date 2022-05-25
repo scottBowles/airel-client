@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Editor, Viewer } from 'bytemd';
+	import { Viewer } from 'bytemd';
 	import 'bytemd/dist/index.css';
 	// https://github.com/sindresorhus/github-markdown-css
 	// Run `npm run make` to update the CSS. (From github's repo, presumably?)
@@ -10,28 +10,9 @@
 	// const plugins = [gfm()];
 	const plugins = [];
 	export let value = '';
-	export let asInput: boolean = false;
-
-	export let editing = false;
 </script>
 
-{#if editing}
-	<Editor
-		locale="en.json"
-		maxLength={10000}
-		placeholder="Type at will! Markdown is supported (click the question mark for some examples). If the page gets refreshed, changes will not be saved, so save frequently or copy and paste from another editor for big changes."
-		{plugins}
-		{value}
-		on:change={(e) => {
-			value = e.detail.value;
-		}}
-	/>
-	{#if asInput}
-		<input type="hidden" name="markdownNotes" {value} />
-	{/if}
-{:else}
-	<Viewer {value} />
-{/if}
+<Viewer {value} />
 
 <style>
 	:global(.bytemd) {

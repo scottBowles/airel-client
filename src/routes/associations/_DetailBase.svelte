@@ -1,33 +1,32 @@
 <script lang="ts">
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
-	import BasicProperty from '$lib/components/DetailPage/BasicProperty.svelte';
-	import { Text, TextInput } from '@kahi-ui/framework';
 
 	export let onEditClick = () => {};
 	export let onFormSubmit;
 	export let onImageUpload;
-	export let association;
+	export let association = {};
+	export let form;
 	export let status = undefined;
 	export let errors = [];
 	export let creating = false;
 
 	$: ({
-		name = '',
+		name,
+		description,
+		markdownNotes,
 		imageIds = [],
-		description = '',
-		markdownNotes = '',
 		lockUser,
 		lockedBySelf
 	} = association || {});
-	$: editing = lockedBySelf || creating;
 </script>
 
 <StatusHandler {status} {errors} value={association} entityName="association">
 	<Layout
+		{form}
 		{name}
 		{description}
-		{imageIds}
 		{markdownNotes}
+		{imageIds}
 		{lockUser}
 		{lockedBySelf}
 		{onEditClick}

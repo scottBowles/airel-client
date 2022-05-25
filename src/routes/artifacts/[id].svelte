@@ -8,7 +8,10 @@
 	} from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
+	import { onMount } from 'svelte';
+	import { writable } from 'svelte/store';
 	import DetailBase from './_DetailBase.svelte';
+	import { emptyArtifact } from './_utils';
 
 	export const load = async ({ fetch, params }) => {
 		await KQL_ArtifactById.queryLoad({ fetch, variables: { id: params.id } });
@@ -16,12 +19,19 @@
 	};
 </script>
 
-<script>
+<script lang="ts">
 	const { id } = $page.params;
 	const variables = { id }; // for requests
 
 	$: ({ status, errors, data } = $KQL_ArtifactById);
 	$: ({ artifact } = data || {});
+
+	const form = writable(emptyArtifact);
+	onMount(setForm);
+
+	function setForm() {
+		$form = artifact;
+	}
 
 	function patchStore(patch) {
 		const update = { artifact: { ...artifact, ...patch } };
@@ -40,37 +50,32 @@
 			return;
 		}
 		patchStore(lockRes.data.artifactLock.artifact);
+		setForm();
 		return;
 	}
 
-	async function onFormSubmit(e) {
-		const form = e.target;
-		const formData = new FormData(form);
-		const patch = {};
-		formData.forEach((value, key) => {
-			patch[key] = value;
-		});
-		console.log({ patch });
+	async function onFormSubmit() {
+		const patch = {
+			name: $form.name,
+			description: $form.description,
+			markdownNotes: $form.markdownNotes
+		};
 
 		const { data, errors: resErrors } = await KQL_ArtifactPatch.mutate({
 			variables: { id, ...patch }
 		});
 
-		if (resErrors) {
-			somethingWentWrong(resErrors[0].message);
-		}
+		if (resErrors) somethingWentWrong(resErrors[0].message);
+
 		const { artifact: updatedArtifact, errors, ok } = data.artifactPatch;
-		if (ok) {
-			patchStore(updatedArtifact);
-		}
-		if (errors) {
-			somethingWentWrong(errors);
-		}
+		if (ok) patchStore(updatedArtifact);
+		if (errors) somethingWentWrong(errors);
 	}
 
 	async function onImageUpload(error, result) {
 		if (error) {
 			somethingWentWrong(error.message);
+			return;
 		}
 		if (result?.event === 'success') {
 			const { data, errors: resErrors } = await KQL_ArtifactAddImage.mutate({
@@ -83,15 +88,12 @@
 				somethingWentWrong(resErrors[0].message);
 			}
 			const { artifact, errors, ok } = data.artifactAddImage;
-			if (ok) {
-				patchStore(artifact);
-			}
-			if (errors) {
-				somethingWentWrong(errors);
-			}
+			if (ok) patchStore(artifact);
+			if (ok && artifact.lockedBySelf) $form.imageIds = artifact.imageIds;
+			if (errors) somethingWentWrong(errors);
 		}
 	}
 </script>
 
-<DetailBase {artifact} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
+<DetailBase {artifact} {form} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
 <!-- <KitQLInfo store={KQL_ArtifactById} /> -->

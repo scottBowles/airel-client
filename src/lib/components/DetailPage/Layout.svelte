@@ -1,25 +1,25 @@
 <script lang="ts">
 	import CloudinaryUpload from '$lib/components/CloudinaryUpload.svelte';
 	import { BasicProperty } from '$lib/components/DetailPage';
-	import EditableMarkdown from '$lib/components/EditableMarkdown.svelte';
 	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
 	import MobileNavSpacer from '$lib/components/MobileNav/Spacer.svelte';
 	import { Container, Heading, Text, TextInput } from '@kahi-ui/framework';
 	import { onMount } from 'svelte';
+	import MdEditor from '../EditableMarkdown/MdEditor.svelte';
+	import MdViewer from '../EditableMarkdown/MdViewer.svelte';
 
+	export let form;
 	export let name = '';
 	export let description = '';
 	export let properties: { [key: string]: string | number } = {};
 	export let imageIds = [];
 	export let onEditClick = () => {};
 	export let onFormSubmit = () => {};
-	export let lockUser = {};
+	export let lockUser;
 	export let lockedBySelf = false;
 	export let creating = false;
 	export let onImageUpload = () => {};
 	export let markdownNotes = '';
-
-	$: console.log({ name });
 
 	let isMounted = false;
 	onMount(() => {
@@ -28,6 +28,7 @@
 
 	$: editing = lockedBySelf || creating;
 	console.log({ imageIds });
+	console.log({ lockedBySelf });
 </script>
 
 <MobileNavSpacer />
@@ -44,7 +45,7 @@
 						variation="block"
 						name="name"
 						placeholder="Name"
-						value={name}
+						bind:value={$form.name}
 						required
 					/>
 				{:else}
@@ -56,13 +57,13 @@
 			<span class="locked-edit-save-container">
 				{#if isMounted}
 					{#if creating}
-						<button type="submit">Save</button>
+						<button class="lone-btn" type="submit">Save</button>
 					{:else if lockedBySelf}
 						<span>Locked by {lockUser.username}</span> <button type="submit">Save</button>
 					{:else if lockUser}
 						Locked by {lockUser.username} <button type="button" disabled>Edit</button>
 					{:else}
-						<button type="button" on:click={onEditClick}>Edit</button>
+						<button class="lone-btn" type="button" on:click={onEditClick}>Edit</button>
 					{/if}
 				{/if}
 			</span>
@@ -78,7 +79,7 @@
 			<div class="img-container">
 				<slot name="mainImage">
 					<CloudinaryUpload {onImageUpload}>
-						<ImageCarousel {imageIds} />
+						<ImageCarousel imageIds={editing ? $form.imageIds : imageIds} />
 					</CloudinaryUpload>
 				</slot>
 			</div>
@@ -91,26 +92,30 @@
 					variation="block"
 					name="description"
 					placeholder="Brief Description"
-					value={description}
+					bind:value={$form.description}
 				/>
 			{:else}
 				<Text class="description-text">{description}</Text>
 			{/if}
-		</div>
 
-		<!-- PROPERTIES -->
-		<slot name="properties">
-			{#each Object.entries(properties) as [name, value]}
-				<BasicProperty {name} {value} />
-			{/each}
-		</slot>
+			<!-- PROPERTIES -->
+			<slot name="properties">
+				{#each Object.entries(properties) as [name, value]}
+					<BasicProperty {name} {value} />
+				{/each}
+			</slot>
+		</div>
 
 		<div class="spacer" />
 
 		<!-- MARKDOWN NOTES -->
 		<!-- <div class:markdown-container={false}> -->
 		<slot name="markdown-notes">
-			<EditableMarkdown bind:value={markdownNotes} {editing} asInput slot="markdown-notes" />
+			{#if editing}
+				<MdEditor bind:value={$form.markdownNotes} asInput />
+			{:else}
+				<MdViewer value={markdownNotes} />
+			{/if}
 		</slot>
 		<!-- </div> -->
 	</form>
@@ -130,7 +135,7 @@
 		gap: 1rem;
 	}
 	.name-container {
-		flex: 3;
+		flex-grow: 3;
 	}
 	.locked-edit-save-container {
 		display: flex;
@@ -139,6 +144,9 @@
 		flex: 1;
 		gap: 2rem;
 		min-width: fit-content;
+	}
+	.lone-btn {
+		margin-left: auto;
 	}
 	hr {
 		color: #ccc;

@@ -8,7 +8,10 @@
 	} from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
+	import { onMount } from 'svelte';
+	import { writable } from 'svelte/store';
 	import DetailBase from './_DetailBase.svelte';
+	import { emptyNpc } from './_utils';
 
 	export const load = async ({ fetch, params }) => {
 		await KQL_NpcById.queryLoad({ fetch, variables: { id: params.id } });
@@ -22,6 +25,14 @@
 
 	$: ({ status, errors, data } = $KQL_NpcById);
 	$: ({ npc } = data || {});
+
+	const form = writable(emptyNpc);
+
+	onMount(setForm);
+
+	function setForm() {
+		$form = npc;
+	}
 
 	function patchStore(patch) {
 		const update = { npc: { ...npc, ...patch } };
@@ -40,16 +51,16 @@
 			return;
 		}
 		patchStore(lockRes.data.npcLock.npc);
+		setForm();
 		return;
 	}
 
-	async function onFormSubmit(e) {
-		const form = e.target;
-		const formData = new FormData(form);
-		const patch = {};
-		formData.forEach((value, key) => {
-			patch[key] = value;
-		});
+	async function onFormSubmit() {
+		const patch = {
+			name: $form.name,
+			description: $form.description,
+			markdownNotes: $form.markdownNotes
+		};
 
 		const { data, errors: resErrors } = await KQL_NpcPatch.mutate({
 			variables: { id, ...patch }
@@ -57,14 +68,12 @@
 
 		if (resErrors) {
 			somethingWentWrong(resErrors[0].message);
+			return;
 		}
+
 		const { npc: updatedNpc, errors, ok } = data.npcPatch;
-		if (ok) {
-			patchStore(updatedNpc);
-		}
-		if (errors) {
-			somethingWentWrong(errors);
-		}
+		if (ok) patchStore(updatedNpc);
+		if (errors) somethingWentWrong(errors);
 	}
 
 	async function onImageUpload(error, result) {
@@ -74,24 +83,20 @@
 		}
 		if (result?.event === 'success') {
 			const { data, errors: resErrors } = await KQL_NpcAddImage.mutate({
-				variables: {
-					id,
-					imageId: result.info.public_id
-				}
+				variables: { id, imageId: result.info.public_id }
 			});
 			if (resErrors) {
 				somethingWentWrong(resErrors[0].message);
+				return;
 			}
+
 			const { npc, errors, ok } = data.npcAddImage;
-			if (ok) {
-				patchStore(npc);
-			}
-			if (errors) {
-				somethingWentWrong(errors);
-			}
+			if (ok) patchStore(npc);
+			if (ok && npc.lockedBySelf) $form.imageIds = npc.imageIds;
+			if (errors) somethingWentWrong(errors);
 		}
 	}
 </script>
 
-<DetailBase {npc} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
+<DetailBase {npc} {form} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
 <!-- <KitQLInfo store={KQL_NpcById} /> -->

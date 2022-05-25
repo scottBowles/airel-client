@@ -1,33 +1,25 @@
 <script lang="ts">
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
-	import BasicProperty from '$lib/components/DetailPage/BasicProperty.svelte';
-	import { Text, TextInput } from '@kahi-ui/framework';
 
 	export let onEditClick = () => {};
 	export let onFormSubmit;
 	export let onImageUpload;
-	export let race;
+	export let race = {};
+	export let form;
 	export let status = undefined;
 	export let errors = [];
 	export let creating = false;
 
-	$: ({
-		name = '',
-		imageIds = [],
-		description = '',
-		markdownNotes = '',
-		lockUser,
-		lockedBySelf
-	} = race || {});
-	$: editing = lockedBySelf || creating;
+	$: ({ name, description, markdownNotes, imageIds = [], lockUser, lockedBySelf } = race || {});
 </script>
 
 <StatusHandler {status} {errors} value={race} entityName="race">
 	<Layout
+		{form}
 		{name}
 		{description}
-		{imageIds}
 		{markdownNotes}
+		{imageIds}
 		{lockUser}
 		{lockedBySelf}
 		{onEditClick}

@@ -8,7 +8,10 @@
 	} from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
+	import { onMount } from 'svelte';
+	import { writable } from 'svelte/store';
 	import DetailBase from './_DetailBase.svelte';
+	import { emptyAssociation } from './_utils';
 
 	export const load = async ({ fetch, params }) => {
 		await KQL_AssociationById.queryLoad({ fetch, variables: { id: params.id } });
@@ -22,6 +25,13 @@
 
 	$: ({ status, errors, data } = $KQL_AssociationById);
 	$: ({ association } = data || {});
+
+	const form = writable(emptyAssociation);
+	onMount(setForm);
+
+	function setForm() {
+		$form = association;
+	}
 
 	function patchStore(patch) {
 		const update = { association: { ...association, ...patch } };
@@ -40,32 +50,25 @@
 			return;
 		}
 		patchStore(lockRes.data.associationLock.association);
+		setForm();
 		return;
 	}
 
-	async function onFormSubmit(e) {
-		const form = e.target;
-		const formData = new FormData(form);
-		const patch = {};
-		formData.forEach((value, key) => {
-			patch[key] = value;
-		});
-		console.log({ patch });
-
+	async function onFormSubmit() {
+		const patch = {
+			name: $form.name,
+			description: $form.description,
+			markdownNotes: $form.markdownNotes
+		};
 		const { data, errors: resErrors } = await KQL_AssociationPatch.mutate({
 			variables: { id, ...patch }
 		});
 
-		if (resErrors) {
-			somethingWentWrong(resErrors[0].message);
-		}
+		if (resErrors) somethingWentWrong(resErrors[0].message);
+
 		const { association: updatedAssociation, errors, ok } = data.associationPatch;
-		if (ok) {
-			patchStore(updatedAssociation);
-		}
-		if (errors) {
-			somethingWentWrong(errors);
-		}
+		if (ok) patchStore(updatedAssociation);
+		if (errors) somethingWentWrong(errors);
 	}
 
 	async function onImageUpload(error, result) {
@@ -75,25 +78,19 @@
 		}
 		if (result?.event === 'success') {
 			const { data, errors: resErrors } = await KQL_AssociationAddImage.mutate({
-				variables: {
-					id,
-					imageId: result.info.public_id
-				}
+				variables: { id, imageId: result.info.public_id }
 			});
 			if (resErrors) {
 				somethingWentWrong(resErrors[0].message);
 				return;
 			}
 			const { association, errors, ok } = data.associationAddImage;
-			if (ok) {
-				patchStore(association);
-			}
-			if (errors) {
-				somethingWentWrong(errors);
-			}
+			if (ok) patchStore(association);
+			if (ok && association.lockedBySelf) $form.imageIds = association.imageIds;
+			if (errors) somethingWentWrong(errors);
 		}
 	}
 </script>
 
-<DetailBase {association} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
+<DetailBase {association} {form} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
 <!-- <KitQLInfo store={KQL_AssociationById} /> -->
