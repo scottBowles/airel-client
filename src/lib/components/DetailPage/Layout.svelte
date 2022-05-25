@@ -97,14 +97,14 @@
 			{:else}
 				<Text class="description-text">{description}</Text>
 			{/if}
-		</div>
 
-		<!-- PROPERTIES -->
-		<slot name="properties">
-			{#each Object.entries(properties) as [name, value]}
-				<BasicProperty {name} {value} />
-			{/each}
-		</slot>
+			<!-- PROPERTIES -->
+			<slot name="properties">
+				{#each Object.entries(properties) as [name, value]}
+					<BasicProperty {name} {value} />
+				{/each}
+			</slot>
+		</div>
 
 		<div class="spacer" />
 
