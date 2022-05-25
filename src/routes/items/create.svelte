@@ -12,7 +12,15 @@
 	$: console.log({ form: $form });
 
 	async function onFormSubmit() {
-		const variables = $form;
+		const variables = {
+			name: $form.name,
+			description: $form.description,
+			markdownNotes: $form.markdownNotes,
+			...($form.armor && { armor: { acBonus: $form.armor.acBonus } }),
+			...($form.equipment && { equipment: { briefDescription: $form.equipment.briefDescription } }),
+			...($form.weapon && { weapon: { attackBonus: $form.weapon.attackBonus } })
+		};
+
 		const { data, errors: resErrors } = await KQL_ItemCreate.mutate({ variables });
 
 		if (resErrors) {
