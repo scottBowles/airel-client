@@ -1,10 +1,17 @@
 <script>
-	import { Heading } from '@kahi-ui/framework';
+	import { TextInput } from '@kahi-ui/framework';
 
-	export let brief_description;
+	export let equipment;
+	export let editing;
+	export let form;
 </script>
 
-<div>
-	<Heading is="h5">Equipment</Heading>
-	Brief Description: {brief_description}
-</div>
+{#if editing && $form.equipment}
+	<TextInput
+		bind:value={$form.equipment.briefDescription}
+		placeholder="Brief description"
+		is="textarea"
+	/>
+{:else}
+	{equipment?.briefDescription}
+{/if}

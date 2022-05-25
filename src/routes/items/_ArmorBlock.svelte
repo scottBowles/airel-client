@@ -1,10 +1,14 @@
 <script>
-	import { Heading } from '@kahi-ui/framework';
+	import { Form, NumberInput } from '@kahi-ui/framework';
 
-	export let acBonus;
+	export let armor;
+	export let editing;
+	export let form;
 </script>
 
-<div>
-	<Heading is="h5">Armor</Heading>
-	AC Bonus: {acBonus}
-</div>
+{#if editing && $form.armor}
+	<Form.Label>AC Bonus</Form.Label>
+	<NumberInput bind:value={$form.armor.acBonus} />
+{:else}
+	AC Bonus: {armor?.acBonus}
+{/if}

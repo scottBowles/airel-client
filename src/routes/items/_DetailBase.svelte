@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
+	import { Heading } from '@kahi-ui/framework';
+	import AddBlock from './_AddBlock.svelte';
 	import ArmorBlock from './_ArmorBlock.svelte';
 	import EquipmentBlock from './_EquipmentBlock.svelte';
 	import WeaponBlock from './_WeaponBlock.svelte';
-
 	export let onEditClick = () => {};
 	export let onFormSubmit;
 	export let onImageUpload;
@@ -24,6 +25,12 @@
 		equipment,
 		weapon
 	} = item);
+	$: editing = lockedBySelf || creating;
+
+	function handleAddStatBlock(event) {
+		const { name } = event.detail;
+		$form[name] ??= {};
+	}
 </script>
 
 <StatusHandler {status} {errors} value={item} entityName="item">
@@ -43,19 +50,42 @@
 		<svelte:fragment slot="properties">
 			<div class="spacer" />
 			<div class="stat-block-container">
-				{#if armor}
+				<!-- ARMOR STAT BLOCK -->
+				{#if editing || armor}
 					<div class="stat-block">
-						<ArmorBlock {...armor} />
+						<Heading is="h5">Armor</Heading>
+						<div class="spacer-xs" />
+						{#if editing && !$form.armor}
+							<AddBlock property="armor" on:addstatblock={handleAddStatBlock} />
+						{:else}
+							<ArmorBlock {armor} {form} {editing} />
+						{/if}
 					</div>
 				{/if}
-				{#if weapon}
+
+				<!-- WEAPON STAT BLOCK -->
+				{#if editing || weapon}
 					<div class="stat-block">
-						<WeaponBlock {...weapon} />
+						<Heading is="h5">Weapon</Heading>
+						<div class="spacer-xs" />
+						{#if editing && !$form.weapon}
+							<AddBlock property="weapon" on:addstatblock={handleAddStatBlock} />
+						{:else}
+							<WeaponBlock {weapon} {form} {editing} />
+						{/if}
 					</div>
 				{/if}
-				{#if equipment}
+
+				<!-- EQUIPMENT STAT BLOCK -->
+				{#if editing || equipment}
 					<div class="stat-block">
-						<EquipmentBlock {...equipment} />
+						<Heading is="h5">Equipment</Heading>
+						<div class="spacer-xs" />
+						{#if editing && !$form.equipment}
+							<AddBlock property="equipment" on:addstatblock={handleAddStatBlock} />
+						{:else}
+							<EquipmentBlock {equipment} {form} {editing} />
+						{/if}
 					</div>
 				{/if}
 			</div>
@@ -67,10 +97,16 @@
 	.spacer {
 		height: 1rem;
 	}
+	.spacer-xs {
+		height: 0.5rem;
+	}
 	.stat-block-container {
 		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
 	}
 	.stat-block {
 		flex: 1;
+		min-width: 100px;
 	}
 </style>
