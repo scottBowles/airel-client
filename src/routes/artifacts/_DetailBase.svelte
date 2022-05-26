@@ -1,5 +1,10 @@
 <script lang="ts">
+	import { browser } from '$app/env';
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
+	import ItemListDisplay from '$lib/components/ItemListDisplay.svelte';
+	import Spacer from '$lib/components/Spacer.svelte';
+	import { KQL_ItemNamesAndIds } from '$lib/graphql/_kitql/graphqlStores';
+	import { DataSelect } from '@kahi-ui/framework';
 
 	export let onEditClick = () => {};
 	export let onFormSubmit;
@@ -10,7 +15,28 @@
 	export let errors = [];
 	export let creating = false;
 
-	$: ({ name, description, markdownNotes, imageIds = [], lockUser, lockedBySelf } = artifact);
+	$: browser && KQL_ItemNamesAndIds.query();
+	$: console.log($KQL_ItemNamesAndIds);
+
+	$: ({
+		name,
+		description,
+		markdownNotes,
+		items: itemConnection,
+		imageIds = [],
+		lockUser,
+		lockedBySelf
+	} = artifact);
+
+	$: editing = lockedBySelf || creating;
+	$: items = itemConnection.edges.map(({ node }) => node);
+	$: itemsForSelect =
+		$KQL_ItemNamesAndIds.status === 'DONE' &&
+		$KQL_ItemNamesAndIds.data.items.edges.map(({ node: { name, id } }) => ({
+			text: name,
+			id
+		}));
+	$: console.log({ itemsForSelect });
 </script>
 
 <StatusHandler {status} {errors} value={artifact} entityName="artifact">
@@ -26,5 +52,41 @@
 		{onFormSubmit}
 		{onImageUpload}
 		{creating}
-	/>
+	>
+		<svelte:fragment slot="properties">
+			<Spacer lg />
+			{#if editing}
+				{#if $KQL_ItemNamesAndIds.status !== 'DONE'}
+					Loading Items...
+				{:else}
+					<div class="spacer" />
+					<DataSelect
+						class="_detailbase-input"
+						items={itemsForSelect}
+						multiple
+						placeholder="Select related items"
+						logic_name="dataselect-logic-state"
+						bind:logic_state={$form.items}
+					/>
+				{/if}
+			{:else}
+				<div class="items-container">
+					{#each items as item}
+						<ItemListDisplay {item} />
+					{/each}
+				</div>
+			{/if}
+		</svelte:fragment></Layout
+	>
 </StatusHandler>
+
+<style>
+	.items-container {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+	:global(._detailbase-input) {
+		width: var(--detail-layout-input-width);
+	}
+</style>

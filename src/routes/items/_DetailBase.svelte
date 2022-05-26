@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
-	import { Heading } from '@kahi-ui/framework';
 	import AddBlock from './_AddBlock.svelte';
-	import ArmorBlock from './_ArmorBlock.svelte';
-	import EquipmentBlock from './_EquipmentBlock.svelte';
-	import WeaponBlock from './_WeaponBlock.svelte';
+	import ItemArmorBlock from './_ItemArmorBlock.svelte';
+	import ItemArmorForm from './_ItemArmorForm.svelte';
+	import ItemEquipmentBlock from './_ItemEquipmentBlock.svelte';
+	import ItemEquipmentForm from './_ItemEquipmentForm.svelte';
+	import ItemWeaponBlock from './_ItemWeaponBlock.svelte';
+	import ItemWeaponForm from './_ItemWeaponForm.svelte';
+
 	export let onEditClick = () => {};
 	export let onFormSubmit;
 	export let onImageUpload;
@@ -53,12 +56,12 @@
 				<!-- ARMOR STAT BLOCK -->
 				{#if editing || armor}
 					<div class="stat-block">
-						<Heading is="h5">Armor</Heading>
-						<div class="spacer-xs" />
 						{#if editing && !$form.armor}
 							<AddBlock property="armor" on:addstatblock={handleAddStatBlock} />
+						{:else if editing && $form.armor}
+							<ItemArmorForm bind:armor={$form.armor} />
 						{:else}
-							<ArmorBlock {armor} {form} {editing} />
+							<ItemArmorBlock {armor} />
 						{/if}
 					</div>
 				{/if}
@@ -66,12 +69,12 @@
 				<!-- WEAPON STAT BLOCK -->
 				{#if editing || weapon}
 					<div class="stat-block">
-						<Heading is="h5">Weapon</Heading>
-						<div class="spacer-xs" />
 						{#if editing && !$form.weapon}
 							<AddBlock property="weapon" on:addstatblock={handleAddStatBlock} />
+						{:else if editing && $form.weapon}
+							<ItemWeaponForm bind:weapon={$form.weapon} />
 						{:else}
-							<WeaponBlock {weapon} {form} {editing} />
+							<ItemWeaponBlock {weapon} />
 						{/if}
 					</div>
 				{/if}
@@ -79,12 +82,12 @@
 				<!-- EQUIPMENT STAT BLOCK -->
 				{#if editing || equipment}
 					<div class="stat-block">
-						<Heading is="h5">Equipment</Heading>
-						<div class="spacer-xs" />
 						{#if editing && !$form.equipment}
 							<AddBlock property="equipment" on:addstatblock={handleAddStatBlock} />
+						{:else if editing && $form.equipment}
+							<ItemEquipmentForm bind:equipment={$form.equipment} />
 						{:else}
-							<EquipmentBlock {equipment} {form} {editing} />
+							<ItemEquipmentBlock {equipment} />
 						{/if}
 					</div>
 				{/if}

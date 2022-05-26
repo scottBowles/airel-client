@@ -26,12 +26,21 @@
 	$: ({ status, errors, data } = $KQL_ArtifactById);
 	$: ({ artifact } = data || {});
 
+	$: console.log({ artifact });
+
 	const form = writable(emptyArtifact);
 	onMount(setForm);
 
 	function setForm() {
-		$form = artifact;
+		$form = {
+			name: artifact.name,
+			description: artifact.description,
+			markdownNotes: artifact.markdownNotes,
+			items: artifact.items.edges.map(({ node }) => node.id),
+			imageIds: artifact.imageIds
+		};
 	}
+	$: console.log($form);
 
 	function patchStore(patch) {
 		const update = { artifact: { ...artifact, ...patch } };
@@ -58,7 +67,8 @@
 		const patch = {
 			name: $form.name,
 			description: $form.description,
-			markdownNotes: $form.markdownNotes
+			markdownNotes: $form.markdownNotes,
+			items: $form.items
 		};
 
 		const { data, errors: resErrors } = await KQL_ArtifactPatch.mutate({

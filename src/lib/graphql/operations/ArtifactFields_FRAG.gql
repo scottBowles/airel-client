@@ -18,11 +18,14 @@ fragment ArtifactFields on ArtifactNode {
 			node {
 				id
 				name
-				weapon {
-					attackBonus
-				}
+				description
+				imageIds
+				thumbnailId
 				armor {
 					acBonus
+				}
+				weapon {
+					attackBonus
 				}
 				equipment {
 					briefDescription

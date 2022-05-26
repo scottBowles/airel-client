@@ -4,6 +4,7 @@ mutation artifactPatch(
 	$description: String
 	$thumbnailId: String
 	$markdownNotes: String
+	$items: [String]
 ) {
 	artifactPatch(
 		input: {
@@ -12,6 +13,7 @@ mutation artifactPatch(
 			description: $description
 			thumbnailId: $thumbnailId
 			markdownNotes: $markdownNotes
+			items: $items
 		}
 	) {
 		ok

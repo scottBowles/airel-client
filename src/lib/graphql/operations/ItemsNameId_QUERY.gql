@@ -1,0 +1,10 @@
+query itemNamesAndIds {
+	items {
+		edges {
+			node {
+				id
+				name
+			}
+		}
+	}
+}

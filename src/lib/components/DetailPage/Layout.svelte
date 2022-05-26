@@ -2,11 +2,12 @@
 	import CloudinaryUpload from '$lib/components/CloudinaryUpload.svelte';
 	import { BasicProperty } from '$lib/components/DetailPage';
 	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
-	import MobileNavSpacer from '$lib/components/MobileNav/Spacer.svelte';
+	import MobileNavSpacer from '$lib/components/MobileNav/MobileNavSpacer.svelte';
 	import { Container, Heading, Text, TextInput } from '@kahi-ui/framework';
 	import { onMount } from 'svelte';
 	import MdEditor from '../EditableMarkdown/MdEditor.svelte';
 	import MdViewer from '../EditableMarkdown/MdViewer.svelte';
+	import Spacer from '../Spacer.svelte';
 
 	export let form;
 	export let name = '';
@@ -32,7 +33,7 @@
 </script>
 
 <MobileNavSpacer />
-<div class="spacer-xs" />
+<Spacer xs />
 <Container>
 	<form on:submit|preventDefault={onFormSubmit}>
 		<!-- TOP ROW -->
@@ -70,9 +71,9 @@
 		</div>
 
 		<!-- HR -->
-		<div class="spacer-xs" />
+		<Spacer xs />
 		<hr />
-		<div class="spacer" />
+		<Spacer />
 
 		<div class:clearfix={editing}>
 			<!-- IMAGES -->
@@ -81,6 +82,7 @@
 					<CloudinaryUpload {onImageUpload}>
 						<ImageCarousel imageIds={editing ? $form.imageIds : imageIds} />
 					</CloudinaryUpload>
+					<Spacer />
 				</slot>
 			</div>
 
@@ -93,6 +95,7 @@
 					name="description"
 					placeholder="Brief Description"
 					bind:value={$form.description}
+					class="detail-layout-input"
 				/>
 			{:else}
 				<Text class="description-text">{description}</Text>
@@ -106,7 +109,7 @@
 			</slot>
 		</div>
 
-		<div class="spacer" />
+		<Spacer />
 
 		<!-- MARKDOWN NOTES -->
 		<!-- <div class:markdown-container={false}> -->
@@ -151,22 +154,19 @@
 	hr {
 		color: #ccc;
 	}
-	.spacer {
-		height: 2em;
-	}
-	.spacer-xs {
-		height: 0.5em;
-	}
 	.img-container {
 		float: right;
-		width: clamp(40%, (120px - 40%) * 1000, 100%);
+		width: var(--detail-layout-img-container-width);
 		margin-left: 0.5em;
-		/* margin-bottom: 0.5em; */
 	}
-	/* .markdown-container {
-		width: clamp(56%, (120px - 40%) * 1000, 100%);
-	} */
+	:global(:root) {
+		--detail-layout-img-container-width: clamp(40%, (370px - 100%) * 1000, 100%);
+		--detail-layout-input-width: clamp(56%, (370px - 100%) * 1000, 100%);
+	}
 	:global(.description-text) {
 		font-style: italic;
+	}
+	:global(.detail-layout-input) {
+		width: var(--detail-layout-input-width);
 	}
 </style>
