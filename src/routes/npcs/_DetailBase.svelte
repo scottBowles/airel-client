@@ -6,7 +6,7 @@
 		KQL_AssociationNamesAndIds,
 		KQL_RaceNamesAndIds
 	} from '$lib/graphql/_kitql/graphqlStores';
-	import { DataSelect } from '@kahi-ui/framework';
+	import { Anchor, DataSelect, Heading } from '@kahi-ui/framework';
 
 	export let onEditClick = () => {};
 	export let onFormSubmit;
@@ -64,11 +64,35 @@
 		<svelte:fragment slot="properties">
 			<Spacer lg />
 			{#if editing}
-				{#if $KQL_AssociationNamesAndIds.status !== 'DONE'}
-					Loading Items...
+				{#if $KQL_RaceNamesAndIds.status !== 'DONE'}
+					Loading Races...
 				{:else}
 					<div class="spacer" />
-					Items loaded
+					<DataSelect
+						class="_detailbase-input"
+						items={racesForSelect}
+						placeholder="Select related races"
+						logic_name="dataselect-logic-state"
+						bind:logic_state={$form.race}
+					/>
+				{/if}
+			{:else}
+				<div class="items-container">
+					<Heading is="h4">Race</Heading>
+					<Spacer xs />
+					<div>
+						<Anchor href={`/races/${race.id}`}>
+							{race.name}
+						</Anchor>
+					</div>
+				</div>
+			{/if}
+			<Spacer lg />
+			{#if editing}
+				{#if $KQL_AssociationNamesAndIds.status !== 'DONE'}
+					Loading Associations...
+				{:else}
+					<div class="spacer" />
 					<DataSelect
 						class="_detailbase-input"
 						items={associationsForSelect}
@@ -80,39 +104,19 @@
 				{/if}
 			{:else}
 				<div class="items-container">
-					<div>Associations</div>
-					{#each associations as association}
-						<div>
-							<!-- <AssociationListDisplay {association} /> -->
-							{association.name}
-						</div>
-					{/each}
-				</div>
-			{/if}
-			<Spacer lg />
-			{#if editing}
-				{#if $KQL_RaceNamesAndIds.status !== 'DONE'}
-					Loading Items...
-				{:else}
-					<div class="spacer" />
-					Items loaded
-					<DataSelect
-						class="_detailbase-input"
-						items={racesForSelect}
-						placeholder="Select related associations"
-						logic_name="dataselect-logic-state"
-						bind:logic_state={$form.race}
-					/>
-				{/if}
-			{:else}
-				<div class="items-container">
-					<div>Race</div>
+					<Heading is="h4">Associations</Heading>
+					<Spacer xs />
 					<div>
-						<!-- <RaceListDisplay {race} /> -->
-						{race.name}
+						{#each associations as association, i}
+							<Anchor href={`/associations/${association.id}`}>{association.name}</Anchor>{i <
+							associations.length - 1
+								? ', '
+								: ''}
+						{/each}
 					</div>
 				</div>
 			{/if}
+			<Spacer lg />
 		</svelte:fragment>
 	</Layout>
 </StatusHandler>
