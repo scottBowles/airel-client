@@ -30,7 +30,9 @@
 	onMount(setForm);
 
 	function setForm() {
-		$form = place;
+		if (place) {
+			$form = place;
+		}
 	}
 
 	function patchStore(patch) {

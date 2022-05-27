@@ -30,7 +30,9 @@
 	onMount(setForm);
 
 	function setForm() {
-		$form = race;
+		if (race) {
+			$form = race;
+		}
 	}
 
 	function patchStore(patch) {

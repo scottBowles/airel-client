@@ -22,14 +22,14 @@
 		name,
 		description,
 		markdownNotes,
-		items: itemConnection,
+		items: itemsConnection,
 		imageIds = [],
 		lockUser,
 		lockedBySelf
 	} = artifact);
 
 	$: editing = lockedBySelf || creating;
-	$: items = itemConnection.edges.map(({ node }) => node);
+	$: items = itemsConnection?.edges.map(({ node }) => node);
 	$: itemsForSelect =
 		$KQL_ItemNamesAndIds.status === 'DONE' &&
 		$KQL_ItemNamesAndIds.data.items.edges.map(({ node: { name, id } }) => ({
@@ -76,8 +76,8 @@
 					{/each}
 				</div>
 			{/if}
-		</svelte:fragment></Layout
-	>
+		</svelte:fragment>
+	</Layout>
 </StatusHandler>
 
 <style>

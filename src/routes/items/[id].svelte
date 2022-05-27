@@ -36,7 +36,9 @@
 	$: console.log({ form: $form });
 
 	function setForm() {
-		$form = item;
+		if (item) {
+			$form = item;
+		}
 	}
 
 	function patchStore(patch) {

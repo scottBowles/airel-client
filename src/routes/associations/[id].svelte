@@ -30,7 +30,9 @@
 	onMount(setForm);
 
 	function setForm() {
-		$form = association;
+		if (association) {
+			$form = association;
+		}
 	}
 
 	function patchStore(patch) {

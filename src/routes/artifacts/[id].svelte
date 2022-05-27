@@ -32,13 +32,15 @@
 	onMount(setForm);
 
 	function setForm() {
-		$form = {
-			name: artifact.name,
-			description: artifact.description,
-			markdownNotes: artifact.markdownNotes,
-			items: artifact.items.edges.map(({ node }) => node.id),
-			imageIds: artifact.imageIds
-		};
+		if (artifact) {
+			$form = {
+				name: artifact.name,
+				description: artifact.description,
+				markdownNotes: artifact.markdownNotes,
+				items: artifact.items.edges.map(({ node }) => node.id),
+				imageIds: artifact.imageIds
+			};
+		}
 	}
 	$: console.log($form);
 
