@@ -1,0 +1,10 @@
+query associationNamesAndIds {
+	associations {
+		edges {
+			node {
+				id
+				name
+			}
+		}
+	}
+}

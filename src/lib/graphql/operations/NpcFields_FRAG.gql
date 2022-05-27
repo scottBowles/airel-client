@@ -24,6 +24,15 @@ fragment NpcFields on NPCNode {
 		size
 		speed
 	}
+	associations {
+		edges {
+			node {
+				id
+				name
+				description
+			}
+		}
+	}
 	featuresAndTraits {
 		edges {
 			node {

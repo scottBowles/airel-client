@@ -3,6 +3,6 @@ export const emptyNpc = {
 	description: '',
 	markdownNotes: '',
 	imageIds: [],
-	lockUser: { username: 'Loading' },
-	lockedBySelf: false
+	associations: [],
+	race: ''
 };

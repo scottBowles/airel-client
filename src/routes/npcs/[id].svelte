@@ -31,7 +31,16 @@
 	onMount(setForm);
 
 	function setForm() {
-		$form = npc;
+		if (npc) {
+			$form = {
+				name: npc.name,
+				description: npc.description,
+				markdownNotes: npc.markdownNotes,
+				associations: npc.associations.edges.map(({ node }) => node.id),
+				imageIds: npc.imageIds,
+				race: npc.race.id
+			};
+		}
 	}
 
 	function patchStore(patch) {
@@ -59,7 +68,9 @@
 		const patch = {
 			name: $form.name,
 			description: $form.description,
-			markdownNotes: $form.markdownNotes
+			markdownNotes: $form.markdownNotes,
+			associations: $form.associations,
+			race: $form.race
 		};
 
 		const { data, errors: resErrors } = await KQL_NpcPatch.mutate({

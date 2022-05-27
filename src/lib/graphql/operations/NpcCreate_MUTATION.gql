@@ -4,6 +4,8 @@ mutation npcCreate(
 	$thumbnailId: String
 	$markdownNotes: String
 	$imageIds: [String]
+	$associations: [ID]
+	$race: ID
 ) {
 	npcCreate(
 		input: {
@@ -12,6 +14,8 @@ mutation npcCreate(
 			thumbnailId: $thumbnailId
 			markdownNotes: $markdownNotes
 			imageIds: $imageIds
+			associations: $associations
+			race: $race
 		}
 	) {
 		ok

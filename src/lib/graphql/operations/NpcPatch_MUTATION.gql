@@ -4,6 +4,8 @@ mutation npcPatch(
 	$description: String
 	$thumbnailId: String
 	$markdownNotes: String
+	$associations: [ID]
+	$race: ID
 ) {
 	npcPatch(
 		input: {
@@ -12,6 +14,8 @@ mutation npcPatch(
 			description: $description
 			thumbnailId: $thumbnailId
 			markdownNotes: $markdownNotes
+			associations: $associations
+			race: $race
 		}
 	) {
 		ok
