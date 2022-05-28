@@ -4,6 +4,7 @@ mutation associationCreate(
 	$thumbnailId: String
 	$markdownNotes: String
 	$imageIds: [String]
+	$npcs: [ID]
 ) {
 	associationCreate(
 		input: {
@@ -12,6 +13,7 @@ mutation associationCreate(
 			thumbnailId: $thumbnailId
 			markdownNotes: $markdownNotes
 			imageIds: $imageIds
+			npcs: $npcs
 		}
 	) {
 		ok

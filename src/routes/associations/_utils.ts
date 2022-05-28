@@ -3,6 +3,5 @@ export const emptyAssociation = {
 	description: '',
 	markdownNotes: '',
 	imageIds: [],
-	lockUser: { username: 'Loading' },
-	lockedBySelf: false
+	npcs: []
 };

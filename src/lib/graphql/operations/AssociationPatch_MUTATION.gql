@@ -4,6 +4,7 @@ mutation associationPatch(
 	$description: String
 	$thumbnailId: String
 	$markdownNotes: String
+	$npcs: [ID]
 ) {
 	associationPatch(
 		input: {
@@ -12,6 +13,7 @@ mutation associationPatch(
 			description: $description
 			thumbnailId: $thumbnailId
 			markdownNotes: $markdownNotes
+			npcs: $npcs
 		}
 	) {
 		ok

@@ -1,0 +1,10 @@
+query npcNamesAndIds {
+	npcs {
+		edges {
+			node {
+				id
+				name
+			}
+		}
+	}
+}

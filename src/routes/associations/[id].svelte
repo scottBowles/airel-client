@@ -31,7 +31,13 @@
 
 	function setForm() {
 		if (association) {
-			$form = association;
+			$form = {
+				name: association.name,
+				description: association.description,
+				markdownNotes: association.markdownNotes,
+				npcs: association.npcs.edges.map(({ node }) => node.id),
+				imageIds: association.imageIds
+			};
 		}
 	}
 
@@ -60,7 +66,8 @@
 		const patch = {
 			name: $form.name,
 			description: $form.description,
-			markdownNotes: $form.markdownNotes
+			markdownNotes: $form.markdownNotes,
+			npcs: $form.npcs || []
 		};
 		const { data, errors: resErrors } = await KQL_AssociationPatch.mutate({
 			variables: { id, ...patch }
