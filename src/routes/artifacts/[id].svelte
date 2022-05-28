@@ -70,7 +70,7 @@
 			name: $form.name,
 			description: $form.description,
 			markdownNotes: $form.markdownNotes,
-			items: $form.items
+			items: $form.items || ''
 		};
 
 		const { data, errors: resErrors } = await KQL_ArtifactPatch.mutate({

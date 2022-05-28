@@ -38,7 +38,7 @@
 				markdownNotes: npc.markdownNotes,
 				associations: npc.associations.edges.map(({ node }) => node.id),
 				imageIds: npc.imageIds,
-				race: npc.race.id
+				race: npc.race?.id || ''
 			};
 		}
 	}
@@ -69,7 +69,7 @@
 			name: $form.name,
 			description: $form.description,
 			markdownNotes: $form.markdownNotes,
-			associations: $form.associations,
+			associations: $form.associations || [],
 			race: $form.race
 		};
 

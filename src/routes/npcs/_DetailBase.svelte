@@ -80,11 +80,15 @@
 				<div class="items-container">
 					<Heading is="h4">Race</Heading>
 					<Spacer xs />
-					<div>
-						<Anchor href={`/races/${race.id}`}>
-							{race.name}
-						</Anchor>
-					</div>
+					{#if race}
+						<div>
+							<Anchor href={`/races/${race.id}`}>
+								{race.name}
+							</Anchor>
+						</div>
+					{:else}
+						<div>No race selected yet</div>
+					{/if}
 				</div>
 			{/if}
 			<Spacer lg />
@@ -102,7 +106,7 @@
 						bind:logic_state={$form.associations}
 					/>
 				{/if}
-			{:else}
+			{:else if associations.length > 0}
 				<div class="items-container">
 					<Heading is="h4">Associations</Heading>
 					<Spacer xs />
