@@ -2,6 +2,7 @@
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { KQL_PlacesForSearch } from '$lib/graphql/_kitql/graphqlStores';
+	import { emptySelectOption } from '$lib/utils';
 	import {
 		Anchor,
 		Breadcrumb,
@@ -36,19 +37,16 @@
 		description,
 		markdownNotes,
 		placeTypeDisplay,
-		parent,
+		// parent,
 		children: childrenConnection,
 		imageIds = [],
 		lockUser,
 		lockedBySelf
 	} = place || {});
 
-	const emptySelectOption = {
-		text: '(None)',
-		id: ''
-	};
+	type TEdge = { node: { id: string; name: string; placeTypeDisplay: string } };
 
-	function getSelectOptionFromEdge({ node }): typeof emptySelectOption {
+	function getSelectOptionFromEdge({ node }: TEdge) {
 		return {
 			text: node.name + ' (' + node.placeTypeDisplay + ')',
 			id: node.id
@@ -61,7 +59,6 @@
 		return node ? [...getBreadcrumbs(node.parent), node] : [];
 	}
 	$: breadcrumbs = getBreadcrumbs(place);
-	$: console.log({ breadcrumbs });
 
 	$: placesForParentSelect =
 		$KQL_PlacesForSearch.data && $form.placeType
@@ -74,12 +71,9 @@
 			: [];
 	$: placesForChildrenSelect =
 		$KQL_PlacesForSearch.data && $form.placeType
-			? [
-					emptySelectOption,
-					...$KQL_PlacesForSearch.data.places.edges
-						.filter(filterForChildren($form.placeType))
-						.map(getSelectOptionFromEdge)
-			  ]
+			? $KQL_PlacesForSearch.data.places.edges
+					.filter(filterForChildren($form.placeType))
+					.map(getSelectOptionFromEdge)
 			: [];
 
 	$: editing = lockedBySelf || creating;

@@ -32,3 +32,8 @@ export function withToken(fetch, session) {
 export function somethingWentWrong(error: string) {
 	toast.push(`<strong>Something went wrong</strong><br />${error}`);
 }
+
+export const emptySelectOption = {
+	text: '(None)',
+	id: ''
+};
