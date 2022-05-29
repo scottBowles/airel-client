@@ -26,14 +26,11 @@
 
 	$: ({ status, errors, data } = $KQL_ItemById);
 	$: ({ item } = data || {});
-	$: console.log({ item });
 
 	// TODO: hold form state in storage
-	const form = writable(emptyItem);
+	const form = writable({ ...emptyItem });
 
 	onMount(setForm);
-
-	$: console.log({ form: $form });
 
 	function setForm() {
 		if (item) {

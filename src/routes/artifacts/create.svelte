@@ -9,7 +9,7 @@
 </script>
 
 <script>
-	const form = writable(emptyArtifact);
+	const form = writable({ ...emptyArtifact });
 
 	async function onFormSubmit() {
 		const variables = $form;

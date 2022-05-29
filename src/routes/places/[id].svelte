@@ -26,7 +26,7 @@
 	$: ({ status, errors, data } = $KQL_PlaceById);
 	$: ({ place } = data || {});
 
-	const form = writable(emptyPlace);
+	const form = writable({ ...emptyPlace });
 	onMount(setForm);
 
 	function setForm() {

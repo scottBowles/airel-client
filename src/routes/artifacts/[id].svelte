@@ -28,7 +28,7 @@
 
 	$: console.log({ artifact });
 
-	const form = writable(emptyArtifact);
+	const form = writable({ ...emptyArtifact });
 	onMount(setForm);
 
 	function setForm() {

@@ -26,7 +26,7 @@
 	$: ({ status, errors, data } = $KQL_NpcById);
 	$: ({ npc } = data || {});
 
-	const form = writable(emptyNpc);
+	const form = writable({ ...emptyNpc });
 
 	onMount(setForm);
 

@@ -26,7 +26,7 @@
 	$: ({ status, errors, data } = $KQL_RaceById);
 	$: ({ race } = data || {});
 
-	const form = writable(emptyRace);
+	const form = writable({ ...emptyRace });
 	onMount(setForm);
 
 	function setForm() {

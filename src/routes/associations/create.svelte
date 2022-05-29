@@ -7,9 +7,9 @@
 	import DetailBase from './_DetailBase.svelte';
 	import { emptyAssociation } from './_utils';
 
-	const form = writable(emptyAssociation);
+	const form = writable({ ...emptyAssociation });
 
-	async function onFormSubmit(e) {
+	async function onFormSubmit() {
 		const variables = $form;
 		const { data, errors: resErrors } = await KQL_AssociationCreate.mutate({ variables });
 

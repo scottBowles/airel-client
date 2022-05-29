@@ -7,7 +7,7 @@
 	import DetailBase from './_DetailBase.svelte';
 	import { emptyRace } from './_utils';
 
-	const form = writable(emptyRace);
+	const form = writable({ ...emptyRace });
 
 	async function onFormSubmit() {
 		const variables = $form;

@@ -26,7 +26,7 @@
 	$: ({ status, errors, data } = $KQL_AssociationById);
 	$: ({ association } = data || {});
 
-	const form = writable(emptyAssociation);
+	const form = writable({ ...emptyAssociation });
 	onMount(setForm);
 
 	function setForm() {
