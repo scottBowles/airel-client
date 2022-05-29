@@ -16,18 +16,18 @@
 	$: console.log({ npcs });
 </script>
 
-<BannerImage overlay="NPCs" imageId="dnd/places-banner_bwv6ut" alt="places banner" />
+<BannerImage overlay="Characters" imageId="dnd/places-banner_bwv6ut" alt="places banner" />
 
 <div class="spacer" />
 
 <Container>
 	<div class="cards-container">
 		<div>
-			<AddLink href="npcs/create" />
+			<AddLink href="characters/create" />
 		</div>
 		{#each npcs as npc}
 			{@const { id, name, description, thumbnailId } = npc}
-			{@const href = `npcs/${id}`}
+			{@const href = `characters/${id}`}
 			<ListDetailCard {name} {description} {thumbnailId} {href} />
 		{/each}
 	</div>

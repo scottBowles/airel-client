@@ -18,8 +18,8 @@
 			href: '/artifacts'
 		},
 		{
-			label: 'NPCs',
-			href: '/npcs'
+			label: 'Characters',
+			href: '/characters'
 		},
 		{
 			label: 'Associations',

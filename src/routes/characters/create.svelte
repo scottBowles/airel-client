@@ -19,7 +19,7 @@
 		}
 
 		const { npc: newNpc, errors, ok } = data.npcCreate;
-		if (ok) goto(`/npcs/${newNpc.id}`);
+		if (ok) goto(`/characters/${newNpc.id}`);
 		if (errors) somethingWentWrong(errors);
 	}
 

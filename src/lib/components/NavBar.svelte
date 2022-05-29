@@ -27,8 +27,8 @@
 			href: '/artifacts'
 		},
 		{
-			label: 'NPCs',
-			href: '/npcs'
+			label: 'Characters',
+			href: '/characters'
 		},
 		{
 			label: 'Associations',
@@ -69,7 +69,7 @@
 <Omni.Container palette="dark" width="100">
 	<Omni.Header>
 		<Anchor href="#">Airel</Anchor>
-		<MediaQueryRender queries="(min-width: 1080px)">
+		<MediaQueryRender queries="(min-width: 1132px)">
 			<Divider orientation="vertical" />
 			<Anchor href="#">
 				<Text is="small">Between Two Suns</Text>

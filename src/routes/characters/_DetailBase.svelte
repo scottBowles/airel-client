@@ -47,7 +47,7 @@
 		}));
 </script>
 
-<StatusHandler {status} {errors} value={npc} entityName="npc">
+<StatusHandler {status} {errors} value={npc} entityName="character">
 	<Layout
 		{form}
 		{name}

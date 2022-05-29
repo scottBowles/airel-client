@@ -28,10 +28,10 @@
 
 <!-- TODO: put NavBar outside of main and handle min-height accordingly -->
 <main>
-	<MediaQueryRender queries="(min-width: 810px)">
+	<MediaQueryRender queries="(min-width: 975px)">
 		<NavBar />
 	</MediaQueryRender>
-	<MediaQueryRender queries="(max-width: 809px)">
+	<MediaQueryRender queries="(max-width: 974px)">
 		<MobileNavBar />
 	</MediaQueryRender>
 

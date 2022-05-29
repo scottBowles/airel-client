@@ -54,7 +54,7 @@
 			<Spacer lg />
 			{#if editing}
 				{#if $KQL_NpcNamesAndIds.status !== 'DONE'}
-					Loading NPCs...
+					Loading Characters...
 				{:else}
 					<div class="spacer" />
 					<DataSelect
@@ -73,7 +73,7 @@
 					{#if npcs.length > 0}
 						<div>
 							{#each npcs as npc, i}
-								<Anchor href={`/npcs/${npc.id}`}>{npc.name}</Anchor>{i < npcs.length - 1
+								<Anchor href={`/characters/${npc.id}`}>{npc.name}</Anchor>{i < npcs.length - 1
 									? ', '
 									: ''}
 							{/each}
