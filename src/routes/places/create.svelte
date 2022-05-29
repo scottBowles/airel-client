@@ -10,7 +10,15 @@
 	const form = writable({ ...emptyPlace });
 
 	async function onFormSubmit() {
-		const variables = $form;
+		const variables = {
+			name: $form.name,
+			description: $form.description,
+			markdownNotes: $form.markdownNotes,
+			placeType: $form.placeType,
+			parent: $form.parent,
+			children: $form.children
+		};
+
 		const { data, errors: resErrors } = await KQL_PlaceCreate.mutate({ variables });
 
 		if (resErrors) {

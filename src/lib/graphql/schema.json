@@ -11259,6 +11259,22 @@
             "deprecationReason": null
           },
           {
+            "name": "children",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "clientMutationId",
             "description": null,
             "type": {
@@ -11343,7 +11359,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "UUID",
+              "name": "ID",
               "ofType": null
             },
             "defaultValue": null,
@@ -12151,13 +12167,21 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "PlacePlacePlaceTypeChoices",
-                "ofType": null
-              }
+              "kind": "ENUM",
+              "name": "PlacePlacePlaceTypeChoices",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "placeTypeDisplay",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -12327,6 +12351,22 @@
             "deprecationReason": null
           },
           {
+            "name": "children",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "clientMutationId",
             "description": null,
             "type": {
@@ -12423,7 +12463,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "UUID",
+              "name": "ID",
               "ofType": null
             },
             "defaultValue": null,
@@ -12763,6 +12803,22 @@
             "deprecationReason": null
           },
           {
+            "name": "children",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "clientMutationId",
             "description": null,
             "type": {
@@ -12859,7 +12915,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "UUID",
+              "name": "ID",
               "ofType": null
             },
             "defaultValue": null,
@@ -19660,16 +19716,6 @@
         ],
         "inputFields": null,
         "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "SCALAR",
-        "name": "UUID",
-        "description": "Leverages the internal Python implementation of UUID (uuid.UUID) to provide native UUID objects\nin fields, resolvers and input.",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },

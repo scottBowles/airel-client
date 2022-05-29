@@ -14,6 +14,7 @@ fragment PlaceFields on PlaceNode {
 	created
 	updated
 	placeType
+	placeTypeDisplay
 	population
 	parent {
 		id
@@ -24,6 +25,7 @@ fragment PlaceFields on PlaceNode {
 		created
 		updated
 		placeType
+		placeTypeDisplay
 		population
 		parent {
 			id
@@ -34,7 +36,48 @@ fragment PlaceFields on PlaceNode {
 			created
 			updated
 			placeType
+			placeTypeDisplay
 			population
+			parent {
+				id
+				name
+				placeType
+				placeTypeDisplay
+				parent {
+					id
+					name
+					placeType
+					placeTypeDisplay
+					parent {
+						id
+						name
+						placeType
+						placeTypeDisplay
+						parent {
+							id
+							name
+							placeType
+							placeTypeDisplay
+						}
+					}
+				}
+			}
+		}
+	}
+	children {
+		edges {
+			node {
+				id
+				name
+				description
+				imageIds
+				thumbnailId
+				created
+				updated
+				placeType
+				placeTypeDisplay
+				population
+			}
 		}
 	}
 }

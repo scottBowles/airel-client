@@ -3,6 +3,7 @@ export const emptyPlace = {
 	description: '',
 	markdownNotes: '',
 	imageIds: [],
-	lockUser: { username: 'Loading' },
-	lockedBySelf: false
+	placeType: null,
+	parent: '',
+	children: []
 };

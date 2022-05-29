@@ -30,9 +30,9 @@
 			<AddLink href="places/create" />
 		</div>
 		{#each places as place}
-			{@const { id, name, description, thumbnailId } = place}
+			{@const { id, name, description, thumbnailId, placeTypeDisplay } = place}
 			{@const href = `places/${id}`}
-			<ListDetailCard {name} {description} {thumbnailId} {href} />
+			<ListDetailCard name={`${name} (${placeTypeDisplay})`} {description} {thumbnailId} {href} />
 		{/each}
 	</div>
 </Container>

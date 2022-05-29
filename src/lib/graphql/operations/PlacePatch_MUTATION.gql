@@ -4,6 +4,9 @@ mutation placePatch(
 	$description: String
 	$thumbnailId: String
 	$markdownNotes: String
+	$placeType: String
+	$parent: ID
+	$children: [ID]
 ) {
 	placePatch(
 		input: {
@@ -12,6 +15,9 @@ mutation placePatch(
 			description: $description
 			thumbnailId: $thumbnailId
 			markdownNotes: $markdownNotes
+			placeType: $placeType
+			parent: $parent
+			children: $children
 		}
 	) {
 		ok

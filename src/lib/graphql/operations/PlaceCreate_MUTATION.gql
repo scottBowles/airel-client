@@ -4,6 +4,9 @@ mutation placeCreate(
 	$thumbnailId: String
 	$markdownNotes: String
 	$imageIds: [String]
+	$placeType: String
+	$parent: ID
+	$children: [ID]
 ) {
 	placeCreate(
 		input: {
@@ -12,6 +15,9 @@ mutation placeCreate(
 			thumbnailId: $thumbnailId
 			markdownNotes: $markdownNotes
 			imageIds: $imageIds
+			placeType: $placeType
+			parent: $parent
+			children: $children
 		}
 	) {
 		ok

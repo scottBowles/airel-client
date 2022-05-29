@@ -31,7 +31,15 @@
 
 	function setForm() {
 		if (place) {
-			$form = place;
+			$form = {
+				name: place.name,
+				description: place.description,
+				markdownNotes: place.markdownNotes,
+				imageIds: place.imageIds,
+				placeType: place.placeTypeDisplay,
+				parent: place.parent?.id,
+				children: place.children.edges.map(({ node }) => node.id)
+			};
 		}
 	}
 
@@ -60,7 +68,10 @@
 		const patch = {
 			name: $form.name,
 			description: $form.description,
-			markdownNotes: $form.markdownNotes
+			markdownNotes: $form.markdownNotes,
+			placeType: $form.placeType,
+			parent: $form.parent,
+			children: $form.children
 		};
 
 		const { data, errors: resErrors } = await KQL_PlacePatch.mutate({

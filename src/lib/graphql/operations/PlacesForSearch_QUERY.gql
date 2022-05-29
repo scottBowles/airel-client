@@ -1,0 +1,11 @@
+query placesForSearch {
+	places {
+		edges {
+			node {
+				id
+				name
+				placeTypeDisplay
+			}
+		}
+	}
+}
