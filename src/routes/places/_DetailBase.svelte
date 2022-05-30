@@ -86,6 +86,7 @@
 			<Breadcrumb.Container>
 				{#each breadcrumbs as breadcrumb, i}
 					<Breadcrumb.Anchor
+						sveltekit:prefetch
 						href={`/places/${breadcrumb.id}`}
 						active={i === breadcrumbs.length - 1}
 					>
@@ -173,7 +174,8 @@
 					<Heading is="h4">{getChildrenName(placeTypeDisplay)}</Heading>
 					<Spacer xs />
 					{#each children as child, i}
-						<Anchor href={`/places/${child.id}`}>{child.name}</Anchor>{i < children.length - 1
+						<Anchor sveltekit:prefetch href={`/places/${child.id}`}>{child.name}</Anchor>{i <
+						children.length - 1
 							? ', '
 							: ''}
 					{/each}

@@ -11,7 +11,8 @@
 </script>
 
 {#if status === 'LOADING'}
-	<Loading />
+	<!-- <Loading /> -->
+	<slot />
 {:else if status === 'DONE' && errors?.length > 0}
 	<Error {errors} />
 {:else if (status === 'DONE' && value) || status === undefined}

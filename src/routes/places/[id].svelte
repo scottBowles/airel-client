@@ -1,5 +1,6 @@
 <script context="module" lang="ts">
 	import { page } from '$app/stores';
+	import placeDetails from '$lib/graphql/customStores/placeDetails';
 	import {
 		KQL_PlaceAddImage,
 		KQL_PlaceById,
@@ -14,16 +15,17 @@
 	import { emptyPlace } from './_utils';
 
 	export const load = async ({ fetch, params }) => {
-		await KQL_PlaceById.queryLoad({ fetch, variables: { id: params.id } });
+		await placeDetails.queryLoad({ fetch, variables: { id: params.id } });
 		return {};
 	};
 </script>
 
 <script>
-	const { id } = $page.params;
-	const variables = { id }; // for requests
+	$: ({ id } = $page.params);
+	$: variables = { id }; // for requests
 
-	$: ({ status, errors, data } = $KQL_PlaceById);
+	$: store = placeDetails.byId(variables);
+	$: ({ status, errors, data } = $store);
 	$: ({ place } = data || {});
 
 	const form = writable({ ...emptyPlace });
