@@ -59,7 +59,7 @@
 
 <div class="menu-container">
 	<Menu.Container>
-		<Anchor href="/"><Heading is="h1">Airel</Heading></Anchor>
+		<Anchor sveltekit:prefetch href="/"><Heading is="h1">Airel</Heading></Anchor>
 		<div class="spacer" />
 		{#each links as link}
 			<a href={link.href} sveltekit:prefetch>

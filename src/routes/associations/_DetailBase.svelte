@@ -73,7 +73,8 @@
 					{#if npcs.length > 0}
 						<div>
 							{#each npcs as npc, i}
-								<Anchor href={`/characters/${npc.id}`}>{npc.name}</Anchor>{i < npcs.length - 1
+								<Anchor sveltekit:prefetch href={`/characters/${npc.id}`}>{npc.name}</Anchor>{i <
+								npcs.length - 1
 									? ', '
 									: ''}
 							{/each}

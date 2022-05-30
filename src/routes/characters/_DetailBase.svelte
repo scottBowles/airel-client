@@ -82,7 +82,7 @@
 					<Spacer xs />
 					{#if race}
 						<div>
-							<Anchor href={`/races/${race.id}`}>
+							<Anchor sveltekit:prefetch href={`/races/${race.id}`}>
 								{race.name}
 							</Anchor>
 						</div>
@@ -112,10 +112,9 @@
 					<Spacer xs />
 					<div>
 						{#each associations as association, i}
-							<Anchor href={`/associations/${association.id}`}>{association.name}</Anchor>{i <
-							associations.length - 1
-								? ', '
-								: ''}
+							<Anchor sveltekit:prefetch href={`/associations/${association.id}`}
+								>{association.name}</Anchor
+							>{i < associations.length - 1 ? ', ' : ''}
 						{/each}
 					</div>
 				</div>

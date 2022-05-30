@@ -68,7 +68,7 @@
 
 <Omni.Container palette="dark" width="100">
 	<Omni.Header>
-		<Anchor href="#">Airel</Anchor>
+		<Anchor sveltekit:prefetch href="#">Airel</Anchor>
 		<MediaQueryRender queries="(min-width: 1132px)">
 			<Divider orientation="vertical" />
 			<Anchor href="#">
