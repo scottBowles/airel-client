@@ -48,7 +48,7 @@
 	<Text>
 		The best way to make a suggestion is to create an issue on <a
 			href="https://github.com/scottBowles/airel-client/issues"
-			rel="external"
+			rel="external noopener noreferrer"
 			target="_blank">GitHub<span class="gh-icon"><DiGithubBadge /></span></a
 		> (you'll have to make an account but that's simple enough). There anyone who wants can discuss and
 		track progress made. You can also see and help with some things I have in mind already. Feel free
