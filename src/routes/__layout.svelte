@@ -5,6 +5,7 @@
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
 	import { PUBLIC_PAGES } from '$lib/constants';
 	import { kitQLClient } from '$lib/graphql/kitQLClient';
+	import { KQL__Init } from '$lib/graphql/_kitql/graphqlStores';
 	import { MediaQueryRender } from '@kahi-ui/framework';
 	import '@kahi-ui/framework/dist/kahi-ui.framework.min.css';
 	import '@kahi-ui/framework/dist/kahi-ui.theme.default.min.css';
@@ -20,6 +21,10 @@
 		kitQLClient.setHeaders({ Authorization: `JWT ${session.token}` });
 		return {};
 	}
+</script>
+
+<script>
+	KQL__Init();
 </script>
 
 {#if $navigating}
