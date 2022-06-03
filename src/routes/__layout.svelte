@@ -7,9 +7,10 @@
 	import { kitQLClient } from '$lib/graphql/kitQLClient';
 	import { KQL__Init } from '$lib/graphql/_kitql/graphqlStores';
 	import { MediaQueryRender } from '@kahi-ui/framework';
-	import '@kahi-ui/framework/dist/kahi-ui.framework.min.css';
-	import '@kahi-ui/framework/dist/kahi-ui.theme.default.min.css';
+	// import '@kahi-ui/framework/dist/kahi-ui.framework.min.css';
+	// import '@kahi-ui/framework/dist/kahi-ui.theme.default.min.css';
 	import { SvelteToast } from '@zerodevx/svelte-toast';
+	import '../app.css';
 
 	export async function load({ session, url }) {
 		if (!session.isLoggedIn && !PUBLIC_PAGES.includes(url.pathname)) {
