@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/env';
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
+	import QuillEditor from '$lib/components/QuillEditor.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { KQL_NpcNamesAndIds } from '$lib/graphql/_kitql/graphqlStores';
 	import { Anchor, DataSelect, Heading, Text } from '@kahi-ui/framework';
@@ -51,6 +52,12 @@
 		{creating}
 	>
 		<svelte:fragment slot="properties">
+			<Spacer lg />
+			{#if editing}
+				<QuillEditor bind:html={$form.markdownNotes} />
+			{:else}
+				{@html markdownNotes}
+			{/if}
 			<Spacer lg />
 			{#if editing}
 				{#if $KQL_NpcNamesAndIds.status !== 'DONE'}

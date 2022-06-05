@@ -113,13 +113,13 @@
 
 		<!-- MARKDOWN NOTES -->
 		<!-- <div class:markdown-container={false}> -->
-		<slot name="markdown-notes">
+		<!-- <slot name="markdown-notes">
 			{#if editing}
 				<MdEditor bind:value={$form.markdownNotes} asInput />
 			{:else}
 				<MdViewer value={markdownNotes} />
 			{/if}
-		</slot>
+		</slot> -->
 		<!-- </div> -->
 	</form>
 </Container>
