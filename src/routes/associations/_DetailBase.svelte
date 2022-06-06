@@ -54,12 +54,6 @@
 		<svelte:fragment slot="properties">
 			<Spacer lg />
 			{#if editing}
-				<QuillEditor bind:html={$form.markdownNotes} />
-			{:else}
-				{@html markdownNotes}
-			{/if}
-			<Spacer lg />
-			{#if editing}
 				{#if $KQL_NpcNamesAndIds.status !== 'DONE'}
 					Loading Characters...
 				{:else}
