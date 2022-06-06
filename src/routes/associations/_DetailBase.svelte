@@ -71,7 +71,7 @@
 				<div class="items-container">
 					<Heading is="h4">Members</Heading>
 					<Spacer xs />
-					{#if npcs.length > 0}
+					{#if npcs?.length > 0}
 						<div>
 							{#each npcs as npc, i}
 								<Anchor sveltekit:prefetch href={`/characters/${npc.id}`}>{npc.name}</Anchor>{i <
