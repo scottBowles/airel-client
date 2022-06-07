@@ -26,9 +26,9 @@
 			<AddLink href="characters/create" />
 		</div>
 		{#each npcs as npc}
-			{@const { id, name, description, thumbnailId } = npc}
+			{@const { id, name, description, thumbnailId, imageIds } = npc}
 			{@const href = `characters/${id}`}
-			<ListDetailCard {name} {description} {thumbnailId} {href} />
+			<ListDetailCard {name} {description} thumbnailId={thumbnailId || imageIds[0]} {href} />
 		{/each}
 	</div>
 </Container>

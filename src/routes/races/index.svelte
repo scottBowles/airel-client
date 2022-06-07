@@ -32,9 +32,9 @@
 			<AddLink href="races/create" />
 		</div>
 		{#each races as race}
-			{@const { id, name, thumbnailId } = race}
+			{@const { id, name, thumbnailId, imageIds } = race}
 			{@const href = `races/${id}`}
-			<ListDetailCard {name} {href} {thumbnailId} />
+			<ListDetailCard {name} {href} thumbnailId={thumbnailId || imageIds[0]} />
 		{/each}
 	</div>
 </Container>

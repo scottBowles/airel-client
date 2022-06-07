@@ -60,9 +60,9 @@
 				<AddLink href="artifacts/create" />
 			</div>
 			{#each artifacts as artifact}
-				{@const { id, name, description, thumbnailId, items } = artifact}
+				{@const { id, name, description, thumbnailId, imageIds, items } = artifact}
 				{@const href = `artifacts/${id}`}
-				<ListDetailCard {name} {description} {thumbnailId} {href}>
+				<ListDetailCard {name} {description} thumbnailId={thumbnailId || imageIds[0]} {href}>
 					<!-- <svelte:fragment slot="title">
 					<a {href}>{name}</a>
 					{#if weapon}
