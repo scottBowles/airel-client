@@ -39,10 +39,12 @@
 
 		return {
 			destroy() {
-				const els = document.querySelectorAll("div[class^='ql-']");
-				for (const el of els) {
-					if (el.parentNode !== null) {
-						el.parentNode.removeChild(el);
+				if (document) {
+					const els = document.querySelectorAll("div[class^='ql-']");
+					for (const el of els) {
+						if (el.parentNode !== null) {
+							el.parentNode.removeChild(el);
+						}
 					}
 				}
 			}
