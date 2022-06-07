@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/env';
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
+	import QuillEditor from '$lib/components/QuillEditor.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { KQL_NpcNamesAndIds } from '$lib/graphql/_kitql/graphqlStores';
 	import { Anchor, DataSelect, Heading, Text } from '@kahi-ui/framework';
@@ -70,7 +71,7 @@
 				<div class="items-container">
 					<Heading is="h4">Members</Heading>
 					<Spacer xs />
-					{#if npcs.length > 0}
+					{#if npcs?.length > 0}
 						<div>
 							{#each npcs as npc, i}
 								<Anchor sveltekit:prefetch href={`/characters/${npc.id}`}>{npc.name}</Anchor>{i <

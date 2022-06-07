@@ -5,8 +5,7 @@
 	import MobileNavSpacer from '$lib/components/MobileNav/MobileNavSpacer.svelte';
 	import { Container, Heading, Text, TextInput } from '@kahi-ui/framework';
 	import { onMount } from 'svelte';
-	import MdEditor from '../EditableMarkdown/MdEditor.svelte';
-	import MdViewer from '../EditableMarkdown/MdViewer.svelte';
+	import QuillEditor from '../QuillEditor.svelte';
 	import Spacer from '../Spacer.svelte';
 
 	export let form;
@@ -111,16 +110,15 @@
 
 		<Spacer />
 
-		<!-- MARKDOWN NOTES -->
-		<!-- <div class:markdown-container={false}> -->
-		<slot name="markdown-notes">
+		<!-- FREEFORM -->
+		<slot name="freeform">
+			<Spacer lg />
 			{#if editing}
-				<MdEditor bind:value={$form.markdownNotes} asInput />
+				<QuillEditor bind:html={$form.markdownNotes} />
 			{:else}
-				<MdViewer value={markdownNotes} />
+				{@html markdownNotes}
 			{/if}
 		</slot>
-		<!-- </div> -->
 	</form>
 </Container>
 
