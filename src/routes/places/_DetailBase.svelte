@@ -81,7 +81,7 @@
 
 <StatusHandler {status} {errors} value={place} entityName="place">
 	<Spacer xs />
-	{#if breadcrumbs.length > 0}
+	{#if breadcrumbs?.length > 0}
 		<Container>
 			<Breadcrumb.Container>
 				{#each breadcrumbs as breadcrumb, i}
@@ -169,7 +169,7 @@
 						<Spacer lg />
 					{/if}
 				{/if}
-			{:else if children.length > 0}
+			{:else if children?.length > 0}
 				<div class="items-container">
 					<Heading is="h4">{getChildrenName(placeTypeDisplay)}</Heading>
 					<Spacer xs />

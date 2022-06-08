@@ -106,7 +106,7 @@
 						bind:logic_state={$form.associations}
 					/>
 				{/if}
-			{:else if associations.length > 0}
+			{:else if associations?.length > 0}
 				<div class="items-container">
 					<Heading is="h4">Associations</Heading>
 					<Spacer xs />
