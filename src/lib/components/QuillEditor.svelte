@@ -21,6 +21,11 @@
 			...options
 		});
 
+		if (html) {
+			const delta = quill.clipboard.convert(html);
+			quill.setContents(delta);
+		}
+
 		const container = node.getElementsByClassName('ql-editor')[0];
 
 		quill.on('text-change', function (/*delta, oldDelta, source*/) {
