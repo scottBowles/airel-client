@@ -42,7 +42,9 @@
 	});
 
 	onDestroy(() => {
-		node.removeEventListener('text-change', handleTextChange);
+		if (node) {
+			node.removeEventListener('text-change', handleTextChange);
+		}
 		if (document) {
 			const els = document.querySelectorAll("div[class^='ql-']");
 			for (const el of els) {
