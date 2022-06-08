@@ -27,7 +27,7 @@
 		<div>
 			<AddLink href="places/create" />
 		</div>
-		{#each places as place}
+		{#each places as place (place.id)}
 			{@const { id, name, description, thumbnailId, imageIds, placeTypeDisplay } = place}
 			{@const href = `places/${id}`}
 			<ListDetailCard

@@ -32,7 +32,7 @@
 		<div>
 			<AddLink href="associations/create" />
 		</div>
-		{#each associations as association}
+		{#each associations as association (association.id)}
 			{@const { id, name, description, thumbnailId, imageIds } = association}
 			{@const href = `associations/${id}`}
 			<ListDetailCard thumbnailId={thumbnailId || imageIds[0]} {name} {description} {href} />

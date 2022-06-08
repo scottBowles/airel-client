@@ -30,7 +30,7 @@
 		<div>
 			<AddLink href="items/create" />
 		</div>
-		{#each items as item}
+		{#each items as item (item.id)}
 			<ItemListDisplay {item} />
 		{/each}
 	</div>

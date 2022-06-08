@@ -55,7 +55,7 @@
 			<div>
 				<AddLink href="artifacts/create" />
 			</div>
-			{#each artifacts as artifact}
+			{#each artifacts as artifact (artifact.id)}
 				{@const { id, name, description, thumbnailId, imageIds, items } = artifact}
 				{@const href = `artifacts/${id}`}
 				<ListDetailCard {name} {description} thumbnailId={thumbnailId || imageIds[0]} {href}>

@@ -29,7 +29,7 @@
 		<div>
 			<AddLink href="races/create" />
 		</div>
-		{#each races as race}
+		{#each races as race (race.id)}
 			{@const { id, name, thumbnailId, imageIds } = race}
 			{@const href = `races/${id}`}
 			<ListDetailCard {name} {href} thumbnailId={thumbnailId || imageIds[0]} />

@@ -23,7 +23,7 @@
 		<div>
 			<AddLink href="characters/create" />
 		</div>
-		{#each npcs as npc}
+		{#each npcs as npc (npc.id)}
 			{@const { id, name, description, thumbnailId, imageIds } = npc}
 			{@const href = `characters/${id}`}
 			<ListDetailCard {name} {description} thumbnailId={thumbnailId || imageIds[0]} {href} />
