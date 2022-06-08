@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	export let onImageUpload;
 	let uploadWidget;
@@ -15,6 +15,10 @@
 		);
 
 		openWidget = () => uploadWidget && uploadWidget.open();
+	});
+
+	onDestroy(async () => {
+		await uploadWidget?.destroy();
 	});
 </script>
 
