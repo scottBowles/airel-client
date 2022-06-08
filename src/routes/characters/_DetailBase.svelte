@@ -32,7 +32,7 @@
 	} = npc || {});
 
 	$: editing = lockedBySelf || creating;
-	$: associations = associationsConnection?.edges.map(({ node }) => node);
+	$: associations = associationsConnection?.edges.map(({ node }) => node) || [];
 	$: associationsForSelect =
 		$KQL_AssociationNamesAndIds.status === 'DONE' &&
 		$KQL_AssociationNamesAndIds.data.associations.edges.map(({ node: { name, id } }) => ({

@@ -55,7 +55,7 @@
 
 	$: children = childrenConnection?.edges?.map((edge) => edge.node) || [];
 
-	function getBreadcrumbs(node) {
+	function getBreadcrumbs(node): any[] {
 		return node ? [...getBreadcrumbs(node.parent), node] : [];
 	}
 	$: breadcrumbs = getBreadcrumbs(place);
@@ -81,7 +81,7 @@
 
 <StatusHandler {status} {errors} value={place} entityName="place">
 	<Spacer xs />
-	{#if breadcrumbs?.length > 0}
+	{#if breadcrumbs.length > 0}
 		<Container>
 			<Breadcrumb.Container>
 				{#each breadcrumbs as breadcrumb, i}

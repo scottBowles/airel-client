@@ -28,7 +28,7 @@
 	} = artifact);
 
 	$: editing = lockedBySelf || creating;
-	$: items = itemsConnection?.edges.map(({ node }) => node);
+	$: items = itemsConnection?.edges.map(({ node }) => node) || [];
 	$: itemsForSelect =
 		$KQL_ItemNamesAndIds.status === 'DONE' &&
 		$KQL_ItemNamesAndIds.data.items.edges.map(({ node: { name, id } }) => ({

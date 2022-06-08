@@ -27,7 +27,7 @@
 	} = association || {});
 
 	$: editing = lockedBySelf || creating;
-	$: npcs = npcsConnection?.edges.map(({ node }) => node);
+	$: npcs = npcsConnection?.edges.map(({ node }) => node) || [];
 	$: npcsForSelect =
 		$KQL_NpcNamesAndIds.status === 'DONE' &&
 		$KQL_NpcNamesAndIds.data.npcs.edges.map(({ node: { name, id } }) => ({
