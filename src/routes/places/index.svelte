@@ -12,8 +12,6 @@
 
 <script>
 	$: places = $KQL_Places.data?.places.edges?.map(({ node }) => node) || [];
-	$: ({ status } = $KQL_Places);
-	$: console.log({ places });
 </script>
 
 <BannerImage overlay="Places" imageId="dnd/places-banner_bwv6ut" alt="places banner" />

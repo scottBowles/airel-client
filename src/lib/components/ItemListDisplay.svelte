@@ -6,8 +6,6 @@
 
 	export let item;
 
-	$: console.log({ item });
-
 	$: ({ id, name, description, thumbnailId, imageIds, weapon, armor, equipment } = item);
 	$: href = `/items/${id}`;
 </script>

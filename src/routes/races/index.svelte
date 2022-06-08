@@ -13,8 +13,6 @@
 
 <script>
 	$: races = $KQL_Races.data?.races.edges?.map(({ node }) => node) || [];
-	$: ({ status } = $KQL_Races);
-	$: console.log({ races });
 </script>
 
 <BannerImage

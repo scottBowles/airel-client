@@ -16,7 +16,6 @@
 	export let creating = false;
 
 	$: browser && KQL_ItemNamesAndIds.query();
-	$: console.log($KQL_ItemNamesAndIds);
 
 	$: ({
 		name,
@@ -36,7 +35,6 @@
 			text: name,
 			id
 		}));
-	$: console.log({ itemsForSelect });
 </script>
 
 <StatusHandler {status} {errors} value={artifact} entityName="artifact">

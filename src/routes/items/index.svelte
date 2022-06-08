@@ -14,8 +14,6 @@
 
 <script>
 	$: items = $KQL_Items.data?.items.edges?.map(({ node }) => node) || [];
-	$: ({ status } = $KQL_Items);
-	$: console.log({ items });
 </script>
 
 <BannerImage

@@ -27,8 +27,6 @@
 	});
 
 	$: editing = lockedBySelf || creating;
-	console.log({ imageIds });
-	console.log({ lockedBySelf });
 </script>
 
 <MobileNavSpacer />

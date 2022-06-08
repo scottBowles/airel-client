@@ -49,7 +49,6 @@
 		$session.token = null;
 		$session.isLoggedIn = false;
 		goto('/login');
-		console.log('logged out');
 	}
 </script>
 

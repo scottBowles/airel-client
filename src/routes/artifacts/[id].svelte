@@ -26,8 +26,6 @@
 	$: ({ status, errors, data } = $KQL_ArtifactById);
 	$: ({ artifact } = data || {});
 
-	$: console.log({ artifact });
-
 	const form = writable({ ...emptyArtifact });
 	onMount(setForm);
 
@@ -42,7 +40,6 @@
 			};
 		}
 	}
-	$: console.log($form);
 
 	function patchStore(patch) {
 		const update = { artifact: { ...artifact, ...patch } };

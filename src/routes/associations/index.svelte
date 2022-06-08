@@ -9,7 +9,6 @@
 	import { KitQLInfo } from '@kitql/all-in';
 
 	export const load = async ({ fetch }) => {
-		console.log('ASSOCIATIONS LOAD FUNCTION RUNNING');
 		await KQL_Associations.queryLoad({ fetch });
 		return {};
 	};
@@ -17,8 +16,6 @@
 
 <script>
 	$: associations = $KQL_Associations.data?.associations.edges?.map(({ node }) => node) || [];
-	$: ({ status } = $KQL_Associations);
-	$: console.log({ associations });
 </script>
 
 <BannerImage

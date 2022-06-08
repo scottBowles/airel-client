@@ -6,7 +6,6 @@ import api from './_api.js';
  * but now this is handled by KitQl
  */
 export async function post({ request, locals }) {
-	console.log('running apirel endpoint with', { request, locals });
 	const token = locals.token;
 	const payload = await request.json();
 	const res = await api({ payload, token });

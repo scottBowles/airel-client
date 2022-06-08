@@ -2,11 +2,9 @@
 	import { browser } from '$app/env';
 	import AddLink from '$lib/components/AddLink.svelte';
 	import BannerImage from '$lib/components/BannerImage.svelte';
-	import Loading from '$lib/components/DetailPage/StatusHandling/Loading.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import fetchBanner from '$lib/fetchBanner';
 	import { KQL_Artifacts } from '$lib/graphql/_kitql/graphqlStores';
-	import settings from '$lib/settings';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import { Container } from '@kahi-ui/framework';
 
@@ -34,8 +32,6 @@
 
 	$: artifacts = $KQL_Artifacts.data?.artifacts.edges?.map(({ node }) => node) || [];
 	$: ({ status } = $KQL_Artifacts);
-	// $: artifacts = $queriedArtifacts?.artifacts.edges?.map(({ node }) => node);
-	$: console.log({ KQL_Artifacts: $KQL_Artifacts });
 </script>
 
 {#if status === 'LOADING'}

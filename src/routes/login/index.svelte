@@ -24,7 +24,6 @@
 
 	async function loginUser() {
 		const response = await post(`endpoints/login`, { username, password });
-		console.log({ response });
 		if (response.errors) {
 			$session.token = null;
 			$session.isLoggedIn = false;

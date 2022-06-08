@@ -12,8 +12,6 @@
 
 <script>
 	$: npcs = $KQL_Npcs.data?.npcs.edges?.map(({ node }) => node) || [];
-	$: ({ status } = $KQL_Npcs);
-	$: console.log({ npcs });
 </script>
 
 <BannerImage overlay="Characters" imageId="dnd/places-banner_bwv6ut" alt="places banner" />

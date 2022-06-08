@@ -9,7 +9,6 @@ import api from './_api.js';
  * GraphQL requests requiring authentication.
  */
 export async function post(event) {
-	console.log('running login endpoint with', { event });
 	/* Receive request from client in SvelteKit backend */
 	const requestFromClient = event.request;
 	const { username, password } = await requestFromClient.json();
