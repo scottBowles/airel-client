@@ -1,4 +1,5 @@
 <script>
+	import { browser } from '$app/env';
 	import { onDestroy, onMount } from 'svelte';
 
 	export let options = { placeholder: 'Anything goes here...' };
@@ -45,7 +46,7 @@
 		if (node) {
 			node.removeEventListener('text-change', handleTextChange);
 		}
-		if (document) {
+		if (browser && document) {
 			const els = document.querySelectorAll("div[class^='ql-']");
 			for (const el of els) {
 				if (el.parentNode !== null) {
