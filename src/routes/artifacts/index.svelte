@@ -2,6 +2,7 @@
 	import { browser } from '$app/env';
 	import AddLink from '$lib/components/AddLink.svelte';
 	import BannerImage from '$lib/components/BannerImage.svelte';
+	import ItemTypeIcons from '$lib/components/ItemTypeIcons.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import fetchBanner from '$lib/fetchBanner';
 	import { KQL_Artifacts } from '$lib/graphql/_kitql/graphqlStores';
@@ -58,25 +59,15 @@
 			{#each artifacts as artifact (artifact.id)}
 				{@const { id, name, description, thumbnailId, imageIds, items } = artifact}
 				{@const href = `artifacts/${id}`}
+				{@const itemNodes = items.edges?.map(({ node }) => node) || []}
+				{@const isWeapon = itemNodes.some((item) => !!item.weapon)}
+				{@const isArmor = itemNodes.some((item) => !!item.armor)}
+				{@const isEquipment = itemNodes.some((item) => !!item.equipment)}
 				<ListDetailCard {name} {description} thumbnailId={thumbnailId || imageIds[0]} {href}>
-					<!-- <svelte:fragment slot="title">
-					<a {href}>{name}</a>
-					{#if weapon}
-						<span class="icon">
-							<GiBroadsword />
-						</span>
-					{/if}
-					{#if armor}
-						<span class="icon">
-							<GiCheckedShield />
-						</span>
-					{/if}
-					{#if equipment}
-						<span class="icon">
-							<GiRoundBottomFlask />
-						</span>
-					{/if}
-				</svelte:fragment> -->
+					<svelte:fragment slot="title">
+						<a {href}>{name}</a>
+						<ItemTypeIcons {isWeapon} {isArmor} {isEquipment} />
+					</svelte:fragment>
 				</ListDetailCard>
 			{/each}
 		</div>
@@ -84,13 +75,6 @@
 {/if}
 
 <style>
-	.icon {
-		display: inline-block;
-		height: 1em;
-		width: 1em;
-		color: #908149;
-	}
-
 	.cards-container {
 		display: grid;
 		row-gap: 1rem;
