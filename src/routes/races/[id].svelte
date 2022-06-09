@@ -1,11 +1,7 @@
 <script context="module" lang="ts">
 	import { page } from '$app/stores';
-	import {
-		KQL_RaceAddImage,
-		KQL_RaceById,
-		KQL_RaceLock,
-		KQL_RacePatch
-	} from '$lib/graphql/_kitql/graphqlStores';
+	import raceDetails from '$lib/graphql/customStores/raceDetails';
+	import { KQL_RaceAddImage, KQL_RaceLock, KQL_RacePatch } from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
 	import { onMount } from 'svelte';
@@ -14,7 +10,7 @@
 	import { emptyRace } from './_utils';
 
 	export const load = async ({ fetch, params }) => {
-		await KQL_RaceById.queryLoad({ fetch, variables: { id: params.id } });
+		await raceDetails.queryLoad({ fetch, variables: { id: params.id } });
 		return {};
 	};
 </script>
@@ -23,7 +19,8 @@
 	const { id } = $page.params;
 	const variables = { id }; // for requests
 
-	$: ({ status, errors, data } = $KQL_RaceById);
+	$: raceStore = raceDetails.byId(variables);
+	$: ({ status, errors, data } = $raceStore);
 	$: ({ race } = data || {});
 
 	const form = writable({ ...emptyRace });
@@ -37,11 +34,11 @@
 
 	function patchStore(patch) {
 		const update = { race: { ...race, ...patch } };
-		KQL_RaceById.patch(update, variables);
+		raceDetails.patch(update, variables);
 	}
 
 	function refreshFromNetwork() {
-		KQL_RaceById.query({ variables, settings: { policy: 'cache-and-network' } });
+		raceDetails.query({ variables, settings: { policy: 'cache-and-network' } });
 	}
 
 	async function onEditClick() {
@@ -99,4 +96,4 @@
 </script>
 
 <DetailBase {race} {form} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
-<!-- <KitQLInfo store={KQL_RaceById} /> -->
+<!-- <KitQLInfo store={raceDetails} /> -->

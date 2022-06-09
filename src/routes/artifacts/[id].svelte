@@ -1,8 +1,8 @@
 <script context="module" lang="ts">
 	import { page } from '$app/stores';
+	import artifactDetails from '$lib/graphql/customStores/artifactDetails';
 	import {
 		KQL_ArtifactAddImage,
-		KQL_ArtifactById,
 		KQL_ArtifactLock,
 		KQL_ArtifactPatch
 	} from '$lib/graphql/_kitql/graphqlStores';
@@ -14,7 +14,7 @@
 	import { emptyArtifact } from './_utils';
 
 	export const load = async ({ fetch, params }) => {
-		await KQL_ArtifactById.queryLoad({ fetch, variables: { id: params.id } });
+		await artifactDetails.queryLoad({ fetch, variables: { id: params.id } });
 		return {};
 	};
 </script>
@@ -23,7 +23,8 @@
 	const { id } = $page.params;
 	const variables = { id }; // for requests
 
-	$: ({ status, errors, data } = $KQL_ArtifactById);
+	$: artifactStore = artifactDetails.byId(variables);
+	$: ({ status, errors, data } = $artifactStore);
 	$: ({ artifact } = data || {});
 
 	const form = writable({ ...emptyArtifact });
@@ -43,11 +44,11 @@
 
 	function patchStore(patch) {
 		const update = { artifact: { ...artifact, ...patch } };
-		KQL_ArtifactById.patch(update, variables);
+		artifactDetails.patch(update, variables);
 	}
 
 	function refreshFromNetwork() {
-		KQL_ArtifactById.query({ variables, settings: { policy: 'cache-and-network' } });
+		artifactDetails.query({ variables, settings: { policy: 'cache-and-network' } });
 	}
 
 	async function onEditClick() {
@@ -105,4 +106,4 @@
 </script>
 
 <DetailBase {artifact} {form} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
-<!-- <KitQLInfo store={KQL_ArtifactById} /> -->
+<!-- <KitQLInfo store={artifactDetails} /> -->

@@ -1,8 +1,8 @@
 <script context="module" lang="ts">
 	import { page } from '$app/stores';
+	import associationDetails from '$lib/graphql/customStores/associationDetails';
 	import {
 		KQL_AssociationAddImage,
-		KQL_AssociationById,
 		KQL_AssociationLock,
 		KQL_AssociationPatch
 	} from '$lib/graphql/_kitql/graphqlStores';
@@ -14,7 +14,7 @@
 	import { emptyAssociation } from './_utils';
 
 	export const load = async ({ fetch, params }) => {
-		await KQL_AssociationById.queryLoad({ fetch, variables: { id: params.id } });
+		await associationDetails.queryLoad({ fetch, variables: { id: params.id } });
 		return {};
 	};
 </script>
@@ -23,7 +23,8 @@
 	const { id } = $page.params;
 	const variables = { id }; // for requests
 
-	$: ({ status, errors, data } = $KQL_AssociationById);
+	$: associationStore = associationDetails.byId(variables);
+	$: ({ status, errors, data } = $associationStore);
 	$: ({ association } = data || {});
 
 	const form = writable({ ...emptyAssociation });
@@ -43,11 +44,11 @@
 
 	function patchStore(patch) {
 		const update = { association: { ...association, ...patch } };
-		KQL_AssociationById.patch(update, variables);
+		associationDetails.patch(update, variables);
 	}
 
 	function refreshFromNetwork() {
-		KQL_AssociationById.query({ variables, settings: { policy: 'cache-and-network' } });
+		associationDetails.query({ variables, settings: { policy: 'cache-and-network' } });
 	}
 
 	async function onEditClick() {
@@ -102,4 +103,4 @@
 </script>
 
 <DetailBase {association} {form} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
-<!-- <KitQLInfo store={KQL_AssociationById} /> -->
+<!-- <KitQLInfo store={associationDetails} /> -->
