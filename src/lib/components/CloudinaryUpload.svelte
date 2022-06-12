@@ -2,31 +2,38 @@
 	import { onDestroy, onMount } from 'svelte';
 
 	export let onImageUpload;
-	let uploadWidget;
-	let openWidget;
 
-	onMount(() => {
-		uploadWidget = window?.cloudinary?.createUploadWidget(
+	let uploadWidget;
+
+	async function destroyWidget() {
+		await uploadWidget?.destroy();
+		uploadWidget = null;
+	}
+
+	function loadWidget() {
+		uploadWidget ??= window?.cloudinary?.createUploadWidget(
 			{
 				cloudName: 'scottBowles',
 				uploadPreset: 'ubste3oi'
 			},
 			onImageUpload
 		);
+	}
 
-		openWidget = () => uploadWidget && uploadWidget.open();
-	});
+	function openWidget() {
+		uploadWidget?.open();
+	}
 
-	onDestroy(async () => {
-		await uploadWidget?.destroy();
-	});
+	onMount(loadWidget);
+	onDestroy(destroyWidget);
 </script>
 
 <svelte:head>
 	<script
 		src="https://upload-widget.cloudinary.com/global/all.js"
 		type="text/javascript"
-		async></script>
+		async
+		on:load={loadWidget}></script>
 </svelte:head>
 
 <span on:click={openWidget}>
