@@ -18,6 +18,8 @@
 		const src = image.toURL();
 		return src;
 	}
+
+	$: imageIds = imageIds.length > 0 ? imageIds : [defaultImageSrc];
 </script>
 
 <Splide
@@ -25,7 +27,7 @@
 	aria-label="My Favorite Images"
 	options={{ type: 'fade', rewind: true, height: 400, lazyLoad: 'nearby', speed: 1000 }}
 >
-	<div class="splide__arrows" on:click|stopPropagation />
+	<div class="splide__arrows" class:hidden={imageIds.length < 2} on:click|stopPropagation />
 	<SplideTrack>
 		{#each imageIds as imageId}
 			{@const src = getImageSrc(imageId)}
@@ -41,5 +43,9 @@
 		width: 100%;
 		height: 100%;
 		object-fit: contain;
+	}
+
+	.hidden {
+		display: none;
 	}
 </style>
