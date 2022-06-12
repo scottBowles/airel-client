@@ -4,6 +4,7 @@ mutation artifactCreate(
 	$thumbnailId: String
 	$markdownNotes: String
 	$imageIds: [String]
+	$items: [String]
 ) {
 	artifactCreate(
 		input: {
@@ -12,6 +13,7 @@ mutation artifactCreate(
 			thumbnailId: $thumbnailId
 			markdownNotes: $markdownNotes
 			imageIds: $imageIds
+			items: $items
 		}
 	) {
 		ok
