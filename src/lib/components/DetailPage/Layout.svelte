@@ -77,7 +77,7 @@
 			<div class="img-container">
 				<slot name="mainImage">
 					<CloudinaryUpload {onImageUpload}>
-						<ImageCarousel imageIds={editing ? $form.imageIds : imageIds} />
+						<ImageCarousel imageIds={editing ? $form.imageIds : imageIds} alt={name} />
 					</CloudinaryUpload>
 					<Spacer />
 				</slot>
