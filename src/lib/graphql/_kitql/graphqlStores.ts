@@ -169,7 +169,7 @@ function KQL_ArtifactByIdStore() {
 			params?: RequestQueryParameters<Types.ArtifactByIdQueryVariables>
 		): Promise<void> => {
 			if (clientStarted) {
-				queryLocal(params); // No await in purpose, we are in a client navigation.
+				queryLocal(params); // No await on purpose, we are in a client navigation.
 			} else {
 				await queryLocal(params);
 			}
@@ -486,7 +486,7 @@ function KQL_ArtifactsStore() {
 			params?: RequestQueryParameters<Types.ArtifactsQueryVariables>
 		): Promise<void> => {
 			if (clientStarted) {
-				queryLocal(params); // No await in purpose, we are in a client navigation.
+				queryLocal(params); // No await on purpose, we are in a client navigation.
 			} else {
 				await queryLocal(params);
 			}
@@ -656,7 +656,7 @@ function KQL_AssociationByIdStore() {
 			params?: RequestQueryParameters<Types.AssociationByIdQueryVariables>
 		): Promise<void> => {
 			if (clientStarted) {
-				queryLocal(params); // No await in purpose, we are in a client navigation.
+				queryLocal(params); // No await on purpose, we are in a client navigation.
 			} else {
 				await queryLocal(params);
 			}
@@ -973,7 +973,7 @@ function KQL_AssociationNamesAndIdsStore() {
 			params?: RequestQueryParameters<Types.AssociationNamesAndIdsQueryVariables>
 		): Promise<void> => {
 			if (clientStarted) {
-				queryLocal(params); // No await in purpose, we are in a client navigation.
+				queryLocal(params); // No await on purpose, we are in a client navigation.
 			} else {
 				await queryLocal(params);
 			}
@@ -1094,7 +1094,7 @@ function KQL_AssociationsStore() {
 			params?: RequestQueryParameters<Types.AssociationsQueryVariables>
 		): Promise<void> => {
 			if (clientStarted) {
-				queryLocal(params); // No await in purpose, we are in a client navigation.
+				queryLocal(params); // No await on purpose, we are in a client navigation.
 			} else {
 				await queryLocal(params);
 			}
@@ -1264,7 +1264,7 @@ function KQL_ItemByIdStore() {
 			params?: RequestQueryParameters<Types.ItemByIdQueryVariables>
 		): Promise<void> => {
 			if (clientStarted) {
-				queryLocal(params); // No await in purpose, we are in a client navigation.
+				queryLocal(params); // No await on purpose, we are in a client navigation.
 			} else {
 				await queryLocal(params);
 			}
@@ -1581,7 +1581,7 @@ function KQL_ItemNamesAndIdsStore() {
 			params?: RequestQueryParameters<Types.ItemNamesAndIdsQueryVariables>
 		): Promise<void> => {
 			if (clientStarted) {
-				queryLocal(params); // No await in purpose, we are in a client navigation.
+				queryLocal(params); // No await on purpose, we are in a client navigation.
 			} else {
 				await queryLocal(params);
 			}
@@ -1702,7 +1702,7 @@ function KQL_ItemsStore() {
 			params?: RequestQueryParameters<Types.ItemsQueryVariables>
 		): Promise<void> => {
 			if (clientStarted) {
-				queryLocal(params); // No await in purpose, we are in a client navigation.
+				queryLocal(params); // No await on purpose, we are in a client navigation.
 			} else {
 				await queryLocal(params);
 			}
@@ -1872,7 +1872,7 @@ function KQL_MeStore() {
 			params?: RequestQueryParameters<Types.MeQueryVariables>
 		): Promise<void> => {
 			if (clientStarted) {
-				queryLocal(params); // No await in purpose, we are in a client navigation.
+				queryLocal(params); // No await on purpose, we are in a client navigation.
 			} else {
 				await queryLocal(params);
 			}
@@ -2042,7 +2042,7 @@ function KQL_NpcByIdStore() {
 			params?: RequestQueryParameters<Types.NpcByIdQueryVariables>
 		): Promise<void> => {
 			if (clientStarted) {
-				queryLocal(params); // No await in purpose, we are in a client navigation.
+				queryLocal(params); // No await on purpose, we are in a client navigation.
 			} else {
 				await queryLocal(params);
 			}
@@ -2359,7 +2359,7 @@ function KQL_NpcNamesAndIdsStore() {
 			params?: RequestQueryParameters<Types.NpcNamesAndIdsQueryVariables>
 		): Promise<void> => {
 			if (clientStarted) {
-				queryLocal(params); // No await in purpose, we are in a client navigation.
+				queryLocal(params); // No await on purpose, we are in a client navigation.
 			} else {
 				await queryLocal(params);
 			}
@@ -2480,7 +2480,7 @@ function KQL_NpcsStore() {
 			params?: RequestQueryParameters<Types.NpcsQueryVariables>
 		): Promise<void> => {
 			if (clientStarted) {
-				queryLocal(params); // No await in purpose, we are in a client navigation.
+				queryLocal(params); // No await on purpose, we are in a client navigation.
 			} else {
 				await queryLocal(params);
 			}
@@ -2650,7 +2650,7 @@ function KQL_PlaceByIdStore() {
 			params?: RequestQueryParameters<Types.PlaceByIdQueryVariables>
 		): Promise<void> => {
 			if (clientStarted) {
-				queryLocal(params); // No await in purpose, we are in a client navigation.
+				queryLocal(params); // No await on purpose, we are in a client navigation.
 			} else {
 				await queryLocal(params);
 			}
@@ -2967,7 +2967,7 @@ function KQL_PlacesForSearchStore() {
 			params?: RequestQueryParameters<Types.PlacesForSearchQueryVariables>
 		): Promise<void> => {
 			if (clientStarted) {
-				queryLocal(params); // No await in purpose, we are in a client navigation.
+				queryLocal(params); // No await on purpose, we are in a client navigation.
 			} else {
 				await queryLocal(params);
 			}
@@ -3088,7 +3088,7 @@ function KQL_PlacesStore() {
 			params?: RequestQueryParameters<Types.PlacesQueryVariables>
 		): Promise<void> => {
 			if (clientStarted) {
-				queryLocal(params); // No await in purpose, we are in a client navigation.
+				queryLocal(params); // No await on purpose, we are in a client navigation.
 			} else {
 				await queryLocal(params);
 			}
@@ -3258,7 +3258,7 @@ function KQL_RaceByIdStore() {
 			params?: RequestQueryParameters<Types.RaceByIdQueryVariables>
 		): Promise<void> => {
 			if (clientStarted) {
-				queryLocal(params); // No await in purpose, we are in a client navigation.
+				queryLocal(params); // No await on purpose, we are in a client navigation.
 			} else {
 				await queryLocal(params);
 			}
@@ -3575,7 +3575,7 @@ function KQL_RaceNamesAndIdsStore() {
 			params?: RequestQueryParameters<Types.RaceNamesAndIdsQueryVariables>
 		): Promise<void> => {
 			if (clientStarted) {
-				queryLocal(params); // No await in purpose, we are in a client navigation.
+				queryLocal(params); // No await on purpose, we are in a client navigation.
 			} else {
 				await queryLocal(params);
 			}
@@ -3696,7 +3696,7 @@ function KQL_RacesStore() {
 			params?: RequestQueryParameters<Types.RacesQueryVariables>
 		): Promise<void> => {
 			if (clientStarted) {
-				queryLocal(params); // No await in purpose, we are in a client navigation.
+				queryLocal(params); // No await on purpose, we are in a client navigation.
 			} else {
 				await queryLocal(params);
 			}

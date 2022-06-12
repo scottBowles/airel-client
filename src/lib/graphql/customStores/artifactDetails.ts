@@ -36,7 +36,8 @@ function artifactDetails() {
 		patch: KQL_ArtifactById.patch,
 		byId: (variables) => {
 			const queryKey = JSON.stringify(variables);
-			return stores[queryKey] || writable({});
+			stores[queryKey] ??= writable({});
+			return stores[queryKey];
 		}
 	};
 }
