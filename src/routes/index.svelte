@@ -46,13 +46,13 @@
 	</Text>
 	<div class="spacer-sm" />
 	<Text>
-		The best way to make a suggestion is to create an issue on <a
-			href="https://github.com/scottBowles/airel-client/issues"
+		The best way to make a suggestion is to start a discussion or create an issue on <a
+			href="https://github.com/scottBowles/airel-client/discussions"
 			rel="external noopener noreferrer"
 			target="_blank">GitHub<span class="gh-icon"><DiGithubBadge /></span></a
 		> (you'll have to make an account but that's simple enough). There anyone who wants can discuss and
-		track progress made. You can also see and help with some things I have in mind already. Feel free
-		to comment on anything.
+		track progress made. You can also see and help with some things I have in mind already (mostly under
+		the Issues tab at the moment). Feel free to comment on anything.
 	</Text>
 	<div class="spacer-sm" />
 	<Text>
