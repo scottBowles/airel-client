@@ -10,8 +10,9 @@
 	export let value;
 </script>
 
-{#if ['LOADING', 'NEVER'].includes(status)}
-	<!-- <Loading /> -->
+{#if status === undefined}
+	<Loading />
+{:else if ['LOADING', 'NEVER'].includes(status)}
 	<slot />
 {:else if status === 'DONE' && errors?.length > 0}
 	<Error {errors} />

@@ -8,14 +8,14 @@
 	import QuillEditor from '../QuillEditor.svelte';
 	import Spacer from '../Spacer.svelte';
 
-	export let form;
+	export let form = undefined;
 	export let name = '';
 	export let description = '';
 	export let properties: { [key: string]: string | number } = {};
 	export let imageIds = [];
 	export let onEditClick = () => {};
 	export let onFormSubmit = () => {};
-	export let lockUser;
+	export let lockUser = undefined;
 	export let lockedBySelf = false;
 	export let creating = false;
 	export let onImageUpload = () => {};
