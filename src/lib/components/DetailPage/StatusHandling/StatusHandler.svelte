@@ -10,7 +10,7 @@
 	export let value;
 </script>
 
-{#if status === 'LOADING'}
+{#if ['LOADING', 'NEVER'].includes(status)}
 	<!-- <Loading /> -->
 	<slot />
 {:else if status === 'DONE' && errors?.length > 0}
