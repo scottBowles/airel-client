@@ -10,16 +10,27 @@
 	export let errors = [];
 	export let creating = false;
 
-	$: ({ name, description, markdownNotes, imageIds = [], lockUser, lockedBySelf } = race || {});
+	$: ({
+		id,
+		name,
+		description,
+		markdownNotes,
+		imageIds = [],
+		lockUser,
+		lockedBySelf,
+		logs
+	} = race || {});
 </script>
 
 <StatusHandler {status} {errors} value={race} entityName="race">
 	<Layout
+		{id}
 		{form}
 		{name}
 		{description}
 		{markdownNotes}
 		{imageIds}
+		{logs}
 		{lockUser}
 		{lockedBySelf}
 		{onEditClick}

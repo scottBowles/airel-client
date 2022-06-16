@@ -7,12 +7,15 @@
 	import { onMount } from 'svelte';
 	import QuillEditor from '../QuillEditor.svelte';
 	import Spacer from '../Spacer.svelte';
+	import LogsDisplay from './LogsDisplay.svelte';
 
+	export let id;
 	export let form = undefined;
 	export let name = '';
 	export let description = '';
 	export let properties: { [key: string]: string | number } = {};
 	export let imageIds = [];
+	export let logs = undefined;
 	export let onEditClick = () => {};
 	export let onFormSubmit = () => {};
 	export let lockUser = undefined;
@@ -73,12 +76,18 @@
 		<Spacer />
 
 		<div class:clearfix={editing}>
-			<!-- IMAGES -->
-			<div class="img-container">
+			<!-- FLOAT AREA -->
+			<div class="float-container">
+				<!-- IMAGES -->
 				<slot name="mainImage">
 					<CloudinaryUpload {onImageUpload}>
 						<ImageCarousel imageIds={editing ? $form.imageIds : imageIds} alt={name} />
 					</CloudinaryUpload>
+					<Spacer />
+				</slot>
+				<!-- LOGS -->
+				<slot name="logs">
+					<LogsDisplay {logs} {id} />
 					<Spacer />
 				</slot>
 			</div>
@@ -150,7 +159,7 @@
 	hr {
 		color: #ccc;
 	}
-	.img-container {
+	.float-container {
 		float: right;
 		width: var(--detail-layout-img-container-width);
 		margin-left: 0.5em;

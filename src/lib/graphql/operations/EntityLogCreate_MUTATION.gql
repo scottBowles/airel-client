@@ -1,0 +1,10 @@
+mutation addEntityLog($entityId: ID!, $logId: ID, $logUrl: String) {
+	addEntityLog(input: { entityId: $entityId, logId: $logId, logUrl: $logUrl }) {
+		ok
+		errors
+		log {
+			id
+			url
+		}
+	}
+}
