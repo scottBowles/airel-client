@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
 	import FaBars from 'svelte-icons/fa/FaBars.svelte';
+	import FaTimes from 'svelte-icons/fa/FaTimes.svelte';
 	import Menu from './Menu.svelte';
 
 	let showMobileMenu = false;
@@ -17,7 +18,11 @@
 <div class="mobile-top-bar">
 	<div class="hamburger-container">
 		<div class="hamburger-menu" on:click={toggleMobileMenu}>
-			<FaBars />
+			{#if showMobileMenu}
+				<FaTimes />
+			{:else}
+				<FaBars />
+			{/if}
 		</div>
 	</div>
 </div>
