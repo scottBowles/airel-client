@@ -25,6 +25,11 @@
 		logInputField.focus();
 	}
 
+	function closeLogInput() {
+		logInputOpen = false;
+		logInput = '';
+	}
+
 	async function addLog() {
 		if (logInput.length > 0) {
 			const { data, errors } = await KQL_AddEntityLog.mutate({
@@ -75,8 +80,8 @@
 					id="log-input"
 				/>
 				<div class="flex">
-					<div class="icon" on:click={addLog}><FaCheck /></div>
-					<div class="icon" on:click={() => (logInputOpen = false)}><FaTimes /></div>
+					<button class="icon" on:click={addLog} type="button"><FaCheck /></button>
+					<button class="icon" on:click={closeLogInput} type="button"><FaTimes /></button>
 				</div>
 			</div>
 		{:else}
