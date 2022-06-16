@@ -16,6 +16,14 @@ fragment RaceFields on RaceNode {
 	alignment
 	size
 	speed
+	logs {
+		edges {
+			node {
+				id
+				url
+			}
+		}
+	}
 	baseRace {
 		id
 		name

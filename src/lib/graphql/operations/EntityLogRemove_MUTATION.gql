@@ -1,0 +1,6 @@
+mutation removeEntityLog($entityId: ID!, $logId: ID!) {
+	removeEntityLog(input: { entityId: $entityId, logId: $logId }) {
+		ok
+		errors
+	}
+}
