@@ -60,7 +60,7 @@
 	<Heading is="h2">Logs</Heading>
 	<Spacer sm />
 	<div class="logs-list">
-		{#each logNodes as log}
+		{#each logNodes as log (log.id)}
 			<LogDisplay {log} {removeLog} />
 		{/each}
 		<Spacer sm />
