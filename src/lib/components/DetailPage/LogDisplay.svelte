@@ -14,7 +14,7 @@
 </script>
 
 <div class="flex_center_between">
-	<a href={log.url} rel="external noopener noreferrer">{log.url}</a>
+	<a href={log.url} rel="external noopener noreferrer">{log.name || log.url}</a>
 	<div class="icon" on:click={() => (logic_state = true)}><FaTimes /></div>
 	<Overlay.Container logic_id={`overlay-logic-state-${log.id}`} bind:logic_state>
 		<Overlay.Section>

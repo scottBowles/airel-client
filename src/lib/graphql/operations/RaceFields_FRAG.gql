@@ -21,6 +21,7 @@ fragment RaceFields on RaceNode {
 			node {
 				id
 				url
+				name
 			}
 		}
 	}

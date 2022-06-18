@@ -12,7 +12,7 @@
 	export let id;
 	export let logs;
 
-	type logNode = { id: string; url: string };
+	type logNode = { id: string; url: string; name?: string };
 	let logNodes: logNode[] = logs?.edges.map(({ node }) => node) ?? [];
 
 	let logInputOpen = false;
@@ -42,7 +42,7 @@
 				logInputOpen = false;
 				// TODO: update store rather than just logs array
 				const log = data.addEntityLog.log;
-				logNodes.push({ id: log.id, url: log.url });
+				logNodes.push({ id: log.id, url: log.url, name: log.name });
 			}
 		}
 	}

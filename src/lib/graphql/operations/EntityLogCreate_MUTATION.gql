@@ -5,6 +5,7 @@ mutation addEntityLog($entityId: ID!, $logId: ID, $logUrl: String) {
 		log {
 			id
 			url
+			name
 		}
 	}
 }
