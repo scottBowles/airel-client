@@ -23,6 +23,7 @@
 	export let creating = false;
 	export let onImageUpload = () => {};
 	export let markdownNotes = '';
+	export let patchStore: (patch: Record<string, any>) => void;
 
 	let isMounted = false;
 	onMount(() => {
@@ -87,7 +88,7 @@
 				</slot>
 				<!-- LOGS -->
 				<slot name="logs">
-					<LogsDisplay {logs} {id} />
+					<LogsDisplay {logs} {id} {patchStore} />
 					<Spacer />
 				</slot>
 			</div>

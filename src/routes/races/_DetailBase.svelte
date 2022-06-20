@@ -9,6 +9,7 @@
 	export let status = undefined;
 	export let errors = [];
 	export let creating = false;
+	export let patchStore;
 
 	$: ({
 		id,
@@ -36,6 +37,7 @@
 		{onEditClick}
 		{onFormSubmit}
 		{onImageUpload}
+		{patchStore}
 		{creating}
 	/>
 </StatusHandler>

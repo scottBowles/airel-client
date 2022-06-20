@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { KQL_AddEntityLog, KQL_RemoveEntityLog } from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
-	import { Card, Heading, Overlay, TextInput } from '@kahi-ui/framework';
+	import { Heading, TextInput } from '@kahi-ui/framework';
 	import { tick } from 'svelte';
 	import FaCheck from 'svelte-icons/fa/FaCheck.svelte';
 	import FaPlus from 'svelte-icons/fa/FaPlus.svelte';
@@ -11,9 +11,9 @@
 
 	export let id;
 	export let logs;
+	export let patchStore: (patch: Record<string, any>) => void;
 
-	type logNode = { id: string; url: string; name?: string };
-	let logNodes: logNode[] = logs?.edges.map(({ node }) => node) ?? [];
+	$: logNodes = logs?.edges.map(({ node }) => node) ?? [];
 
 	let logInputOpen = false;
 	let logInput = '';
@@ -40,9 +40,24 @@
 			if (data?.addEntityLog?.ok) {
 				logInput = '';
 				logInputOpen = false;
-				// TODO: update store rather than just logs array
 				const log = data.addEntityLog.log;
-				logNodes.push({ id: log.id, url: log.url, name: log.name });
+				let newLogEdges;
+				if (logNodes.some((node) => node.id === log.id)) {
+					newLogEdges = logs.edges.map((edge) =>
+						edge.node.id === log.id
+							? {
+									...edge,
+									node: {
+										...edge.node,
+										...log
+									}
+							  }
+							: edge
+					);
+				} else {
+					newLogEdges = [...(logs?.edges ?? []), { node: log }];
+				}
+				patchStore({ logs: { edges: newLogEdges } });
 			}
 		}
 	}
@@ -55,8 +70,8 @@
 		if (data?.removeEntityLog?.errors)
 			somethingWentWrong(JSON.stringify(data.removeEntityLog.errors));
 		if (data?.removeEntityLog?.ok) {
-			// TODO: update store rather than just logs array
-			logNodes = logNodes.filter((log) => log.id !== logId);
+			const newLogEdges = logs.edges.filter((edge) => edge.node.id !== logId);
+			patchStore({ logs: { edges: newLogEdges } });
 		}
 	}
 </script>

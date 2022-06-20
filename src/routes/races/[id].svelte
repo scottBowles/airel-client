@@ -95,5 +95,14 @@
 	}
 </script>
 
-<DetailBase {race} {form} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
+<DetailBase
+	{race}
+	{form}
+	{status}
+	{errors}
+	{onEditClick}
+	{onFormSubmit}
+	{onImageUpload}
+	{patchStore}
+/>
 <!-- <KitQLInfo store={raceDetails} /> -->
