@@ -16,7 +16,7 @@
 	export let status = undefined;
 	export let errors = [];
 	export let creating = false;
-	export let patchStore;
+	export let patchStore = undefined;
 
 	$: browser && KQL_AssociationNamesAndIds.query();
 	$: browser && KQL_RaceNamesAndIds.query();
@@ -50,7 +50,7 @@
 		}));
 </script>
 
-<StatusHandler {status} {errors} value={npc} entityName="character">
+<StatusHandler status={creating ? 'DONE' : status} {errors} value={npc} entityName="character">
 	<Layout
 		{id}
 		{form}

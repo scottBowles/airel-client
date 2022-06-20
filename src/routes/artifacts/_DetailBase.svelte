@@ -14,7 +14,7 @@
 	export let status = undefined;
 	export let errors = [];
 	export let creating = false;
-	export let patchStore;
+	export let patchStore = undefined;
 
 	$: browser && KQL_ItemNamesAndIds.query();
 
@@ -40,7 +40,7 @@
 		}));
 </script>
 
-<StatusHandler {status} {errors} value={artifact} entityName="artifact">
+<StatusHandler status={creating ? 'DONE' : status} {errors} value={artifact} entityName="artifact">
 	<Layout
 		{id}
 		{form}

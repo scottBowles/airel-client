@@ -16,7 +16,7 @@
 	export let status = undefined;
 	export let errors = [];
 	export let creating = false;
-	export let patchStore;
+	export let patchStore = undefined;
 
 	$: ({
 		id,
@@ -39,7 +39,7 @@
 	}
 </script>
 
-<StatusHandler {status} {errors} value={item} entityName="item">
+<StatusHandler status={creating ? 'DONE' : status} {errors} value={item} entityName="item">
 	<Layout
 		{id}
 		{form}

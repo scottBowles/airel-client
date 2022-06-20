@@ -29,7 +29,7 @@
 	export let status = undefined;
 	export let errors = [];
 	export let creating = false;
-	export let patchStore;
+	export let patchStore = undefined;
 
 	onMount(KQL_PlacesForSearch.query);
 
@@ -82,7 +82,7 @@
 	$: editing = lockedBySelf || creating;
 </script>
 
-<StatusHandler {status} {errors} value={place} entityName="place">
+<StatusHandler status={creating ? 'DONE' : status} {errors} value={place} entityName="place">
 	<Spacer xs />
 	{#if breadcrumbs.length > 0}
 		<Container>

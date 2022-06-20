@@ -9,7 +9,7 @@
 	export let status = undefined;
 	export let errors = [];
 	export let creating = false;
-	export let patchStore;
+	export let patchStore = undefined;
 
 	$: ({
 		id,
@@ -21,9 +21,11 @@
 		lockedBySelf,
 		logs
 	} = race || {});
+
+	$: console.log({ status });
 </script>
 
-<StatusHandler {status} {errors} value={race} entityName="race">
+<StatusHandler status={creating ? 'DONE' : status} {errors} value={race} entityName="race">
 	<Layout
 		{id}
 		{form}
