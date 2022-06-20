@@ -11,6 +11,15 @@ fragment AssociationFields on AssociationNode {
 	}
 	lockTime
 	lockedBySelf
+	logs {
+		edges {
+			node {
+				id
+				url
+				name
+			}
+		}
+	}
 	npcs {
 		edges {
 			node {

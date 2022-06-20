@@ -13,13 +13,16 @@
 	export let status = undefined;
 	export let errors = [];
 	export let creating = false;
+	export let patchStore;
 
 	$: browser && KQL_NpcNamesAndIds.query();
 
 	$: ({
+		id,
 		name,
 		description,
 		markdownNotes,
+		logs,
 		imageIds = [],
 		lockUser,
 		lockedBySelf,
@@ -38,16 +41,19 @@
 
 <StatusHandler {status} {errors} value={association} entityName="association">
 	<Layout
+		{id}
 		{form}
 		{name}
 		{description}
 		{markdownNotes}
+		{logs}
 		{imageIds}
 		{lockUser}
 		{lockedBySelf}
 		{onEditClick}
 		{onFormSubmit}
 		{onImageUpload}
+		{patchStore}
 		{creating}
 	>
 		<svelte:fragment slot="properties">

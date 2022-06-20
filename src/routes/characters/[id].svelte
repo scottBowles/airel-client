@@ -106,5 +106,14 @@
 	}
 </script>
 
-<DetailBase {npc} {form} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
+<DetailBase
+	{npc}
+	{form}
+	{status}
+	{errors}
+	{onEditClick}
+	{onFormSubmit}
+	{onImageUpload}
+	{patchStore}
+/>
 <!-- <KitQLInfo store={characterDetails} /> -->

@@ -27,6 +27,8 @@
 	$: ({ status, errors, data } = $artifactStore);
 	$: ({ artifact } = data || {});
 
+	$: console.log({ artifact });
+
 	const form = writable({ ...emptyArtifact });
 	onMount(setForm);
 
@@ -105,5 +107,14 @@
 	}
 </script>
 
-<DetailBase {artifact} {form} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
+<DetailBase
+	{artifact}
+	{form}
+	{status}
+	{errors}
+	{onEditClick}
+	{onFormSubmit}
+	{onImageUpload}
+	{patchStore}
+/>
 <!-- <KitQLInfo store={artifactDetails} /> -->

@@ -14,18 +14,21 @@
 	export let status = undefined;
 	export let errors = [];
 	export let creating = false;
+	export let patchStore;
 
 	$: browser && KQL_ItemNamesAndIds.query();
 
 	$: ({
+		id,
 		name,
 		description,
 		markdownNotes,
+		logs,
 		items: itemsConnection,
 		imageIds = [],
 		lockUser,
 		lockedBySelf
-	} = artifact);
+	} = artifact || {});
 
 	$: editing = lockedBySelf || creating;
 	$: items = itemsConnection?.edges.map(({ node }) => node) || [];
@@ -39,16 +42,19 @@
 
 <StatusHandler {status} {errors} value={artifact} entityName="artifact">
 	<Layout
+		{id}
 		{form}
 		{name}
 		{description}
 		{markdownNotes}
 		{imageIds}
+		{logs}
 		{lockUser}
 		{lockedBySelf}
 		{onEditClick}
 		{onFormSubmit}
 		{onImageUpload}
+		{patchStore}
 		{creating}
 	>
 		<svelte:fragment slot="properties">

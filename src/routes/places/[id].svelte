@@ -112,5 +112,14 @@
 	}
 </script>
 
-<DetailBase {place} {form} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
+<DetailBase
+	{place}
+	{form}
+	{status}
+	{errors}
+	{onEditClick}
+	{onFormSubmit}
+	{onImageUpload}
+	{patchStore}
+/>
 <!-- <KitQLInfo store={placeDetails} /> -->
