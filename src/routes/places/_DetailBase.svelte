@@ -135,7 +135,7 @@
 				</div>
 				<Spacer lg />
 			{/if}
-			{#if editing && $form.placeType}
+			{#if editing && $form.placeType && placesForParentSelect.length > 0}
 				{#if $KQL_PlacesForSearch.status !== 'DONE'}
 					Loading Places...
 				{:else}
@@ -155,7 +155,7 @@
 				{/if}
 				<Spacer lg />
 			{/if}
-			{#if editing}
+			{#if editing && placesForChildrenSelect.length > 0}
 				{#if $form.placeType}
 					{#if $KQL_PlacesForSearch.status !== 'DONE'}
 						<div>Loading Places...</div>
