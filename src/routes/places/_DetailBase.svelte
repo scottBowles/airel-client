@@ -82,7 +82,7 @@
 	$: editing = lockedBySelf || creating;
 </script>
 
-<StatusHandler status={creating ? 'DONE' : status} {errors} value={place} entityName="place">
+<StatusHandler {creating} {status} {errors} value={place} entityName="place">
 	<Spacer xs />
 	{#if breadcrumbs.length > 0}
 		<Container>

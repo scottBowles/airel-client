@@ -25,7 +25,7 @@
 	$: console.log({ status });
 </script>
 
-<StatusHandler status={creating ? 'DONE' : status} {errors} value={race} entityName="race">
+<StatusHandler {creating} {status} {errors} value={race} entityName="race">
 	<Layout
 		{id}
 		{form}

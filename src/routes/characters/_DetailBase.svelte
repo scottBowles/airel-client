@@ -50,7 +50,7 @@
 		}));
 </script>
 
-<StatusHandler status={creating ? 'DONE' : status} {errors} value={npc} entityName="character">
+<StatusHandler {creating} {status} {errors} value={npc} entityName="character">
 	<Layout
 		{id}
 		{form}

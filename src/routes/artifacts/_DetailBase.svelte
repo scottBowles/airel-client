@@ -40,7 +40,7 @@
 		}));
 </script>
 
-<StatusHandler status={creating ? 'DONE' : status} {errors} value={artifact} entityName="artifact">
+<StatusHandler {creating} {status} {errors} value={artifact} entityName="artifact">
 	<Layout
 		{id}
 		{form}

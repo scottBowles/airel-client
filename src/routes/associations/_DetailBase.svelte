@@ -39,12 +39,7 @@
 		}));
 </script>
 
-<StatusHandler
-	status={creating ? 'DONE' : status}
-	{errors}
-	value={association}
-	entityName="association"
->
+<StatusHandler {creating} {status} {errors} value={association} entityName="association">
 	<Layout
 		{id}
 		{form}
