@@ -24,6 +24,7 @@
 	export let onImageUpload = () => {};
 	export let markdownNotes = '';
 	export let patchStore: ((patch: Record<string, any>) => void) | undefined = undefined;
+	export let omitMobileSpacer = false;
 
 	let isMounted = false;
 	onMount(() => {
@@ -33,7 +34,9 @@
 	$: editing = lockedBySelf || creating;
 </script>
 
-<MobileNavSpacer />
+{#if !omitMobileSpacer}
+	<MobileNavSpacer />
+{/if}
 <Spacer xs />
 <Container>
 	<form on:submit|preventDefault={onFormSubmit}>
