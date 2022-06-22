@@ -137,14 +137,20 @@
 				</div>
 				<Spacer lg />
 			{/if}
+			{#if editing}
+				<i class="small-text"
+					>Note: In general, the hierarchy of places is:<br />
+					Stars &gt; Planets &gt; Moons &gt; Regions &gt; Towns &gt; Districts &gt; Locations<br />
+				</i>
+				<Spacer xs />
+			{/if}
 			{#if editing && $form.placeType && placesForParentSelect.length > 0}
 				{#if $KQL_PlacesForSearch.status !== 'DONE'}
 					Loading Places...
 				{:else}
 					<div class="spacer" />
 					<Form.Label>
-						{getParentName($form.placeType)}
-						{$form.name} is a {$form.placeType} Of
+						{$form.name} is a {$form.placeType} of the {getParentName($form.placeType)}
 					</Form.Label>
 					<br />
 					<DataSelect
@@ -193,3 +199,10 @@
 		</svelte:fragment>
 	</Layout>
 </StatusHandler>
+
+<style>
+	.small-text {
+		font-size: 0.75rem;
+		line-height: 1;
+	}
+</style>
