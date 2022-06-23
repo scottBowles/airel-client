@@ -6,7 +6,7 @@ export const getParentName = (type: string): string => {
 		Region: 'Planet or Moon',
 		Town: 'Planet, Moon, or Region',
 		District: 'Region or Town',
-		Location: 'Town, District, or Location'
+		Location: 'Region, Town, District, or Location'
 	}[type];
 };
 
@@ -15,7 +15,7 @@ export const getChildrenName = (type: string): string => {
 		Star: 'Planets',
 		Planet: 'Moons, Regions, or Towns',
 		Moon: 'Regions or Towns',
-		Region: 'Towns or Districts',
+		Region: 'Towns, Districts, or Locations',
 		Town: 'Districts or Locations',
 		District: 'Locations',
 		Location: 'Locations'
@@ -30,20 +30,21 @@ export const filterForParent = (placeType) => {
 		Region: ({ node }) => ['Planet', 'Moon'].includes(node.placeTypeDisplay),
 		Town: ({ node }) => ['Planet', 'Moon', 'Region'].includes(node.placeTypeDisplay),
 		District: ({ node }) => ['Region', 'Town'].includes(node.placeTypeDisplay),
-		Location: ({ node }) => ['Town', 'District', 'Location'].includes(node.placeTypeDisplay)
+		Location: ({ node }) =>
+			['Region', 'Town', 'District', 'Location'].includes(node.placeTypeDisplay)
 	};
 	return typeFilterMap[placeType] || (() => false);
 };
 
 export const filterForChildren = (placeType) => {
 	const typeFilterMap = {
-		Star: ({ node }) => ['Planets'].includes(node.placeTypeDisplay),
-		Planet: ({ node }) => ['Moons', 'Regions', 'Towns'].includes(node.placeTypeDisplay),
-		Moon: ({ node }) => ['Regions', 'Towns'].includes(node.placeTypeDisplay),
-		Region: ({ node }) => ['Towns', 'Districts'].includes(node.placeTypeDisplay),
-		Town: ({ node }) => ['Districts', 'Locations'].includes(node.placeTypeDisplay),
-		District: ({ node }) => ['Locations'].includes(node.placeTypeDisplay),
-		Location: ({ node }) => ['Locations'].includes(node.placeTypeDisplay)
+		Star: ({ node }) => ['Planet'].includes(node.placeTypeDisplay),
+		Planet: ({ node }) => ['Moon', 'Region', 'Town'].includes(node.placeTypeDisplay),
+		Moon: ({ node }) => ['Region', 'Town'].includes(node.placeTypeDisplay),
+		Region: ({ node }) => ['Town', 'District', 'Location'].includes(node.placeTypeDisplay),
+		Town: ({ node }) => ['District', 'Location'].includes(node.placeTypeDisplay),
+		District: ({ node }) => ['Location'].includes(node.placeTypeDisplay),
+		Location: ({ node }) => ['Location'].includes(node.placeTypeDisplay)
 	};
 	return typeFilterMap[placeType] || (() => false);
 };
