@@ -22,6 +22,16 @@
 			...options
 		});
 
+		quill.clipboard.addMatcher(Node.ELEMENT_NODE, function (node, delta) {
+			delta.forEach((e) => {
+				if (e.attributes) {
+					e.attributes.color = '';
+					e.attributes.background = '';
+				}
+			});
+			return delta;
+		});
+
 		if (html) {
 			const delta = quill.clipboard.convert(html);
 			quill.setContents(delta);
