@@ -6,6 +6,7 @@
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import fetchBanner from '$lib/fetchBanner';
 	import { KQL_Artifacts } from '$lib/graphql/_kitql/graphqlStores';
+	import { alphabetically } from '$lib/utils';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import { Container } from '@kahi-ui/framework';
 
@@ -31,7 +32,8 @@
 <script>
 	export let bannerUrl = undefined;
 
-	$: artifacts = $KQL_Artifacts.data?.artifacts.edges?.map(({ node }) => node) || [];
+	$: artifacts =
+		$KQL_Artifacts.data?.artifacts.edges?.map(({ node }) => node).sort(alphabetically) || [];
 	$: ({ status } = $KQL_Artifacts);
 </script>
 

@@ -3,8 +3,10 @@
 	import BannerImage from '$lib/components/BannerImage.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import { KQL_Races } from '$lib/graphql/_kitql/graphqlStores';
+	import { alphabetically } from '$lib/utils';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import { Container } from '@kahi-ui/framework';
+
 	export const load = async ({ fetch }) => {
 		await KQL_Races.queryLoad({ fetch });
 		return {};
@@ -12,7 +14,7 @@
 </script>
 
 <script>
-	$: races = $KQL_Races.data?.races.edges?.map(({ node }) => node) || [];
+	$: races = $KQL_Races.data?.races.edges?.map(({ node }) => node).sort(alphabetically) || [];
 </script>
 
 <BannerImage

@@ -38,3 +38,20 @@ export const emptySelectOption = {
 	text: '(None)',
 	id: ''
 };
+
+/** SORT FUNCTIONS */
+
+export const alphabetically = (a, b) => (a.name > b.name ? 1 : -1);
+
+const placePrecendence = {
+	STAR: 7,
+	PLANET: 6,
+	MOON: 5,
+	REGION: 4,
+	TOWN: 3,
+	DISTRICT: 2,
+	LOCATION: 1
+};
+
+export const placeByPrecendence = (a, b) =>
+	placePrecendence[b.placeType] - placePrecendence[a.placeType];

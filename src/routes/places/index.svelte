@@ -3,7 +3,9 @@
 	import BannerImage from '$lib/components/BannerImage.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import { KQL_Places } from '$lib/graphql/_kitql/graphqlStores';
+	import { alphabetically, placeByPrecendence } from '$lib/utils';
 	import { Container } from '@kahi-ui/framework';
+
 	export const load = async ({ fetch }) => {
 		await KQL_Places.queryLoad({ fetch });
 		return {};
@@ -11,7 +13,11 @@
 </script>
 
 <script>
-	$: places = $KQL_Places.data?.places.edges?.map(({ node }) => node) || [];
+	$: places =
+		$KQL_Places.data?.places.edges
+			?.map(({ node }) => node)
+			.sort(alphabetically)
+			.sort(placeByPrecendence) || [];
 </script>
 
 <BannerImage overlay="Places" imageId="dnd/places-banner_bwv6ut" alt="places banner" />

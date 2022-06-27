@@ -27,8 +27,6 @@
 	$: ({ status, errors, data } = $artifactStore);
 	$: ({ artifact } = data || {});
 
-	$: console.log({ artifact });
-
 	const form = writable({ ...emptyArtifact });
 	onMount(setForm);
 

@@ -21,8 +21,6 @@
 		lockedBySelf,
 		logs
 	} = race || {});
-
-	$: console.log({ status });
 </script>
 
 <StatusHandler {creating} {status} {errors} value={race} entityName="race">

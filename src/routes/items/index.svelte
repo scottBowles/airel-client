@@ -1,10 +1,11 @@
 <script context="module" lang="ts">
 	import AddLink from '$lib/components/AddLink.svelte';
 	import BannerImage from '$lib/components/BannerImage.svelte';
+	import ItemListDisplay from '$lib/components/ItemListDisplay.svelte';
 	import { KQL_Items } from '$lib/graphql/_kitql/graphqlStores';
+	import { alphabetically } from '$lib/utils';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import { Container } from '@kahi-ui/framework';
-	import ItemListDisplay from '../../lib/components/ItemListDisplay.svelte';
 
 	export const load = async ({ fetch }) => {
 		await KQL_Items.queryLoad({ fetch });
@@ -13,7 +14,7 @@
 </script>
 
 <script>
-	$: items = $KQL_Items.data?.items.edges?.map(({ node }) => node) || [];
+	$: items = $KQL_Items.data?.items.edges?.map(({ node }) => node).sort(alphabetically) || [];
 </script>
 
 <BannerImage
