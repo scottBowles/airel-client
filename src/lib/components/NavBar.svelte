@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page, session } from '$app/stores';
+	import SearchButton from '$lib/components/SearchButton.svelte';
 	import { post } from '$lib/utils';
 	import {
 		Anchor,
@@ -68,13 +69,17 @@
 <Omni.Container palette="dark" width="100">
 	<Omni.Header>
 		<Anchor sveltekit:prefetch href="#">Airel</Anchor>
-		<MediaQueryRender queries="(min-width: 1132px)">
+		<MediaQueryRender queries="(min-width: 1250px)">
 			<Divider orientation="vertical" />
 			<Anchor href="#">
 				<Text is="small">Between Two Suns</Text>
 			</Anchor>
 		</MediaQueryRender>
 	</Omni.Header>
+
+	<Omni.Section>
+		<SearchButton />
+	</Omni.Section>
 
 	<Omni.Footer>
 		<Menu.Container orientation="horizontal" sizing="tiny">

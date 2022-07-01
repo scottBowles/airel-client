@@ -1,10 +1,14 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
+	import Algolia from '$lib/components/Algolia.svelte';
+	import SearchButton from '$lib/components/SearchButton.svelte';
 	import FaBars from 'svelte-icons/fa/FaBars.svelte';
 	import FaTimes from 'svelte-icons/fa/FaTimes.svelte';
 	import Menu from './Menu.svelte';
 
 	let showMobileMenu = false;
+
+	let innerWidth;
 
 	afterNavigate(() => {
 		showMobileMenu = false;
@@ -24,6 +28,15 @@
 				<FaBars />
 			{/if}
 		</div>
+	</div>
+	<div class="search-side-container">
+		{#if innerWidth > 681}
+			<SearchButton />
+		{:else}
+			<div class="search-container">
+				<Algolia />
+			</div>
+		{/if}
 	</div>
 </div>
 {#if showMobileMenu}
@@ -48,6 +61,8 @@
 	{/if}
 </svelte:head>
 
+<svelte:window bind:innerWidth />
+
 <style>
 	.mobile-top-bar {
 		height: 50px;
@@ -55,9 +70,20 @@
 		overflow: hidden;
 		display: flex;
 		justify-content: flex-end;
-		position: absolute;
-		top: 0;
+		align-items: center;
+		padding-left: 20px;
+		padding-right: 20px;
 	}
+	.search-side-container {
+		flex: 1;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+	}
+	.search-container {
+		width: 50px;
+	}
+
 	.hamburger-container {
 		display: grid;
 		place-items: center;
@@ -66,7 +92,7 @@
 	}
 
 	.hamburger-menu {
-		z-index: 9999;
+		z-index: 9998;
 		cursor: pointer;
 		display: flex;
 		align-items: center;
