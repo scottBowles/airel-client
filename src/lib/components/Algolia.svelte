@@ -6,14 +6,12 @@
 
 	import { getThumbnailUrl } from '$lib/cloudinary';
 
-	import { onMount } from 'svelte';
-
 	export let placeholder = '';
 
-	function algoliaInit() {
+	function algoliaInit(_node) {
 		const searchClient = algoliasearch('BV34Z34BB6', 'e0a30ac7c279eae51cf9853eb0ba05b9');
 
-		function makeSource({ indexName, getItemUrl, query }) {
+		function makeSource({ indexName, getUrlFromId, query }) {
 			return {
 				sourceId: indexName,
 				getItems() {
@@ -36,84 +34,88 @@
 						return indexName;
 					},
 					item({ item, components, html }) {
-						return html`<div class="aa-ItemWrapper">
-							<div class="aa-ItemContent">
-								<div class="aa-ItemIcon aa-ItemIcon--alignTop">
-									<img
-										src="${getThumbnailUrl(item.thumbnail)}"
-										alt="${item.name}"
-										width="40"
-										height="40"
-									/>
-								</div>
-								<div class="aa-ItemContentBody">
-									<div class="aa-ItemContentTitle">
-										${components.Highlight({
-											hit: item,
-											attribute: 'name'
-										})}
+						return html`<a href=${getUrlFromId(item.global_id)}>
+							<div class="aa-ItemWrapper">
+								<div class="aa-ItemContent">
+									<div class="aa-ItemIcon aa-ItemIcon--alignTop">
+										<img
+											src="${getThumbnailUrl(item.thumbnail)}"
+											alt="${item.name}"
+											width="40"
+											height="40"
+										/>
 									</div>
-									<div class="aa-ItemContentDescription">
-										${components.Snippet({
-											hit: item,
-											attribute: 'description'
-										})}
+									<div class="aa-ItemContentBody">
+										<div class="aa-ItemContentTitle">
+											${components.Highlight({
+												hit: item,
+												attribute: 'name'
+											})}
+										</div>
+										<div class="aa-ItemContentDescription">
+											${components.Snippet({
+												hit: item,
+												attribute: 'description'
+											})}
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>`;
+						</a>`;
 					}
 				},
-				getItemUrl
+				getItemUrl: ({ item }) => getUrlFromId(item.global_id)
 			};
 		}
 
-		const autoCompleteState = autocomplete({
+		autocomplete({
 			container: '#autocomplete',
 			placeholder,
 			getSources({ query }) {
 				return [
 					makeSource({
 						indexName: 'Association',
-						getItemUrl: ({ item }) => `/associations/${item.global_id}`,
+						getUrlFromId: (id) => `/associations/${id}`,
 						query
 					}),
 					makeSource({
 						indexName: 'Artifact',
-						getItemUrl: ({ item }) => `/artifacts/${item.global_id}`,
+						getUrlFromId: (id) => `/artifacts/${id}`,
 						query
 					}),
 					makeSource({
 						indexName: 'Character',
-						getItemUrl: ({ item }) => `/characters/${item.global_id}`,
+						getUrlFromId: (id) => `/characters/${id}`,
 						query
 					}),
 					makeSource({
 						indexName: 'Item',
-						getItemUrl: ({ item }) => `/items/${item.global_id}`,
+						getUrlFromId: (id) => `/items/${id}`,
 						query
 					}),
 					makeSource({
 						indexName: 'Place',
-						getItemUrl: ({ item }) => `/places/${item.global_id}`,
+						getUrlFromId: (id) => `/places/${id}`,
 						query
 					}),
 					makeSource({
 						indexName: 'Race',
-						getItemUrl: ({ item }) => `/races/${item.global_id}`,
+						getUrlFromId: (id) => `/races/${id}`,
 						query
 					})
 				];
 			}
 		});
-		console.log({ autoCompleteState });
-	}
 
-	onMount(() => {
-		algoliaInit();
 		const inputElement = document.querySelector('input.aa-Input');
 		inputElement instanceof HTMLInputElement && inputElement.focus();
-	});
+	}
 </script>
 
-<div id="autocomplete" />
+<div id="autocomplete" use:algoliaInit />
+
+<style>
+	:global(.aa-Panel) {
+		z-index: 99;
+	}
+</style>
