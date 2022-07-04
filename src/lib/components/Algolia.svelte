@@ -6,10 +6,13 @@
 
 	import { getThumbnailUrl } from '$lib/cloudinary';
 
+	const ALGOLIA_APP_ID = import.meta.env.VITE_ALGOLIA_APP_ID.toString();
+	const ALGOLIA_SEARCH_ONLY_KEY = import.meta.env.VITE_ALGOLIA_SEARCH_ONLY_KEY.toString();
+
 	export let placeholder = '';
 
 	function algoliaInit(_node) {
-		const searchClient = algoliasearch('BV34Z34BB6', 'e0a30ac7c279eae51cf9853eb0ba05b9');
+		const searchClient = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_SEARCH_ONLY_KEY);
 
 		function makeSource({ indexName, getUrlFromId, query }) {
 			return {
