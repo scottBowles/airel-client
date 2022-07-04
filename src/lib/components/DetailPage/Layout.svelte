@@ -5,22 +5,26 @@
 	import MobileNavSpacer from '$lib/components/MobileNav/MobileNavSpacer.svelte';
 	import { Container, Heading, Text, TextInput } from '@kahi-ui/framework';
 	import { onMount } from 'svelte';
-	import MdEditor from '../EditableMarkdown/MdEditor.svelte';
-	import MdViewer from '../EditableMarkdown/MdViewer.svelte';
+	import QuillEditor from '../QuillEditor.svelte';
 	import Spacer from '../Spacer.svelte';
+	import LogsDisplay from './LogsDisplay.svelte';
 
-	export let form;
+	export let id;
+	export let form = undefined;
 	export let name = '';
 	export let description = '';
 	export let properties: { [key: string]: string | number } = {};
 	export let imageIds = [];
+	export let logs = undefined;
 	export let onEditClick = () => {};
 	export let onFormSubmit = () => {};
-	export let lockUser;
+	export let lockUser = undefined;
 	export let lockedBySelf = false;
 	export let creating = false;
 	export let onImageUpload = () => {};
 	export let markdownNotes = '';
+	export let patchStore: ((patch: Record<string, any>) => void) | undefined = undefined;
+	export let omitMobileSpacer = false;
 
 	let isMounted = false;
 	onMount(() => {
@@ -28,11 +32,11 @@
 	});
 
 	$: editing = lockedBySelf || creating;
-	console.log({ imageIds });
-	console.log({ lockedBySelf });
 </script>
 
-<MobileNavSpacer />
+{#if !omitMobileSpacer}
+	<MobileNavSpacer />
+{/if}
 <Spacer xs />
 <Container>
 	<form on:submit|preventDefault={onFormSubmit}>
@@ -76,14 +80,22 @@
 		<Spacer />
 
 		<div class:clearfix={editing}>
-			<!-- IMAGES -->
-			<div class="img-container">
+			<!-- FLOAT AREA -->
+			<div class="float-container">
+				<!-- IMAGES -->
 				<slot name="mainImage">
 					<CloudinaryUpload {onImageUpload}>
-						<ImageCarousel imageIds={editing ? $form.imageIds : imageIds} />
+						<ImageCarousel imageIds={editing ? $form.imageIds : imageIds} alt={name} />
 					</CloudinaryUpload>
 					<Spacer />
 				</slot>
+				<!-- LOGS -->
+				{#if !creating}
+					<slot name="logs">
+						<LogsDisplay {logs} {id} {patchStore} />
+						<Spacer />
+					</slot>
+				{/if}
 			</div>
 
 			<!-- DESCRIPTION -->
@@ -111,16 +123,15 @@
 
 		<Spacer />
 
-		<!-- MARKDOWN NOTES -->
-		<!-- <div class:markdown-container={false}> -->
-		<slot name="markdown-notes">
+		<!-- FREEFORM -->
+		<slot name="freeform">
+			<Spacer lg />
 			{#if editing}
-				<MdEditor bind:value={$form.markdownNotes} asInput />
+				<QuillEditor bind:html={$form.markdownNotes} />
 			{:else}
-				<MdViewer value={markdownNotes} />
+				{@html markdownNotes}
 			{/if}
 		</slot>
-		<!-- </div> -->
 	</form>
 </Container>
 
@@ -154,7 +165,7 @@
 	hr {
 		color: #ccc;
 	}
-	.img-container {
+	.float-container {
 		float: right;
 		width: var(--detail-layout-img-container-width);
 		margin-left: 0.5em;

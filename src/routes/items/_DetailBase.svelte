@@ -16,18 +16,21 @@
 	export let status = undefined;
 	export let errors = [];
 	export let creating = false;
+	export let patchStore = undefined;
 
 	$: ({
+		id,
 		name,
 		description,
 		markdownNotes,
+		logs,
 		imageIds = [],
 		lockUser,
 		lockedBySelf,
 		armor,
 		equipment,
 		weapon
-	} = item);
+	} = item || {});
 	$: editing = lockedBySelf || creating;
 
 	function handleAddStatBlock(event) {
@@ -36,18 +39,21 @@
 	}
 </script>
 
-<StatusHandler {status} {errors} value={item} entityName="item">
+<StatusHandler {creating} {status} {errors} value={item} entityName="item">
 	<Layout
+		{id}
 		{form}
 		{name}
 		{description}
 		{markdownNotes}
+		{logs}
 		{imageIds}
 		{lockUser}
 		{lockedBySelf}
 		{onEditClick}
 		{onFormSubmit}
 		{onImageUpload}
+		{patchStore}
 		{creating}
 	>
 		<svelte:fragment slot="properties">

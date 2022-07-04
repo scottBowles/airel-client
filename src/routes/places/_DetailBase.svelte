@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
+	import MobileNavSpacer from '$lib/components/MobileNav/MobileNavSpacer.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { KQL_PlacesForSearch } from '$lib/graphql/_kitql/graphqlStores';
 	import { emptySelectOption } from '$lib/utils';
@@ -29,13 +30,16 @@
 	export let status = undefined;
 	export let errors = [];
 	export let creating = false;
+	export let patchStore = undefined;
 
 	onMount(KQL_PlacesForSearch.query);
 
 	$: ({
+		id,
 		name,
 		description,
 		markdownNotes,
+		logs,
 		placeTypeDisplay,
 		// parent,
 		children: childrenConnection,
@@ -55,7 +59,7 @@
 
 	$: children = childrenConnection?.edges?.map((edge) => edge.node) || [];
 
-	function getBreadcrumbs(node) {
+	function getBreadcrumbs(node): any[] {
 		return node ? [...getBreadcrumbs(node.parent), node] : [];
 	}
 	$: breadcrumbs = getBreadcrumbs(place);
@@ -79,8 +83,8 @@
 	$: editing = lockedBySelf || creating;
 </script>
 
-<StatusHandler {status} {errors} value={place} entityName="place">
-	<Spacer xs />
+<StatusHandler {creating} {status} {errors} value={place} entityName="place">
+	<MobileNavSpacer />
 	{#if breadcrumbs.length > 0}
 		<Container>
 			<Breadcrumb.Container>
@@ -97,16 +101,20 @@
 		</Container>
 	{/if}
 	<Layout
+		omitMobileSpacer
+		{id}
 		{form}
 		{name}
 		{description}
 		{markdownNotes}
+		{logs}
 		{imageIds}
 		{lockUser}
 		{lockedBySelf}
 		{onEditClick}
 		{onFormSubmit}
 		{onImageUpload}
+		{patchStore}
 		{creating}
 	>
 		<svelte:fragment slot="properties">
@@ -129,14 +137,20 @@
 				</div>
 				<Spacer lg />
 			{/if}
-			{#if editing && $form.placeType}
+			{#if editing}
+				<i class="small-text"
+					>Note: In general, the hierarchy of places is:<br />
+					Stars &gt; Planets &gt; Moons &gt; Regions &gt; Towns &gt; Districts &gt; Locations<br />
+				</i>
+				<Spacer xs />
+			{/if}
+			{#if editing && $form.placeType && placesForParentSelect.length > 0}
 				{#if $KQL_PlacesForSearch.status !== 'DONE'}
 					Loading Places...
 				{:else}
 					<div class="spacer" />
 					<Form.Label>
-						{getParentName($form.placeType)}
-						{$form.name} is a {$form.placeType} Of
+						{$form.name} is a {$form.placeType} of the {getParentName($form.placeType)}
 					</Form.Label>
 					<br />
 					<DataSelect
@@ -149,7 +163,7 @@
 				{/if}
 				<Spacer lg />
 			{/if}
-			{#if editing}
+			{#if editing && placesForChildrenSelect.length > 0}
 				{#if $form.placeType}
 					{#if $KQL_PlacesForSearch.status !== 'DONE'}
 						<div>Loading Places...</div>
@@ -169,7 +183,7 @@
 						<Spacer lg />
 					{/if}
 				{/if}
-			{:else if children.length > 0}
+			{:else if children?.length > 0}
 				<div class="items-container">
 					<Heading is="h4">{getChildrenName(placeTypeDisplay)}</Heading>
 					<Spacer xs />
@@ -185,3 +199,10 @@
 		</svelte:fragment>
 	</Layout>
 </StatusHandler>
+
+<style>
+	.small-text {
+		font-size: 0.75rem;
+		line-height: 1;
+	}
+</style>

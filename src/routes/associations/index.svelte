@@ -3,22 +3,21 @@
 	import BannerImage from '$lib/components/BannerImage.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import { KQL_Associations } from '$lib/graphql/_kitql/graphqlStores';
+	import { alphabetically } from '$lib/utils';
 	import { thumbnail } from '@cloudinary/url-gen/actions/resize';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import { Container } from '@kahi-ui/framework';
 	import { KitQLInfo } from '@kitql/all-in';
 
 	export const load = async ({ fetch }) => {
-		console.log('ASSOCIATIONS LOAD FUNCTION RUNNING');
 		await KQL_Associations.queryLoad({ fetch });
 		return {};
 	};
 </script>
 
 <script>
-	$: associations = $KQL_Associations.data?.associations.edges?.map(({ node }) => node) || [];
-	$: ({ status } = $KQL_Associations);
-	$: console.log({ associations });
+	$: associations =
+		$KQL_Associations.data?.associations.edges?.map(({ node }) => node).sort(alphabetically) || [];
 </script>
 
 <BannerImage
@@ -35,7 +34,7 @@
 		<div>
 			<AddLink href="associations/create" />
 		</div>
-		{#each associations as association}
+		{#each associations as association (association.id)}
 			{@const { id, name, description, thumbnailId, imageIds } = association}
 			{@const href = `associations/${id}`}
 			<ListDetailCard thumbnailId={thumbnailId || imageIds[0]} {name} {description} {href} />

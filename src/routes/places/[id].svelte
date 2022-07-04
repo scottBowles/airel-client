@@ -3,7 +3,6 @@
 	import placeDetails from '$lib/graphql/customStores/placeDetails';
 	import {
 		KQL_PlaceAddImage,
-		KQL_PlaceById,
 		KQL_PlaceLock,
 		KQL_PlacePatch
 	} from '$lib/graphql/_kitql/graphqlStores';
@@ -47,11 +46,11 @@
 
 	function patchStore(patch) {
 		const update = { place: { ...place, ...patch } };
-		KQL_PlaceById.patch(update, variables);
+		placeDetails.patch(update, variables);
 	}
 
 	function refreshFromNetwork() {
-		KQL_PlaceById.query({ variables, settings: { policy: 'cache-and-network' } });
+		placeDetails.query({ variables, settings: { policy: 'cache-and-network' } });
 	}
 
 	async function onEditClick() {
@@ -113,5 +112,14 @@
 	}
 </script>
 
-<DetailBase {place} {form} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
-<!-- <KitQLInfo store={KQL_PlaceById} /> -->
+<DetailBase
+	{place}
+	{form}
+	{status}
+	{errors}
+	{onEditClick}
+	{onFormSubmit}
+	{onImageUpload}
+	{patchStore}
+/>
+<!-- <KitQLInfo store={placeDetails} /> -->

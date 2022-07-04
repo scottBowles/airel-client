@@ -13,6 +13,15 @@ fragment ArtifactFields on ArtifactNode {
 	}
 	lockTime
 	lockedBySelf
+	logs {
+		edges {
+			node {
+				id
+				url
+				name
+			}
+		}
+	}
 	items {
 		edges {
 			node {

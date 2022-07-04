@@ -13,13 +13,16 @@
 	export let status = undefined;
 	export let errors = [];
 	export let creating = false;
+	export let patchStore = undefined;
 
 	$: browser && KQL_NpcNamesAndIds.query();
 
 	$: ({
+		id,
 		name,
 		description,
 		markdownNotes,
+		logs,
 		imageIds = [],
 		lockUser,
 		lockedBySelf,
@@ -27,7 +30,7 @@
 	} = association || {});
 
 	$: editing = lockedBySelf || creating;
-	$: npcs = npcsConnection?.edges.map(({ node }) => node);
+	$: npcs = npcsConnection?.edges.map(({ node }) => node) || [];
 	$: npcsForSelect =
 		$KQL_NpcNamesAndIds.status === 'DONE' &&
 		$KQL_NpcNamesAndIds.data.npcs.edges.map(({ node: { name, id } }) => ({
@@ -36,18 +39,21 @@
 		}));
 </script>
 
-<StatusHandler {status} {errors} value={association} entityName="association">
+<StatusHandler {creating} {status} {errors} value={association} entityName="association">
 	<Layout
+		{id}
 		{form}
 		{name}
 		{description}
 		{markdownNotes}
+		{logs}
 		{imageIds}
 		{lockUser}
 		{lockedBySelf}
 		{onEditClick}
 		{onFormSubmit}
 		{onImageUpload}
+		{patchStore}
 		{creating}
 	>
 		<svelte:fragment slot="properties">
@@ -70,7 +76,7 @@
 				<div class="items-container">
 					<Heading is="h4">Members</Heading>
 					<Spacer xs />
-					{#if npcs.length > 0}
+					{#if npcs?.length > 0}
 						<div>
 							{#each npcs as npc, i}
 								<Anchor sveltekit:prefetch href={`/characters/${npc.id}`}>{npc.name}</Anchor>{i <

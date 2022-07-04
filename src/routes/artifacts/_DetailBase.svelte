@@ -14,43 +14,47 @@
 	export let status = undefined;
 	export let errors = [];
 	export let creating = false;
+	export let patchStore = undefined;
 
 	$: browser && KQL_ItemNamesAndIds.query();
-	$: console.log($KQL_ItemNamesAndIds);
 
 	$: ({
+		id,
 		name,
 		description,
 		markdownNotes,
+		logs,
 		items: itemsConnection,
 		imageIds = [],
 		lockUser,
 		lockedBySelf
-	} = artifact);
+	} = artifact || {});
 
 	$: editing = lockedBySelf || creating;
-	$: items = itemsConnection?.edges.map(({ node }) => node);
+	$: items = itemsConnection?.edges.map(({ node }) => node) || [];
 	$: itemsForSelect =
 		$KQL_ItemNamesAndIds.status === 'DONE' &&
 		$KQL_ItemNamesAndIds.data.items.edges.map(({ node: { name, id } }) => ({
 			text: name,
 			id
 		}));
-	$: console.log({ itemsForSelect });
 </script>
 
-<StatusHandler {status} {errors} value={artifact} entityName="artifact">
+<StatusHandler {creating} {status} {errors} value={artifact} entityName="artifact">
 	<Layout
+		{id}
 		{form}
 		{name}
 		{description}
 		{markdownNotes}
 		{imageIds}
+		{logs}
 		{lockUser}
 		{lockedBySelf}
 		{onEditClick}
 		{onFormSubmit}
 		{onImageUpload}
+		{patchStore}
 		{creating}
 	>
 		<svelte:fragment slot="properties">

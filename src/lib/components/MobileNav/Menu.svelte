@@ -49,7 +49,6 @@
 		$session.token = null;
 		$session.isLoggedIn = false;
 		goto('/login');
-		console.log('logged out');
 	}
 </script>
 
@@ -82,7 +81,7 @@
 		background-color: hsla(var(--palette-background-lighter), var(--document-background-opacity));
 		display: grid;
 		place-items: center;
-		z-index: 9998;
+		z-index: 9997;
 	}
 
 	.spacer {

@@ -9,22 +9,35 @@
 	export let status = undefined;
 	export let errors = [];
 	export let creating = false;
+	export let patchStore = undefined;
 
-	$: ({ name, description, markdownNotes, imageIds = [], lockUser, lockedBySelf } = race || {});
+	$: ({
+		id,
+		name,
+		description,
+		markdownNotes,
+		imageIds = [],
+		lockUser,
+		lockedBySelf,
+		logs
+	} = race || {});
 </script>
 
-<StatusHandler {status} {errors} value={race} entityName="race">
+<StatusHandler {creating} {status} {errors} value={race} entityName="race">
 	<Layout
+		{id}
 		{form}
 		{name}
 		{description}
 		{markdownNotes}
 		{imageIds}
+		{logs}
 		{lockUser}
 		{lockedBySelf}
 		{onEditClick}
 		{onFormSubmit}
 		{onImageUpload}
+		{patchStore}
 		{creating}
 	/>
 </StatusHandler>

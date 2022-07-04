@@ -16,6 +16,15 @@ fragment PlaceFields on PlaceNode {
 	placeType
 	placeTypeDisplay
 	population
+	logs {
+		edges {
+			node {
+				id
+				url
+				name
+			}
+		}
+	}
 	parent {
 		id
 		name

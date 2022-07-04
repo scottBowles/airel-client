@@ -17,7 +17,6 @@ type Input = {
  * exceptions
  */
 async function api({ payload, token, opts }: Input): Promise<Response> {
-	console.log('running _api endpoint');
 	return fetch(settings.API_PATH, {
 		method: 'POST',
 		headers: {

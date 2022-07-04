@@ -1,5 +1,5 @@
 <script>
-	import { Layout, BasicProperty } from '$lib/components/DetailPage';
+	import { BasicProperty, Layout } from '$lib/components/DetailPage';
 	export let errors;
 </script>
 

@@ -1,12 +1,7 @@
 <script context="module">
 	import { page } from '$app/stores';
-	import AddLink from '$lib/components/AddLink.svelte';
-	import {
-		KQL_ItemAddImage,
-		KQL_ItemById,
-		KQL_ItemLock,
-		KQL_ItemPatch
-	} from '$lib/graphql/_kitql/graphqlStores';
+	import itemDetails from '$lib/graphql/customStores/itemDetails';
+	import { KQL_ItemAddImage, KQL_ItemLock, KQL_ItemPatch } from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
 	import { onMount } from 'svelte';
@@ -15,7 +10,7 @@
 	import { emptyItem } from './_utils';
 
 	export const load = async ({ fetch, params }) => {
-		await KQL_ItemById.queryLoad({ fetch, variables: { id: params.id } });
+		await itemDetails.queryLoad({ fetch, variables: { id: params.id } });
 		return {};
 	};
 </script>
@@ -24,7 +19,8 @@
 	const { id } = $page.params;
 	const variables = { id }; // for requests
 
-	$: ({ status, errors, data } = $KQL_ItemById);
+	$: itemStore = itemDetails.byId(variables);
+	$: ({ status, errors, data } = $itemStore);
 	$: ({ item } = data || {});
 
 	// TODO: hold form state in storage
@@ -40,11 +36,11 @@
 
 	function patchStore(patch) {
 		const update = { item: { ...item, ...patch } };
-		KQL_ItemById.patch(update, variables);
+		itemDetails.patch(update, variables);
 	}
 
 	function refreshFromNetwork() {
-		KQL_ItemById.query({ variables, settings: { policy: 'cache-and-network' } });
+		itemDetails.query({ variables, settings: { policy: 'cache-and-network' } });
 	}
 
 	async function onEditClick() {
@@ -104,5 +100,14 @@
 	}
 </script>
 
-<DetailBase {item} {form} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
-<!-- <KitQLInfo store={KQL_ItemById} /> -->
+<DetailBase
+	{item}
+	{form}
+	{status}
+	{errors}
+	{onEditClick}
+	{onFormSubmit}
+	{onImageUpload}
+	{patchStore}
+/>
+<!-- <KitQLInfo store={itemDetails} /> -->

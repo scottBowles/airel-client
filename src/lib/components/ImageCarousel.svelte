@@ -1,62 +1,51 @@
 <script lang="ts">
-	import LargeImage from '$lib/components/LargeImage.svelte';
-	import { onMount } from 'svelte';
+	import cloudinary from '$lib/cloudinary';
+	import { defaultImage } from '@cloudinary/url-gen/actions/delivery';
+	import { thumbnail } from '@cloudinary/url-gen/actions/resize';
+	import { Splide, SplideSlide, SplideTrack } from '@splidejs/svelte-splide';
+	import '@splidejs/svelte-splide/css';
 
 	export let imageIds;
+	export let alt;
 
-	let currentIndex = 0;
-	let hasMounted;
+	let defaultImageSrc = 'dnd:placeholder.jpg';
 
-	$: currentImageId = imageIds[Math.abs(currentIndex % imageIds.length)];
+	function getImageSrc(imageId: string): string {
+		const image = cloudinary
+			.image(imageId)
+			.resize(thumbnail().width(300).height(400))
+			.delivery(defaultImage(defaultImageSrc));
+		const src = image.toURL();
+		return src;
+	}
 
-	onMount(() => (hasMounted = true));
-
-	const incrementIndex = () => (currentIndex += 1);
-	const decrementIndex = () => (currentIndex -= 1);
+	$: imageIds = imageIds.length > 0 ? imageIds : [defaultImageSrc];
 </script>
 
-<div class="img-container">
-	{#if imageIds.length > 1 && hasMounted}
-		<div class="arrow left" on:click|stopPropagation={decrementIndex}>&#10094;</div>
-	{/if}
-
-	<LargeImage imageId={currentImageId} />
-
-	{#if imageIds.length > 1 && hasMounted}
-		<div class="arrow right" on:click|stopPropagation={incrementIndex}>&#10095;</div>
-	{/if}
-</div>
+<Splide
+	hasTrack={false}
+	aria-label="My Favorite Images"
+	options={{ type: 'fade', rewind: true, height: 400, lazyLoad: 'nearby', speed: 1000 }}
+>
+	<div class="splide__arrows" class:hidden={imageIds.length < 2} on:click|stopPropagation />
+	<SplideTrack>
+		{#each imageIds as imageId}
+			{@const src = getImageSrc(imageId)}
+			<SplideSlide>
+				<img data-splide-lazy={src} {alt} />
+			</SplideSlide>
+		{/each}
+	</SplideTrack>
+</Splide>
 
 <style>
-	.arrow {
-		cursor: pointer;
-		position: absolute;
-		top: 50%;
-		transform: translateY(-50%);
-		height: 30px;
-		width: 30px;
-		display: grid;
-		place-items: center;
-		background-color: rgba(0, 0, 0, 0.25);
-		color: white;
-		font-weight: bold;
-		font-size: 19px;
-		transition: 0.4s ease;
-		border-radius: 100%;
-		user-select: none;
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
 	}
-	.arrow:hover {
-		background-color: rgba(0, 0, 0, 0.4);
-	}
-	.left {
-		left: 10px;
-	}
-	.right {
-		right: 10px;
-	}
-	.img-container {
-		width: fit-content;
-		height: fit-content;
-		position: relative;
+
+	.hidden {
+		display: none;
 	}
 </style>

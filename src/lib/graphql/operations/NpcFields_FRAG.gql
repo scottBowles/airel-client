@@ -12,6 +12,15 @@ fragment NpcFields on NPCNode {
 	lockTime
 	lockedBySelf
 	size
+	logs {
+		edges {
+			node {
+				id
+				url
+				name
+			}
+		}
+	}
 	race {
 		id
 		name

@@ -1139,6 +1139,104 @@ function KQL_AssociationsStore() {
  */
 export const KQL_Associations = KQL_AssociationsStore();
 
+function KQL_AddEntityLogStore() {
+	const operationName = 'KQL_AddEntityLog';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.AddEntityLogMutation, Types.AddEntityLogMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.AddEntityLogMutationVariables>
+		): Promise<RequestResult<Types.AddEntityLogMutation, Types.AddEntityLogMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_AddEntityLog).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.AddEntityLogMutation, Types.AddEntityLogMutationVariables>({
+				skFetch: fetch,
+				document: Types.AddEntityLogDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `AddEntityLog` Operation
+ */
+export const KQL_AddEntityLog = KQL_AddEntityLogStore();
+
+function KQL_RemoveEntityLogStore() {
+	const operationName = 'KQL_RemoveEntityLog';
+	const operationType = ResponseResultType.Mutation;
+
+	// prettier-ignore
+	const { subscribe, set, update } = writable<RequestResult<Types.RemoveEntityLogMutation, Types.RemoveEntityLogMutationVariables>>({...defaultStoreValue, operationName, operationType});
+
+		async function mutateLocal(
+			params?: RequestParameters<Types.RemoveEntityLogMutationVariables>
+		): Promise<RequestResult<Types.RemoveEntityLogMutation, Types.RemoveEntityLogMutationVariables>> {
+			let { fetch, variables } = params ?? {};
+
+			const storedVariables = get(KQL_RemoveEntityLog).variables;
+			variables = variables ?? storedVariables;
+
+			update((c) => {
+				return { ...c, isFetching: true, status: RequestStatus.LOADING };
+			});
+
+			// prettier-ignore
+			const res = await kitQLClient.request<Types.RemoveEntityLogMutation, Types.RemoveEntityLogMutationVariables>({
+				skFetch: fetch,
+				document: Types.RemoveEntityLogDocument,
+				variables, 
+				operationName, 
+				operationType, 
+				browser
+			});
+			const result = { ...res, isFetching: false, status: RequestStatus.DONE, variables };
+			set(result);
+			return result;
+		}
+
+	return {
+		subscribe,
+
+		/**
+		 * Can be used for SSR, but simpler option is `.queryLoad`
+		 * @returns fill this store & the cache
+		 */
+		mutate: mutateLocal,
+
+	};
+}
+/**
+ * KitQL Svelte Store with the latest `RemoveEntityLog` Operation
+ */
+export const KQL_RemoveEntityLog = KQL_RemoveEntityLogStore();
+
 function KQL_ItemAddImageStore() {
 	const operationName = 'KQL_ItemAddImage';
 	const operationType = ResponseResultType.Mutation;

@@ -16,14 +16,17 @@
 	export let status = undefined;
 	export let errors = [];
 	export let creating = false;
+	export let patchStore = undefined;
 
 	$: browser && KQL_AssociationNamesAndIds.query();
 	$: browser && KQL_RaceNamesAndIds.query();
 
 	$: ({
+		id,
 		name,
 		description,
 		markdownNotes,
+		logs,
 		imageIds = [],
 		race,
 		associations: associationsConnection,
@@ -32,7 +35,7 @@
 	} = npc || {});
 
 	$: editing = lockedBySelf || creating;
-	$: associations = associationsConnection?.edges.map(({ node }) => node);
+	$: associations = associationsConnection?.edges.map(({ node }) => node) || [];
 	$: associationsForSelect =
 		$KQL_AssociationNamesAndIds.status === 'DONE' &&
 		$KQL_AssociationNamesAndIds.data.associations.edges.map(({ node: { name, id } }) => ({
@@ -47,18 +50,21 @@
 		}));
 </script>
 
-<StatusHandler {status} {errors} value={npc} entityName="character">
+<StatusHandler {creating} {status} {errors} value={npc} entityName="character">
 	<Layout
+		{id}
 		{form}
 		{name}
 		{description}
 		{markdownNotes}
+		{logs}
 		{imageIds}
 		{lockUser}
 		{lockedBySelf}
 		{onEditClick}
 		{onFormSubmit}
 		{onImageUpload}
+		{patchStore}
 		{creating}
 	>
 		<svelte:fragment slot="properties">
@@ -106,7 +112,7 @@
 						bind:logic_state={$form.associations}
 					/>
 				{/if}
-			{:else if associations.length > 0}
+			{:else if associations?.length > 0}
 				<div class="items-container">
 					<Heading is="h4">Associations</Heading>
 					<Spacer xs />

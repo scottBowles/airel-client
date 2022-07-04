@@ -1,11 +1,7 @@
 <script context="module" lang="ts">
 	import { page } from '$app/stores';
-	import {
-		KQL_NpcAddImage,
-		KQL_NpcById,
-		KQL_NpcLock,
-		KQL_NpcPatch
-	} from '$lib/graphql/_kitql/graphqlStores';
+	import characterDetails from '$lib/graphql/customStores/characterDetails';
+	import { KQL_NpcAddImage, KQL_NpcLock, KQL_NpcPatch } from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
 	import { onMount } from 'svelte';
@@ -14,7 +10,7 @@
 	import { emptyNpc } from './_utils';
 
 	export const load = async ({ fetch, params }) => {
-		await KQL_NpcById.queryLoad({ fetch, variables: { id: params.id } });
+		await characterDetails.queryLoad({ fetch, variables: { id: params.id } });
 		return {};
 	};
 </script>
@@ -23,7 +19,8 @@
 	const { id } = $page.params;
 	const variables = { id }; // for requests
 
-	$: ({ status, errors, data } = $KQL_NpcById);
+	$: characterStore = characterDetails.byId(variables);
+	$: ({ status, errors, data } = $characterStore);
 	$: ({ npc } = data || {});
 
 	const form = writable({ ...emptyNpc });
@@ -45,11 +42,11 @@
 
 	function patchStore(patch) {
 		const update = { npc: { ...npc, ...patch } };
-		KQL_NpcById.patch(update, variables);
+		characterDetails.patch(update, variables);
 	}
 
 	function refreshFromNetwork() {
-		KQL_NpcById.query({ variables, settings: { policy: 'cache-and-network' } });
+		characterDetails.query({ variables, settings: { policy: 'cache-and-network' } });
 	}
 
 	async function onEditClick() {
@@ -109,5 +106,14 @@
 	}
 </script>
 
-<DetailBase {npc} {form} {status} {errors} {onEditClick} {onFormSubmit} {onImageUpload} />
-<!-- <KitQLInfo store={KQL_NpcById} /> -->
+<DetailBase
+	{npc}
+	{form}
+	{status}
+	{errors}
+	{onEditClick}
+	{onFormSubmit}
+	{onImageUpload}
+	{patchStore}
+/>
+<!-- <KitQLInfo store={characterDetails} /> -->

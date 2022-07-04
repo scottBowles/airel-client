@@ -1,5 +1,13 @@
-<script>
-	import { Layout } from '$lib/components/DetailPage';
-</script>
+<div class="container">
+	<div>Loading...</div>
+</div>
 
-<Layout name="Loading" />
+<style>
+	.container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		height: 100vh;
+	}
+</style>

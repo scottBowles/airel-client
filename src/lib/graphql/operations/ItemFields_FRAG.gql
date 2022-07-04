@@ -11,6 +11,15 @@ fragment ItemFields on ItemNode {
 	}
 	lockTime
 	lockedBySelf
+	logs {
+		edges {
+			node {
+				id
+				url
+				name
+			}
+		}
+	}
 	armor {
 		acBonus
 	}
