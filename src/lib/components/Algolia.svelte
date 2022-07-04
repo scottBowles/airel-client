@@ -1,6 +1,6 @@
 <script>
 	import { autocomplete, getAlgoliaResults } from '@algolia/autocomplete-js';
-	import algoliasearch from 'algoliasearch/lite';
+	import algoliasearch from 'algoliasearch/lite.js';
 
 	import '@algolia/autocomplete-theme-classic';
 
