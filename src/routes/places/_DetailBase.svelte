@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
-	import MobileNavSpacer from '$lib/components/MobileNav/MobileNavSpacer.svelte';
+	import MobileNavSpacer from '$lib/components/nav/MobileNavSpacer.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { KQL_PlacesForSearch } from '$lib/graphql/_kitql/graphqlStores';
 	import { emptySelectOption } from '$lib/utils';

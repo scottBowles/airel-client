@@ -1,14 +1,12 @@
 <script context="module" lang="ts">
 	import { navigating } from '$app/stores';
 	import Algolia from '$lib/components/Algolia.svelte';
-	import MobileNavBar from '$lib/components/MobileNav/Bar.svelte';
-	import NavBar from '$lib/components/NavBar.svelte';
+	import NavBar from '$lib/components/nav/NavBar.svelte';
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
 	import { PUBLIC_PAGES } from '$lib/constants';
 	import { kitQLClient } from '$lib/graphql/kitQLClient';
 	import { KQL__Init } from '$lib/graphql/_kitql/graphqlStores';
 	import { showAlgoliaSearch } from '$lib/stores';
-	import { MediaQueryRender } from '@kahi-ui/framework';
 	// import '@kahi-ui/framework/dist/kahi-ui.framework.min.css';
 	// import '@kahi-ui/framework/dist/kahi-ui.theme.default.min.css';
 	import { SvelteToast } from '@zerodevx/svelte-toast';
@@ -36,14 +34,7 @@
 
 <!-- TODO: put NavBar outside of main and handle min-height accordingly -->
 <main>
-	<MediaQueryRender queries="(min-width: 975px)">
-		<NavBar />
-	</MediaQueryRender>
-	<MediaQueryRender queries="(max-width: 974px)">
-		<MobileNavBar />
-	</MediaQueryRender>
-
-	<slot />
+	<NavBar><slot /></NavBar>
 
 	<SvelteToast options={{ pausable: true }} />
 

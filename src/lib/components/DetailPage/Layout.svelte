@@ -2,7 +2,7 @@
 	import CloudinaryUpload from '$lib/components/CloudinaryUpload.svelte';
 	import { BasicProperty } from '$lib/components/DetailPage';
 	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
-	import MobileNavSpacer from '$lib/components/MobileNav/MobileNavSpacer.svelte';
+	import MobileNavSpacer from '$lib/components/nav/MobileNavSpacer.svelte';
 	import { Container, Heading, Text, TextInput } from '@kahi-ui/framework';
 	import { onMount } from 'svelte';
 	import QuillEditor from '../QuillEditor.svelte';
