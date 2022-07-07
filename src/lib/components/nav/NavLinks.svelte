@@ -66,7 +66,7 @@
 	</li>
 {/each}
 <li>
-	<button class="btn btn-ghost btn-sm no-animation normal-case btn-{btnSize}" on:click={logout}>
+	<button class="btn btn-ghost no-animation normal-case btn-{btnSize}" on:click={logout}>
 		Logout
 	</button>
 </li>
