@@ -5,7 +5,6 @@
 	import { KQL_Items } from '$lib/graphql/_kitql/graphqlStores';
 	import { alphabetically } from '$lib/utils';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
-	import { Container } from '@kahi-ui/framework';
 
 	export const load = async ({ fetch }) => {
 		await KQL_Items.queryLoad({ fetch });
@@ -24,26 +23,10 @@
 	gravity={compass('north_east')}
 />
 
-<div class="spacer" />
+<div class="container mx-auto mt-12 mb-32 grid gap-y-4">
+	<div><AddLink href="items/create" /></div>
 
-<Container>
-	<div class="cards-container">
-		<div>
-			<AddLink href="items/create" />
-		</div>
-		{#each items as item (item.id)}
-			<ItemListDisplay {item} />
-		{/each}
-	</div>
-</Container>
-
-<style>
-	.cards-container {
-		display: grid;
-		row-gap: 1rem;
-	}
-
-	.spacer {
-		height: 2rem;
-	}
-</style>
+	{#each items as item (item.id)}
+		<ItemListDisplay {item} />
+	{/each}
+</div>

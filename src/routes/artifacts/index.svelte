@@ -8,7 +8,6 @@
 	import { KQL_Artifacts } from '$lib/graphql/_kitql/graphqlStores';
 	import { alphabetically } from '$lib/utils';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
-	import { Container } from '@kahi-ui/framework';
 
 	export async function load({ fetch }) {
 		if (browser) {
@@ -51,38 +50,22 @@
 		/>
 	{/if}
 
-	<div class="spacer" />
+	<div class="container mx-auto mt-12 mb-32 grid gap-y-4">
+		<div><AddLink href="artifacts/create" /></div>
 
-	<Container>
-		<div class="cards-container">
-			<div>
-				<AddLink href="artifacts/create" />
-			</div>
-			{#each artifacts as artifact (artifact.id)}
-				{@const { id, name, description, thumbnailId, imageIds, items } = artifact}
-				{@const href = `artifacts/${id}`}
-				{@const itemNodes = items.edges?.map(({ node }) => node) || []}
-				{@const isWeapon = itemNodes.some((item) => !!item.weapon)}
-				{@const isArmor = itemNodes.some((item) => !!item.armor)}
-				{@const isEquipment = itemNodes.some((item) => !!item.equipment)}
-				<ListDetailCard {name} {description} thumbnailId={thumbnailId || imageIds[0]} {href}>
-					<svelte:fragment slot="title">
-						<a {href}>{name}</a>
-						<ItemTypeIcons {isWeapon} {isArmor} {isEquipment} />
-					</svelte:fragment>
-				</ListDetailCard>
-			{/each}
-		</div>
-	</Container>
+		{#each artifacts as artifact (artifact.id)}
+			{@const { id, name, description, thumbnailId, imageIds, items } = artifact}
+			{@const href = `artifacts/${id}`}
+			{@const itemNodes = items.edges?.map(({ node }) => node) || []}
+			{@const isWeapon = itemNodes.some((item) => !!item.weapon)}
+			{@const isArmor = itemNodes.some((item) => !!item.armor)}
+			{@const isEquipment = itemNodes.some((item) => !!item.equipment)}
+			<ListDetailCard {name} {description} thumbnailId={thumbnailId || imageIds[0]} {href}>
+				<svelte:fragment slot="title">
+					<a {href}>{name}</a>
+					<ItemTypeIcons {isWeapon} {isArmor} {isEquipment} />
+				</svelte:fragment>
+			</ListDetailCard>
+		{/each}
+	</div>
 {/if}
-
-<style>
-	.cards-container {
-		display: grid;
-		row-gap: 1rem;
-	}
-
-	.spacer {
-		height: 2rem;
-	}
-</style>

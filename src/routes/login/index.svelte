@@ -14,7 +14,6 @@
 	import { goto } from '$app/navigation';
 	import { session } from '$app/stores';
 	import { post } from '$lib/utils';
-	import { Button, Heading, TextInput } from '@kahi-ui/framework';
 
 	let username;
 	let password;
@@ -33,61 +32,29 @@
 			$session.isLoggedIn = true;
 			goto('/');
 		}
-		// const res = await login({ variables: { username, password } });
-		// const {
-		// 	tokenAuth: { payload, token },
-		// 	errors
-		// } = res;
-
-		// const { auth_token, non_field_errors } = json;
-		// if (res.ok) {
-		// 	token = auth_token;
-		// 	fetchUser();
-		// 	goto('/');
-		// } else {
-		// 	errors = non_field_errors.join('\n');
-		// }
 	}
-
-	// async function fetchUser() {
-	// 	const res = await api.get('auth/users/me/', token);
-	// 	const json = await res.json();
-	// 	user = JSON.stringify(json);
-	// }
 </script>
 
-<div class="container_">
-	<div class="card_">
-		<Heading is="h1">Welcome to Airel</Heading>
-		<form on:submit|preventDefault={loginUser}>
-			<TextInput type="text" name="username" placeholder="Username" bind:value={username} />
-			<TextInput type="password" name="password" placeholder="Password" bind:value={password} />
-			<Button is="input" type="submit" value="Login" />
-		</form>
-		{#each errors as error}
-			<pre>{error}</pre>
-		{/each}
-	</div>
+<div class="container h-screen mx-auto flex flex-col items-center justify-center">
+	<h1 class="text-3xl sm:text-4xl font-bold text-center mb-4">Welcome to Airel</h1>
+	<form on:submit|preventDefault={loginUser} class="form-control w-full max-w-xs flex gap-2">
+		<input
+			type="text"
+			name="username"
+			placeholder="Username"
+			bind:value={username}
+			class="input input-bordered w-full max-w-xs"
+		/>
+		<input
+			type="password"
+			name="password"
+			placeholder="Password"
+			bind:value={password}
+			class="input input-bordered w-full max-w-xs"
+		/>
+		<button type="submit" class="btn btn-glass">Login</button>
+	</form>
+	{#each errors as error}
+		<pre>{error}</pre>
+	{/each}
 </div>
-
-<style>
-	.container_ {
-		height: 100vh;
-		width: 100vw;
-		display: grid;
-		place-items: center;
-	}
-
-	.card_ {
-		display: grid;
-		place-items: center;
-		gap: 16px;
-		width: 320px;
-		max-width: 76%;
-	}
-	form {
-		width: 100%;
-		display: grid;
-		gap: 8px;
-	}
-</style>

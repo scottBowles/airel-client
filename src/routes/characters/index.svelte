@@ -4,7 +4,6 @@
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import { KQL_Npcs } from '$lib/graphql/_kitql/graphqlStores';
 	import { alphabetically } from '$lib/utils';
-	import { Container } from '@kahi-ui/framework';
 
 	export const load = async ({ fetch }) => {
 		await KQL_Npcs.queryLoad({ fetch });
@@ -18,28 +17,12 @@
 
 <BannerImage overlay="Characters" imageId="dnd/places-banner_bwv6ut" alt="places banner" />
 
-<div class="spacer" />
+<div class="container mx-auto mt-12 mb-32 grid gap-y-4">
+	<div><AddLink href="characters/create" /></div>
 
-<Container>
-	<div class="cards-container">
-		<div>
-			<AddLink href="characters/create" />
-		</div>
-		{#each npcs as npc (npc.id)}
-			{@const { id, name, description, thumbnailId, imageIds } = npc}
-			{@const href = `characters/${id}`}
-			<ListDetailCard {name} {description} thumbnailId={thumbnailId || imageIds[0]} {href} />
-		{/each}
-	</div>
-</Container>
-
-<style>
-	.cards-container {
-		display: grid;
-		row-gap: 1rem;
-	}
-
-	.spacer {
-		height: 2rem;
-	}
-</style>
+	{#each npcs as npc (npc.id)}
+		{@const { id, name, description, thumbnailId, imageIds } = npc}
+		{@const href = `characters/${id}`}
+		<ListDetailCard {name} {description} thumbnailId={thumbnailId || imageIds[0]} {href} />
+	{/each}
+</div>
