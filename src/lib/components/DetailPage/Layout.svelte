@@ -11,6 +11,7 @@
 	export let form = undefined;
 	export let name = '';
 	export let description = '';
+	export let properties: { [key: string]: string | number } = {};
 	export let imageIds = [];
 	export let logs = undefined;
 	export let onEditClick = () => {};
