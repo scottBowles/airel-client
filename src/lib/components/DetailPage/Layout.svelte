@@ -39,7 +39,9 @@
 				<!-- NAME -->
 				{#if editing}
 					<div class="form-control">
-						<label for="name-input">Name</label>
+						<label for="name-input" class="label">
+							<span class="label-text">Name</span>
+						</label>
 						<input
 							type="text"
 							id="name-input"
@@ -95,7 +97,9 @@
 			<!-- DESCRIPTION -->
 			{#if editing}
 				<div class="form-control">
-					<label for="description-input">Description</label>
+					<label for="description-input" class="label">
+						<span class="label-text">Description</span>
+					</label>
 					<textarea
 						name="description"
 						id="description-input"

@@ -141,9 +141,12 @@
 				{:else}
 					<div class="spacer" />
 					<div class="form-control">
-						<label for="place-parent-select">
-							{$form.name} is a {$form.placeType} of the {getParentName($form.placeType)}
+						<label for="place-parent-select" class="label">
+							<span class="label-text">
+								{$form.name} is a {$form.placeType} of the {getParentName($form.placeType)}
+							</span>
 						</label>
+
 						<DataSelect
 							class="_detailbase-input"
 							id="place-parent-select"
@@ -164,8 +167,10 @@
 					{:else}
 						<div class="spacer" />
 						<div class="form-control">
-							<label for="place-children-select">
-								Child {getChildrenName($form.placeType)}
+							<label for="place-children-select" class="label">
+								<span class="label-text">
+									Child {getChildrenName($form.placeType)}
+								</span>
 							</label>
 							<DataSelect
 								class="_detailbase-input"
