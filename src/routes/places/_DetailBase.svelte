@@ -3,7 +3,7 @@
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { KQL_PlacesForSearch } from '$lib/graphql/_kitql/graphqlStores';
 	import { emptySelectOption } from '$lib/utils';
-	import { Breadcrumb, DataSelect } from '@kahi-ui/framework';
+	import { DataSelect } from '@kahi-ui/framework';
 	import { onMount } from 'svelte';
 	import { placeTypeOptions } from './_placeTypeOptions';
 	import {
@@ -76,18 +76,18 @@
 
 <StatusHandler {creating} {status} {errors} value={place} entityName="place">
 	{#if breadcrumbs.length > 0}
-		<div class="container mx-auto mt-4 mb-2">
-			<Breadcrumb.Container>
-				{#each breadcrumbs as breadcrumb, i}
-					<Breadcrumb.Anchor
-						sveltekit:prefetch
-						href={`/places/${breadcrumb.id}`}
-						active={i === breadcrumbs.length - 1}
-					>
-						{breadcrumb.name}
-					</Breadcrumb.Anchor>
-				{/each}
-			</Breadcrumb.Container>
+		<div class="container mx-auto mt-2">
+			<div class="text-sm breadcrumbs">
+				<ul>
+					{#each breadcrumbs as { id, name }}
+						<li>
+							<a sveltekit:prefetch href={`/places/${id}`}>
+								{name}
+							</a>
+						</li>
+					{/each}
+				</ul>
+			</div>
 		</div>
 	{/if}
 	<Layout
