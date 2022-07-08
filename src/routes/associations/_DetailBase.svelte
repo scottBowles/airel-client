@@ -3,7 +3,7 @@
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { KQL_NpcNamesAndIds } from '$lib/graphql/_kitql/graphqlStores';
-	import { Anchor, DataSelect, Heading, Text } from '@kahi-ui/framework';
+	import { DataSelect } from '@kahi-ui/framework';
 
 	export let onEditClick = () => {};
 	export let onFormSubmit;
@@ -74,19 +74,20 @@
 				{/if}
 			{:else}
 				<div class="items-container">
-					<Heading is="h4">Members</Heading>
+					<h2 class="text-xl font-bold">Members</h2>
 					<Spacer xs />
 					{#if npcs?.length > 0}
 						<div>
 							{#each npcs as npc, i}
-								<Anchor sveltekit:prefetch href={`/characters/${npc.id}`}>{npc.name}</Anchor>{i <
-								npcs.length - 1
-									? ', '
-									: ''}
+								<a
+									sveltekit:prefetch
+									href={`/characters/${npc.id}`}
+									class="link link-accent link-hover">{npc.name}</a
+								>{i < npcs.length - 1 ? ', ' : ''}
 							{/each}
 						</div>
 					{:else}
-						<Text palette="neutral">- None selected -</Text>
+						<p class="text-slate-400">- None selected -</p>
 					{/if}
 				</div>
 			{/if}

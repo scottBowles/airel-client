@@ -6,7 +6,7 @@
 		KQL_AssociationNamesAndIds,
 		KQL_RaceNamesAndIds
 	} from '$lib/graphql/_kitql/graphqlStores';
-	import { Anchor, DataSelect, Heading } from '@kahi-ui/framework';
+	import { DataSelect } from '@kahi-ui/framework';
 
 	export let onEditClick = () => {};
 	export let onFormSubmit;
@@ -84,13 +84,13 @@
 				{/if}
 			{:else}
 				<div class="items-container">
-					<Heading is="h4">Race</Heading>
+					<h2 class="text-xl font-bold">Race</h2>
 					<Spacer xs />
 					{#if race}
 						<div>
-							<Anchor sveltekit:prefetch href={`/races/${race.id}`}>
+							<a class="link link-accent link-hover" href={`/races/${race.id}`} sveltekit:prefetch>
 								{race.name}
-							</Anchor>
+							</a>
 						</div>
 					{:else}
 						<div>No race selected yet</div>
@@ -114,13 +114,14 @@
 				{/if}
 			{:else if associations?.length > 0}
 				<div class="items-container">
-					<Heading is="h4">Associations</Heading>
+					<h2 class="text-xl font-bold">Associations</h2>
 					<Spacer xs />
 					<div>
 						{#each associations as association, i}
-							<Anchor sveltekit:prefetch href={`/associations/${association.id}`}
-								>{association.name}</Anchor
-							>{i < associations.length - 1 ? ', ' : ''}
+							<a class="link link-accent link-hover" href={`/associations/${association.id}`}>
+								{association.name}
+							</a>
+							{i < associations.length - 1 ? ', ' : ''}
 						{/each}
 					</div>
 				</div>

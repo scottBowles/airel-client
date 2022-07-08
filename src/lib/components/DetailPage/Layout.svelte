@@ -2,8 +2,6 @@
 	import CloudinaryUpload from '$lib/components/CloudinaryUpload.svelte';
 	import { BasicProperty } from '$lib/components/DetailPage';
 	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
-	import MobileNavSpacer from '$lib/components/nav/MobileNavSpacer.svelte';
-	import { Container, Heading, Text, TextInput } from '@kahi-ui/framework';
 	import { onMount } from 'svelte';
 	import QuillEditor from '../QuillEditor.svelte';
 	import Spacer from '../Spacer.svelte';
@@ -13,7 +11,6 @@
 	export let form = undefined;
 	export let name = '';
 	export let description = '';
-	export let properties: { [key: string]: string | number } = {};
 	export let imageIds = [];
 	export let logs = undefined;
 	export let onEditClick = () => {};
@@ -24,7 +21,6 @@
 	export let onImageUpload = () => {};
 	export let markdownNotes = '';
 	export let patchStore: ((patch: Record<string, any>) => void) | undefined = undefined;
-	export let omitMobileSpacer = false;
 
 	let isMounted = false;
 	onMount(() => {
@@ -34,27 +30,26 @@
 	$: editing = lockedBySelf || creating;
 </script>
 
-{#if !omitMobileSpacer}
-	<MobileNavSpacer />
-{/if}
-<Spacer xs />
-<Container>
+<div class="container mx-auto mt-2">
 	<form on:submit|preventDefault={onFormSubmit}>
 		<!-- TOP ROW -->
 		<div class="top-row">
 			<span class="name-container">
 				<!-- NAME -->
 				{#if editing}
-					<TextInput
-						span_x={'30'}
-						variation="block"
-						name="name"
-						placeholder="Name"
-						bind:value={$form.name}
-						required
-					/>
+					<div class="form-control">
+						<label for="name-input">Name</label>
+						<input
+							type="text"
+							id="name-input"
+							name="name"
+							bind:value={$form.name}
+							class="input input-bordered w-full max-w-xs"
+							required
+						/>
+					</div>
 				{:else}
-					<Heading is="h1">{name}</Heading>
+					<h1 class="text-3xl font-bold">{name}</h1>
 				{/if}
 			</span>
 
@@ -75,9 +70,7 @@
 		</div>
 
 		<!-- HR -->
-		<Spacer xs />
-		<hr />
-		<Spacer />
+		<hr class="mt-2 mb-4" />
 
 		<div class:clearfix={editing}>
 			<!-- FLOAT AREA -->
@@ -100,17 +93,17 @@
 
 			<!-- DESCRIPTION -->
 			{#if editing}
-				<TextInput
-					span_x={'30'}
-					is="textarea"
-					variation="block"
-					name="description"
-					placeholder="Brief Description"
-					bind:value={$form.description}
-					class="detail-layout-input"
-				/>
+				<div class="form-control">
+					<label for="description-input">Description</label>
+					<textarea
+						name="description"
+						id="description-input"
+						bind:value={$form.description}
+						class="textarea textarea-bordered w-full max-w-xs"
+					/>
+				</div>
 			{:else}
-				<Text class="description-text">{description}</Text>
+				<p class="italic">{description}</p>
 			{/if}
 
 			<!-- PROPERTIES -->
@@ -129,11 +122,13 @@
 			{#if editing}
 				<QuillEditor bind:html={$form.markdownNotes} />
 			{:else}
-				{@html markdownNotes}
+				<div class="prose inline">
+					{@html markdownNotes}
+				</div>
 			{/if}
 		</slot>
 	</form>
-</Container>
+</div>
 
 <style>
 	.clearfix::after {

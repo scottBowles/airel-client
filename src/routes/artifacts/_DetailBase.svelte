@@ -63,18 +63,19 @@
 				{#if $KQL_ItemNamesAndIds.status !== 'DONE'}
 					Loading Items...
 				{:else}
-					<div class="spacer" />
-					<DataSelect
-						class="_detailbase-input"
-						items={itemsForSelect}
-						multiple
-						placeholder="Select related items"
-						logic_name="dataselect-logic-state"
-						bind:logic_state={$form.items}
-					/>
+					<div class="pt-4">
+						<DataSelect
+							class="_detailbase-input"
+							items={itemsForSelect}
+							multiple
+							placeholder="Select related items"
+							logic_name="dataselect-logic-state"
+							bind:logic_state={$form.items}
+						/>
+					</div>
 				{/if}
 			{:else}
-				<div class="items-container">
+				<div class="flex flex-col gap-4">
 					{#each items as item}
 						<ItemListDisplay {item} />
 					{/each}
@@ -85,11 +86,6 @@
 </StatusHandler>
 
 <style>
-	.items-container {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
 	:global(._detailbase-input) {
 		width: var(--detail-layout-input-width);
 	}

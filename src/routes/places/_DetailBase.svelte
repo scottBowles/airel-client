@@ -1,18 +1,9 @@
 <script lang="ts">
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
-	import MobileNavSpacer from '$lib/components/nav/MobileNavSpacer.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { KQL_PlacesForSearch } from '$lib/graphql/_kitql/graphqlStores';
 	import { emptySelectOption } from '$lib/utils';
-	import {
-		Anchor,
-		Breadcrumb,
-		Container,
-		DataSelect,
-		Form,
-		Heading,
-		Text
-	} from '@kahi-ui/framework';
+	import { Breadcrumb, DataSelect } from '@kahi-ui/framework';
 	import { onMount } from 'svelte';
 	import { placeTypeOptions } from './_placeTypeOptions';
 	import {
@@ -84,9 +75,8 @@
 </script>
 
 <StatusHandler {creating} {status} {errors} value={place} entityName="place">
-	<MobileNavSpacer />
 	{#if breadcrumbs.length > 0}
-		<Container>
+		<div class="container mx-auto mt-4 mb-2">
 			<Breadcrumb.Container>
 				{#each breadcrumbs as breadcrumb, i}
 					<Breadcrumb.Anchor
@@ -98,10 +88,9 @@
 					</Breadcrumb.Anchor>
 				{/each}
 			</Breadcrumb.Container>
-		</Container>
+		</div>
 	{/if}
 	<Layout
-		omitMobileSpacer
 		{id}
 		{form}
 		{name}
@@ -121,19 +110,21 @@
 			<Spacer lg />
 			{#if editing}
 				<div class="spacer" />
-				<Form.Label>Place Type</Form.Label>
-				<br />
-				<DataSelect
-					class="_detailbase-input"
-					items={placeTypeOptions}
-					placeholder="Select place type"
-					logic_name="dataselect-placeType-logic-state"
-					bind:logic_state={$form.placeType}
-				/>
+				<div class="form-control">
+					<label for="place-type-select">Place Type</label>
+					<DataSelect
+						id="place-type-select"
+						class="_detailbase-input"
+						items={placeTypeOptions}
+						placeholder="Select place type"
+						logic_name="dataselect-placeType-logic-state"
+						bind:logic_state={$form.placeType}
+					/>
+				</div>
 				<Spacer lg />
 			{:else if placeTypeDisplay}
 				<div class="items-container">
-					<Heading is="h4">{placeTypeDisplay}</Heading>
+					<h2 class="text-xl font-bold">{placeTypeDisplay}</h2>
 				</div>
 				<Spacer lg />
 			{/if}
@@ -149,17 +140,19 @@
 					Loading Places...
 				{:else}
 					<div class="spacer" />
-					<Form.Label>
-						{$form.name} is a {$form.placeType} of the {getParentName($form.placeType)}
-					</Form.Label>
-					<br />
-					<DataSelect
-						class="_detailbase-input"
-						items={placesForParentSelect}
-						placeholder={`Select ${getParentName($form.placeType)}`}
-						logic_name="dataselect-parent-logic-state"
-						bind:logic_state={$form.parent}
-					/>
+					<div class="form-control">
+						<label for="place-parent-select">
+							{$form.name} is a {$form.placeType} of the {getParentName($form.placeType)}
+						</label>
+						<DataSelect
+							class="_detailbase-input"
+							id="place-parent-select"
+							items={placesForParentSelect}
+							placeholder={`Select ${getParentName($form.placeType)}`}
+							logic_name="dataselect-parent-logic-state"
+							bind:logic_state={$form.parent}
+						/>
+					</div>
 				{/if}
 				<Spacer lg />
 			{/if}
@@ -170,28 +163,32 @@
 						<Spacer lg />
 					{:else}
 						<div class="spacer" />
-						<Form.Label>Child {getChildrenName($form.placeType)}</Form.Label>
-						<br />
-						<DataSelect
-							class="_detailbase-input"
-							items={placesForChildrenSelect}
-							placeholder={`Select ${getChildrenName($form.placeType)}`}
-							logic_name="dataselect-children-logic-state"
-							multiple
-							bind:logic_state={$form.children}
-						/>
+						<div class="form-control">
+							<label for="place-children-select">
+								Child {getChildrenName($form.placeType)}
+							</label>
+							<DataSelect
+								class="_detailbase-input"
+								id="place-children-select"
+								items={placesForChildrenSelect}
+								placeholder={`Select ${getChildrenName($form.placeType)}`}
+								logic_name="dataselect-children-logic-state"
+								multiple
+								bind:logic_state={$form.children}
+							/>
+						</div>
 						<Spacer lg />
 					{/if}
 				{/if}
 			{:else if children?.length > 0}
 				<div class="items-container">
-					<Heading is="h4">{getChildrenName(placeTypeDisplay)}</Heading>
+					<h2 class="text-xl font-bold">{getChildrenName(placeTypeDisplay)}</h2>
 					<Spacer xs />
 					{#each children as child, i}
-						<Anchor sveltekit:prefetch href={`/places/${child.id}`}>{child.name}</Anchor>{i <
-						children.length - 1
-							? ', '
-							: ''}
+						<a class="link link-accent link-hover" sveltekit:prefetch href={`/places/${child.id}`}>
+							{child.name}
+						</a>
+						{i < children.length - 1 ? ', ' : ''}
 					{/each}
 				</div>
 				<Spacer lg />
