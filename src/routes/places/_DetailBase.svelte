@@ -110,16 +110,20 @@
 			<Spacer lg />
 			{#if editing}
 				<div class="spacer" />
-				<div class="form-control">
-					<label for="place-type-select">Place Type</label>
-					<DataSelect
-						id="place-type-select"
-						class="_detailbase-input"
-						items={placeTypeOptions}
-						placeholder="Select place type"
-						logic_name="dataselect-placeType-logic-state"
-						bind:logic_state={$form.placeType}
-					/>
+				<div class="form-control w-full max-w-xs">
+					<label class="label" for={`place-${id}-type-select`}>
+						<span class="label-text">Select Place Type</span>
+					</label>
+					<select
+						bind:value={$form.placeType}
+						class="select select-bordered"
+						id={`character-${id}-race-select`}
+					>
+						<option disabled selected>Pick one</option>
+						{#each placeTypeOptions as { id, text }}
+							<option value={id}>{text}</option>
+						{/each}
+					</select>
 				</div>
 				<Spacer lg />
 			{:else if placeTypeDisplay}

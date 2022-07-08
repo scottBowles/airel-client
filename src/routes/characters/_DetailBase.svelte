@@ -74,13 +74,21 @@
 					Loading Races...
 				{:else}
 					<div class="spacer" />
-					<DataSelect
-						class="_detailbase-input"
-						items={racesForSelect}
-						placeholder="Select related races"
-						logic_name="dataselect-logic-state"
-						bind:logic_state={$form.race}
-					/>
+					<div class="form-control w-full max-w-xs">
+						<label class="label" for={`character-${id}-race-select`}>
+							<span class="label-text">Select Race</span>
+						</label>
+						<select
+							bind:value={$form.race}
+							class="select select-bordered"
+							id={`character-${id}-race-select`}
+						>
+							<option disabled selected>Pick one</option>
+							{#each racesForSelect as { id, text }}
+								<option value={id}>{text}</option>
+							{/each}
+						</select>
+					</div>
 				{/if}
 			{:else}
 				<div class="items-container">
