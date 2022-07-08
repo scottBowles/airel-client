@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { browser } from '$app/env';
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
+	import MultiSelect from '$lib/components/MultiSelect.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import {
 		KQL_AssociationNamesAndIds,
 		KQL_RaceNamesAndIds
 	} from '$lib/graphql/_kitql/graphqlStores';
-	import { DataSelect } from '@kahi-ui/framework';
 
 	export let onEditClick = () => {};
 	export let onFormSubmit;
@@ -37,11 +37,12 @@
 	$: editing = lockedBySelf || creating;
 	$: associations = associationsConnection?.edges.map(({ node }) => node) || [];
 	$: associationsForSelect =
-		$KQL_AssociationNamesAndIds.status === 'DONE' &&
-		$KQL_AssociationNamesAndIds.data.associations.edges.map(({ node: { name, id } }) => ({
-			text: name,
-			id
-		}));
+		$KQL_AssociationNamesAndIds.status === 'DONE'
+			? $KQL_AssociationNamesAndIds.data.associations.edges.map(({ node: { name, id } }) => ({
+					label: name,
+					value: id
+			  }))
+			: [];
 	$: racesForSelect =
 		$KQL_RaceNamesAndIds.status === 'DONE' &&
 		$KQL_RaceNamesAndIds.data.races.edges.map(({ node: { name, id } }) => ({
@@ -111,14 +112,17 @@
 					Loading Associations...
 				{:else}
 					<div class="spacer" />
-					<DataSelect
-						class="_detailbase-input"
-						items={associationsForSelect}
-						multiple
-						placeholder="Select related associations"
-						logic_name="dataselect-logic-state"
-						bind:logic_state={$form.associations}
-					/>
+					<div class="form-control w-full max-w-xs">
+						<label class="label" for={`character-${id}-place-select`}>
+							<span class="label-text">Select Associations</span>
+						</label>
+						<MultiSelect
+							id={`character-${id}-place-select`}
+							options={associationsForSelect}
+							initialValues={associations.map((association) => association.id)}
+							bind:values={$form.associations}
+						/>
+					</div>
 				{/if}
 			{:else if associations?.length > 0}
 				<div class="items-container">
