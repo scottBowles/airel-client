@@ -1,11 +1,22 @@
 <script>
 	import Spacer from '$lib/components/Spacer.svelte';
-	import { Form, Heading, NumberInput } from '@kahi-ui/framework';
 
 	export let weapon;
+
+	const attackBonusId = 'weapon-attack-bonus';
 </script>
 
-<Heading is="h5">Weapon</Heading>
+<h3 class="text-xl font-bold">Weapon</h3>
 <Spacer xs />
-<Form.Label>Attack Bonus</Form.Label>
-<NumberInput bind:value={weapon.attackBonus} />
+<div class="form-control w-full max-w-xs">
+	<label for={attackBonusId} class="label">
+		<span class="label-text">Attack Bonus</span>
+	</label>
+	<input
+		type="number"
+		id={attackBonusId}
+		name={attackBonusId}
+		bind:value={weapon.attackBonus}
+		class="input input-bordered"
+	/>
+</div>

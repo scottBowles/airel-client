@@ -43,12 +43,15 @@
 					value: id
 			  }))
 			: [];
+	$: associationIds = associations.map((association) => association.id);
 	$: racesForSelect =
 		$KQL_RaceNamesAndIds.status === 'DONE' &&
 		$KQL_RaceNamesAndIds.data.races.edges.map(({ node: { name, id } }) => ({
 			text: name,
 			id
 		}));
+	$: associationSelectId = `character-${id}-association-select`;
+	$: raceSelectId = `character-${id}-race-select`;
 </script>
 
 <StatusHandler {creating} {status} {errors} value={npc} entityName="character">
@@ -71,26 +74,21 @@
 		<svelte:fragment slot="properties">
 			<Spacer lg />
 			{#if editing}
-				{#if $KQL_RaceNamesAndIds.status !== 'DONE'}
-					Loading Races...
-				{:else}
-					<div class="spacer" />
-					<div class="form-control w-full max-w-xs">
-						<label class="label" for={`character-${id}-race-select`}>
-							<span class="label-text">Select Race</span>
-						</label>
-						<select
-							bind:value={$form.race}
-							class="select select-bordered"
-							id={`character-${id}-race-select`}
-						>
+				<div class="form-control w-full max-w-xs">
+					<label class="label" for={raceSelectId}>
+						<span class="label-text">Select Race</span>
+					</label>
+					{#if $KQL_RaceNamesAndIds.status !== 'DONE'}
+						Loading Races...
+					{:else}
+						<select bind:value={$form.race} class="select select-bordered" id={raceSelectId}>
 							<option disabled selected>Pick one</option>
 							{#each racesForSelect as { id, text }}
 								<option value={id}>{text}</option>
 							{/each}
 						</select>
-					</div>
-				{/if}
+					{/if}
+				</div>
 			{:else}
 				<div class="items-container">
 					<h2 class="text-xl font-bold">Race</h2>
@@ -108,22 +106,21 @@
 			{/if}
 			<Spacer lg />
 			{#if editing}
-				{#if $KQL_AssociationNamesAndIds.status !== 'DONE'}
-					Loading Associations...
-				{:else}
-					<div class="spacer" />
-					<div class="form-control w-full max-w-xs">
-						<label class="label" for={`character-${id}-place-select`}>
-							<span class="label-text">Select Associations</span>
-						</label>
+				<div class="form-control w-full max-w-xs">
+					<label class="label" for={associationSelectId}>
+						<span class="label-text">Select Associations</span>
+					</label>
+					{#if $KQL_AssociationNamesAndIds.status !== 'DONE'}
+						Loading Associations...
+					{:else}
 						<MultiSelect
-							id={`character-${id}-place-select`}
+							id={associationSelectId}
 							options={associationsForSelect}
-							initialValues={associations.map((association) => association.id)}
+							initialValues={associationIds}
 							bind:values={$form.associations}
 						/>
-					</div>
-				{/if}
+					{/if}
+				</div>
 			{:else if associations?.length > 0}
 				<div class="items-container">
 					<h2 class="text-xl font-bold">Associations</h2>

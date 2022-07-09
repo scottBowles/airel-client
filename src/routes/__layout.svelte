@@ -7,8 +7,6 @@
 	import { kitQLClient } from '$lib/graphql/kitQLClient';
 	import { KQL__Init } from '$lib/graphql/_kitql/graphqlStores';
 	import { showAlgoliaSearch } from '$lib/stores';
-	// import '@kahi-ui/framework/dist/kahi-ui.framework.min.css';
-	// import '@kahi-ui/framework/dist/kahi-ui.theme.default.min.css';
 	import { SvelteToast } from '@zerodevx/svelte-toast';
 	import '../app.css';
 

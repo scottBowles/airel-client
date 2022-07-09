@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
+	import MultiSelect from '$lib/components/MultiSelect.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { KQL_PlacesForSearch } from '$lib/graphql/_kitql/graphqlStores';
-	import { emptySelectOption } from '$lib/utils';
-	import { DataSelect } from '@kahi-ui/framework';
 	import { onMount } from 'svelte';
 	import { placeTypeOptions } from './_placeTypeOptions';
 	import {
@@ -43,12 +42,13 @@
 
 	function getSelectOptionFromEdge({ node }: TEdge) {
 		return {
-			text: node.name + ' (' + node.placeTypeDisplay + ')',
-			id: node.id
+			label: node.name + ' (' + node.placeTypeDisplay + ')',
+			value: node.id
 		};
 	}
 
 	$: children = childrenConnection?.edges?.map((edge) => edge.node) || [];
+	$: childrenIds = children.map((child) => child.id);
 
 	function getBreadcrumbs(node): any[] {
 		return node ? [...getBreadcrumbs(node.parent), node] : [];
@@ -58,7 +58,6 @@
 	$: placesForParentSelect =
 		$KQL_PlacesForSearch.data && $form.placeType
 			? [
-					emptySelectOption,
 					...$KQL_PlacesForSearch.data.places.edges
 						.filter(filterForParent($form.placeType))
 						.map(getSelectOptionFromEdge)
@@ -117,7 +116,7 @@
 					<select
 						bind:value={$form.placeType}
 						class="select select-bordered"
-						id={`character-${id}-race-select`}
+						id={`place-${id}-type-select`}
 					>
 						<option disabled selected>Pick one</option>
 						{#each placeTypeOptions as { id, text }}
@@ -140,55 +139,37 @@
 				<Spacer xs />
 			{/if}
 			{#if editing && $form.placeType && placesForParentSelect.length > 0}
-				{#if $KQL_PlacesForSearch.status !== 'DONE'}
-					Loading Places...
-				{:else}
-					<div class="spacer" />
-					<div class="form-control">
-						<label for="place-parent-select" class="label">
-							<span class="label-text">
-								{$form.name} is a {$form.placeType} of the {getParentName($form.placeType)}
-							</span>
-						</label>
-
-						<DataSelect
-							class="_detailbase-input"
-							id="place-parent-select"
-							items={placesForParentSelect}
-							placeholder={`Select ${getParentName($form.placeType)}`}
-							logic_name="dataselect-parent-logic-state"
-							bind:logic_state={$form.parent}
-						/>
-					</div>
-				{/if}
+				<div class="form-control w-full max-w-xs">
+					<label for="place-parent-select" class="label">
+						<span class="label-text">
+							{$form.name || 'This'} is a {$form.placeType} of the {getParentName($form.placeType)}
+						</span>
+					</label>
+					<select bind:value={$form.parent} class="select select-bordered" id="place-parent-select">
+						<option disabled selected>Pick one</option>
+						{#each placesForParentSelect as { label, value }}
+							<option {value}>{label}</option>
+						{/each}
+					</select>
+				</div>
 				<Spacer lg />
 			{/if}
-			{#if editing && placesForChildrenSelect.length > 0}
-				{#if $form.placeType}
-					{#if $KQL_PlacesForSearch.status !== 'DONE'}
-						<div>Loading Places...</div>
-						<Spacer lg />
-					{:else}
-						<div class="spacer" />
-						<div class="form-control">
-							<label for="place-children-select" class="label">
-								<span class="label-text">
-									Child {getChildrenName($form.placeType)}
-								</span>
-							</label>
-							<DataSelect
-								class="_detailbase-input"
-								id="place-children-select"
-								items={placesForChildrenSelect}
-								placeholder={`Select ${getChildrenName($form.placeType)}`}
-								logic_name="dataselect-children-logic-state"
-								multiple
-								bind:logic_state={$form.children}
-							/>
-						</div>
-						<Spacer lg />
-					{/if}
-				{/if}
+			{#if editing && $form.placeType && placesForChildrenSelect.length > 0}
+				<!-- No need to have a loading display here b/c we're checking whether places for children select exist before we show anything anyways -->
+				<div class="form-control w-full max-w-xs">
+					<label for="place-children-select" class="label">
+						<span class="label-text">
+							Child {getChildrenName($form.placeType)}
+						</span>
+					</label>
+					<MultiSelect
+						id="place-children-select"
+						options={placesForChildrenSelect}
+						initialValues={childrenIds}
+						bind:values={$form.children}
+					/>
+				</div>
+				<Spacer lg />
 			{:else if children?.length > 0}
 				<div class="items-container">
 					<h2 class="text-xl font-bold">{getChildrenName(placeTypeDisplay)}</h2>

@@ -2,9 +2,9 @@
 	import { browser } from '$app/env';
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
 	import ItemListDisplay from '$lib/components/ItemListDisplay.svelte';
+	import MultiSelect from '$lib/components/MultiSelect.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { KQL_ItemNamesAndIds } from '$lib/graphql/_kitql/graphqlStores';
-	import { DataSelect } from '@kahi-ui/framework';
 
 	export let onEditClick = () => {};
 	export let onFormSubmit;
@@ -33,11 +33,14 @@
 	$: editing = lockedBySelf || creating;
 	$: items = itemsConnection?.edges.map(({ node }) => node) || [];
 	$: itemsForSelect =
-		$KQL_ItemNamesAndIds.status === 'DONE' &&
-		$KQL_ItemNamesAndIds.data.items.edges.map(({ node: { name, id } }) => ({
-			text: name,
-			id
-		}));
+		$KQL_ItemNamesAndIds.status === 'DONE'
+			? $KQL_ItemNamesAndIds.data.items.edges.map(({ node }) => ({
+					label: node.name,
+					value: node.id
+			  }))
+			: [];
+	$: itemIds = items.map((item) => item.id);
+	$: itemSelectId = `artifact-${id}-item-select`;
 </script>
 
 <StatusHandler {creating} {status} {errors} value={artifact} entityName="artifact">
@@ -60,20 +63,21 @@
 		<svelte:fragment slot="properties">
 			<Spacer lg />
 			{#if editing}
-				{#if $KQL_ItemNamesAndIds.status !== 'DONE'}
-					Loading Items...
-				{:else}
-					<div class="pt-4">
-						<DataSelect
-							class="_detailbase-input"
-							items={itemsForSelect}
-							multiple
-							placeholder="Select related items"
-							logic_name="dataselect-logic-state"
-							bind:logic_state={$form.items}
+				<div class="form-control w-full max-w-xs">
+					<label class="label" for={itemSelectId}>
+						<span class="label-text">Select Related Items</span>
+					</label>
+					{#if $KQL_ItemNamesAndIds.status !== 'DONE'}
+						Loading Items...
+					{:else}
+						<MultiSelect
+							id={itemSelectId}
+							options={itemsForSelect}
+							initialValues={itemIds}
+							bind:values={$form.items}
 						/>
-					</div>
-				{/if}
+					{/if}
+				</div>
 			{:else}
 				<div class="flex flex-col gap-4">
 					{#each items as item}
