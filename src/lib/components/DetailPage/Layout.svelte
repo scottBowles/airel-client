@@ -75,15 +75,17 @@
 		<!-- HR -->
 		<hr class="mt-2 mb-4" />
 
-		<div class:clearfix={editing}>
+		<div class:clearfix={editing} class="max-w-full">
 			<!-- FLOAT AREA -->
-			<div class="float-container">
+			<div class="float-right w-full sm:max-w-xs sm:w-2/5 ml-2">
 				<!-- IMAGES -->
 				<slot name="mainImage">
-					<CloudinaryUpload {onImageUpload}>
-						<ImageCarousel imageIds={editing ? $form.imageIds : imageIds} alt={name} />
-					</CloudinaryUpload>
-					<Spacer />
+					<div class="w-full max-w-xs mx-auto">
+						<CloudinaryUpload {onImageUpload}>
+							<ImageCarousel imageIds={editing ? $form.imageIds : imageIds} alt={name} />
+						</CloudinaryUpload>
+						<Spacer />
+					</div>
 				</slot>
 				<!-- LOGS -->
 				{#if !creating}
@@ -165,13 +167,7 @@
 	hr {
 		color: #ccc;
 	}
-	.float-container {
-		float: right;
-		width: var(--detail-layout-img-container-width);
-		margin-left: 0.5em;
-	}
 	:global(:root) {
-		--detail-layout-img-container-width: clamp(40%, (370px - 100%) * 1000, 100%);
 		--detail-layout-input-width: clamp(56%, (370px - 100%) * 1000, 100%);
 	}
 	:global(.description-text) {
