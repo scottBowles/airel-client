@@ -23,7 +23,6 @@
     "@bytemd/plugin-gfm": "^1.13.1",
     "@cloudinary/html": "^1.2.0",
     "@cloudinary/url-gen": "^1.7.0",
-    "@kahi-ui/framework": "^0.6.3",
     "@kitql/all-in": "^0.6.3",
     "@splidejs/svelte-splide": "^0.2.5",
     "@sveltejs/adapter-auto": "next",
