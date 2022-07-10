@@ -9,7 +9,7 @@
 	<input
 		type="text"
 		placeholder="Search (Ctrl + K)"
-		class="input input-bordered"
+		class="input input-sm input-bordered"
 		on:click={showAlgoliaSearch.open}
 	/>
 </div>

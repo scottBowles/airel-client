@@ -58,8 +58,9 @@
 		<a
 			href={link.href}
 			sveltekit:prefetch
-			class="btn btn-ghost no-animation normal-case btn-{btnSize}"
-			class:btn-active={link === activeLink}
+			class="btn no-animation normal-case btn-{btnSize}"
+			class:btn-primary={link === activeLink}
+			class:btn-ghost={link !== activeLink}
 		>
 			{link.label}
 		</a>

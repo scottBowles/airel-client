@@ -80,7 +80,7 @@
 				<ul>
 					{#each breadcrumbs as { id, name }}
 						<li>
-							<a sveltekit:prefetch href={`/places/${id}`}>
+							<a sveltekit:prefetch href={`/places/${id}`} class="text-accent">
 								{name}
 							</a>
 						</li>

@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { navigating } from '$app/stores';
 	import Algolia from '$lib/components/Algolia.svelte';
+	import { themes } from '$lib/constants';
+	import { capitalize } from '$lib/utils';
+	import { onMount } from 'svelte';
+	import { themeChange } from 'theme-change';
 	import SearchButton from '../SearchButton.svelte';
 	import NavLinks from './NavLinks.svelte';
 	import Title from './Title.svelte';
@@ -17,6 +21,10 @@
 	$: drawerShouldClose = innerWidth >= 1024;
 	$: if (drawerShouldClose) closeDrawer();
 	$: if ($navigating) closeDrawer();
+
+	onMount(() => {
+		themeChange(false);
+	});
 </script>
 
 <svelte:window bind:innerWidth />
@@ -25,7 +33,7 @@
 	<input id="mobile-drawer" type="checkbox" class="drawer-toggle" bind:this={inputToggle} />
 	<div class="drawer-content flex flex-col">
 		<!-- Navbar -->
-		<div class="w-full navbar bg-base-300 justify-between">
+		<div class="w-full navbar bg-base-300 justify-between gap-2">
 			<div class="lg:hidden">
 				<label for="mobile-drawer" class="btn btn-square btn-ghost">
 					<svg
@@ -42,12 +50,22 @@
 					>
 				</label>
 			</div>
+
 			<div class="px-2 mx-2"><Title /></div>
+
 			{#if innerWidth > 681}
 				<SearchButton />
 			{:else}
 				<Algolia />
 			{/if}
+
+			<select data-choose-theme class="select select-sm select-bordered hidden lg:block">
+				<option value="">Select a theme</option>
+				{#each themes as theme}
+					<option value={theme}>{capitalize(theme)}</option>
+				{/each}
+			</select>
+
 			<div class="hidden lg:block">
 				<ul class="flex gap-1">
 					<!-- Navbar menu content here -->

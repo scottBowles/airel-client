@@ -1,6 +1,7 @@
 <script context="module" lang="ts">
 	import { navigating } from '$app/stores';
 	import Algolia from '$lib/components/Algolia.svelte';
+	// import AllDrawers from '$lib/components/nav/AllDrawers.svelte';
 	import NavBar from '$lib/components/nav/NavBar.svelte';
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
 	import { PUBLIC_PAGES } from '$lib/constants';
@@ -32,6 +33,7 @@
 
 <!-- TODO: put NavBar outside of main and handle min-height accordingly -->
 <main>
+	<!-- <AllDrawers><slot /></AllDrawers> -->
 	<NavBar><slot /></NavBar>
 
 	<SvelteToast options={{ pausable: true }} />

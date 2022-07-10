@@ -85,7 +85,7 @@
 		{/each}
 		<Spacer sm />
 		{#if logInputOpen}
-			<div class="flex items-center justify-between" use:callOnEsc={closeLogInput}>
+			<div class="flex items-center justify-between gap-2" use:callOnEsc={closeLogInput}>
 				<input
 					type="text"
 					id="log-input"
