@@ -1,14 +1,12 @@
 <script lang="ts">
-	import { Heading, Text } from '@kahi-ui/framework';
-
 	export let name = 'No property name provided';
 	export let value: string | number = `No value provided for property ${name}`;
 </script>
 
-<Heading is="h3">{name}</Heading>
+<h3 class="text-xl font-bold">{name}</h3>
 <div class="spacer-sm" />
 <slot>
-	<Text>{value || ''}</Text>
+	<p>{value || ''}</p>
 </slot>
 <div class="spacer" />
 

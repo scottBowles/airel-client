@@ -1,10 +1,15 @@
 <script lang="ts">
-	import { Button } from '@kahi-ui/framework';
-
 	import { algoliaCloseOnNavigation, algoliaEventListeners } from '$lib/actions';
 	import { showAlgoliaSearch } from '$lib/stores';
 </script>
 
 <svelte:body use:algoliaEventListeners use:algoliaCloseOnNavigation />
 
-<Button on:click={showAlgoliaSearch.open}>Search (CTRL + K)</Button>
+<div class="form-control">
+	<input
+		type="text"
+		placeholder="Search (Ctrl + K)"
+		class="input input-sm input-bordered"
+		on:click={showAlgoliaSearch.open}
+	/>
+</div>

@@ -1,10 +1,20 @@
 <script>
 	import Spacer from '$lib/components/Spacer.svelte';
-	import { Heading, TextInput } from '@kahi-ui/framework';
 
 	export let equipment;
+	const equipmentDetailInputId = 'item-equipment-brief-description';
 </script>
 
-<Heading is="h5">Equipment</Heading>
+<h3 class="text-xl font-bold">Equipment</h3>
 <Spacer xs />
-<TextInput bind:value={equipment.briefDescription} placeholder="Brief description" is="textarea" />
+<div class="form-control w-full max-w-xs">
+	<label for={equipmentDetailInputId} class="label">
+		<span class="label-text">Detail</span>
+	</label>
+	<textarea
+		id={equipmentDetailInputId}
+		name="equipment-detail"
+		bind:value={equipment.briefDescription}
+		class="textarea textarea-bordered"
+	/>
+</div>

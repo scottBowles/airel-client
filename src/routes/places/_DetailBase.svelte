@@ -1,18 +1,8 @@
 <script lang="ts">
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
-	import MobileNavSpacer from '$lib/components/MobileNav/MobileNavSpacer.svelte';
+	import MultiSelect from '$lib/components/MultiSelect.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { KQL_PlacesForSearch } from '$lib/graphql/_kitql/graphqlStores';
-	import { emptySelectOption } from '$lib/utils';
-	import {
-		Anchor,
-		Breadcrumb,
-		Container,
-		DataSelect,
-		Form,
-		Heading,
-		Text
-	} from '@kahi-ui/framework';
 	import { onMount } from 'svelte';
 	import { placeTypeOptions } from './_placeTypeOptions';
 	import {
@@ -52,12 +42,13 @@
 
 	function getSelectOptionFromEdge({ node }: TEdge) {
 		return {
-			text: node.name + ' (' + node.placeTypeDisplay + ')',
-			id: node.id
+			label: node.name + ' (' + node.placeTypeDisplay + ')',
+			value: node.id
 		};
 	}
 
 	$: children = childrenConnection?.edges?.map((edge) => edge.node) || [];
+	$: childrenIds = children.map((child) => child.id);
 
 	function getBreadcrumbs(node): any[] {
 		return node ? [...getBreadcrumbs(node.parent), node] : [];
@@ -67,7 +58,6 @@
 	$: placesForParentSelect =
 		$KQL_PlacesForSearch.data && $form.placeType
 			? [
-					emptySelectOption,
 					...$KQL_PlacesForSearch.data.places.edges
 						.filter(filterForParent($form.placeType))
 						.map(getSelectOptionFromEdge)
@@ -84,24 +74,22 @@
 </script>
 
 <StatusHandler {creating} {status} {errors} value={place} entityName="place">
-	<MobileNavSpacer />
 	{#if breadcrumbs.length > 0}
-		<Container>
-			<Breadcrumb.Container>
-				{#each breadcrumbs as breadcrumb, i}
-					<Breadcrumb.Anchor
-						sveltekit:prefetch
-						href={`/places/${breadcrumb.id}`}
-						active={i === breadcrumbs.length - 1}
-					>
-						{breadcrumb.name}
-					</Breadcrumb.Anchor>
-				{/each}
-			</Breadcrumb.Container>
-		</Container>
+		<div class="container mx-auto mt-2">
+			<div class="text-sm breadcrumbs">
+				<ul>
+					{#each breadcrumbs as { id, name }}
+						<li>
+							<a sveltekit:prefetch href={`/places/${id}`} class="text-accent">
+								{name}
+							</a>
+						</li>
+					{/each}
+				</ul>
+			</div>
+		</div>
 	{/if}
 	<Layout
-		omitMobileSpacer
 		{id}
 		{form}
 		{name}
@@ -121,19 +109,25 @@
 			<Spacer lg />
 			{#if editing}
 				<div class="spacer" />
-				<Form.Label>Place Type</Form.Label>
-				<br />
-				<DataSelect
-					class="_detailbase-input"
-					items={placeTypeOptions}
-					placeholder="Select place type"
-					logic_name="dataselect-placeType-logic-state"
-					bind:logic_state={$form.placeType}
-				/>
+				<div class="form-control w-full max-w-xs">
+					<label class="label" for={`place-${id}-type-select`}>
+						<span class="label-text">Select Place Type</span>
+					</label>
+					<select
+						bind:value={$form.placeType}
+						class="select select-bordered"
+						id={`place-${id}-type-select`}
+					>
+						<option disabled selected>Pick one</option>
+						{#each placeTypeOptions as { id, text }}
+							<option value={id}>{text}</option>
+						{/each}
+					</select>
+				</div>
 				<Spacer lg />
 			{:else if placeTypeDisplay}
 				<div class="items-container">
-					<Heading is="h4">{placeTypeDisplay}</Heading>
+					<h2 class="text-xl font-bold">{placeTypeDisplay}</h2>
 				</div>
 				<Spacer lg />
 			{/if}
@@ -145,53 +139,46 @@
 				<Spacer xs />
 			{/if}
 			{#if editing && $form.placeType && placesForParentSelect.length > 0}
-				{#if $KQL_PlacesForSearch.status !== 'DONE'}
-					Loading Places...
-				{:else}
-					<div class="spacer" />
-					<Form.Label>
-						{$form.name} is a {$form.placeType} of the {getParentName($form.placeType)}
-					</Form.Label>
-					<br />
-					<DataSelect
-						class="_detailbase-input"
-						items={placesForParentSelect}
-						placeholder={`Select ${getParentName($form.placeType)}`}
-						logic_name="dataselect-parent-logic-state"
-						bind:logic_state={$form.parent}
-					/>
-				{/if}
+				<div class="form-control w-full max-w-xs">
+					<label for="place-parent-select" class="label">
+						<span class="label-text">
+							{$form.name || 'This'} is a {$form.placeType} of the {getParentName($form.placeType)}
+						</span>
+					</label>
+					<select bind:value={$form.parent} class="select select-bordered" id="place-parent-select">
+						<option disabled selected>Pick one</option>
+						{#each placesForParentSelect as { label, value }}
+							<option {value}>{label}</option>
+						{/each}
+					</select>
+				</div>
 				<Spacer lg />
 			{/if}
-			{#if editing && placesForChildrenSelect.length > 0}
-				{#if $form.placeType}
-					{#if $KQL_PlacesForSearch.status !== 'DONE'}
-						<div>Loading Places...</div>
-						<Spacer lg />
-					{:else}
-						<div class="spacer" />
-						<Form.Label>Child {getChildrenName($form.placeType)}</Form.Label>
-						<br />
-						<DataSelect
-							class="_detailbase-input"
-							items={placesForChildrenSelect}
-							placeholder={`Select ${getChildrenName($form.placeType)}`}
-							logic_name="dataselect-children-logic-state"
-							multiple
-							bind:logic_state={$form.children}
-						/>
-						<Spacer lg />
-					{/if}
-				{/if}
+			{#if editing && $form.placeType && placesForChildrenSelect.length > 0}
+				<!-- No need to have a loading display here b/c we're checking whether places for children select exist before we show anything anyways -->
+				<div class="form-control w-full max-w-xs">
+					<label for="place-children-select" class="label">
+						<span class="label-text">
+							Child {getChildrenName($form.placeType)}
+						</span>
+					</label>
+					<MultiSelect
+						id="place-children-select"
+						options={placesForChildrenSelect}
+						initialValues={childrenIds}
+						bind:values={$form.children}
+					/>
+				</div>
+				<Spacer lg />
 			{:else if children?.length > 0}
 				<div class="items-container">
-					<Heading is="h4">{getChildrenName(placeTypeDisplay)}</Heading>
+					<h2 class="text-xl font-bold">{getChildrenName(placeTypeDisplay)}</h2>
 					<Spacer xs />
 					{#each children as child, i}
-						<Anchor sveltekit:prefetch href={`/places/${child.id}`}>{child.name}</Anchor>{i <
-						children.length - 1
-							? ', '
-							: ''}
+						<a class="link link-accent link-hover" sveltekit:prefetch href={`/places/${child.id}`}>
+							{child.name}
+						</a>
+						{i < children.length - 1 ? ', ' : ''}
 					{/each}
 				</div>
 				<Spacer lg />

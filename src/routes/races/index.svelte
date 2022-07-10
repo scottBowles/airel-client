@@ -5,7 +5,6 @@
 	import { KQL_Races } from '$lib/graphql/_kitql/graphqlStores';
 	import { alphabetically } from '$lib/utils';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
-	import { Container } from '@kahi-ui/framework';
 
 	export const load = async ({ fetch }) => {
 		await KQL_Races.queryLoad({ fetch });
@@ -24,28 +23,12 @@
 	gravity={compass('north_east')}
 />
 
-<div class="spacer" />
+<div class="container mx-auto mt-12 mb-32 grid gap-y-4">
+	<div><AddLink href="races/create" /></div>
 
-<Container>
-	<div class="cards-container">
-		<div>
-			<AddLink href="races/create" />
-		</div>
-		{#each races as race (race.id)}
-			{@const { id, name, description, thumbnailId, imageIds } = race}
-			{@const href = `races/${id}`}
-			<ListDetailCard {name} {description} {href} thumbnailId={thumbnailId || imageIds[0]} />
-		{/each}
-	</div>
-</Container>
-
-<style>
-	.spacer {
-		height: 2rem;
-	}
-
-	.cards-container {
-		display: grid;
-		row-gap: 1rem;
-	}
-</style>
+	{#each races as race (race.id)}
+		{@const { id, name, description, thumbnailId, imageIds } = race}
+		{@const href = `races/${id}`}
+		<ListDetailCard {name} {description} {href} thumbnailId={thumbnailId || imageIds[0]} />
+	{/each}
+</div>

@@ -2,7 +2,8 @@
 	import { goto } from '$app/navigation';
 	import { page, session } from '$app/stores';
 	import { post } from '$lib/utils';
-	import { Anchor, Heading, Menu } from '@kahi-ui/framework';
+
+	export let btnSize = '';
 
 	const links = [
 		{
@@ -52,39 +53,21 @@
 	}
 </script>
 
-<svelte:head>
-	<title>{activeLink.label || 'Airel'}</title>
-</svelte:head>
-
-<div class="menu-container">
-	<Menu.Container>
-		<Anchor sveltekit:prefetch href="/"><Heading is="h1">Airel</Heading></Anchor>
-		<div class="spacer" />
-		{#each links as link}
-			<a href={link.href} sveltekit:prefetch>
-				<Menu.Button active={link === activeLink}>{link.label}</Menu.Button>
-			</a>
-		{/each}
-		<a href={'#'} on:click={logout}>
-			<Menu.Button>Logout</Menu.Button>
+{#each links as link}
+	<li>
+		<a
+			href={link.href}
+			sveltekit:prefetch
+			class="btn no-animation normal-case btn-{btnSize}"
+			class:btn-primary={link === activeLink}
+			class:btn-ghost={link !== activeLink}
+		>
+			{link.label}
 		</a>
-	</Menu.Container>
-</div>
-
-<style>
-	.menu-container {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100vw;
-		height: 100vh;
-		background-color: hsla(var(--palette-background-lighter), var(--document-background-opacity));
-		display: grid;
-		place-items: center;
-		z-index: 9997;
-	}
-
-	.spacer {
-		margin-bottom: 1rem;
-	}
-</style>
+	</li>
+{/each}
+<li>
+	<button class="btn btn-ghost no-animation normal-case btn-{btnSize}" on:click={logout}>
+		Logout
+	</button>
+</li>

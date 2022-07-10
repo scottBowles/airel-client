@@ -6,7 +6,6 @@
 	import { alphabetically } from '$lib/utils';
 	import { thumbnail } from '@cloudinary/url-gen/actions/resize';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
-	import { Container } from '@kahi-ui/framework';
 	import { KitQLInfo } from '@kitql/all-in';
 
 	export const load = async ({ fetch }) => {
@@ -27,29 +26,14 @@
 	gravity={compass('north_east')}
 />
 
-<div class="spacer" />
+<div class="container mx-auto mt-12 mb-32 grid gap-y-4">
+	<div><AddLink href="associations/create" /></div>
 
-<Container>
-	<div class="cards-container">
-		<div>
-			<AddLink href="associations/create" />
-		</div>
-		{#each associations as association (association.id)}
-			{@const { id, name, description, thumbnailId, imageIds } = association}
-			{@const href = `associations/${id}`}
-			<ListDetailCard thumbnailId={thumbnailId || imageIds[0]} {name} {description} {href} />
-		{/each}
-	</div>
-</Container>
+	{#each associations as association (association.id)}
+		{@const { id, name, description, thumbnailId, imageIds } = association}
+		{@const href = `associations/${id}`}
+		<ListDetailCard thumbnailId={thumbnailId || imageIds[0]} {name} {description} {href} />
+	{/each}
+</div>
 
 <!-- <KitQLInfo store={KQL_Associations} /> -->
-<style>
-	.spacer {
-		height: 2rem;
-	}
-
-	.cards-container {
-		display: grid;
-		row-gap: 1rem;
-	}
-</style>

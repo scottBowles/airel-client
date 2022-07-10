@@ -1,10 +1,9 @@
 <script>
 	import Spacer from '$lib/components/Spacer.svelte';
-	import { Heading } from '@kahi-ui/framework';
 
 	export let weapon;
 </script>
 
-<Heading is="h5">Weapon</Heading>
+<h3 class="text-xl font-bold">Weapon</h3>
 <Spacer xs />
-Attack Bonus: {weapon?.attackBonus}
+<p>Attack Bonus: {weapon?.attackBonus}</p>

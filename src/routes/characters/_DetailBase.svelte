@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { browser } from '$app/env';
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
+	import MultiSelect from '$lib/components/MultiSelect.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import {
 		KQL_AssociationNamesAndIds,
 		KQL_RaceNamesAndIds
 	} from '$lib/graphql/_kitql/graphqlStores';
-	import { Anchor, DataSelect, Heading } from '@kahi-ui/framework';
 
 	export let onEditClick = () => {};
 	export let onFormSubmit;
@@ -37,17 +37,21 @@
 	$: editing = lockedBySelf || creating;
 	$: associations = associationsConnection?.edges.map(({ node }) => node) || [];
 	$: associationsForSelect =
-		$KQL_AssociationNamesAndIds.status === 'DONE' &&
-		$KQL_AssociationNamesAndIds.data.associations.edges.map(({ node: { name, id } }) => ({
-			text: name,
-			id
-		}));
+		$KQL_AssociationNamesAndIds.status === 'DONE'
+			? $KQL_AssociationNamesAndIds.data.associations.edges.map(({ node: { name, id } }) => ({
+					label: name,
+					value: id
+			  }))
+			: [];
+	$: associationIds = associations.map((association) => association.id);
 	$: racesForSelect =
 		$KQL_RaceNamesAndIds.status === 'DONE' &&
 		$KQL_RaceNamesAndIds.data.races.edges.map(({ node: { name, id } }) => ({
 			text: name,
 			id
 		}));
+	$: associationSelectId = `character-${id}-association-select`;
+	$: raceSelectId = `character-${id}-race-select`;
 </script>
 
 <StatusHandler {creating} {status} {errors} value={npc} entityName="character">
@@ -70,27 +74,30 @@
 		<svelte:fragment slot="properties">
 			<Spacer lg />
 			{#if editing}
-				{#if $KQL_RaceNamesAndIds.status !== 'DONE'}
-					Loading Races...
-				{:else}
-					<div class="spacer" />
-					<DataSelect
-						class="_detailbase-input"
-						items={racesForSelect}
-						placeholder="Select related races"
-						logic_name="dataselect-logic-state"
-						bind:logic_state={$form.race}
-					/>
-				{/if}
+				<div class="form-control w-full max-w-xs">
+					<label class="label" for={raceSelectId}>
+						<span class="label-text">Select Race</span>
+					</label>
+					{#if $KQL_RaceNamesAndIds.status !== 'DONE'}
+						Loading Races...
+					{:else}
+						<select bind:value={$form.race} class="select select-bordered" id={raceSelectId}>
+							<option disabled selected>Pick one</option>
+							{#each racesForSelect as { id, text }}
+								<option value={id}>{text}</option>
+							{/each}
+						</select>
+					{/if}
+				</div>
 			{:else}
 				<div class="items-container">
-					<Heading is="h4">Race</Heading>
+					<h2 class="text-xl font-bold">Race</h2>
 					<Spacer xs />
 					{#if race}
 						<div>
-							<Anchor sveltekit:prefetch href={`/races/${race.id}`}>
+							<a class="link link-accent link-hover" href={`/races/${race.id}`} sveltekit:prefetch>
 								{race.name}
-							</Anchor>
+							</a>
 						</div>
 					{:else}
 						<div>No race selected yet</div>
@@ -99,28 +106,31 @@
 			{/if}
 			<Spacer lg />
 			{#if editing}
-				{#if $KQL_AssociationNamesAndIds.status !== 'DONE'}
-					Loading Associations...
-				{:else}
-					<div class="spacer" />
-					<DataSelect
-						class="_detailbase-input"
-						items={associationsForSelect}
-						multiple
-						placeholder="Select related associations"
-						logic_name="dataselect-logic-state"
-						bind:logic_state={$form.associations}
-					/>
-				{/if}
+				<div class="form-control w-full max-w-xs">
+					<label class="label" for={associationSelectId}>
+						<span class="label-text">Select Associations</span>
+					</label>
+					{#if $KQL_AssociationNamesAndIds.status !== 'DONE'}
+						Loading Associations...
+					{:else}
+						<MultiSelect
+							id={associationSelectId}
+							options={associationsForSelect}
+							initialValues={associationIds}
+							bind:values={$form.associations}
+						/>
+					{/if}
+				</div>
 			{:else if associations?.length > 0}
 				<div class="items-container">
-					<Heading is="h4">Associations</Heading>
+					<h2 class="text-xl font-bold">Associations</h2>
 					<Spacer xs />
 					<div>
 						{#each associations as association, i}
-							<Anchor sveltekit:prefetch href={`/associations/${association.id}`}
-								>{association.name}</Anchor
-							>{i < associations.length - 1 ? ', ' : ''}
+							<a class="link link-accent link-hover" href={`/associations/${association.id}`}>
+								{association.name}
+							</a>
+							{i < associations.length - 1 ? ', ' : ''}
 						{/each}
 					</div>
 				</div>

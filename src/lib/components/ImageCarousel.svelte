@@ -13,7 +13,7 @@
 	function getImageSrc(imageId: string): string {
 		const image = cloudinary
 			.image(imageId)
-			.resize(thumbnail().width(300).height(400))
+			.resize(thumbnail().width(320))
 			.delivery(defaultImage(defaultImageSrc));
 		const src = image.toURL();
 		return src;

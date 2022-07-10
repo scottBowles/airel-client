@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { callOnEsc } from '$lib/actions';
 	import { KQL_AddEntityLog, KQL_RemoveEntityLog } from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
-	import { Heading, TextInput } from '@kahi-ui/framework';
 	import { tick } from 'svelte';
 	import FaCheck from 'svelte-icons/fa/FaCheck.svelte';
 	import FaPlus from 'svelte-icons/fa/FaPlus.svelte';
@@ -76,27 +76,32 @@
 	}
 </script>
 
-<div class="logs-container">
-	<Heading is="h2">Logs</Heading>
+<div>
+	<h2 class="text-2xl font-bold">Logs</h2>
 	<Spacer sm />
-	<div class="logs-list">
+	<div>
 		{#each logNodes as log (log.id)}
 			<LogDisplay {log} {removeLog} />
 		{/each}
 		<Spacer sm />
 		{#if logInputOpen}
-			<div class="flex_center_between">
-				<TextInput
-					span_x={'25'}
-					variation="block"
+			<div class="flex items-center justify-between gap-2" use:callOnEsc={closeLogInput}>
+				<input
+					type="text"
+					id="log-input"
 					name="log"
 					placeholder="Log url"
 					bind:value={logInput}
-					id="log-input"
+					class="input input-bordered w-full max-w-xs flex-1"
+					autofocus
 				/>
-				<div class="flex">
-					<button class="icon" on:click={addLog} type="button"><FaCheck /></button>
-					<button class="icon" on:click={closeLogInput} type="button"><FaTimes /></button>
+				<div>
+					<button class="btn btn-square btn-ghost btn-sm" on:click={addLog} type="button"
+						><div class="icon"><FaCheck /></div></button
+					>
+					<button class="btn btn-square btn-ghost btn-sm" on:click={closeLogInput} type="button"
+						><div class="icon"><FaTimes /></div></button
+					>
 				</div>
 			</div>
 		{:else}
@@ -108,18 +113,10 @@
 </div>
 
 <style>
-	.flex_center_between {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
 	.icon {
-		height: 1em;
-		width: 1em;
+		height: 1.125em;
+		width: 1.125em;
 		margin-left: 0.25em;
 		margin-right: 0.25em;
-	}
-	.flex {
-		display: flex;
 	}
 </style>
