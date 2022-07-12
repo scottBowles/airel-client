@@ -29,9 +29,16 @@
 
 <svelte:window bind:innerWidth />
 
+<!-- <div class="navbar bg-base-300">
+	<div class="navbar-content">
+		<Title />
+		<SearchButton />
+	</div>
+</div> -->
 <div class="drawer drawer-mobile">
 	<input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-	<div class="drawer-content flex flex-col items-center justify-center">
+	<div class="drawer-content flex flex-col items-center">
+		<!-- <div class="drawer-content flex flex-col items-center justify-center"> -->
 		<!-- Page content here -->
 		<slot />
 		<label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">Open drawer</label>
