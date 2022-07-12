@@ -2,6 +2,7 @@
 	import { navigating } from '$app/stores';
 	import Algolia from '$lib/components/Algolia.svelte';
 	import { themes } from '$lib/constants';
+	import { theme } from '$lib/stores';
 	import { capitalize } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import { themeChange } from 'theme-change';
@@ -59,7 +60,11 @@
 				<Algolia />
 			{/if}
 
-			<select data-choose-theme class="select select-sm select-bordered hidden lg:block">
+			<select
+				data-choose-theme
+				bind:value={$theme}
+				class="select select-sm select-bordered hidden lg:block"
+			>
 				<option value="">Select a theme</option>
 				{#each themes as theme}
 					<option value={theme}>{capitalize(theme)}</option>

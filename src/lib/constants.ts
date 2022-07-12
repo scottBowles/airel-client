@@ -3,6 +3,7 @@ export const PUBLIC_PAGES = ['/login'];
 export const themes = [
 	'light',
 	'dark',
+	'trek',
 	'cupcake',
 	'bumblebee',
 	'emerald',

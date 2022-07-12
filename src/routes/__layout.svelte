@@ -1,13 +1,14 @@
 <script context="module" lang="ts">
 	import { navigating } from '$app/stores';
 	import Algolia from '$lib/components/Algolia.svelte';
-	// import AllDrawers from '$lib/components/nav/AllDrawers.svelte';
+	import AllDrawers from '$lib/components/nav/AllDrawers.svelte';
+	import CustomLayout from '$lib/components/nav/CustomLayout.svelte';
 	import NavBar from '$lib/components/nav/NavBar.svelte';
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
 	import { PUBLIC_PAGES } from '$lib/constants';
 	import { kitQLClient } from '$lib/graphql/kitQLClient';
 	import { KQL__Init } from '$lib/graphql/_kitql/graphqlStores';
-	import { showAlgoliaSearch } from '$lib/stores';
+	import { showAlgoliaSearch, theme } from '$lib/stores';
 	import { SvelteToast } from '@zerodevx/svelte-toast';
 	import '../app.css';
 
@@ -25,6 +26,8 @@
 
 <script>
 	KQL__Init();
+
+	$: console.log({ $theme });
 </script>
 
 {#if $navigating}
@@ -34,7 +37,11 @@
 <!-- TODO: put NavBar outside of main and handle min-height accordingly -->
 <main>
 	<!-- <AllDrawers><slot /></AllDrawers> -->
-	<NavBar><slot /></NavBar>
+	{#if $theme === 'trek'}
+		<CustomLayout><slot /></CustomLayout>
+	{:else}
+		<NavBar><slot /></NavBar>
+	{/if}
 
 	<SvelteToast options={{ pausable: true }} />
 
