@@ -1,34 +1,12 @@
-<script context="module" lang="ts">
-	import { browser } from '$app/env';
+<script>
 	import AddLink from '$lib/components/AddLink.svelte';
 	import BannerImage from '$lib/components/BannerImage.svelte';
 	import ItemTypeIcons from '$lib/components/ItemTypeIcons.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
-	import fetchBanner from '$lib/fetchBanner';
 	import { KQL_Artifacts } from '$lib/graphql/_kitql/graphqlStores';
 	import { alphabetically } from '$lib/utils';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 
-	export async function load({ fetch }) {
-		if (browser) {
-			const [bannerUrl, _] = await Promise.all([
-				fetchBanner({
-					fetch,
-					imageId: 'dnd/City_guard_and_magister-5e_uk2sr0',
-					overlay: 'Artifacts',
-					gravity: compass('north_east')
-				}),
-				KQL_Artifacts.queryLoad({ fetch })
-			]);
-			return { props: { bannerUrl } };
-		} else {
-			await KQL_Artifacts.queryLoad({ fetch });
-			return {};
-		}
-	}
-</script>
-
-<script>
 	export let bannerUrl = undefined;
 
 	$: artifacts =

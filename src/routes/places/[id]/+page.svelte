@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script>
 	import { page } from '$app/stores';
 	import placeDetails from '$lib/graphql/customStores/placeDetails';
 	import {
@@ -7,19 +7,11 @@
 		KQL_PlacePatch
 	} from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
-	import { KitQLInfo } from '@kitql/all-in';
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
-	import DetailBase from './_DetailBase.svelte';
-	import { emptyPlace } from './_utils';
+	import DetailBase from '../_DetailBase.svelte';
+	import { emptyPlace } from '../_utils';
 
-	export const load = async ({ fetch, params }) => {
-		await placeDetails.queryLoad({ fetch, variables: { id: params.id } });
-		return {};
-	};
-</script>
-
-<script>
 	$: ({ id } = $page.params);
 	$: variables = { id }; // for requests
 

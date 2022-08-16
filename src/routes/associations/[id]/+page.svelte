@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script>
 	import { page } from '$app/stores';
 	import associationDetails from '$lib/graphql/customStores/associationDetails';
 	import {
@@ -7,19 +7,11 @@
 		KQL_AssociationPatch
 	} from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
-	import { KitQLInfo } from '@kitql/all-in';
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
-	import DetailBase from './_DetailBase.svelte';
-	import { emptyAssociation } from './_utils';
+	import DetailBase from '../_DetailBase.svelte';
+	import { emptyAssociation } from '../_utils';
 
-	export const load = async ({ fetch, params }) => {
-		await associationDetails.queryLoad({ fetch, variables: { id: params.id } });
-		return {};
-	};
-</script>
-
-<script>
 	const { id } = $page.params;
 	const variables = { id }; // for requests
 

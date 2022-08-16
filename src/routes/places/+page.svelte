@@ -1,17 +1,10 @@
-<script context="module" lang="ts">
+<script>
 	import AddLink from '$lib/components/AddLink.svelte';
 	import BannerImage from '$lib/components/BannerImage.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import { KQL_Places } from '$lib/graphql/_kitql/graphqlStores';
 	import { alphabetically, placeByPrecendence } from '$lib/utils';
 
-	export const load = async ({ fetch }) => {
-		await KQL_Places.queryLoad({ fetch });
-		return {};
-	};
-</script>
-
-<script>
 	$: places =
 		$KQL_Places.data?.places.edges
 			?.map(({ node }) => node)

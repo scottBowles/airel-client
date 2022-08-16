@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script>
 	import AddLink from '$lib/components/AddLink.svelte';
 	import BannerImage from '$lib/components/BannerImage.svelte';
 	import ItemListDisplay from '$lib/components/ItemListDisplay.svelte';
@@ -6,13 +6,6 @@
 	import { alphabetically } from '$lib/utils';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 
-	export const load = async ({ fetch }) => {
-		await KQL_Items.queryLoad({ fetch });
-		return {};
-	};
-</script>
-
-<script>
 	$: items = $KQL_Items.data?.items.edges?.map(({ node }) => node).sort(alphabetically) || [];
 </script>
 

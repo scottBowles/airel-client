@@ -1,21 +1,13 @@
-<script context="module">
+<script>
 	import { page } from '$app/stores';
 	import itemDetails from '$lib/graphql/customStores/itemDetails';
 	import { KQL_ItemAddImage, KQL_ItemLock, KQL_ItemPatch } from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
-	import { KitQLInfo } from '@kitql/all-in';
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
-	import DetailBase from './_DetailBase.svelte';
-	import { emptyItem } from './_utils';
+	import DetailBase from '../_DetailBase.svelte';
+	import { emptyItem } from '../_utils';
 
-	export const load = async ({ fetch, params }) => {
-		await itemDetails.queryLoad({ fetch, variables: { id: params.id } });
-		return {};
-	};
-</script>
-
-<script>
 	const { id } = $page.params;
 	const variables = { id }; // for requests
 

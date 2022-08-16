@@ -1,21 +1,13 @@
-<script context="module" lang="ts">
+<script>
 	import { page } from '$app/stores';
 	import characterDetails from '$lib/graphql/customStores/characterDetails';
 	import { KQL_NpcAddImage, KQL_NpcLock, KQL_NpcPatch } from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
-	import { KitQLInfo } from '@kitql/all-in';
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
-	import DetailBase from './_DetailBase.svelte';
-	import { emptyNpc } from './_utils';
+	import DetailBase from '../_DetailBase.svelte';
+	import { emptyNpc } from '../_utils';
 
-	export const load = async ({ fetch, params }) => {
-		await characterDetails.queryLoad({ fetch, variables: { id: params.id } });
-		return {};
-	};
-</script>
-
-<script>
 	const { id } = $page.params;
 	const variables = { id }; // for requests
 

@@ -4,8 +4,8 @@
 	import { somethingWentWrong } from '$lib/utils';
 	import { KitQLInfo } from '@kitql/all-in';
 	import { writable } from 'svelte/store';
-	import DetailBase from './_DetailBase.svelte';
-	import { emptyAssociation } from './_utils';
+	import DetailBase from '../_DetailBase.svelte';
+	import { emptyAssociation } from '../_utils';
 
 	const form = writable({ ...emptyAssociation });
 

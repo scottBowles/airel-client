@@ -1,14 +1,11 @@
-<script context="module" lang="ts">
+<script>
 	import { goto } from '$app/navigation';
 	import { KQL_ArtifactCreate } from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
-	import { KitQLInfo } from '@kitql/all-in';
 	import { writable } from 'svelte/store';
-	import DetailBase from './_DetailBase.svelte';
-	import { emptyArtifact } from './_utils';
-</script>
+	import DetailBase from '../_DetailBase.svelte';
+	import { emptyArtifact } from '../_utils';
 
-<script>
 	const form = writable({ ...emptyArtifact });
 
 	async function onFormSubmit() {

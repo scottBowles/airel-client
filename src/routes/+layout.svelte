@@ -1,30 +1,14 @@
-<script context="module" lang="ts">
+<script>
 	import { navigating } from '$app/stores';
 	import Algolia from '$lib/components/Algolia.svelte';
-	import AllDrawers from '$lib/components/nav/AllDrawers.svelte';
 	import CustomLayout from '$lib/components/nav/CustomLayout.svelte';
 	import NavBar from '$lib/components/nav/NavBar.svelte';
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
-	import { PUBLIC_PAGES } from '$lib/constants';
-	import { kitQLClient } from '$lib/graphql/kitQLClient';
 	import { KQL__Init } from '$lib/graphql/_kitql/graphqlStores';
 	import { showAlgoliaSearch, theme } from '$lib/stores';
 	import { SvelteToast } from '@zerodevx/svelte-toast';
 	import '../app.css';
 
-	export async function load({ session, url }) {
-		if (!session.isLoggedIn && !PUBLIC_PAGES.includes(url.pathname)) {
-			return {
-				status: 302,
-				redirect: '/login'
-			};
-		}
-		kitQLClient.setHeaders({ Authorization: `JWT ${session.token}` });
-		return {};
-	}
-</script>
-
-<script>
 	KQL__Init();
 
 	$: console.log({ $theme });

@@ -1,20 +1,11 @@
-<script context="module" lang="ts">
+<script>
 	import AddLink from '$lib/components/AddLink.svelte';
 	import BannerImage from '$lib/components/BannerImage.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import { KQL_Associations } from '$lib/graphql/_kitql/graphqlStores';
 	import { alphabetically } from '$lib/utils';
-	import { thumbnail } from '@cloudinary/url-gen/actions/resize';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
-	import { KitQLInfo } from '@kitql/all-in';
 
-	export const load = async ({ fetch }) => {
-		await KQL_Associations.queryLoad({ fetch });
-		return {};
-	};
-</script>
-
-<script>
 	$: associations =
 		$KQL_Associations.data?.associations.edges?.map(({ node }) => node).sort(alphabetically) || [];
 </script>

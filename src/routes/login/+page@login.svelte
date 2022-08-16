@@ -1,15 +1,3 @@
-<script context="module" lang="ts">
-	export async function load({ session }) {
-		if (session.isLoggedIn) {
-			return {
-				status: 302,
-				redirect: '/'
-			};
-		}
-		return {};
-	}
-</script>
-
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { session } from '$app/stores';
