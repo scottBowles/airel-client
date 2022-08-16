@@ -10,8 +10,6 @@
 	import '../app.css';
 
 	KQL__Init();
-
-	$: console.log({ $theme });
 </script>
 
 {#if $navigating}

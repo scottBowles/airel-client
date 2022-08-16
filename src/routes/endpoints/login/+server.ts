@@ -8,7 +8,7 @@ import api from '../_api.js';
  * on requests and the token stored in the `event.locals` object, to be used by future
  * GraphQL requests requiring authentication.
  */
-export async function post(event) {
+export async function POST(event) {
 	/* Receive request from client in SvelteKit backend */
 	const requestFromClient = event.request;
 	const { username, password } = await requestFromClient.json();
@@ -36,20 +36,18 @@ export async function post(event) {
 
 	/* If there are errors, remove the token cookie from the client */
 	if (errors) {
-		return {
+		return new Response(body, {
 			status: 401,
-			body,
 			headers: {
 				'set-cookie': 'token=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
 			}
-		};
+		});
 	}
 	/* On a successful login, at a token cookie to the client */
-	return {
+	return new Response(body, {
 		status: 200,
-		body,
 		headers: {
 			'set-cookie': `token=${tokenAuth.token}; Path=/; HttpOnly`
 		}
-	};
+	});
 }
