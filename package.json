@@ -27,7 +27,7 @@
     "@splidejs/svelte-splide": "^0.2.5",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/adapter-node": "^1.0.0-next.73",
-    "@sveltejs/kit": "^1.0.0-next.405",
+    "@sveltejs/kit": "^1.0.0-next.423",
     "@tailwindcss/typography": "^0.5.2",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",

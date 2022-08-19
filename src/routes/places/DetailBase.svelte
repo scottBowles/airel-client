@@ -4,13 +4,13 @@
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { KQL_PlacesForSearch } from '$lib/graphql/_kitql/graphqlStores';
 	import { onMount } from 'svelte';
-	import { placeTypeOptions } from './_placeTypeOptions';
+	import { placeTypeOptions } from './placeTypeOptions';
 	import {
 		filterForChildren,
 		filterForParent,
 		getChildrenName,
 		getParentName
-	} from './_typeRelations';
+	} from './typeRelations';
 
 	export let onEditClick = () => {};
 	export let onFormSubmit;

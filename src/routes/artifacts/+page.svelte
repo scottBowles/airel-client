@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import AddLink from '$lib/components/AddLink.svelte';
 	import BannerImage from '$lib/components/BannerImage.svelte';
 	import ItemTypeIcons from '$lib/components/ItemTypeIcons.svelte';
@@ -6,8 +6,10 @@
 	import { KQL_Artifacts } from '$lib/graphql/_kitql/graphqlStores';
 	import { alphabetically } from '$lib/utils';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
+	import type { PageData } from './$types';
 
-	export let bannerUrl = undefined;
+	export let data: PageData;
+	const { bannerUrl } = data;
 
 	$: artifacts =
 		$KQL_Artifacts.data?.artifacts.edges?.map(({ node }) => node).sort(alphabetically) || [];

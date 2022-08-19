@@ -9,8 +9,8 @@
 	import { somethingWentWrong } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
-	import DetailBase from '../_DetailBase.svelte';
-	import { emptyPlace } from '../_utils';
+	import DetailBase from '../DetailBase.svelte';
+	import { emptyPlace } from '../utils';
 
 	$: ({ id } = $page.params);
 	$: variables = { id }; // for requests

@@ -3,8 +3,8 @@
 	import { KQL_ArtifactCreate } from '$lib/graphql/_kitql/graphqlStores';
 	import { somethingWentWrong } from '$lib/utils';
 	import { writable } from 'svelte/store';
-	import DetailBase from '../_DetailBase.svelte';
-	import { emptyArtifact } from '../_utils';
+	import DetailBase from '../DetailBase.svelte';
+	import { emptyArtifact } from '../utils';
 
 	const form = writable({ ...emptyArtifact });
 

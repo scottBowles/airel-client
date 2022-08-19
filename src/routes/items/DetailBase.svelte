@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { Layout, StatusHandler } from '$lib/components/DetailPage';
-	import AddBlock from './_AddBlock.svelte';
-	import ItemArmorBlock from './_ItemArmorBlock.svelte';
-	import ItemArmorForm from './_ItemArmorForm.svelte';
-	import ItemEquipmentBlock from './_ItemEquipmentBlock.svelte';
-	import ItemEquipmentForm from './_ItemEquipmentForm.svelte';
-	import ItemWeaponBlock from './_ItemWeaponBlock.svelte';
-	import ItemWeaponForm from './_ItemWeaponForm.svelte';
+	import AddBlock from './AddBlock.svelte';
+	import ItemArmorBlock from './ItemArmorBlock.svelte';
+	import ItemArmorForm from './ItemArmorForm.svelte';
+	import ItemEquipmentBlock from './ItemEquipmentBlock.svelte';
+	import ItemEquipmentForm from './ItemEquipmentForm.svelte';
+	import ItemWeaponBlock from './ItemWeaponBlock.svelte';
+	import ItemWeaponForm from './ItemWeaponForm.svelte';
 
 	export let onEditClick = () => {};
 	export let onFormSubmit;

@@ -1,23 +1,16 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { session } from '$app/stores';
 	import { post } from '$lib/utils';
 
 	let username;
 	let password;
 	let errors = [];
-	let token;
-	let user;
 
 	async function loginUser() {
 		const response = await post(`endpoints/login`, { username, password });
 		if (response.errors) {
-			$session.token = null;
-			$session.isLoggedIn = false;
 			errors = response.errors.map((error) => error.message);
 		} else {
-			$session.token = response.tokenAuth.token;
-			$session.isLoggedIn = true;
 			goto('/');
 		}
 	}

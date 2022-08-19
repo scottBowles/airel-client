@@ -1,4 +1,4 @@
-import api from '../_api.js';
+import api from '../api.js';
 
 /**
  * Login endpoint

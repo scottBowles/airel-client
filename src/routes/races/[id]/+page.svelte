@@ -5,8 +5,8 @@
 	import { somethingWentWrong } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
-	import DetailBase from '../_DetailBase.svelte';
-	import { emptyRace } from '../_utils';
+	import DetailBase from '../DetailBase.svelte';
+	import { emptyRace } from '../utils';
 
 	const { id } = $page.params;
 	const variables = { id }; // for requests

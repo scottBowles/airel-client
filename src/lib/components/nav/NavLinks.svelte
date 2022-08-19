@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page, session } from '$app/stores';
+	import { page } from '$app/stores';
 	import { post } from '$lib/utils';
 
 	export let btnSize = '';
@@ -47,8 +47,6 @@
 
 	async function logout() {
 		await post('/endpoints/logout');
-		$session.token = null;
-		$session.isLoggedIn = false;
 		goto('/login');
 	}
 </script>
