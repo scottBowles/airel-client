@@ -13,22 +13,23 @@ export function post(endpoint: string, data = {}) {
 	}).then((r) => r.json());
 }
 
-export function withToken(fetch, session) {
-	function fetchWithToken(path: RequestInfo, opts: RequestInit = {}): Promise<Response> {
-		const headers = {
-			...opts.headers,
-			Authorization: `JWT ${session.token}`
-		};
-		return fetch(path, {
-			...opts,
-			headers
-		});
-	}
-	if (session.token) {
-		return fetchWithToken;
-	}
-	return fetch;
-}
+/** Can't use this as is since session doesn't exist anymore */
+// export function withToken(fetch, session) {
+// 	function fetchWithToken(path: RequestInfo, opts: RequestInit = {}): Promise<Response> {
+// 		const headers = {
+// 			...opts.headers,
+// 			Authorization: `JWT ${session.token}`
+// 		};
+// 		return fetch(path, {
+// 			...opts,
+// 			headers
+// 		});
+// 	}
+// 	if (session.token) {
+// 		return fetchWithToken;
+// 	}
+// 	return fetch;
+// }
 
 export function somethingWentWrong(error: string) {
 	toast.push(`<strong>Something went wrong</strong><br />${error}`);

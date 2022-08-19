@@ -9,8 +9,3 @@ export async function handle({ event, resolve }) {
 
 	return response;
 }
-
-export function getSession(event) {
-	const { isLoggedIn, token } = event.locals;
-	return { isLoggedIn, token };
-}

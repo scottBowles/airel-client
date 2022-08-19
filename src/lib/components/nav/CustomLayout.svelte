@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { navigating, page, session } from '$app/stores';
+	import { navigating, page } from '$app/stores';
 	import { algoliaCloseOnNavigation, algoliaEventListeners } from '$lib/actions';
 	import Algolia from '$lib/components/Algolia.svelte';
 	import { themes } from '$lib/constants';
@@ -58,8 +58,6 @@
 
 	async function logout() {
 		await post('/endpoints/logout');
-		$session.token = null;
-		$session.isLoggedIn = false;
 		goto('/login');
 	}
 </script>
