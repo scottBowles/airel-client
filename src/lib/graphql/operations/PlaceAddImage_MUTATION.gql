@@ -1,9 +1,0 @@
-mutation placeAddImage($id: ID!, $imageId: String) {
-	placeAddImage(input: { id: $id, imageId: $imageId }) {
-		ok
-		errors
-		place {
-			...PlaceFields
-		}
-	}
-}

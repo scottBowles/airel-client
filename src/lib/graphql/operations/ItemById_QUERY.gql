@@ -1,5 +1,0 @@
-query itemById($id: ID!) {
-	item(id: $id) {
-		...ItemFields
-	}
-}

@@ -1,9 +1,0 @@
-mutation npcReleaseLock($id: ID!) {
-	npcReleaseLock(input: { id: $id }) {
-		ok
-		errors
-		npc {
-			...NpcFields
-		}
-	}
-}

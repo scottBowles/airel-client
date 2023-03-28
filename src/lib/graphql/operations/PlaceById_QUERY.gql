@@ -1,5 +1,0 @@
-query placeById($id: ID!) {
-	place(id: $id) {
-		...PlaceFields
-	}
-}

@@ -1,5 +1,0 @@
-query artifactById($id: ID!) {
-	artifact(id: $id) {
-		...ArtifactFields
-	}
-}

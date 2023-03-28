@@ -1,9 +1,0 @@
-query races {
-	races {
-		edges {
-			node {
-				...RaceFields
-			}
-		}
-	}
-}

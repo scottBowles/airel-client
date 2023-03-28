@@ -1,5 +1,0 @@
-query raceById($id: ID!) {
-	race(id: $id) {
-		...RaceFields
-	}
-}

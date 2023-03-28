@@ -1,9 +1,0 @@
-mutation artifactLock($id: ID!) {
-	artifactLock(input: { id: $id }) {
-		ok
-		errors
-		artifact {
-			...ArtifactFields
-		}
-	}
-}

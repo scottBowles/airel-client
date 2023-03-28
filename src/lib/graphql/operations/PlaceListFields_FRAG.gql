@@ -1,8 +1,0 @@
-fragment PlaceListFields on PlaceNode {
-	id
-	name
-	description
-	imageIds
-	thumbnailId
-	placeTypeDisplay
-}

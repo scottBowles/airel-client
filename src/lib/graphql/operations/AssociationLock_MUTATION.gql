@@ -1,9 +1,0 @@
-mutation associationLock($id: ID!) {
-	associationLock(input: { id: $id }) {
-		ok
-		errors
-		association {
-			...AssociationFields
-		}
-	}
-}

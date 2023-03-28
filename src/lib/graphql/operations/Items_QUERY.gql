@@ -1,9 +1,0 @@
-query items {
-	items {
-		edges {
-			node {
-				...ItemFields
-			}
-		}
-	}
-}

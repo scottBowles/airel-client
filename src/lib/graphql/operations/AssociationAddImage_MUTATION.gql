@@ -1,9 +1,0 @@
-mutation associationAddImage($id: ID!, $imageId: String) {
-	associationAddImage(input: { id: $id, imageId: $imageId }) {
-		ok
-		errors
-		association {
-			...AssociationFields
-		}
-	}
-}

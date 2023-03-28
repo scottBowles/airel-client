@@ -1,5 +1,0 @@
-query npcById($id: ID!) {
-	npc(id: $id) {
-		...NpcFields
-	}
-}

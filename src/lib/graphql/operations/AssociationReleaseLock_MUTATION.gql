@@ -1,9 +1,0 @@
-mutation associationReleaseLock($id: ID!) {
-	associationReleaseLock(input: { id: $id }) {
-		ok
-		errors
-		association {
-			...AssociationFields
-		}
-	}
-}
