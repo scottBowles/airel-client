@@ -10,7 +10,16 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		alias: {
-			$houdini: './$houdini',
+			$houdini: './$houdini'
+		}
+	},
+
+	vitePlugin: {
+		experimental: {
+			inspector: {
+				holdMode: true,
+				toggleKeyCombo: 'meta-shift'
+			}
 		}
 	}
 };
