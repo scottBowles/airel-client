@@ -3,10 +3,14 @@
 	import { page } from '$app/stores';
 	import { algoliaCloseOnNavigation, algoliaEventListeners } from '$lib/actions';
 	import { themes } from '$lib/constants';
-	import { showAlgoliaSearch, theme } from '$lib/stores';
+	import type { Theme } from '$lib/stores';
+	import type { ShowAlgoliaSearch } from '$lib/stores';
 	import { capitalize, post } from '$lib/utils';
-	import { onMount } from 'svelte';
+	import { getContext, onMount } from 'svelte';
 	import { themeChange } from 'theme-change';
+
+	const showAlgoliaSearch = getContext<ShowAlgoliaSearch>('showAlgoliaSearch');
+	const theme = getContext<Theme>('theme');
 
 	onMount(() => {
 		themeChange(false);
@@ -58,7 +62,10 @@
 	}
 </script>
 
-<svelte:body use:algoliaEventListeners use:algoliaCloseOnNavigation />
+<svelte:body
+	use:algoliaEventListeners={showAlgoliaSearch}
+	use:algoliaCloseOnNavigation={showAlgoliaSearch}
+/>
 
 <div class="w-screen h-screen flex bg-black">
 	<div class="h-screen w-40 pl-4 py-4">

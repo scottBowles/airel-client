@@ -7,7 +7,7 @@ import { writable } from 'svelte/store';
  * and uses a full screen, mobile-style ui.
  */
 
-function showAlgoliaSearch() {
+function initShowAlgoliaSearchStore() {
 	const store = writable(false);
 	return {
 		...store,
@@ -16,4 +16,6 @@ function showAlgoliaSearch() {
 	};
 }
 
-export default showAlgoliaSearch();
+export type ShowAlgoliaSearch = ReturnType<typeof initShowAlgoliaSearchStore>;
+
+export default initShowAlgoliaSearchStore;

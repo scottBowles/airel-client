@@ -2,13 +2,15 @@
 	import { navigating } from '$app/stores';
 	import Algolia from '$lib/components/Algolia.svelte';
 	import { themes } from '$lib/constants';
-	import { theme } from '$lib/stores';
+	import type { Theme } from '$lib/stores';
 	import { capitalize } from '$lib/utils';
-	import { onMount } from 'svelte';
+	import { getContext, onMount } from 'svelte';
 	import { themeChange } from 'theme-change';
 	import SearchButton from '../SearchButton.svelte';
 	import NavLinks from './NavLinks.svelte';
 	import Title from './Title.svelte';
+
+	const theme = getContext<Theme>('theme');
 
 	let innerWidth: number;
 	let inputToggle: HTMLInputElement;

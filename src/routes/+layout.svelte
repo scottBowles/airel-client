@@ -4,9 +4,18 @@
 	import CustomLayout from '$lib/components/nav/CustomLayout.svelte';
 	import NavBar from '$lib/components/nav/NavBar.svelte';
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
-	import { showAlgoliaSearch, theme } from '$lib/stores';
+	import { initShowAlgoliaSearchStore, initThemeStore } from '$lib/stores';
 	import { SvelteToast } from '@zerodevx/svelte-toast';
 	import '../app.css';
+	import { setContext } from 'svelte';
+
+	// Initialize stores
+	const theme = initThemeStore();
+	const showAlgoliaSearch = initShowAlgoliaSearchStore();
+
+	// Add stores to context
+	setContext('theme', theme);
+	setContext('showAlgoliaSearch', showAlgoliaSearch);
 </script>
 
 <svelte:head>
