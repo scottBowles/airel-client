@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 
-function initThemeStore() {
-	const store = writable('');
+function initThemeStore(initialValue = 'dark') {
+	const store = writable(initialValue);
 	return store;
 }
 

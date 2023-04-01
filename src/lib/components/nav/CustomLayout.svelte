@@ -6,15 +6,10 @@
 	import type { Theme } from '$lib/stores';
 	import type { ShowAlgoliaSearch } from '$lib/stores';
 	import { capitalize, post } from '$lib/utils';
-	import { getContext, onMount } from 'svelte';
-	import { themeChange } from 'theme-change';
+	import { getContext } from 'svelte';
 
 	const showAlgoliaSearch = getContext<ShowAlgoliaSearch>('showAlgoliaSearch');
 	const theme = getContext<Theme>('theme');
-
-	onMount(() => {
-		themeChange(false);
-	});
 
 	const links = [
 		{
