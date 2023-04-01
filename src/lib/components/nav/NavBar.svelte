@@ -72,7 +72,6 @@
 				<ul class="flex gap-1">
 					<!-- Navbar menu content here -->
 					<NavLinks btnSize="sm" />
-					<div class="asdf" />
 				</ul>
 			</div>
 		</div>
@@ -88,20 +87,3 @@
 		</ul>
 	</div>
 </div>
-
-<style>
-	:global(main) {
-		--my-color: #f00;
-	}
-	[data-theme='dark'] {
-		--my-color: #000;
-	}
-	[data-theme='light'] {
-		--my-color: #ffabc8;
-	}
-	.asdf {
-		height: 20px;
-		width: 20px;
-		background-color: var(--my-color);
-	}
-</style>

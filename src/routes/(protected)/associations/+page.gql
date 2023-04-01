@@ -1,0 +1,38 @@
+query Associations {
+	associations {
+		edges {
+			node {
+				id
+				name
+				description
+				imageIds
+				thumbnailId
+				markdownNotes
+				lockUser {
+					id
+					username
+				}
+				lockTime
+				# lockedBySelf
+				logs {
+					edges {
+						node {
+							id
+							url
+							name
+						}
+					}
+				}
+				npcs {
+					edges {
+						node {
+							id
+							name
+							description
+						}
+					}
+				}
+			}
+		}
+	}
+}

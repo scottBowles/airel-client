@@ -1,0 +1,34 @@
+query Association($id: ID!) {
+	association(pk: $id) {
+		id
+		name
+		description
+		imageIds
+		thumbnailId
+		markdownNotes
+		lockUser {
+			id
+			username
+		}
+		lockTime
+		# lockedBySelf
+		logs {
+			edges {
+				node {
+					id
+					url
+					name
+				}
+			}
+		}
+		npcs {
+			edges {
+				node {
+					id
+					name
+					description
+				}
+			}
+		}
+	}
+}
