@@ -3,8 +3,10 @@
 	import { onDestroy, onMount } from 'svelte';
 
 	export let options = { placeholder: 'Anything goes here...' };
-	export let html = '<p>Initial content</p>';
+	export let init = '<p>Initial content</p>';
+
 	let node: HTMLElement;
+	let html = init;
 
 	onMount(async () => {
 		const { default: Quill } = await import('quill');
@@ -17,7 +19,6 @@
 					['link', 'code-block']
 				]
 			},
-			placeholder: 'Type something...',
 			theme: 'snow', // or 'bubble'
 			...options
 		});
@@ -31,11 +32,6 @@
 			});
 			return delta;
 		});
-
-		if (html) {
-			const delta = quill.clipboard.convert({ html });
-			quill.setContents(delta);
-		}
 
 		const container = node.getElementsByClassName('ql-editor')[0];
 
@@ -71,7 +67,10 @@
 	}
 </script>
 
-<div class="editor" bind:this={node} on:text-change={handleTextChange} />
+<div class="editor" bind:this={node} on:text-change={handleTextChange}>
+	{@html init}
+</div>
+<textarea name="markdownNotes" bind:value={html} hidden />
 
 <style>
 	@import 'https://cdn.quilljs.com/1.3.6/quill.snow.css';
