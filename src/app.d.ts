@@ -10,6 +10,11 @@ declare global {
 		}
 		// interface PageData {}
 		// interface Platform {}
+
+		// Houdini's Session type
+		interface Session {
+			token?: string;
+		}
 	}
 }
 
