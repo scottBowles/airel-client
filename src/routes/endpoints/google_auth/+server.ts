@@ -58,5 +58,7 @@ export async function POST(event) {
 		maxAge: 60 * 60 * 24 * 7 * 5 // 5 weeks
 	});
 
-	throw redirect(303, '/');
+	const redirectUrl = event.url.searchParams.get('redirect') || '/';
+
+	throw redirect(303, redirectUrl);
 }

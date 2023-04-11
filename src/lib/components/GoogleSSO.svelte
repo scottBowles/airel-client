@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
+
+	const login_uri = 'http://localhost:5173/endpoints/google_auth?' + $page.url.searchParams;
 
 	onMount(() => {
 		const script = document.createElement('script');
@@ -18,7 +21,7 @@
 	data-client_id="663709274997-73tvumrgtdluvolar09ifg9vcehrdfcg.apps.googleusercontent.com"
 	data-context="signin"
 	data-ux_mode="popup"
-	data-login_uri="http://localhost:5173/endpoints/google_auth"
+	data-login_uri={login_uri}
 	data-auto_select="true"
 	data-itp_support="true"
 />
