@@ -1,21 +1,11 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { graphql } from '$houdini';
-	import { LayoutCreate } from '$lib/components/DetailPage';
-	import { error } from '@sveltejs/kit';
 	import { fromGlobalId } from 'graphql-relay';
+	import { error } from '@sveltejs/kit';
+	import { goto } from '$app/navigation';
+	import { CreateAssociationStore } from '$houdini';
+	import { LayoutCreate } from '$lib/components/DetailPage';
 
-	const createMutation = graphql(`
-		mutation CreateAssociation($name: String!, $description: String, $markdownNotes: String) {
-			createAssociation(
-				input: { name: $name, description: $description, markdownNotes: $markdownNotes }
-			) {
-				... on Association {
-					id
-				}
-			}
-		}
-	`);
+	const createMutation = new CreateAssociationStore();
 
 	const handleSubmit = async (event: Event) => {
 		const data = new FormData(event.target as HTMLFormElement);

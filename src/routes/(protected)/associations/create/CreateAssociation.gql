@@ -1,0 +1,9 @@
+mutation CreateAssociation($name: String!, $description: String, $markdownNotes: String) {
+	createAssociation(
+		input: { name: $name, description: $description, markdownNotes: $markdownNotes }
+	) {
+		... on Association {
+			id
+		}
+	}
+}

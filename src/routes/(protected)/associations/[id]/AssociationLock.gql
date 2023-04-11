@@ -1,0 +1,13 @@
+mutation AssociationLock($id: GlobalID!) {
+	associationLock(input: { id: $id }) {
+		... on Association {
+			id
+			lockedBySelf
+			lockTime
+			lockUser {
+				id
+				username
+			}
+		}
+	}
+}

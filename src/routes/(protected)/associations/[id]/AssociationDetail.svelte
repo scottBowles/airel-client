@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { fragment, graphql, type AssociationDetailFields } from '$houdini';
+	import { fragment, graphql, AssociationLockStore, type AssociationDetailFields } from '$houdini';
 	import { LayoutDisplay } from '$lib/components/DetailPage';
+
+	const lockForEditMutation = new AssociationLockStore();
 
 	export let association: AssociationDetailFields;
 
@@ -52,21 +54,7 @@
 		npcs: npcsConnection
 	} = $data);
 
-	const lockForEdit = graphql(`
-		mutation AssociationLock($id: GlobalID!) {
-			associationLock(input: { id: $id }) {
-				... on Association {
-					id
-					lockedBySelf
-					lockTime
-					lockUser {
-						id
-						username
-					}
-				}
-			}
-		}
-	`);
+	const lockForEdit = () => lockForEditMutation.mutate({ id });
 </script>
 
 <LayoutDisplay
@@ -77,5 +65,5 @@
 	{logs}
 	{imageIds}
 	{lockUser}
-	onEditClick={() => lockForEdit.mutate({ id })}
+	onEditClick={lockForEdit}
 />

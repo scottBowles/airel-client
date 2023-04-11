@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { fragment, graphql, type AssociationEditFields } from '$houdini';
+	import { fragment, graphql, UpdateAssociationStore, type AssociationEditFields } from '$houdini';
 	import { LayoutEdit } from '$lib/components/DetailPage';
+
+	const updateAssociation = new UpdateAssociationStore();
 
 	export let association: AssociationEditFields;
 
@@ -52,42 +54,16 @@
 		npcs: npcsConnection
 	} = $data);
 
-	const updateMutation = graphql(`
-		mutation UpdateAssociation(
-			$id: GlobalID!
-			$name: String
-			$description: String
-			$markdownNotes: String
-		) {
-			updateAssociation(
-				input: { id: $id, name: $name, description: $description, markdownNotes: $markdownNotes }
-			) {
-				... on Association {
-					id
-					name
-					description
-					markdownNotes
-					lockTime
-					lockedBySelf
-					lockUser {
-						id
-						username
-					}
-				}
-			}
-		}
-	`);
-
 	const handleSubmit = async (event: Event) => {
 		const data = new FormData(event.target as HTMLFormElement);
 		const name = data.get('name')?.toString();
 		const description = data.get('description')?.toString();
 		const markdownNotes = data.get('markdownNotes')?.toString();
 
-		updateMutation.mutate({ id, name, description, markdownNotes });
+		updateAssociation.mutate({ id, name, description, markdownNotes });
 	};
 </script>
 
 <form method="POST" on:submit|preventDefault={handleSubmit}>
-	<LayoutEdit {id} {name} {description} {markdownNotes} {logs} {imageIds} {lockUser}>e</LayoutEdit>
+	<LayoutEdit {id} {name} {description} {markdownNotes} {logs} {imageIds} {lockUser} />
 </form>
