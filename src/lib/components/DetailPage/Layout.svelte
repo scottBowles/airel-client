@@ -130,8 +130,8 @@
 
 		<Spacer />
 
-		<!-- FREEFORM -->
-		<slot name="freeform">
+		<!-- MARKDOWN NOTES -->
+		<slot name="markdownNotes">
 			<Spacer lg />
 			{#if editing}
 				EDITING NOT IMPLEMENTED

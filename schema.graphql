@@ -75,6 +75,13 @@ type Artifact implements Node {
   ): ItemConnection!
   lockTime: DateTime
   lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
   logs(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -168,6 +175,13 @@ type Association implements Node {
   imageIds: [String!]!
   lockTime: DateTime
   lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
   logs(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -369,6 +383,13 @@ type Export implements Node {
   imageIds: [String!]!
   lockTime: DateTime
   lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
   logs(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -545,6 +566,13 @@ type Item implements Node {
   imageIds: [String!]!
   lockTime: DateTime
   lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
   logs(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -937,6 +965,13 @@ type Npc implements Node {
   imageIds: [String!]!
   lockTime: DateTime
   lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
   logs(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -1108,6 +1143,13 @@ type Place implements Node {
   imageIds: [String!]!
   lockTime: DateTime
   lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
   logs(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -1682,6 +1724,13 @@ type Race implements Node {
   imageIds: [String!]!
   lockTime: DateTime
   lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
   logs(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null

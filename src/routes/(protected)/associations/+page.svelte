@@ -30,5 +30,3 @@
 		<ListDetailCard thumbnailId={thumbnailId || imageIds[0]} {name} {description} {href} />
 	{/each}
 </div>
-
-<!-- <KitQLInfo store={KQL_Associations} /> -->

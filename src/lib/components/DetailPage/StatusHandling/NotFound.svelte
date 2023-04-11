@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
 	import { BasicProperty, Layout } from '$lib/components/DetailPage';
 	import { capitalize } from '$lib/utils';
-	export let entityName;
+	export let entityName: string;
 </script>
 
 <Layout name="{capitalize(entityName)} Not Found">

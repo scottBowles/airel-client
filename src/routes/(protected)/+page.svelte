@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import DiGithubBadge from 'svelte-icons/di/DiGithubBadge.svelte';
 </script>
 
@@ -30,9 +30,9 @@
 
 		<p>
 			Content — Suggest a new page or a new feature. The pages are currently pretty bare. Most
-			things just have a name, description, and freeform area. Most should have more. For instance,
-			a Place might have a population, a type (is it a planet a town or what?), common races,
-			associations, etc. Let's think it through and I'll make it happen!
+			things just have a name, description, and markdownNotes area. Most should have more. For
+			instance, a Place might have a population, a type (is it a planet a town or what?), common
+			races, associations, etc. Let's think it through and I'll make it happen!
 		</p>
 
 		<p>
