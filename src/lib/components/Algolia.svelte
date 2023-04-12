@@ -14,7 +14,15 @@
 	function algoliaInit(_node: HTMLElement) {
 		const searchClient = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_SEARCH_ONLY_KEY);
 
-		function makeSource({ indexName, getUrlFromId, query }) {
+		function makeSource({
+			indexName,
+			getUrlFromId,
+			query
+		}: {
+			indexName: string;
+			getUrlFromId: (id: string) => string;
+			query: string;
+		}) {
 			return {
 				sourceId: indexName,
 				getItems() {
@@ -37,7 +45,7 @@
 						return indexName;
 					},
 					item({ item, components, html }) {
-						return html`<a href=${getUrlFromId(item.global_id)}>
+						return html`<a href=${getUrlFromId(item.objectID)}>
 							<div class="aa-ItemWrapper">
 								<div class="aa-ItemContent">
 									<div class="aa-ItemIcon aa-ItemIcon--alignTop">
@@ -67,7 +75,7 @@
 						</a>`;
 					}
 				},
-				getItemUrl: ({ item }) => getUrlFromId(item.global_id)
+				getItemUrl: ({ item }) => getUrlFromId(item.objectID)
 			};
 		}
 
@@ -78,32 +86,32 @@
 				return [
 					makeSource({
 						indexName: 'Association',
-						getUrlFromId: (id) => `/associations/${id}`,
+						getUrlFromId: (id: string) => `/associations/${id}`,
 						query
 					}),
 					makeSource({
 						indexName: 'Artifact',
-						getUrlFromId: (id) => `/artifacts/${id}`,
+						getUrlFromId: (id: string) => `/artifacts/${id}`,
 						query
 					}),
 					makeSource({
 						indexName: 'Character',
-						getUrlFromId: (id) => `/characters/${id}`,
+						getUrlFromId: (id: string) => `/characters/${id}`,
 						query
 					}),
 					makeSource({
 						indexName: 'Item',
-						getUrlFromId: (id) => `/items/${id}`,
+						getUrlFromId: (id: string) => `/items/${id}`,
 						query
 					}),
 					makeSource({
 						indexName: 'Place',
-						getUrlFromId: (id) => `/places/${id}`,
+						getUrlFromId: (id: string) => `/places/${id}`,
 						query
 					}),
 					makeSource({
 						indexName: 'Race',
-						getUrlFromId: (id) => `/races/${id}`,
+						getUrlFromId: (id: string) => `/races/${id}`,
 						query
 					})
 				];
