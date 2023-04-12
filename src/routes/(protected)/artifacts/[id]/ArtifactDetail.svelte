@@ -5,6 +5,7 @@
 	const lockForEditMutation = new ArtifactLockStore();
 
 	export let artifact: ArtifactDetailFields;
+	export let onImageUpload: (error: any, result: any) => Promise<void>;
 
 	$: data = fragment(
 		artifact,
@@ -36,7 +37,7 @@
 
 	$: ({ id, name, description, markdownNotes, logs, imageIds = [], lockUser } = $data);
 
-	const lockForEdit = () => lockForEditMutation.mutate({ id });
+	const onEditClick = () => lockForEditMutation.mutate({ id });
 </script>
 
 <LayoutDisplay
@@ -47,5 +48,6 @@
 	{logs}
 	{imageIds}
 	{lockUser}
-	onEditClick={lockForEdit}
+	{onEditClick}
+	{onImageUpload}
 />

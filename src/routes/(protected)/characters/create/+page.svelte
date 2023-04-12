@@ -12,10 +12,11 @@
 		const name = data.get('name')?.toString();
 		const description = data.get('description')?.toString();
 		const markdownNotes = data.get('markdownNotes')?.toString();
+		const imageIds = data.get('imageIds')?.toString().split(',');
 
 		if (!name) throw error(400, 'Name is required');
 
-		const res = await createMutation.mutate({ name, description, markdownNotes });
+		const res = await createMutation.mutate({ name, description, markdownNotes, imageIds });
 
 		if (res.data) {
 			const { id: globalId } = res.data.createCharacter;

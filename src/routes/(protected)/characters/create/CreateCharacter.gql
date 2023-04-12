@@ -1,6 +1,16 @@
-mutation CreateCharacter($name: String!, $description: String, $markdownNotes: String) {
+mutation CreateCharacter(
+	$name: String!
+	$description: String
+	$markdownNotes: String
+	$imageIds: [String!]
+) {
 	createCharacter(
-		input: { name: $name, description: $description, markdownNotes: $markdownNotes }
+		input: {
+			name: $name
+			description: $description
+			markdownNotes: $markdownNotes
+			imageIds: $imageIds
+		}
 	) {
 		... on Character {
 			id

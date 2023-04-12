@@ -214,6 +214,14 @@ type Association implements Node {
   updated: DateTime!
 }
 
+"""Input data for `associationAddImage` mutation"""
+input AssociationAddImageInput {
+  id: GlobalID!
+  imageId: String!
+}
+
+union AssociationAddImagePayload = Association | OperationInfo
+
 """A connection to a list of items."""
 type AssociationConnection {
   """Contains the nodes in this connection"""
@@ -343,6 +351,14 @@ type Character implements Node {
   thumbnailId: String
   updated: DateTime!
 }
+
+"""Input data for `characterAddImage` mutation"""
+input CharacterAddImageInput {
+  id: GlobalID!
+  imageId: String!
+}
+
+union CharacterAddImagePayload = Character | OperationInfo
 
 """A connection to a list of items."""
 type CharacterConnection {
@@ -859,6 +875,10 @@ type Mutation {
     """Input data for `artifactReleaseLock` mutation"""
     input: ArtifactReleaseLockInput!
   ): ArtifactReleaseLockPayload!
+  associationAddImage(
+    """Input data for `associationAddImage` mutation"""
+    input: AssociationAddImageInput!
+  ): AssociationAddImagePayload!
   associationLock(
     """Input data for `associationLock` mutation"""
     input: AssociationLockInput!
@@ -867,6 +887,10 @@ type Mutation {
     """Input data for `associationReleaseLock` mutation"""
     input: AssociationReleaseLockInput!
   ): AssociationReleaseLockPayload!
+  characterAddImage(
+    """Input data for `characterAddImage` mutation"""
+    input: CharacterAddImageInput!
+  ): CharacterAddImagePayload!
   characterLock(
     """Input data for `characterLock` mutation"""
     input: CharacterLockInput!

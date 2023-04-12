@@ -1,9 +1,21 @@
 <script lang="ts">
 	import CloudinaryUpload from '$lib/components/CloudinaryUpload.svelte';
 	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
+	import { somethingWentWrong } from '$lib/utils';
 	import QuillEditor from '../QuillEditor.svelte';
 	import Spacer from '../Spacer.svelte';
 	import LayoutBase from './LayoutBase.svelte';
+
+	let imageIds: string[] = [];
+
+	const onImageUpload = async (error: any, result: any) => {
+		if (error) return somethingWentWrong(error.message);
+
+		if (result?.event === 'success') {
+			const newImageId = result.info.public_id;
+			imageIds = [...imageIds, newImageId];
+		}
+	};
 </script>
 
 <LayoutBase clearfix>
@@ -25,12 +37,13 @@
 	<button slot="lockedBy" class="ml-auto" type="submit">Save</button>
 
 	<!-- MAIN IMAGE -->
-	<!-- <div slot="mainImage" class="w-full max-w-xs mx-auto">
+	<div slot="mainImage" class="w-full max-w-xs mx-auto">
 		<CloudinaryUpload {onImageUpload}>
-			<ImageCarousel {imageIds} alt={name ?? ''} />
+			<ImageCarousel {imageIds} alt={'uploaded images'} />
 		</CloudinaryUpload>
+		<input type="hidden" name="imageIds" bind:value={imageIds} />
 		<Spacer />
-	</div> -->
+	</div>
 
 	<!-- DESCRIPTION -->
 	<div slot="description" class="form-control">

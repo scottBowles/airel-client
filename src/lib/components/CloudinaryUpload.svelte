@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 
-	export let onImageUpload: any;
+	export let onImageUpload: (error: any, result: any) => Promise<void>;
 
 	let uploadWidget: any;
 

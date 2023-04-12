@@ -14,7 +14,7 @@
 	export let imageIds: string[] = [];
 	export let logs: any = undefined;
 	export let lockUser: any = undefined;
-	export let onImageUpload = () => {};
+	export let onImageUpload: (error: any, result: any) => Promise<void>;
 
 	let isMounted = false;
 	onMount(() => {

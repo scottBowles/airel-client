@@ -5,6 +5,7 @@
 	const updateCharacter = new UpdateCharacterStore();
 
 	export let character: CharacterEditFields;
+	export let onImageUpload: (error: any, result: any) => Promise<void>;
 
 	$: data = fragment(
 		character,
@@ -47,5 +48,14 @@
 </script>
 
 <form method="POST" on:submit|preventDefault={handleSubmit}>
-	<LayoutEdit {id} {name} {description} {markdownNotes} {logs} {imageIds} {lockUser} />
+	<LayoutEdit
+		{id}
+		{name}
+		{description}
+		{markdownNotes}
+		{logs}
+		{imageIds}
+		{lockUser}
+		{onImageUpload}
+	/>
 </form>

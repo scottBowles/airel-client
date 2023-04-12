@@ -14,7 +14,7 @@
 	export let logs: any = undefined;
 	export let onEditClick: () => void;
 	export let lockUser: any = undefined;
-	export let onImageUpload = () => {};
+	export let onImageUpload: (error: any, result: any) => Promise<void>;
 	export let markdownNotes: string | null = '';
 </script>
 

@@ -1,0 +1,8 @@
+mutation ItemAddImage($id: GlobalID!, $imageId: String!) {
+	itemAddImage(input: { id: $id, imageId: $imageId }) {
+		... on Item {
+			id
+			imageIds
+		}
+	}
+}
