@@ -29,7 +29,7 @@
 >
 	<div class="splide__arrows" class:hidden={imageIds.length < 2} on:click|stopPropagation />
 	<SplideTrack>
-		{#each imageIds as imageId}
+		{#each imageIds as imageId (imageId)}
 			{@const src = getImageSrc(imageId)}
 			<SplideSlide>
 				<img data-splide-lazy={src} {alt} />
