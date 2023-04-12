@@ -1,0 +1,7 @@
+query Artifact($id: ID!) {
+	artifact(pk: $id) {
+		...ArtifactLockedBySelf
+		...ArtifactDetailFields
+		...ArtifactEditFields
+	}
+}

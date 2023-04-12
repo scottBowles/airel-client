@@ -1,15 +1,15 @@
 <script lang="ts">
-	import { fragment, graphql, UpdateAssociationStore, type AssociationEditFields } from '$houdini';
+	import { fragment, graphql, UpdateItemStore, type ItemEditFields } from '$houdini';
 	import { LayoutEdit } from '$lib/components/DetailPage';
 
-	const updateAssociation = new UpdateAssociationStore();
+	const updateItem = new UpdateItemStore();
 
-	export let association: AssociationEditFields;
+	export let item: ItemEditFields;
 
 	$: data = fragment(
-		association,
+		item,
 		graphql(`
-			fragment AssociationEditFields on Association {
+			fragment ItemEditFields on Item {
 				id
 				name
 				description
@@ -30,29 +30,11 @@
 						}
 					}
 				}
-				characters {
-					edges {
-						node {
-							id
-							name
-							description
-						}
-					}
-				}
 			}
 		`)
 	);
 
-	$: ({
-		id,
-		name,
-		description,
-		markdownNotes,
-		logs,
-		imageIds = [],
-		lockUser,
-		characters: charactersConnection
-	} = $data);
+	$: ({ id, name, description, markdownNotes, logs, imageIds = [], lockUser } = $data);
 
 	const handleSubmit = async (event: Event) => {
 		const data = new FormData(event.target as HTMLFormElement);
@@ -60,7 +42,7 @@
 		const description = data.get('description')?.toString();
 		const markdownNotes = data.get('markdownNotes')?.toString();
 
-		updateAssociation.mutate({ id, name, description, markdownNotes });
+		updateItem.mutate({ id, name, description, markdownNotes });
 	};
 </script>
 

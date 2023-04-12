@@ -1,0 +1,7 @@
+mutation CreatePlace($name: String!, $description: String, $markdownNotes: String) {
+	createPlace(input: { name: $name, description: $description, markdownNotes: $markdownNotes }) {
+		... on Place {
+			id
+		}
+	}
+}

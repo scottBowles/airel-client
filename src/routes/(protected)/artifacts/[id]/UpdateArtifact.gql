@@ -1,0 +1,23 @@
+mutation UpdateArtifact(
+	$id: GlobalID!
+	$name: String
+	$description: String
+	$markdownNotes: String
+) {
+	updateArtifact(
+		input: { id: $id, name: $name, description: $description, markdownNotes: $markdownNotes }
+	) {
+		... on Artifact {
+			id
+			name
+			description
+			markdownNotes
+			lockTime
+			lockedBySelf
+			lockUser {
+				id
+				username
+			}
+		}
+	}
+}

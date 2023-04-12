@@ -1,5 +1,5 @@
-query Associations {
-	associations {
+query Races {
+	races {
 		edges {
 			node {
 				id
@@ -20,15 +20,6 @@ query Associations {
 							id
 							url
 							name
-						}
-					}
-				}
-				characters {
-					edges {
-						node {
-							id
-							name
-							description
 						}
 					}
 				}

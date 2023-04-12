@@ -1,15 +1,15 @@
 <script lang="ts">
-	import { fragment, graphql, AssociationLockStore, type AssociationDetailFields } from '$houdini';
+	import { fragment, graphql, RaceLockStore, type RaceDetailFields } from '$houdini';
 	import { LayoutDisplay } from '$lib/components/DetailPage';
 
-	const lockForEditMutation = new AssociationLockStore();
+	const lockForEditMutation = new RaceLockStore();
 
-	export let association: AssociationDetailFields;
+	export let race: RaceDetailFields;
 
 	$: data = fragment(
-		association,
+		race,
 		graphql(`
-			fragment AssociationDetailFields on Association {
+			fragment RaceDetailFields on Race {
 				id
 				name
 				description
@@ -30,29 +30,11 @@
 						}
 					}
 				}
-				characters {
-					edges {
-						node {
-							id
-							name
-							description
-						}
-					}
-				}
 			}
 		`)
 	);
 
-	$: ({
-		id,
-		name,
-		description,
-		markdownNotes,
-		logs,
-		imageIds = [],
-		lockUser,
-		characters: charactersConnection
-	} = $data);
+	$: ({ id, name, description, markdownNotes, logs, imageIds = [], lockUser } = $data);
 
 	const lockForEdit = () => lockForEditMutation.mutate({ id });
 </script>

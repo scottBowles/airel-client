@@ -1,0 +1,13 @@
+mutation ArtifactLock($id: GlobalID!) {
+	artifactLock(input: { id: $id }) {
+		... on Artifact {
+			id
+			lockedBySelf
+			lockTime
+			lockUser {
+				id
+				username
+			}
+		}
+	}
+}

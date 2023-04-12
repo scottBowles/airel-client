@@ -1,0 +1,7 @@
+mutation CreateItem($name: String!, $description: String, $markdownNotes: String) {
+	createItem(input: { name: $name, description: $description, markdownNotes: $markdownNotes }) {
+		... on Item {
+			id
+		}
+	}
+}

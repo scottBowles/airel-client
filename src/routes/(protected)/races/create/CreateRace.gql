@@ -1,0 +1,7 @@
+mutation CreateRace($name: String!, $description: String, $markdownNotes: String) {
+	createRace(input: { name: $name, description: $description, markdownNotes: $markdownNotes }) {
+		... on Race {
+			id
+		}
+	}
+}

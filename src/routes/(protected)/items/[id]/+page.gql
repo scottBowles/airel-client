@@ -1,0 +1,7 @@
+query Item($id: ID!) {
+	item(pk: $id) {
+		...ItemLockedBySelf
+		...ItemDetailFields
+		...ItemEditFields
+	}
+}

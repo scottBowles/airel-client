@@ -169,6 +169,19 @@ input ArtifactReleaseLockInput {
 union ArtifactReleaseLockPayload = Artifact | OperationInfo
 
 type Association implements Node {
+  characters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
   created: DateTime!
   description: String
   id: GlobalID!
@@ -197,19 +210,6 @@ type Association implements Node {
   ): GameLogConnection!
   markdownNotes: String
   name: String!
-  npcs(
-    """Returns the items in the list that come after the specified cursor."""
-    after: String = null
-
-    """Returns the items in the list that come before the specified cursor."""
-    before: String = null
-
-    """Returns the first n items from the list."""
-    first: Int = null
-
-    """Returns the items in the list that come after the specified cursor."""
-    last: Int = null
-  ): NpcConnection!
   thumbnailId: String
   updated: DateTime!
 }
@@ -236,23 +236,23 @@ type AssociationEdge {
 }
 
 input AssociationInput {
+  characters: NodePartialListInput
   description: String
   imageIds: [String!]
   logs: NodePartialListInput
   markdownNotes: String
   name: String!
-  npcs: NodePartialListInput
   thumbnailId: String
 }
 
 input AssociationInputPartial {
+  characters: NodePartialListInput
   description: String
   id: GlobalID!
   imageIds: [String!]
   logs: NodePartialListInput
   markdownNotes: String
   name: String
-  npcs: NodePartialListInput
   thumbnailId: String
 }
 
@@ -270,11 +270,151 @@ input AssociationReleaseLockInput {
 
 union AssociationReleaseLockPayload = Association | OperationInfo
 
+type Character implements Node {
+  associations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  created: DateTime!
+  description: String
+  featuresAndTraits(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): FeatureConnection!
+  id: GlobalID!
+  imageIds: [String!]!
+  lockTime: DateTime
+  lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
+  logs(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): GameLogConnection!
+  markdownNotes: String
+  name: String!
+  proficiencies(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ProficiencyConnection!
+  race: Race
+  size: String
+  thumbnailId: String
+  updated: DateTime!
+}
+
+"""A connection to a list of items."""
+type CharacterConnection {
+  """Contains the nodes in this connection"""
+  edges: [CharacterEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type CharacterEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Character!
+}
+
+input CharacterInput {
+  associations: NodePartialListInput
+  description: String
+  featuresAndTraits: NodePartialListInput
+  imageIds: [String!]
+  logs: NodePartialListInput
+  markdownNotes: String
+  name: String!
+  proficiencies: NodePartialListInput
+  race: NodeInput
+  size: String
+  thumbnailId: String
+}
+
+input CharacterInputPartial {
+  associations: NodePartialListInput
+  description: String
+  featuresAndTraits: NodePartialListInput
+  id: GlobalID!
+  imageIds: [String!]
+  logs: NodePartialListInput
+  markdownNotes: String
+  name: String
+  proficiencies: NodePartialListInput
+  race: NodeInput
+  size: String
+  thumbnailId: String
+}
+
+"""Input data for `characterLock` mutation"""
+input CharacterLockInput {
+  id: GlobalID!
+}
+
+union CharacterLockPayload = Character | OperationInfo
+
+"""Input data for `characterReleaseLock` mutation"""
+input CharacterReleaseLockInput {
+  id: GlobalID!
+}
+
+union CharacterReleaseLockPayload = Character | OperationInfo
+
 union CreateAbilityScoreIncreasePayload = AbilityScoreIncrease | OperationInfo
 
 union CreateArtifactPayload = Artifact | OperationInfo
 
 union CreateAssociationPayload = Association | OperationInfo
+
+union CreateCharacterPayload = Character | OperationInfo
 
 union CreateExportPayload = Export | OperationInfo
 
@@ -285,8 +425,6 @@ union CreateGameLogPayload = GameLog | OperationInfo
 union CreateItemPayload = Item | OperationInfo
 
 union CreateLanguagePayload = Language | OperationInfo
-
-union CreateNpcPayload = Npc | OperationInfo
 
 union CreatePlacePayload = OperationInfo | Place
 
@@ -309,6 +447,8 @@ union DeleteArtifactPayload = Artifact | OperationInfo
 
 union DeleteAssociationPayload = Association | OperationInfo
 
+union DeleteCharacterPayload = Character | OperationInfo
+
 union DeleteExportPayload = Export | OperationInfo
 
 union DeleteFeaturePayload = Feature | OperationInfo
@@ -318,8 +458,6 @@ union DeleteGameLogPayload = GameLog | OperationInfo
 union DeleteItemPayload = Item | OperationInfo
 
 union DeleteLanguagePayload = Language | OperationInfo
-
-union DeleteNpcPayload = Npc | OperationInfo
 
 union DeletePlacePayload = OperationInfo | Place
 
@@ -450,10 +588,7 @@ input ExportInputPartial {
 }
 
 type Feature implements Node {
-  description: String!
-  id: GlobalID!
-  name: String!
-  npcs(
+  characters(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
 
@@ -465,7 +600,10 @@ type Feature implements Node {
 
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
-  ): NpcConnection!
+  ): CharacterConnection!
+  description: String!
+  id: GlobalID!
+  name: String!
 }
 
 """A connection to a list of items."""
@@ -490,16 +628,16 @@ type FeatureEdge {
 }
 
 input FeatureInput {
+  characters: NodePartialListInput
   description: String!
   name: String!
-  npcs: NodePartialListInput
 }
 
 input FeatureInputPartial {
+  characters: NodePartialListInput
   description: String
   id: GlobalID!
   name: String
-  npcs: NodePartialListInput
 }
 
 type GameLog implements Node {
@@ -729,9 +867,18 @@ type Mutation {
     """Input data for `associationReleaseLock` mutation"""
     input: AssociationReleaseLockInput!
   ): AssociationReleaseLockPayload!
+  characterLock(
+    """Input data for `characterLock` mutation"""
+    input: CharacterLockInput!
+  ): CharacterLockPayload!
+  characterReleaseLock(
+    """Input data for `characterReleaseLock` mutation"""
+    input: CharacterReleaseLockInput!
+  ): CharacterReleaseLockPayload!
   createAbilityScoreIncrease(input: AbilityScoreIncreaseInput!): CreateAbilityScoreIncreasePayload!
   createArtifact(input: ArtifactInput!): CreateArtifactPayload!
   createAssociation(input: AssociationInput!): CreateAssociationPayload!
+  createCharacter(input: CharacterInput!): CreateCharacterPayload!
   createExport(input: ExportInput!): CreateExportPayload!
   createFeature(input: FeatureInput!): CreateFeaturePayload!
   createGameLog(input: GameLogInput!): CreateGameLogPayload!
@@ -739,7 +886,6 @@ type Mutation {
   """Create an item with traits if present."""
   createItem(input: ItemInput!): CreateItemPayload!
   createLanguage(input: LanguageInput!): CreateLanguagePayload!
-  createNpc(input: NpcInput!): CreateNpcPayload!
   createPlace(input: PlaceInput!): CreatePlacePayload!
   createProficiency(input: ProficiencyInput!): CreateProficiencyPayload!
   createRace(input: RaceInput!): CreateRacePayload!
@@ -758,6 +904,10 @@ type Mutation {
     """Input of an object that implements the `Node` interface."""
     input: NodeInput!
   ): DeleteAssociationPayload!
+  deleteCharacter(
+    """Input of an object that implements the `Node` interface."""
+    input: NodeInput!
+  ): DeleteCharacterPayload!
   deleteExport(
     """Input of an object that implements the `Node` interface."""
     input: NodeInput!
@@ -778,10 +928,6 @@ type Mutation {
     """Input of an object that implements the `Node` interface."""
     input: NodeInput!
   ): DeleteLanguagePayload!
-  deleteNpc(
-    """Input of an object that implements the `Node` interface."""
-    input: NodeInput!
-  ): DeleteNpcPayload!
   deletePlace(
     """Input of an object that implements the `Node` interface."""
     input: NodeInput!
@@ -819,14 +965,6 @@ type Mutation {
     """Input data for `itemReleaseLock` mutation"""
     input: ItemReleaseLockInput!
   ): ItemReleaseLockPayload!
-  npcLock(
-    """Input data for `npcLock` mutation"""
-    input: NpcLockInput!
-  ): NpcLockPayload!
-  npcReleaseLock(
-    """Input data for `npcReleaseLock` mutation"""
-    input: NpcReleaseLockInput!
-  ): NpcReleaseLockPayload!
   placeAddImage(
     """Input data for `placeAddImage` mutation"""
     input: PlaceAddImageInput!
@@ -875,12 +1013,12 @@ type Mutation {
   updateAbilityScoreIncrease(input: AbilityScoreIncreaseInputPartial!): UpdateAbilityScoreIncreasePayload!
   updateArtifact(input: ArtifactInputPartial!): UpdateArtifactPayload!
   updateAssociation(input: AssociationInputPartial!): UpdateAssociationPayload!
+  updateCharacter(input: CharacterInputPartial!): UpdateCharacterPayload!
   updateExport(input: ExportInputPartial!): UpdateExportPayload!
   updateFeature(input: FeatureInputPartial!): UpdateFeaturePayload!
   updateGameLog(input: GameLogInputPartial!): UpdateGameLogPayload!
   updateItem(input: ItemInputPartial!): UpdateItemPayload!
   updateLanguage(input: LanguageInputPartial!): UpdateLanguagePayload!
-  updateNpc(input: NpcInputPartial!): UpdateNpcPayload!
   updatePlace(input: PlaceInputPartial!): UpdatePlacePayload!
   updateProficiency(input: ProficiencyInputPartial!): UpdateProficiencyPayload!
   updateRace(input: RaceInputPartial!): UpdateRacePayload!
@@ -931,144 +1069,6 @@ input NodePartialListInput {
 type NodeType implements Node {
   id: GlobalID!
 }
-
-type Npc implements Node {
-  associations(
-    """Returns the items in the list that come after the specified cursor."""
-    after: String = null
-
-    """Returns the items in the list that come before the specified cursor."""
-    before: String = null
-
-    """Returns the first n items from the list."""
-    first: Int = null
-
-    """Returns the items in the list that come after the specified cursor."""
-    last: Int = null
-  ): AssociationConnection!
-  created: DateTime!
-  description: String
-  featuresAndTraits(
-    """Returns the items in the list that come after the specified cursor."""
-    after: String = null
-
-    """Returns the items in the list that come before the specified cursor."""
-    before: String = null
-
-    """Returns the first n items from the list."""
-    first: Int = null
-
-    """Returns the items in the list that come after the specified cursor."""
-    last: Int = null
-  ): FeatureConnection!
-  id: GlobalID!
-  imageIds: [String!]!
-  lockTime: DateTime
-  lockUser: User
-
-  """
-  Add this as a resolver on any type that has a lock_user field like this:
-  
-  locked_by_self: bool = gql.field(resolver=locked_by_self)
-  """
-  lockedBySelf: Boolean!
-  logs(
-    """Returns the items in the list that come after the specified cursor."""
-    after: String = null
-
-    """Returns the items in the list that come before the specified cursor."""
-    before: String = null
-
-    """Returns the first n items from the list."""
-    first: Int = null
-
-    """Returns the items in the list that come after the specified cursor."""
-    last: Int = null
-  ): GameLogConnection!
-  markdownNotes: String
-  name: String!
-  proficiencies(
-    """Returns the items in the list that come after the specified cursor."""
-    after: String = null
-
-    """Returns the items in the list that come before the specified cursor."""
-    before: String = null
-
-    """Returns the first n items from the list."""
-    first: Int = null
-
-    """Returns the items in the list that come after the specified cursor."""
-    last: Int = null
-  ): ProficiencyConnection!
-  race: Race
-  size: String
-  thumbnailId: String
-  updated: DateTime!
-}
-
-"""A connection to a list of items."""
-type NpcConnection {
-  """Contains the nodes in this connection"""
-  edges: [NpcEdge!]!
-
-  """Pagination data for this connection"""
-  pageInfo: PageInfo!
-
-  """Total quantity of existing nodes"""
-  totalCount: Int
-}
-
-"""An edge in a connection."""
-type NpcEdge {
-  """A cursor for use in pagination"""
-  cursor: String!
-
-  """The item at the end of the edge"""
-  node: Npc!
-}
-
-input NpcInput {
-  associations: NodePartialListInput
-  description: String
-  featuresAndTraits: NodePartialListInput
-  imageIds: [String!]
-  logs: NodePartialListInput
-  markdownNotes: String
-  name: String!
-  proficiencies: NodePartialListInput
-  race: NodeInput
-  size: String
-  thumbnailId: String
-}
-
-input NpcInputPartial {
-  associations: NodePartialListInput
-  description: String
-  featuresAndTraits: NodePartialListInput
-  id: GlobalID!
-  imageIds: [String!]
-  logs: NodePartialListInput
-  markdownNotes: String
-  name: String
-  proficiencies: NodePartialListInput
-  race: NodeInput
-  size: String
-  thumbnailId: String
-}
-
-"""Input data for `npcLock` mutation"""
-input NpcLockInput {
-  id: GlobalID!
-}
-
-union NpcLockPayload = Npc | OperationInfo
-
-"""Input data for `npcReleaseLock` mutation"""
-input NpcReleaseLockInput {
-  id: GlobalID!
-}
-
-union NpcReleaseLockPayload = Npc | OperationInfo
 
 """
 
@@ -1235,10 +1235,7 @@ input PlaceReleaseLockInput {
 union PlaceReleaseLockPayload = OperationInfo | Place
 
 type Proficiency implements Node {
-  description: String!
-  id: GlobalID!
-  name: String!
-  npcs(
+  characters(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
 
@@ -1250,7 +1247,10 @@ type Proficiency implements Node {
 
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
-  ): NpcConnection!
+  ): CharacterConnection!
+  description: String!
+  id: GlobalID!
+  name: String!
   proficiencyType: String!
 }
 
@@ -1276,17 +1276,17 @@ type ProficiencyEdge {
 }
 
 input ProficiencyInput {
+  characters: NodePartialListInput
   description: String
   name: String!
-  npcs: NodePartialListInput
   proficiencyType: String
 }
 
 input ProficiencyInputPartial {
+  characters: NodePartialListInput
   description: String
   id: GlobalID!
   name: String
-  npcs: NodePartialListInput
   proficiencyType: String
 }
 
@@ -1319,6 +1319,20 @@ type Query {
     last: Int = null
     nameStartswith: String!
   ): ArtifactConnection!
+  CharactersConnectionFiltered(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+    nameStartswith: String!
+  ): CharacterConnection!
   ExportsConnectionFiltered(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -1375,20 +1389,6 @@ type Query {
     last: Int = null
     nameStartswith: String!
   ): LanguageConnection!
-  NpcsConnectionFiltered(
-    """Returns the items in the list that come after the specified cursor."""
-    after: String = null
-
-    """Returns the items in the list that come before the specified cursor."""
-    before: String = null
-
-    """Returns the first n items from the list."""
-    first: Int = null
-
-    """Returns the items in the list that come after the specified cursor."""
-    last: Int = null
-    nameStartswith: String!
-  ): NpcConnection!
   PlacesConnectionFiltered(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -1529,6 +1529,20 @@ type Query {
     last: Int = null
     nameStartswith: String!
   ): AssociationConnection!
+  character(pk: ID!): Character
+  characters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
   export(pk: ID!): Export
   exports(
     """Returns the items in the list that come after the specified cursor."""
@@ -1600,20 +1614,6 @@ type Query {
     last: Int = null
   ): LanguageConnection!
   me: UserType!
-  npc(pk: ID!): Npc
-  npcs(
-    """Returns the items in the list that come after the specified cursor."""
-    after: String = null
-
-    """Returns the items in the list that come before the specified cursor."""
-    before: String = null
-
-    """Returns the first n items from the list."""
-    first: Int = null
-
-    """Returns the items in the list that come after the specified cursor."""
-    last: Int = null
-  ): NpcConnection!
   place(pk: ID!): Place
   places(
     """Returns the items in the list that come after the specified cursor."""
@@ -1718,6 +1718,19 @@ type Query {
 }
 
 type Race implements Node {
+  characters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
   created: DateTime!
   description: String
   id: GlobalID!
@@ -1746,19 +1759,6 @@ type Race implements Node {
   ): GameLogConnection!
   markdownNotes: String
   name: String!
-  npcs(
-    """Returns the items in the list that come after the specified cursor."""
-    after: String = null
-
-    """Returns the items in the list that come before the specified cursor."""
-    before: String = null
-
-    """Returns the first n items from the list."""
-    first: Int = null
-
-    """Returns the items in the list that come after the specified cursor."""
-    last: Int = null
-  ): NpcConnection!
   thumbnailId: String
   updated: DateTime!
 }
@@ -1793,23 +1793,23 @@ type RaceEdge {
 }
 
 input RaceInput {
+  characters: NodeListInput
   description: String
   imageIds: [String!]
   logs: NodePartialListInput
   markdownNotes: String
   name: String!
-  npcs: NodeListInput
   thumbnailId: String
 }
 
 input RaceInputPartial {
+  characters: NodeListInput
   description: String
   id: GlobalID!
   imageIds: [String!]
   logs: NodePartialListInput
   markdownNotes: String
   name: String
-  npcs: NodeListInput
   thumbnailId: String
 }
 
@@ -2034,6 +2034,8 @@ union UpdateArtifactPayload = Artifact | OperationInfo
 
 union UpdateAssociationPayload = Association | OperationInfo
 
+union UpdateCharacterPayload = Character | OperationInfo
+
 union UpdateExportPayload = Export | OperationInfo
 
 union UpdateFeaturePayload = Feature | OperationInfo
@@ -2043,8 +2045,6 @@ union UpdateGameLogPayload = GameLog | OperationInfo
 union UpdateItemPayload = Item | OperationInfo
 
 union UpdateLanguagePayload = Language | OperationInfo
-
-union UpdateNpcPayload = Npc | OperationInfo
 
 union UpdatePlacePayload = OperationInfo | Place
 

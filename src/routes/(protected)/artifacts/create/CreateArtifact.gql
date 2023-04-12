@@ -1,0 +1,7 @@
+mutation CreateArtifact($name: String!, $description: String, $markdownNotes: String) {
+	createArtifact(input: { name: $name, description: $description, markdownNotes: $markdownNotes }) {
+		... on Artifact {
+			id
+		}
+	}
+}

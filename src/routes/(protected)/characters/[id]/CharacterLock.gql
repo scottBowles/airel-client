@@ -1,0 +1,13 @@
+mutation CharacterLock($id: GlobalID!) {
+	characterLock(input: { id: $id }) {
+		... on Character {
+			id
+			lockedBySelf
+			lockTime
+			lockUser {
+				id
+				username
+			}
+		}
+	}
+}
