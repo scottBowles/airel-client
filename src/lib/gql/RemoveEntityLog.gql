@@ -1,0 +1,82 @@
+mutation RemoveEntityLog($entityId: GlobalID!, $logId: GlobalID!) {
+	removeEntityLog(input: { entityId: $entityId, logId: $logId }) {
+		... on Artifact {
+			id
+			logs {
+				edges {
+					node {
+						googleId
+						id
+						name
+						url
+					}
+				}
+			}
+		}
+		... on Association {
+			id
+			logs {
+				edges {
+					node {
+						googleId
+						id
+						name
+						url
+					}
+				}
+			}
+		}
+		... on Character {
+			id
+			logs {
+				edges {
+					node {
+						googleId
+						id
+						name
+						url
+					}
+				}
+			}
+		}
+		... on Item {
+			id
+			logs {
+				edges {
+					node {
+						googleId
+						id
+						name
+						url
+					}
+				}
+			}
+		}
+		... on Place {
+			id
+			logs {
+				edges {
+					node {
+						googleId
+						id
+						name
+						url
+					}
+				}
+			}
+		}
+		... on Race {
+			id
+			logs {
+				edges {
+					node {
+						googleId
+						id
+						name
+						url
+					}
+				}
+			}
+		}
+	}
+}

@@ -36,14 +36,11 @@ input AbilityScoreIncreaseInputPartial {
   increase: Int
 }
 
-"""Input data for `addEntityLog` mutation"""
 input AddEntityLogInput {
   entityId: GlobalID!
   logId: GlobalID
   logUrl: String
 }
-
-union AddEntityLogPayload = GameLog | OperationInfo
 
 type ArmorTraits implements Node {
   acBonus: Int!
@@ -55,7 +52,7 @@ input ArmorTraitsInput {
   delete: Boolean = false
 }
 
-type Artifact implements Node {
+type Artifact implements Entity & Node {
   created: DateTime!
   description: String
   id: GlobalID!
@@ -135,7 +132,7 @@ input ArtifactInput {
   description: String
   imageIds: [String!]
   items: NodePartialListInput
-  logs: NodePartialListInput
+  logs: [GameLogInput!]
   markdownNotes: String
   name: String!
   notes: String
@@ -147,7 +144,7 @@ input ArtifactInputPartial {
   id: GlobalID!
   imageIds: [String!]
   items: NodePartialListInput
-  logs: NodePartialListInput
+  logs: [GameLogInput!]
   markdownNotes: String
   name: String
   notes: String
@@ -168,7 +165,7 @@ input ArtifactReleaseLockInput {
 
 union ArtifactReleaseLockPayload = Artifact | OperationInfo
 
-type Association implements Node {
+type Association implements Entity & Node {
   characters(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -222,6 +219,15 @@ input AssociationAddImageInput {
 
 union AssociationAddImagePayload = Association | OperationInfo
 
+"""Input data for `associationAddLog` mutation"""
+input AssociationAddLogInput {
+  id: GlobalID!
+  logId: GlobalID
+  logUrl: String
+}
+
+union AssociationAddLogPayload = Association | OperationInfo
+
 """A connection to a list of items."""
 type AssociationConnection {
   """Contains the nodes in this connection"""
@@ -247,7 +253,7 @@ input AssociationInput {
   characters: NodePartialListInput
   description: String
   imageIds: [String!]
-  logs: NodePartialListInput
+  logs: [GameLogInput!]
   markdownNotes: String
   name: String!
   thumbnailId: String
@@ -258,7 +264,7 @@ input AssociationInputPartial {
   description: String
   id: GlobalID!
   imageIds: [String!]
-  logs: NodePartialListInput
+  logs: [GameLogInput!]
   markdownNotes: String
   name: String
   thumbnailId: String
@@ -278,7 +284,7 @@ input AssociationReleaseLockInput {
 
 union AssociationReleaseLockPayload = Association | OperationInfo
 
-type Character implements Node {
+type Character implements Entity & Node {
   associations(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -386,7 +392,7 @@ input CharacterInput {
   description: String
   featuresAndTraits: NodePartialListInput
   imageIds: [String!]
-  logs: NodePartialListInput
+  logs: [GameLogInput!]
   markdownNotes: String
   name: String!
   proficiencies: NodePartialListInput
@@ -401,7 +407,7 @@ input CharacterInputPartial {
   featuresAndTraits: NodePartialListInput
   id: GlobalID!
   imageIds: [String!]
-  logs: NodePartialListInput
+  logs: [GameLogInput!]
   markdownNotes: String
   name: String
   proficiencies: NodePartialListInput
@@ -491,6 +497,38 @@ type DjangoModelType {
   pk: ID!
 }
 
+interface Entity {
+  created: DateTime!
+  description: String
+  imageIds: [String!]!
+  lockTime: DateTime
+  lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
+  logs(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): GameLogConnection!
+  markdownNotes: String
+  name: String!
+  thumbnailId: String
+  updated: DateTime!
+}
+
 type EquipmentTraits implements Node {
   briefDescription: String!
   id: GlobalID!
@@ -530,7 +568,7 @@ input EquipmentTraitsInput {
 """
 scalar ExpectedError
 
-type Export implements Node {
+type Export implements Entity & Node {
   created: DateTime!
   description: String
   id: GlobalID!
@@ -587,7 +625,7 @@ type ExportEdge {
 input ExportInput {
   description: String
   imageIds: [String!]
-  logs: NodePartialListInput
+  logs: [GameLogInput!]
   markdownNotes: String
   name: String!
   thumbnailId: String
@@ -597,7 +635,7 @@ input ExportInputPartial {
   description: String
   id: GlobalID!
   imageIds: [String!]
-  logs: NodePartialListInput
+  logs: [GameLogInput!]
   markdownNotes: String
   name: String
   thumbnailId: String
@@ -698,7 +736,7 @@ The `ID` scalar type represents a unique identifier, often used to refetch an ob
 """
 scalar GlobalID
 
-type Item implements Node {
+type Item implements Entity & Node {
   armor: ArmorTraits
   artifacts(
     """Returns the items in the list that come after the specified cursor."""
@@ -782,7 +820,7 @@ input ItemInput {
   description: String
   equipment: EquipmentTraitsInput
   imageIds: [String!]
-  logs: NodePartialListInput
+  logs: [GameLogInput!]
   markdownNotes: String
   name: String!
   thumbnailId: String
@@ -796,7 +834,7 @@ input ItemInputPartial {
   equipment: EquipmentTraitsInput
   id: GlobalID!
   imageIds: [String!]
-  logs: NodePartialListInput
+  logs: [GameLogInput!]
   markdownNotes: String
   name: String
   thumbnailId: String
@@ -859,10 +897,7 @@ input LanguageInputPartial {
 }
 
 type Mutation {
-  addEntityLog(
-    """Input data for `addEntityLog` mutation"""
-    input: AddEntityLogInput!
-  ): AddEntityLogPayload!
+  addEntityLog(input: AddEntityLogInput!): Node!
   artifactAddImage(
     """Input data for `artifactAddImage` mutation"""
     input: ArtifactAddImageInput!
@@ -879,6 +914,10 @@ type Mutation {
     """Input data for `associationAddImage` mutation"""
     input: AssociationAddImageInput!
   ): AssociationAddImagePayload!
+  associationAddLog(
+    """Input data for `associationAddLog` mutation"""
+    input: AssociationAddLogInput!
+  ): AssociationAddLogPayload!
   associationLock(
     """Input data for `associationLock` mutation"""
     input: AssociationLockInput!
@@ -1025,7 +1064,7 @@ type Mutation {
       
   """
   refreshToken(input: RefreshTokenInput!): ObtainJSONWebTokenType!
-  removeEntityLog(input: RemoveEntityLogInput!): GameLog!
+  removeEntityLog(input: RemoveEntityLogInput!): Node!
 
   """
   ### Suspends a refresh token.
@@ -1157,7 +1196,7 @@ type PageInfo {
   startCursor: String
 }
 
-type Place implements Node {
+type Place implements Entity & Node {
   associations: [DjangoModelType!]!
   commonRaces: [DjangoModelType!]!
   created: DateTime!
@@ -1228,7 +1267,7 @@ type PlaceEdge {
 input PlaceInput {
   description: String
   imageIds: [String!]
-  logs: NodePartialListInput
+  logs: [GameLogInput!]
   markdownNotes: String
   name: String!
   thumbnailId: String
@@ -1238,7 +1277,7 @@ input PlaceInputPartial {
   description: String
   id: GlobalID!
   imageIds: [String!]
-  logs: NodePartialListInput
+  logs: [GameLogInput!]
   markdownNotes: String
   name: String
   thumbnailId: String
@@ -1638,6 +1677,7 @@ type Query {
     last: Int = null
   ): LanguageConnection!
   me: UserType!
+  node(id: GlobalID!): Node
   place(pk: ID!): Place
   places(
     """Returns the items in the list that come after the specified cursor."""
@@ -1741,7 +1781,7 @@ type Query {
   ): UserConnection!
 }
 
-type Race implements Node {
+type Race implements Entity & Node {
   characters(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -1820,7 +1860,7 @@ input RaceInput {
   characters: NodeListInput
   description: String
   imageIds: [String!]
-  logs: NodePartialListInput
+  logs: [GameLogInput!]
   markdownNotes: String
   name: String!
   thumbnailId: String
@@ -1831,7 +1871,7 @@ input RaceInputPartial {
   description: String
   id: GlobalID!
   imageIds: [String!]
-  logs: NodePartialListInput
+  logs: [GameLogInput!]
   markdownNotes: String
   name: String
   thumbnailId: String

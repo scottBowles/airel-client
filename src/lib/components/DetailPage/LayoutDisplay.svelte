@@ -6,7 +6,6 @@
 	import LayoutBase from './LayoutBase.svelte';
 	import LogsDisplay from './LogsDisplay.svelte';
 
-	export let id: string;
 	export let name: string | null;
 	export let description: string | null = '';
 	export let properties: { [key: string]: string | number } = {};
@@ -16,6 +15,8 @@
 	export let lockUser: any = undefined;
 	export let onImageUpload: (error: any, result: any) => Promise<void>;
 	export let markdownNotes: string | null = '';
+	export let onLogAddition: (logUrl: string) => Promise<void>;
+	export let onLogRemoval: (logId: string) => Promise<void>;
 </script>
 
 <LayoutBase>
@@ -41,7 +42,7 @@
 
 	<!-- LOGS -->
 	<svelte:fragment slot="logs">
-		<LogsDisplay {logs} {id} />
+		<LogsDisplay {logs} {onLogAddition} {onLogRemoval} />
 		<Spacer />
 	</svelte:fragment>
 
