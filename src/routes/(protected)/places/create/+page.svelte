@@ -12,7 +12,7 @@
 		const name = data.get('name')?.toString();
 		const description = data.get('description')?.toString();
 		const markdownNotes = data.get('markdownNotes')?.toString();
-		const imageIds = data.get('imageIds')?.toString().split(',');
+		const imageIds = data.get('imageIds')?.toString().split(',').filter(Boolean);
 
 		if (!name) throw error(400, 'Name is required');
 
