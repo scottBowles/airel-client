@@ -1,5 +1,11 @@
 <script lang="ts">
-	import { fragment, graphql, ItemAddImageStore } from '$houdini';
+	import {
+		AddEntityLogStore,
+		fragment,
+		graphql,
+		ItemAddImageStore,
+		RemoveEntityLogStore
+	} from '$houdini';
 	import { Loading, StatusHandler } from '$lib/components/DetailPage';
 	import { somethingWentWrong } from '$lib/utils';
 	import type { PageData } from './$houdini';
@@ -7,6 +13,8 @@
 	import ItemEdit from './ItemEdit.svelte';
 
 	const addImageMutation = new ItemAddImageStore();
+	const addLogMutation = new AddEntityLogStore();
+	const removeLogMutation = new RemoveEntityLogStore();
 
 	export let data: PageData;
 
@@ -37,14 +45,32 @@
 
 		if (res.errors) somethingWentWrong(res.errors[0].message);
 	};
+
+	const onLogAddition = async (logUrl: string) => {
+		const entityId = $lockedBySelfData?.id;
+		if (!entityId) return somethingWentWrong('Could not find object id');
+
+		const res = await addLogMutation.mutate({ entityId, logUrl });
+
+		if (res.errors) somethingWentWrong(res.errors[0].message);
+	};
+
+	const onLogRemoval = async (logId: string) => {
+		const entityId = $lockedBySelfData?.id;
+		if (!entityId) return somethingWentWrong('Could not find object id');
+
+		const res = await removeLogMutation.mutate({ entityId, logId });
+
+		if (res.errors) somethingWentWrong(res.errors[0].message);
+	};
 </script>
 
 <StatusHandler creating="false" status="DONE" errors={''} value={item} entityName="item">
 	{#if !item}
 		<Loading />
 	{:else if $lockedBySelfData?.lockedBySelf}
-		<ItemEdit {item} {onImageUpload} />
+		<ItemEdit {item} {onImageUpload} {onLogAddition} {onLogRemoval} />
 	{:else}
-		<ItemDetail {item} {onImageUpload} />
+		<ItemDetail {item} {onImageUpload} {onLogAddition} {onLogRemoval} />
 	{/if}
 </StatusHandler>
