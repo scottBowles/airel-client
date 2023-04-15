@@ -6,8 +6,6 @@
 
 	export let character: CharacterEditFields;
 	export let onImageUpload: (error: any, result: any) => Promise<void>;
-	export let onLogAddition: (logUrl: string) => Promise<void>;
-	export let onLogRemoval: (logId: string) => Promise<void>;
 
 	$: data = fragment(
 		character,
@@ -51,6 +49,7 @@
 
 <form method="POST" on:submit|preventDefault={handleSubmit}>
 	<LayoutEdit
+		{id}
 		{name}
 		{description}
 		{markdownNotes}
@@ -58,7 +57,5 @@
 		{imageIds}
 		{lockUser}
 		{onImageUpload}
-		{onLogAddition}
-		{onLogRemoval}
 	/>
 </form>

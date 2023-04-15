@@ -6,8 +6,6 @@
 
 	export let item: ItemDetailFields;
 	export let onImageUpload: (error: any, result: any) => Promise<void>;
-	export let onLogAddition: (logUrl: string) => Promise<void>;
-	export let onLogRemoval: (logId: string) => Promise<void>;
 
 	$: data = fragment(
 		item,
@@ -43,6 +41,7 @@
 </script>
 
 <LayoutDisplay
+	{id}
 	{name}
 	{description}
 	{markdownNotes}
@@ -51,6 +50,4 @@
 	{lockUser}
 	{onEditClick}
 	{onImageUpload}
-	{onLogAddition}
-	{onLogRemoval}
 />

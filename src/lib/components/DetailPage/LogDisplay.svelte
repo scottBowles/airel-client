@@ -25,7 +25,7 @@
 	<input type="checkbox" id={modalId} class="modal-toggle" />
 	<label for={modalId} class="modal modal-bottom sm:modal-middle cursor-pointer">
 		<label class="modal-box relative" for="">
-			<h3 class="font-bold text-lg">Remove log url</h3>
+			<h3 class="font-bold text-lg">Remove log</h3>
 			<p class="py-4">You sure bro?</p>
 			<div class="modal-action">
 				<label for={modalId} class="btn" on:click={handleRemoveLog}>Yes</label>
