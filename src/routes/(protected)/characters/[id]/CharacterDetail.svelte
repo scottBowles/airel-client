@@ -5,7 +5,6 @@
 	const lockForEditMutation = new CharacterLockStore();
 
 	export let character: CharacterDetailFields;
-	export let onImageUpload: (error: any, result: any) => Promise<void>;
 
 	$: data = fragment(
 		character,
@@ -49,5 +48,4 @@
 	{imageIds}
 	{lockUser}
 	{onEditClick}
-	{onImageUpload}
 />

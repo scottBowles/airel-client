@@ -5,7 +5,6 @@
 	const lockForEditMutation = new PlaceLockStore();
 
 	export let place: PlaceDetailFields;
-	export let onImageUpload: (error: any, result: any) => Promise<void>;
 
 	$: data = fragment(
 		place,
@@ -49,5 +48,4 @@
 	{imageIds}
 	{lockUser}
 	{onEditClick}
-	{onImageUpload}
 />

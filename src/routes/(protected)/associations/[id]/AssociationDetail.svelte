@@ -5,7 +5,6 @@
 	const lockForEditMutation = new AssociationLockStore();
 
 	export let association: AssociationDetailFields;
-	export let onImageUpload: (error: any, result: any) => Promise<void>;
 
 	$: data = fragment(
 		association,
@@ -67,5 +66,4 @@
 	{imageIds}
 	{lockUser}
 	{onEditClick}
-	{onImageUpload}
 />

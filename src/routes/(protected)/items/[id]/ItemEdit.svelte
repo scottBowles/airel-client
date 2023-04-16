@@ -5,7 +5,6 @@
 	const updateItem = new UpdateItemStore();
 
 	export let item: ItemEditFields;
-	export let onImageUpload: (error: any, result: any) => Promise<void>;
 
 	$: data = fragment(
 		item,
@@ -48,14 +47,5 @@
 </script>
 
 <form method="POST" on:submit|preventDefault={handleSubmit}>
-	<LayoutEdit
-		{id}
-		{name}
-		{description}
-		{markdownNotes}
-		{logs}
-		{imageIds}
-		{lockUser}
-		{onImageUpload}
-	/>
+	<LayoutEdit {id} {name} {description} {markdownNotes} {logs} {imageIds} {lockUser} />
 </form>

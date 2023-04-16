@@ -1,8 +1,0 @@
-mutation AssociationAddImage($id: GlobalID!, $imageId: String!) {
-	associationAddImage(input: { id: $id, imageId: $imageId }) {
-		... on Association {
-			id
-			imageIds
-		}
-	}
-}

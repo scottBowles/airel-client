@@ -5,7 +5,6 @@
 	const lockForEditMutation = new ArtifactLockStore();
 
 	export let artifact: ArtifactDetailFields;
-	export let onImageUpload: (error: any, result: any) => Promise<void>;
 
 	$: data = fragment(
 		artifact,
@@ -49,5 +48,4 @@
 	{imageIds}
 	{lockUser}
 	{onEditClick}
-	{onImageUpload}
 />

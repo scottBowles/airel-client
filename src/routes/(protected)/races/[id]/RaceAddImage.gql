@@ -1,8 +1,0 @@
-mutation RaceAddImage($id: GlobalID!, $imageId: String!) {
-	raceAddImage(input: { id: $id, imageId: $imageId }) {
-		... on Race {
-			id
-			imageIds
-		}
-	}
-}

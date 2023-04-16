@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AddEntityLogStore, RemoveEntityLogStore } from '$houdini';
+	import { AddEntityLogStore, RemoveEntityLogStore, EntityAddImageStore } from '$houdini';
 	import CloudinaryUpload from '$lib/components/CloudinaryUpload.svelte';
 	import { BasicProperty } from '$lib/components/DetailPage';
 	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
@@ -10,6 +10,7 @@
 
 	const addLogMutation = new AddEntityLogStore();
 	const removeLogMutation = new RemoveEntityLogStore();
+	const addImageMutation = new EntityAddImageStore();
 
 	export let id: string;
 	export let name: string | null = '';
@@ -19,7 +20,6 @@
 	export let imageIds: string[] | null = [];
 	export let logs: any = undefined;
 	export let lockUser: any = undefined;
-	export let onImageUpload: (error: any, result: any) => Promise<void>;
 	export let onEditClick: () => void;
 
 	const onLogAdd = async (logUrl: string) => {
@@ -29,6 +29,17 @@
 
 	const onLogRemove = async (logId: string) => {
 		const res = await removeLogMutation.mutate({ entityId: id, logId });
+		if (res.errors) somethingWentWrong(res.errors[0].message);
+	};
+
+	const onImageUpload = async (error: any, result: any) => {
+		if (error) return somethingWentWrong(error.message);
+
+		const isImageUploadedEvent = result?.event === 'success';
+		if (!isImageUploadedEvent) return;
+
+		const imageId = result.info.public_id;
+		const res = await addImageMutation.mutate({ id, imageId });
 		if (res.errors) somethingWentWrong(res.errors[0].message);
 	};
 </script>

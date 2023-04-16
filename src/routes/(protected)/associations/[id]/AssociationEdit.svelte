@@ -5,7 +5,6 @@
 	const updateAssociation = new UpdateAssociationStore();
 
 	export let association: AssociationEditFields;
-	export let onImageUpload: (error: any, result: any) => Promise<void>;
 
 	$: data = fragment(
 		association,
@@ -66,14 +65,5 @@
 </script>
 
 <form method="POST" on:submit|preventDefault={handleSubmit}>
-	<LayoutEdit
-		{id}
-		{name}
-		{description}
-		{markdownNotes}
-		{logs}
-		{imageIds}
-		{lockUser}
-		{onImageUpload}
-	/>
+	<LayoutEdit {id} {name} {description} {markdownNotes} {logs} {imageIds} {lockUser} />
 </form>

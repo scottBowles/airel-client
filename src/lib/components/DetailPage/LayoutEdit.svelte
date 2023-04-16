@@ -6,11 +6,12 @@
 	import Spacer from '../Spacer.svelte';
 	import LayoutBase from './LayoutBase.svelte';
 	import LogsDisplay from './LogsDisplay.svelte';
-	import { AddEntityLogStore, RemoveEntityLogStore } from '$houdini';
+	import { AddEntityLogStore, EntityAddImageStore, RemoveEntityLogStore } from '$houdini';
 	import { somethingWentWrong } from '$lib/utils';
 
 	const addLogMutation = new AddEntityLogStore();
 	const removeLogMutation = new RemoveEntityLogStore();
+	const addImageMutation = new EntityAddImageStore();
 
 	export let id: string;
 	export let name: string | null = '';
@@ -19,7 +20,6 @@
 	export let imageIds: string[];
 	export let logs: any = undefined;
 	export let lockUser: any = undefined;
-	export let onImageUpload: (error: any, result: any) => Promise<void>;
 
 	const onLogAdd = async (logUrl: string) => {
 		const res = await addLogMutation.mutate({ entityId: id, logUrl });
@@ -28,6 +28,17 @@
 
 	const onLogRemove = async (logId: string) => {
 		const res = await removeLogMutation.mutate({ entityId: id, logId });
+		if (res.errors) somethingWentWrong(res.errors[0].message);
+	};
+
+	const onImageUpload = async (error: any, result: any) => {
+		if (error) return somethingWentWrong(error.message);
+
+		const isImageUploadedEvent = result?.event === 'success';
+		if (!isImageUploadedEvent) return;
+
+		const imageId = result.info.public_id;
+		const res = await addImageMutation.mutate({ id, imageId });
 		if (res.errors) somethingWentWrong(res.errors[0].message);
 	};
 

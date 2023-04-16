@@ -1,8 +1,0 @@
-mutation PlaceAddImage($id: GlobalID!, $imageId: String!) {
-	placeAddImage(input: { id: $id, imageId: $imageId }) {
-		... on Place {
-			id
-			imageIds
-		}
-	}
-}

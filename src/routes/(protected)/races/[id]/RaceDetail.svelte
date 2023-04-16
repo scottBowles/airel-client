@@ -5,7 +5,6 @@
 	const lockForEditMutation = new RaceLockStore();
 
 	export let race: RaceDetailFields;
-	export let onImageUpload: (error: any, result: any) => Promise<void>;
 
 	$: data = fragment(
 		race,
@@ -49,5 +48,4 @@
 	{imageIds}
 	{lockUser}
 	{onEditClick}
-	{onImageUpload}
 />

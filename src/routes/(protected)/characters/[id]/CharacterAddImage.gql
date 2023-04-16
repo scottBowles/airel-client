@@ -1,8 +1,0 @@
-mutation CharacterAddImage($id: GlobalID!, $imageId: String!) {
-	characterAddImage(input: { id: $id, imageId: $imageId }) {
-		... on Character {
-			id
-			imageIds
-		}
-	}
-}

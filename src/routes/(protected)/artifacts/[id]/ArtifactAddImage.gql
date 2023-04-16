@@ -1,8 +1,0 @@
-mutation ArtifactAddImage($id: GlobalID!, $imageId: String!) {
-	artifactAddImage(input: { id: $id, imageId: $imageId }) {
-		... on Artifact {
-			id
-			imageIds
-		}
-	}
-}
