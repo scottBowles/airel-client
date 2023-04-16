@@ -3,6 +3,7 @@ mutation CreateItem(
 	$description: String
 	$markdownNotes: String
 	$imageIds: [String!]
+	$logs: [GlobalID!]
 ) {
 	createItem(
 		input: {
@@ -10,6 +11,7 @@ mutation CreateItem(
 			description: $description
 			markdownNotes: $markdownNotes
 			imageIds: $imageIds
+			logs: $logs
 		}
 	) {
 		... on Item {

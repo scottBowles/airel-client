@@ -1,0 +1,10 @@
+mutation GetOrCreateGameLog($url: String!) {
+	getOrCreateGameLog(input: { url: $url }) {
+		... on GameLog {
+			id
+			url
+			name
+			googleId
+		}
+	}
+}

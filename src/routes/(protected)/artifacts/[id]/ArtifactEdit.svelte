@@ -53,8 +53,8 @@
 		{name}
 		{description}
 		{markdownNotes}
-		{logs}
 		{imageIds}
+		{logs}
 		{lockUser}
 		{onImageUpload}
 	/>

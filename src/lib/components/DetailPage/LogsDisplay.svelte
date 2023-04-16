@@ -9,9 +9,9 @@
 
 	export let logs: any;
 	export let onLogAdd: (logUrl: string) => Promise<void>;
-	export let onLogRemove: (logId: string) => Promise<void>;
+	export let onLogRemove: (logId: string) => Promise<void> | void;
 
-	$: logNodes = logs?.edges.map(({ node }: { node: any }) => node) ?? [];
+	$: logNodes = logs?.edges?.map(({ node }: { node: any }) => node) ?? logs ?? [];
 
 	let logInputOpen = false;
 	let logInput = '';

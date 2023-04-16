@@ -132,7 +132,7 @@ input ArtifactInput {
   description: String
   imageIds: [String!]
   items: NodePartialListInput
-  logs: [GameLogInput!]
+  logs: [GlobalID!]
   markdownNotes: String
   name: String!
   notes: String
@@ -144,7 +144,6 @@ input ArtifactInputPartial {
   id: GlobalID!
   imageIds: [String!]
   items: NodePartialListInput
-  logs: [GameLogInput!]
   markdownNotes: String
   name: String
   notes: String
@@ -219,15 +218,6 @@ input AssociationAddImageInput {
 
 union AssociationAddImagePayload = Association | OperationInfo
 
-"""Input data for `associationAddLog` mutation"""
-input AssociationAddLogInput {
-  id: GlobalID!
-  logId: GlobalID
-  logUrl: String
-}
-
-union AssociationAddLogPayload = Association | OperationInfo
-
 """A connection to a list of items."""
 type AssociationConnection {
   """Contains the nodes in this connection"""
@@ -253,7 +243,7 @@ input AssociationInput {
   characters: NodePartialListInput
   description: String
   imageIds: [String!]
-  logs: [GameLogInput!]
+  logs: [GlobalID!]
   markdownNotes: String
   name: String!
   thumbnailId: String
@@ -264,7 +254,6 @@ input AssociationInputPartial {
   description: String
   id: GlobalID!
   imageIds: [String!]
-  logs: [GameLogInput!]
   markdownNotes: String
   name: String
   thumbnailId: String
@@ -392,7 +381,7 @@ input CharacterInput {
   description: String
   featuresAndTraits: NodePartialListInput
   imageIds: [String!]
-  logs: [GameLogInput!]
+  logs: [GlobalID!]
   markdownNotes: String
   name: String!
   proficiencies: NodePartialListInput
@@ -407,7 +396,6 @@ input CharacterInputPartial {
   featuresAndTraits: NodePartialListInput
   id: GlobalID!
   imageIds: [String!]
-  logs: [GameLogInput!]
   markdownNotes: String
   name: String
   proficiencies: NodePartialListInput
@@ -441,8 +429,6 @@ union CreateCharacterPayload = Character | OperationInfo
 union CreateExportPayload = Export | OperationInfo
 
 union CreateFeaturePayload = Feature | OperationInfo
-
-union CreateGameLogPayload = GameLog | OperationInfo
 
 union CreateItemPayload = Item | OperationInfo
 
@@ -527,6 +513,11 @@ interface Entity {
   name: String!
   thumbnailId: String
   updated: DateTime!
+}
+
+input EntityAddImageInput {
+  id: GlobalID!
+  imageId: String!
 }
 
 type EquipmentTraits implements Node {
@@ -625,7 +616,7 @@ type ExportEdge {
 input ExportInput {
   description: String
   imageIds: [String!]
-  logs: [GameLogInput!]
+  logs: [GlobalID!]
   markdownNotes: String
   name: String!
   thumbnailId: String
@@ -635,7 +626,6 @@ input ExportInputPartial {
   description: String
   id: GlobalID!
   imageIds: [String!]
-  logs: [GameLogInput!]
   markdownNotes: String
   name: String
   thumbnailId: String
@@ -726,10 +716,7 @@ input GameLogInput {
   url: String!
 }
 
-input GameLogInputPartial {
-  id: GlobalID!
-  url: String
-}
+union GetOrCreateGameLogPayload = GameLog | OperationInfo
 
 """
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -820,7 +807,7 @@ input ItemInput {
   description: String
   equipment: EquipmentTraitsInput
   imageIds: [String!]
-  logs: [GameLogInput!]
+  logs: [GlobalID!]
   markdownNotes: String
   name: String!
   thumbnailId: String
@@ -834,7 +821,6 @@ input ItemInputPartial {
   equipment: EquipmentTraitsInput
   id: GlobalID!
   imageIds: [String!]
-  logs: [GameLogInput!]
   markdownNotes: String
   name: String
   thumbnailId: String
@@ -914,10 +900,6 @@ type Mutation {
     """Input data for `associationAddImage` mutation"""
     input: AssociationAddImageInput!
   ): AssociationAddImagePayload!
-  associationAddLog(
-    """Input data for `associationAddLog` mutation"""
-    input: AssociationAddLogInput!
-  ): AssociationAddLogPayload!
   associationLock(
     """Input data for `associationLock` mutation"""
     input: AssociationLockInput!
@@ -944,7 +926,6 @@ type Mutation {
   createCharacter(input: CharacterInput!): CreateCharacterPayload!
   createExport(input: ExportInput!): CreateExportPayload!
   createFeature(input: FeatureInput!): CreateFeaturePayload!
-  createGameLog(input: GameLogInput!): CreateGameLogPayload!
 
   """Create an item with traits if present."""
   createItem(input: ItemInput!): CreateItemPayload!
@@ -1015,6 +996,8 @@ type Mutation {
     """Input of an object that implements the `Node` interface."""
     input: NodeInput!
   ): DeleteTraitPayload!
+  entityAddImage(input: EntityAddImageInput!): Node!
+  getOrCreateGameLog(input: GameLogInput!): GetOrCreateGameLogPayload!
   googleLogin(googleToken: String!): ObtainJSONWebTokenType!
   itemAddImage(
     """Input data for `itemAddImage` mutation"""
@@ -1079,7 +1062,6 @@ type Mutation {
   updateCharacter(input: CharacterInputPartial!): UpdateCharacterPayload!
   updateExport(input: ExportInputPartial!): UpdateExportPayload!
   updateFeature(input: FeatureInputPartial!): UpdateFeaturePayload!
-  updateGameLog(input: GameLogInputPartial!): UpdateGameLogPayload!
   updateItem(input: ItemInputPartial!): UpdateItemPayload!
   updateLanguage(input: LanguageInputPartial!): UpdateLanguagePayload!
   updatePlace(input: PlaceInputPartial!): UpdatePlacePayload!
@@ -1267,7 +1249,7 @@ type PlaceEdge {
 input PlaceInput {
   description: String
   imageIds: [String!]
-  logs: [GameLogInput!]
+  logs: [GlobalID!]
   markdownNotes: String
   name: String!
   thumbnailId: String
@@ -1277,7 +1259,6 @@ input PlaceInputPartial {
   description: String
   id: GlobalID!
   imageIds: [String!]
-  logs: [GameLogInput!]
   markdownNotes: String
   name: String
   thumbnailId: String
@@ -1860,7 +1841,7 @@ input RaceInput {
   characters: NodeListInput
   description: String
   imageIds: [String!]
-  logs: [GameLogInput!]
+  logs: [GlobalID!]
   markdownNotes: String
   name: String!
   thumbnailId: String
@@ -1871,7 +1852,6 @@ input RaceInputPartial {
   description: String
   id: GlobalID!
   imageIds: [String!]
-  logs: [GameLogInput!]
   markdownNotes: String
   name: String
   thumbnailId: String
@@ -2103,8 +2083,6 @@ union UpdateCharacterPayload = Character | OperationInfo
 union UpdateExportPayload = Export | OperationInfo
 
 union UpdateFeaturePayload = Feature | OperationInfo
-
-union UpdateGameLogPayload = GameLog | OperationInfo
 
 union UpdateItemPayload = Item | OperationInfo
 

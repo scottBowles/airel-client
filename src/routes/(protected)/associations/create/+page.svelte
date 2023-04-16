@@ -13,10 +13,11 @@
 		const description = data.get('description')?.toString();
 		const markdownNotes = data.get('markdownNotes')?.toString();
 		const imageIds = data.get('imageIds')?.toString().split(',').filter(Boolean);
+		const logs = data.get('logs')?.toString().split(',').filter(Boolean);
 
 		if (!name) throw error(400, 'Name is required');
 
-		const res = await createMutation.mutate({ name, description, markdownNotes, imageIds });
+		const res = await createMutation.mutate({ name, description, markdownNotes, imageIds, logs });
 
 		if (res.data) {
 			const { id: globalId } = res.data.createAssociation;
