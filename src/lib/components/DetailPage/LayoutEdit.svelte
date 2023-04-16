@@ -6,15 +6,30 @@
 	import Spacer from '../Spacer.svelte';
 	import LayoutBase from './LayoutBase.svelte';
 	import LogsDisplay from './LogsDisplay.svelte';
+	import { AddEntityLogStore, RemoveEntityLogStore } from '$houdini';
+	import { somethingWentWrong } from '$lib/utils';
+
+	const addLogMutation = new AddEntityLogStore();
+	const removeLogMutation = new RemoveEntityLogStore();
 
 	export let id: string;
 	export let name: string | null = '';
 	export let description: string | null = '';
 	export let markdownNotes: string | null = '';
-	export let imageIds: string[] = [];
+	export let imageIds: string[];
 	export let logs: any = undefined;
 	export let lockUser: any = undefined;
 	export let onImageUpload: (error: any, result: any) => Promise<void>;
+
+	const onLogAdd = async (logUrl: string) => {
+		const res = await addLogMutation.mutate({ entityId: id, logUrl });
+		if (res.errors) somethingWentWrong(res.errors[0].message);
+	};
+
+	const onLogRemove = async (logId: string) => {
+		const res = await removeLogMutation.mutate({ entityId: id, logId });
+		if (res.errors) somethingWentWrong(res.errors[0].message);
+	};
 
 	let isMounted = false;
 	onMount(() => {
@@ -53,7 +68,7 @@
 
 	<!-- LOGS -->
 	<svelte:fragment slot="logs">
-		<LogsDisplay {logs} entityId={id} />
+		<LogsDisplay {logs} {onLogAdd} {onLogRemove} />
 		<Spacer />
 	</svelte:fragment>
 

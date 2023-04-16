@@ -1,21 +1,36 @@
 <script lang="ts">
+	import { AddEntityLogStore, RemoveEntityLogStore } from '$houdini';
 	import CloudinaryUpload from '$lib/components/CloudinaryUpload.svelte';
 	import { BasicProperty } from '$lib/components/DetailPage';
 	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
+	import { somethingWentWrong } from '$lib/utils';
 	import Spacer from '../Spacer.svelte';
 	import LayoutBase from './LayoutBase.svelte';
 	import LogsDisplay from './LogsDisplay.svelte';
 
+	const addLogMutation = new AddEntityLogStore();
+	const removeLogMutation = new RemoveEntityLogStore();
+
 	export let id: string;
-	export let name: string | null;
+	export let name: string | null = '';
 	export let description: string | null = '';
+	export let markdownNotes: string | null = '';
 	export let properties: { [key: string]: string | number } = {};
 	export let imageIds: string[] | null = [];
 	export let logs: any = undefined;
-	export let onEditClick: () => void;
 	export let lockUser: any = undefined;
 	export let onImageUpload: (error: any, result: any) => Promise<void>;
-	export let markdownNotes: string | null = '';
+	export let onEditClick: () => void;
+
+	const onLogAdd = async (logUrl: string) => {
+		const res = await addLogMutation.mutate({ entityId: id, logUrl });
+		if (res.errors) somethingWentWrong(res.errors[0].message);
+	};
+
+	const onLogRemove = async (logId: string) => {
+		const res = await removeLogMutation.mutate({ entityId: id, logId });
+		if (res.errors) somethingWentWrong(res.errors[0].message);
+	};
 </script>
 
 <LayoutBase>
@@ -41,7 +56,7 @@
 
 	<!-- LOGS -->
 	<svelte:fragment slot="logs">
-		<LogsDisplay {logs} entityId={id} />
+		<LogsDisplay {logs} {onLogAdd} {onLogRemove} />
 		<Spacer />
 	</svelte:fragment>
 

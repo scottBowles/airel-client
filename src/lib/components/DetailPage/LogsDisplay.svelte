@@ -3,17 +3,13 @@
 	import FaCheck from 'svelte-icons/fa/FaCheck.svelte';
 	import FaPlus from 'svelte-icons/fa/FaPlus.svelte';
 	import FaTimes from 'svelte-icons/fa/FaTimes.svelte';
-	import { AddEntityLogStore, RemoveEntityLogStore } from '$houdini';
 	import { callOnEsc } from '$lib/actions';
-	import { somethingWentWrong } from '$lib/utils';
 	import Spacer from '../Spacer.svelte';
 	import LogDisplay from './LogDisplay.svelte';
 
-	const addLogMutation = new AddEntityLogStore();
-	const removeLogMutation = new RemoveEntityLogStore();
-
 	export let logs: any;
-	export let entityId: string | undefined;
+	export let onLogAdd: (logUrl: string) => Promise<void>;
+	export let onLogRemove: (logId: string) => Promise<void>;
 
 	$: logNodes = logs?.edges.map(({ node }: { node: any }) => node) ?? [];
 
@@ -33,20 +29,9 @@
 	}
 
 	const addLog = async () => {
-		if (!entityId) return somethingWentWrong('Could not find object id');
 		if (logInput.length === 0) return;
-
-		const res = await addLogMutation.mutate({ entityId, logUrl: logInput });
-		if (res.errors) somethingWentWrong(res.errors[0].message);
+		await onLogAdd(logInput);
 		closeLogInput();
-	};
-
-	const removeLog = async (logId: string) => {
-		if (!entityId) return somethingWentWrong('Could not find object id');
-
-		const res = await removeLogMutation.mutate({ entityId, logId });
-
-		if (res.errors) somethingWentWrong(res.errors[0].message);
 	};
 </script>
 
@@ -55,7 +40,7 @@
 	<Spacer sm />
 	<div>
 		{#each logNodes as log (log.id)}
-			<LogDisplay {log} {removeLog} />
+			<LogDisplay {log} removeLog={onLogRemove} />
 		{/each}
 		<Spacer sm />
 		{#if logInputOpen}
