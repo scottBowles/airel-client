@@ -3,7 +3,7 @@ lockfileVersion: '6.0'
 devDependencies:
   '@algolia/autocomplete-js':
     specifier: ^1.8.3
-    version: 1.8.3(@algolia/client-search@4.16.0)(algoliasearch@4.16.0)
+    version: 1.8.3(@algolia/client-search@4.17.0)(algoliasearch@4.16.0)
   '@algolia/autocomplete-theme-classic':
     specifier: ^1.8.3
     version: 1.8.3
@@ -62,11 +62,11 @@ devDependencies:
     specifier: ^0.10.0
     version: 0.10.0(graphql@16.6.0)
   houdini:
-    specifier: ^1.1.3
-    version: 1.1.3
+    specifier: ^1.1.7
+    version: 1.1.7
   houdini-svelte:
-    specifier: ^1.1.3
-    version: 1.1.3
+    specifier: ^1.1.7
+    version: 1.1.7
   jwt-decode:
     specifier: ^3.1.2
     version: 3.1.2
@@ -118,29 +118,29 @@ packages:
       '@algolia/autocomplete-shared': 1.8.3
     dev: true
 
-  /@algolia/autocomplete-js@1.8.3(@algolia/client-search@4.16.0)(algoliasearch@4.16.0):
+  /@algolia/autocomplete-js@1.8.3(@algolia/client-search@4.17.0)(algoliasearch@4.16.0):
     resolution: {integrity: sha512-h5v/qp8CwmCUOCaNkUa+vaybnIpIoJGEfwE2Ks/84KAqIHYCBgcylwn92PkIL3gbQCok2sc6JoSIlUo0eAgPsQ==}
     peerDependencies:
       '@algolia/client-search': '>= 4.5.1 < 6'
       algoliasearch: '>= 4.9.1 < 6'
     dependencies:
       '@algolia/autocomplete-core': 1.8.3
-      '@algolia/autocomplete-preset-algolia': 1.8.3(@algolia/client-search@4.16.0)(algoliasearch@4.16.0)
+      '@algolia/autocomplete-preset-algolia': 1.8.3(@algolia/client-search@4.17.0)(algoliasearch@4.16.0)
       '@algolia/autocomplete-shared': 1.8.3
-      '@algolia/client-search': 4.16.0
+      '@algolia/client-search': 4.17.0
       algoliasearch: 4.16.0
       htm: 3.1.1
       preact: 10.13.2
     dev: true
 
-  /@algolia/autocomplete-preset-algolia@1.8.3(@algolia/client-search@4.16.0)(algoliasearch@4.16.0):
+  /@algolia/autocomplete-preset-algolia@1.8.3(@algolia/client-search@4.17.0)(algoliasearch@4.16.0):
     resolution: {integrity: sha512-M5B9VZtMtBFS8KSIzv8m0gtwVYtFBBjCvr8boBi+orbQUqzdoj5f70CqhQxUtnNcFGizHUaShUDV571F33/m7g==}
     peerDependencies:
       '@algolia/client-search': '>= 4.9.1 < 6'
       algoliasearch: '>= 4.9.1 < 6'
     dependencies:
       '@algolia/autocomplete-shared': 1.8.3
-      '@algolia/client-search': 4.16.0
+      '@algolia/client-search': 4.17.0
       algoliasearch: 4.16.0
     dev: true
 
@@ -160,6 +160,10 @@ packages:
 
   /@algolia/cache-common@4.16.0:
     resolution: {integrity: sha512-4iHjkSYQYw46pITrNQgXXhvUmcekI8INz1m+SzmqLX8jexSSy4Ky4zfGhZzhhhLHXUP3+x/PK/c0qPjxEvRwKQ==}
+    dev: true
+
+  /@algolia/cache-common@4.17.0:
+    resolution: {integrity: sha512-g8mXzkrcUBIPZaulAuqE7xyHhLAYAcF2xSch7d9dABheybaU3U91LjBX6eJTEB7XVhEsgK4Smi27vWtAJRhIKQ==}
     dev: true
 
   /@algolia/cache-in-memory@4.16.0:
@@ -192,6 +196,13 @@ packages:
       '@algolia/transporter': 4.16.0
     dev: true
 
+  /@algolia/client-common@4.17.0:
+    resolution: {integrity: sha512-jHMks0ZFicf8nRDn6ma8DNNsdwGgP/NKiAAL9z6rS7CymJ7L0+QqTJl3rYxRW7TmBhsUH40wqzmrG6aMIN/DrQ==}
+    dependencies:
+      '@algolia/requester-common': 4.17.0
+      '@algolia/transporter': 4.17.0
+    dev: true
+
   /@algolia/client-personalization@4.16.0:
     resolution: {integrity: sha512-irtLafssDGPuhYqIwxqOxiWlVYvrsBD+EMA1P9VJtkKi3vSNBxiWeQ0f0Tn53cUNdSRNEssfoEH84JL97SV2SQ==}
     dependencies:
@@ -208,8 +219,20 @@ packages:
       '@algolia/transporter': 4.16.0
     dev: true
 
+  /@algolia/client-search@4.17.0:
+    resolution: {integrity: sha512-x4P2wKrrRIXszT8gb7eWsMHNNHAJs0wE7/uqbufm4tZenAp+hwU/hq5KVsY50v+PfwM0LcDwwn/1DroujsTFoA==}
+    dependencies:
+      '@algolia/client-common': 4.17.0
+      '@algolia/requester-common': 4.17.0
+      '@algolia/transporter': 4.17.0
+    dev: true
+
   /@algolia/logger-common@4.16.0:
     resolution: {integrity: sha512-U9H8uCzSDuePJmbnjjTX21aPDRU6x74Tdq3dJmdYu2+pISx02UeBJm4kSgc9RW5jcR5j35G9gnjHY9Q3ngWbyQ==}
+    dev: true
+
+  /@algolia/logger-common@4.17.0:
+    resolution: {integrity: sha512-DGuoZqpTmIKJFDeyAJ7M8E/LOenIjWiOsg1XJ1OqAU/eofp49JfqXxbfgctlVZVmDABIyOz8LqEoJ6ZP4DTyvw==}
     dev: true
 
   /@algolia/logger-console@4.16.0:
@@ -228,6 +251,10 @@ packages:
     resolution: {integrity: sha512-3Zmcs/iMubcm4zqZ3vZG6Zum8t+hMWxGMzo0/uY2BD8o9q5vMxIYI0c4ocdgQjkXcix189WtZNkgjSOBzSbkdw==}
     dev: true
 
+  /@algolia/requester-common@4.17.0:
+    resolution: {integrity: sha512-XJjmWFEUlHu0ijvcHBoixuXfEoiRUdyzQM6YwTuB8usJNIgShua8ouFlRWF8iCeag0vZZiUm4S2WCVBPkdxFgg==}
+    dev: true
+
   /@algolia/requester-node-http@4.16.0:
     resolution: {integrity: sha512-L8JxM2VwZzh8LJ1Zb8TFS6G3icYsCKZsdWW+ahcEs1rGWmyk9SybsOe1MLnjonGBaqPWJkn9NjS7mRdjEmBtKA==}
     dependencies:
@@ -240,6 +267,14 @@ packages:
       '@algolia/cache-common': 4.16.0
       '@algolia/logger-common': 4.16.0
       '@algolia/requester-common': 4.16.0
+    dev: true
+
+  /@algolia/transporter@4.17.0:
+    resolution: {integrity: sha512-6xL6H6fe+Fi0AEP3ziSgC+G04RK37iRb4uUUqVAH9WPYFI8g+LYFq6iv5HS8Cbuc5TTut+Bwj6G+dh/asdb9uA==}
+    dependencies:
+      '@algolia/cache-common': 4.17.0
+      '@algolia/logger-common': 4.17.0
+      '@algolia/requester-common': 4.17.0
     dev: true
 
   /@babel/helper-string-parser@7.19.4:
@@ -891,6 +926,10 @@ packages:
     dependencies:
       '@typescript-eslint/types': 5.57.0
       eslint-visitor-keys: 3.4.0
+    dev: true
+
+  /@ungap/structured-clone@1.0.2:
+    resolution: {integrity: sha512-06PHwE0K24Wi8FBmC8MuMi/+nQ3DTpcXYL3y/IaZz2ScY2GOJXOe8fyMykVXyLOKxpL2Y0frAnJZmm65OxzMLQ==}
     dev: true
 
   /@zerodevx/svelte-toast@0.9.3(svelte@3.57.0):
@@ -1796,15 +1835,15 @@ packages:
       function-bind: 1.1.1
     dev: true
 
-  /houdini-svelte@1.1.3:
-    resolution: {integrity: sha512-B88Wut4s50j8dYComLrqs2HXmqfes+Fu/ipOvFL+0hN4j+0AzoP+adMXi6qQYOlD6+kzjIQ/IMXwj+OvbJMU4A==}
+  /houdini-svelte@1.1.7:
+    resolution: {integrity: sha512-m1CppVmQrWEyiU9V8umLTxEqZyx7Sblpd7Fo9S+alKJ3qiKbmGpx5JFbohVilRdhVkv9bmDDnrDptWwm1a5dlw==}
     dependencies:
       '@kitql/helper': 0.5.0
       '@sveltejs/kit': 1.14.0(svelte@3.57.0)(vite@4.2.1)
       ast-types: 0.16.1
       estree-walker: 3.0.3
       graphql: 15.8.0
-      houdini: 1.1.3
+      houdini: 1.1.7
       recast: 0.23.1
       rollup: 3.20.2
       svelte: 3.57.0
@@ -1819,8 +1858,8 @@ packages:
       - terser
     dev: true
 
-  /houdini@1.1.3:
-    resolution: {integrity: sha512-AVXO/B/fIPbRUSBwNboGkpCOJR4HLLia8XN6MIhp1uToi7I2IP0U1o5FlD9DoTrQxorYgrtxmNvJ3FfGtU5g9w==}
+  /houdini@1.1.7:
+    resolution: {integrity: sha512-8eXFcj5psDZ7PN12E2/ZxTTYQi2F4SuhNo1UMSzgoXtwpjKqloexRqkz7f8PhgZtJfjy3BHcWwpmkTXna7Q61w==}
     hasBin: true
     dependencies:
       '@babel/parser': 7.21.3
@@ -1830,6 +1869,7 @@ packages:
       '@types/fs-extra': 9.0.13
       '@types/micromatch': 4.0.2
       '@types/prompts': 2.4.3
+      '@ungap/structured-clone': 1.0.2
       ast-types: 0.16.1
       commander: 9.5.0
       deepmerge: 4.3.1
