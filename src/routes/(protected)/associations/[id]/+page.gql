@@ -3,5 +3,7 @@ query Association($id: ID!) {
 		...AssociationLockedBySelf
 		...AssociationDetailFields
 		...AssociationEditFields
+		...EntityDetailFields
+		...EntityEditFields
 	}
 }

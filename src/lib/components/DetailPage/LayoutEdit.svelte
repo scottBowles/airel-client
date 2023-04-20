@@ -6,20 +6,49 @@
 	import Spacer from '../Spacer.svelte';
 	import LayoutBase from './LayoutBase.svelte';
 	import LogsDisplay from './LogsDisplay.svelte';
-	import { AddEntityLogStore, EntityAddImageStore, RemoveEntityLogStore } from '$houdini';
+	import {
+		AddEntityLogStore,
+		EntityAddImageStore,
+		RemoveEntityLogStore,
+		fragment,
+		graphql,
+		type EntityEditFields
+	} from '$houdini';
 	import { somethingWentWrong } from '$lib/utils';
 
 	const addLogMutation = new AddEntityLogStore();
 	const removeLogMutation = new RemoveEntityLogStore();
 	const addImageMutation = new EntityAddImageStore();
 
-	export let id: string;
-	export let name: string | null = '';
-	export let description: string | null = '';
-	export let markdownNotes: string | null = '';
-	export let imageIds: string[];
-	export let logs: any = undefined;
-	export let lockUser: any = undefined;
+	export let entity: EntityEditFields;
+
+	$: data = fragment(
+		entity,
+		graphql(`
+			fragment EntityEditFields on Entity {
+				id
+				name
+				description
+				imageIds
+				markdownNotes
+				lockUser {
+					id
+					username
+				}
+				logs {
+					edges {
+						node {
+							id
+							url
+							name
+						}
+					}
+				}
+			}
+		`)
+	);
+
+	$: ({ id, name, description, markdownNotes, logs, imageIds = [], lockUser } = $data);
 
 	const onLogAdd = async (logUrl: string) => {
 		const res = await addLogMutation.mutate({ entityId: id, logUrl });
@@ -66,7 +95,7 @@
 
 	<!-- EDIT / SAVE + LOCKED BY {USER} -->
 	<svelte:fragment slot="lockedBy">
-		<span>Locked by {lockUser.username}</span> <button type="submit">Save</button>
+		<span>Locked by {lockUser?.username ?? 'Unknown'}</span> <button type="submit">Save</button>
 	</svelte:fragment>
 
 	<!-- MAIN IMAGE -->

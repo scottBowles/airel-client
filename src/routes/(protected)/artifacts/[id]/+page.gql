@@ -3,5 +3,7 @@ query Artifact($id: ID!) {
 		...ArtifactLockedBySelf
 		...ArtifactDetailFields
 		...ArtifactEditFields
+		...EntityDetailFields
+		...EntityEditFields
 	}
 }

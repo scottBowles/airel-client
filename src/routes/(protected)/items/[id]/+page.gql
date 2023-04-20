@@ -3,5 +3,7 @@ query Item($id: ID!) {
 		...ItemLockedBySelf
 		...ItemDetailFields
 		...ItemEditFields
+		...EntityDetailFields
+		...EntityEditFields
 	}
 }

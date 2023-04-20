@@ -3,5 +3,7 @@ query Race($id: ID!) {
 		...RaceLockedBySelf
 		...RaceDetailFields
 		...RaceEditFields
+		...EntityDetailFields
+		...EntityEditFields
 	}
 }

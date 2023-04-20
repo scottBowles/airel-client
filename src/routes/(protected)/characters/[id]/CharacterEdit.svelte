@@ -11,30 +11,12 @@
 		graphql(`
 			fragment CharacterEditFields on Character {
 				id
-				name
-				description
-				imageIds
-				thumbnailId
-				markdownNotes
-				lockUser {
-					id
-					username
-				}
-				lockTime
-				logs {
-					edges {
-						node {
-							id
-							url
-							name
-						}
-					}
-				}
+				...EntityEditFields
 			}
 		`)
 	);
 
-	$: ({ id, name, description, markdownNotes, logs, imageIds = [], lockUser } = $data);
+	$: ({ id } = $data);
 
 	const handleSubmit = async (event: Event) => {
 		const data = new FormData(event.target as HTMLFormElement);
@@ -47,5 +29,5 @@
 </script>
 
 <form method="POST" on:submit|preventDefault={handleSubmit}>
-	<LayoutEdit {id} {name} {description} {markdownNotes} {logs} {imageIds} {lockUser} />
+	<LayoutEdit entity={$data} />
 </form>

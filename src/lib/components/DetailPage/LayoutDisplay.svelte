@@ -1,5 +1,12 @@
 <script lang="ts">
-	import { AddEntityLogStore, RemoveEntityLogStore, EntityAddImageStore } from '$houdini';
+	import {
+		AddEntityLogStore,
+		RemoveEntityLogStore,
+		EntityAddImageStore,
+		fragment,
+		graphql,
+		type EntityDetailFields
+	} from '$houdini';
 	import CloudinaryUpload from '$lib/components/CloudinaryUpload.svelte';
 	import { BasicProperty } from '$lib/components/DetailPage';
 	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
@@ -12,15 +19,38 @@
 	const removeLogMutation = new RemoveEntityLogStore();
 	const addImageMutation = new EntityAddImageStore();
 
-	export let id: string;
-	export let name: string | null = '';
-	export let description: string | null = '';
-	export let markdownNotes: string | null = '';
 	export let properties: { [key: string]: string | number } = {};
-	export let imageIds: string[] | null = [];
-	export let logs: any = undefined;
-	export let lockUser: any = undefined;
 	export let onEditClick: () => void;
+
+	export let entity: EntityDetailFields;
+
+	$: data = fragment(
+		entity,
+		graphql(`
+			fragment EntityDetailFields on Entity {
+				id
+				name
+				description
+				imageIds
+				markdownNotes
+				lockUser {
+					id
+					username
+				}
+				logs {
+					edges {
+						node {
+							id
+							url
+							name
+						}
+					}
+				}
+			}
+		`)
+	);
+
+	$: ({ id, name, description, imageIds = [], markdownNotes, logs, lockUser } = $data);
 
 	const onLogAdd = async (logUrl: string) => {
 		const res = await addLogMutation.mutate({ entityId: id, logUrl });

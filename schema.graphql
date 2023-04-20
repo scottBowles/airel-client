@@ -486,6 +486,7 @@ type DjangoModelType {
 interface Entity {
   created: DateTime!
   description: String
+  id: GlobalID!
   imageIds: [String!]!
   lockTime: DateTime
   lockUser: User

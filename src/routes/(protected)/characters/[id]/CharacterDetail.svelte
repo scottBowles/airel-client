@@ -11,41 +11,14 @@
 		graphql(`
 			fragment CharacterDetailFields on Character {
 				id
-				name
-				description
-				imageIds
-				thumbnailId
-				markdownNotes
-				lockUser {
-					id
-					username
-				}
-				lockTime
-				logs {
-					edges {
-						node {
-							id
-							url
-							name
-						}
-					}
-				}
+				...EntityDetailFields
 			}
 		`)
 	);
 
-	$: ({ id, name, description, markdownNotes, logs, imageIds = [], lockUser } = $data);
+	$: ({ id } = $data);
 
 	const onEditClick = () => lockForEditMutation.mutate({ id });
 </script>
 
-<LayoutDisplay
-	{id}
-	{name}
-	{description}
-	{markdownNotes}
-	{logs}
-	{imageIds}
-	{lockUser}
-	{onEditClick}
-/>
+<LayoutDisplay entity={$data} {onEditClick} />
