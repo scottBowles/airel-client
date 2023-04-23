@@ -3,7 +3,5 @@ query Character($id: ID!) {
 		...CharacterLockedBySelf
 		...CharacterDetailFields
 		...CharacterEditFields
-		...EntityDetailFields
-		...EntityEditFields
 	}
 }

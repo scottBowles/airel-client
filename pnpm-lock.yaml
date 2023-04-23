@@ -62,11 +62,11 @@ devDependencies:
     specifier: ^0.10.0
     version: 0.10.0(graphql@16.6.0)
   houdini:
-    specifier: ^1.1.7
-    version: 1.1.7
+    specifier: ^1.2.1
+    version: 1.2.1
   houdini-svelte:
-    specifier: ^1.1.7
-    version: 1.1.7
+    specifier: ^1.2.1
+    version: 1.2.1
   jwt-decode:
     specifier: ^3.1.2
     version: 3.1.2
@@ -1870,15 +1870,15 @@ packages:
       function-bind: 1.1.1
     dev: true
 
-  /houdini-svelte@1.1.7:
-    resolution: {integrity: sha512-m1CppVmQrWEyiU9V8umLTxEqZyx7Sblpd7Fo9S+alKJ3qiKbmGpx5JFbohVilRdhVkv9bmDDnrDptWwm1a5dlw==}
+  /houdini-svelte@1.2.1:
+    resolution: {integrity: sha512-xDTpzyPrqaMUHRtYL23aP5sg13s9YCC8kt+g3dU5+/9HeT4FaPmkHpII28UFHxezTTZAJEBvfCkob+fINYBItw==}
     dependencies:
       '@kitql/helper': 0.5.0
       '@sveltejs/kit': 1.14.0(svelte@3.57.0)(vite@4.2.1)
       ast-types: 0.16.1
       estree-walker: 3.0.3
       graphql: 15.8.0
-      houdini: 1.1.7
+      houdini: 1.2.1
       recast: 0.23.1
       rollup: 3.20.2
       svelte: 3.57.0
@@ -1893,8 +1893,8 @@ packages:
       - terser
     dev: true
 
-  /houdini@1.1.7:
-    resolution: {integrity: sha512-8eXFcj5psDZ7PN12E2/ZxTTYQi2F4SuhNo1UMSzgoXtwpjKqloexRqkz7f8PhgZtJfjy3BHcWwpmkTXna7Q61w==}
+  /houdini@1.2.1:
+    resolution: {integrity: sha512-KncFOAmimP979HHfDjLAiSL48SQyr1PNN5ZzrXw2J8MoBrqp4cCO9fM0oIGfAXo4zjIbKywSjeFgxrANH3vzyA==}
     hasBin: true
     dependencies:
       '@babel/parser': 7.21.3

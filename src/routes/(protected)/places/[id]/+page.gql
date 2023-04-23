@@ -3,7 +3,5 @@ query Place($id: ID!) {
 		...PlaceLockedBySelf
 		...PlaceDetailFields
 		...PlaceEditFields
-		...EntityDetailFields
-		...EntityEditFields
 	}
 }
