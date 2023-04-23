@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { fragment, graphql, ArtifactLockStore, type ArtifactDetailFields } from '$houdini';
 	import { LayoutDisplay } from '$lib/components/DetailPage';
+	import Spacer from '$lib/components/Spacer.svelte';
+	import ItemListDisplay from '../../items/ItemListDisplay.svelte';
 
 	const lockForEditMutation = new ArtifactLockStore();
 
@@ -11,14 +13,33 @@
 		graphql(`
 			fragment ArtifactDetailFields on Artifact {
 				id
+				items {
+					edges {
+						node {
+							id
+							...ItemListFields
+						}
+					}
+				}
 				...EntityDetailFields
 			}
 		`)
 	);
 
-	$: ({ id } = $data);
+	$: ({ id, items } = $data);
+	$: itemNodes = items?.edges?.map(({ node }) => node) || [];
 
 	const onEditClick = () => lockForEditMutation.mutate({ id });
 </script>
 
-<LayoutDisplay entity={$data} {onEditClick} />
+<LayoutDisplay entity={$data} {onEditClick}>
+	<svelte:fragment slot="properties">
+		<Spacer lg />
+
+		<div class="flex flex-col gap-4">
+			{#each itemNodes as item (item.id)}
+				<ItemListDisplay {item} />
+			{/each}
+		</div>
+	</svelte:fragment>
+</LayoutDisplay>
