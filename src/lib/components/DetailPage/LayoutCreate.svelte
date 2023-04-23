@@ -86,7 +86,7 @@
 	</div>
 
 	<!-- PROPERTIES -->
-	<div slot="properties" />
+	<slot name="properties" slot="properties" />
 
 	<!-- MARKDOWN NOTES -->
 	<QuillEditor slot="markdownNotes" init="" />

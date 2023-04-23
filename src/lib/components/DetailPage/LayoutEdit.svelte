@@ -126,7 +126,7 @@
 	</div>
 
 	<!-- PROPERTIES -->
-	<svelte:fragment slot="properties" />
+	<slot name="properties" slot="properties" />
 
 	<!-- MARKDOWN NOTES -->
 	<QuillEditor init={markdownNotes ?? undefined} slot="markdownNotes" />

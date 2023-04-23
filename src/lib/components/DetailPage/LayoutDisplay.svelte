@@ -105,11 +105,11 @@
 	<p slot="description" class="italic">{description}</p>
 
 	<!-- PROPERTIES -->
-	<svelte:fragment slot="properties">
+	<slot name="properties" slot="properties">
 		{#each Object.entries(properties) as [name, value]}
 			<BasicProperty {name} {value} />
 		{/each}
-	</svelte:fragment>
+	</slot>
 
 	<!-- MARKDOWN NOTES -->
 	<div slot="markdownNotes" class="prose inline">
