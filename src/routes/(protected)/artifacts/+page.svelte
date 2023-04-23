@@ -1,11 +1,10 @@
 <script lang="ts">
 	import AddLink from '$lib/components/AddLink.svelte';
 	import BannerImage from '$lib/components/BannerImage.svelte';
-	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import { alphabeticallyBy } from '$lib/utils';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import type { PageData } from './$houdini';
-	import { fromGlobalId } from 'graphql-relay';
+	import ArtifactListCard from './ArtifactListCard.svelte';
 
 	export let data: PageData;
 
@@ -26,8 +25,6 @@
 	<div><AddLink href="artifacts/create" /></div>
 
 	{#each artifacts as artifact (artifact.id)}
-		{@const { id } = artifact}
-		{@const href = `artifacts/${fromGlobalId(id).id}`}
-		<ListDetailCard entity={artifact} {href} />
+		<ArtifactListCard {artifact} />
 	{/each}
 </div>
