@@ -36,6 +36,7 @@
         "houdini": "^1.1.7",
         "houdini-svelte": "^1.1.7",
         "jwt-decode": "^3.1.2",
+        "parse-nested-form-data": "^1.0.0",
         "postcss": "^8.4.21",
         "prettier": "^2.8.0",
         "prettier-plugin-svelte": "^2.8.1",
