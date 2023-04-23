@@ -19,7 +19,7 @@
 		return src;
 	}
 
-	$: imageIds = imageIds.length > 0 ? imageIds : [defaultImageSrc];
+	$: imageIds = imageIds.length > 0 ? [...new Set(imageIds)] : [defaultImageSrc];
 </script>
 
 <Splide
