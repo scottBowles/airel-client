@@ -23,6 +23,9 @@
 				equipment {
 					briefDescription
 				}
+				...ItemWeaponBlock
+				...ItemArmorBlock
+				...ItemEquipmentBlock
 				...EntityDetailFields
 			}
 		`)
@@ -40,21 +43,21 @@
 			<!-- ARMOR STAT BLOCK -->
 			{#if armor}
 				<div class="stat-block">
-					<ItemArmorBlock {armor} />
+					<ItemArmorBlock item={$data} />
 				</div>
 			{/if}
 
 			<!-- WEAPON STAT BLOCK -->
 			{#if weapon}
 				<div class="stat-block">
-					<ItemWeaponBlock {weapon} />
+					<ItemWeaponBlock item={$data} />
 				</div>
 			{/if}
 
 			<!-- EQUIPMENT STAT BLOCK -->
 			{#if equipment}
 				<div class="stat-block">
-					<ItemEquipmentBlock {equipment} />
+					<ItemEquipmentBlock item={$data} />
 				</div>
 			{/if}
 		</div>

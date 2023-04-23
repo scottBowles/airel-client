@@ -1,8 +1,21 @@
 <script lang="ts">
+	import { fragment, graphql, type ItemEquipmentBlock } from '$houdini';
 	import Spacer from '$lib/components/Spacer.svelte';
 
-	// instead of typing this I probably should just use a fragment here
-	export let equipment: { briefDescription: string };
+	export let item: ItemEquipmentBlock;
+
+	$: data = fragment(
+		item,
+		graphql(`
+			fragment ItemEquipmentBlock on Item {
+				equipment {
+					briefDescription
+				}
+			}
+		`)
+	);
+
+	$: ({ equipment } = $data);
 </script>
 
 <h3 class="text-xl font-bold">Equipment</h3>
