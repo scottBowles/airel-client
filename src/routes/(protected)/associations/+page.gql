@@ -4,34 +4,7 @@ query Associations {
 			node {
 				id
 				name
-				description
-				imageIds
-				thumbnailId
-				markdownNotes
-				lockUser {
-					id
-					username
-				}
-				lockTime
-				lockedBySelf
-				logs {
-					edges {
-						node {
-							id
-							url
-							name
-						}
-					}
-				}
-				characters {
-					edges {
-						node {
-							id
-							name
-							description
-						}
-					}
-				}
+				...EntityListFields
 			}
 		}
 	}

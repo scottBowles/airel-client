@@ -2,7 +2,7 @@
 	import AddLink from '$lib/components/AddLink.svelte';
 	import BannerImage from '$lib/components/BannerImage.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
-	import { alphabetically } from '$lib/utils';
+	import { alphabeticallyBy } from '$lib/utils';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import type { PageData } from './$houdini';
 	import { fromGlobalId } from 'graphql-relay';
@@ -11,7 +11,8 @@
 
 	$: ({ Artifacts } = data);
 	$: artifacts =
-		$Artifacts?.data?.artifacts?.edges?.map(({ node }) => node).sort(alphabetically) || [];
+		$Artifacts?.data?.artifacts?.edges?.map(({ node }) => node).sort(alphabeticallyBy('name')) ||
+		[];
 </script>
 
 <BannerImage
@@ -25,8 +26,8 @@
 	<div><AddLink href="artifacts/create" /></div>
 
 	{#each artifacts as artifact (artifact.id)}
-		{@const { id, name, description, thumbnailId, imageIds } = artifact}
+		{@const { id } = artifact}
 		{@const href = `artifacts/${fromGlobalId(id).id}`}
-		<ListDetailCard thumbnailId={thumbnailId || imageIds[0]} {name} {description} {href} />
+		<ListDetailCard entity={artifact} {href} />
 	{/each}
 </div>

@@ -37,8 +37,10 @@ export function somethingWentWrong(error: string) {
 
 /** SORT FUNCTIONS */
 
-export const alphabetically = <T extends { name: string }>(a: T, b: T) =>
-	a.name > b.name ? 1 : -1;
+export const alphabeticallyBy =
+	<T extends string, K extends { [key in T]: string }>(key: T) =>
+	(a: K, b: K) =>
+		a[key] > b[key] ? 1 : -1;
 
 const placePrecendence = {
 	STAR: 7,

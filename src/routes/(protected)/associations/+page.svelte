@@ -2,7 +2,7 @@
 	import AddLink from '$lib/components/AddLink.svelte';
 	import BannerImage from '$lib/components/BannerImage.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
-	import { alphabetically } from '$lib/utils';
+	import { alphabeticallyBy } from '$lib/utils';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import type { PageData } from './$houdini';
 	import { fromGlobalId } from 'graphql-relay';
@@ -11,7 +11,9 @@
 
 	$: ({ Associations } = data);
 	$: associations =
-		$Associations?.data?.associations?.edges?.map(({ node }) => node).sort(alphabetically) || [];
+		$Associations?.data?.associations?.edges
+			?.map(({ node }) => node)
+			.sort(alphabeticallyBy('name')) || [];
 </script>
 
 <BannerImage
@@ -25,8 +27,8 @@
 	<div><AddLink href="associations/create" /></div>
 
 	{#each associations as association (association.id)}
-		{@const { id, name, description, thumbnailId, imageIds } = association}
+		{@const { id } = association}
 		{@const href = `associations/${fromGlobalId(id).id}`}
-		<ListDetailCard thumbnailId={thumbnailId || imageIds[0]} {name} {description} {href} />
+		<ListDetailCard entity={association} {href} />
 	{/each}
 </div>
