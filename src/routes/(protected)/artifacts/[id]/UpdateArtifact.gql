@@ -3,9 +3,16 @@ mutation UpdateArtifact(
 	$name: String
 	$description: String
 	$markdownNotes: String
+	$items: NodePartialListInput
 ) {
 	updateArtifact(
-		input: { id: $id, name: $name, description: $description, markdownNotes: $markdownNotes }
+		input: {
+			id: $id
+			name: $name
+			description: $description
+			markdownNotes: $markdownNotes
+			items: $items
+		}
 	) {
 		... on Artifact {
 			id
@@ -17,6 +24,13 @@ mutation UpdateArtifact(
 			lockUser {
 				id
 				username
+			}
+			items {
+				edges {
+					node {
+						...ItemListFields
+					}
+				}
 			}
 		}
 	}
