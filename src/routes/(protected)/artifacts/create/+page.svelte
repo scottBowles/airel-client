@@ -4,7 +4,7 @@
 	import { goto } from '$app/navigation';
 	import { CreateArtifactStore } from '$houdini';
 	import { LayoutCreate } from '$lib/components/DetailPage';
-	import RelatedItemSelect from '$lib/components/RelatedItemSelect.svelte';
+	import RelatedItemMultiSelect from '$lib/components/RelatedItemMultiSelect.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { parseFormData } from 'parse-nested-form-data';
 
@@ -35,7 +35,7 @@
 	<LayoutCreate>
 		<svelte:fragment slot="properties">
 			<Spacer lg />
-			<RelatedItemSelect />
+			<RelatedItemMultiSelect />
 		</svelte:fragment>
 	</LayoutCreate>
 </form>

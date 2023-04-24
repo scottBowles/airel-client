@@ -2,7 +2,7 @@
 	import { parseFormData } from 'parse-nested-form-data';
 	import { fragment, graphql, UpdateArtifactStore, type ArtifactEditFields } from '$houdini';
 	import { LayoutEdit } from '$lib/components/DetailPage';
-	import RelatedItemSelect from '$lib/components/RelatedItemSelect.svelte';
+	import RelatedItemMultiSelect from '$lib/components/RelatedItemMultiSelect.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 
 	const updateArtifact = new UpdateArtifactStore();
@@ -40,7 +40,7 @@
 	<LayoutEdit entity={$data}>
 		<svelte:fragment slot="properties">
 			<Spacer lg />
-			<RelatedItemSelect id={`artifact-${id}-item-select`} {initialItemIds} />
+			<RelatedItemMultiSelect id={`artifact-${id}-item-select`} {initialItemIds} />
 		</svelte:fragment>
 	</LayoutEdit>
 </form>

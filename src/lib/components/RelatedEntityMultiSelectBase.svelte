@@ -1,14 +1,15 @@
 <script lang="ts">
+	import MultiSelect from '$lib/components/MultiSelect.svelte';
 	import { capitalize } from '$lib/utils';
 
 	export let id: string;
-	export let inputName: string;
-	export let entityDisplayName: string = inputName;
-	export let initialValue: string;
+	export let inputGroupName: string;
+	export let entityDisplayName: string = inputGroupName;
+	export let initialValues: string[] = [];
 	export let optionNamesAndIdNodes: { node: { id: string; name: string } }[] = [];
 	export let fetching: boolean;
 
-	let selected: string = initialValue;
+	let selected: string[] = [];
 
 	$: options =
 		optionNamesAndIdNodes?.map((edge) => ({
@@ -24,12 +25,9 @@
 	{#if fetching}
 		Loading {capitalize(entityDisplayName)}...
 	{:else}
-		<select bind:value={selected} class="select select-bordered" {id}>
-			<option disabled selected>Pick one</option>
-			{#each options as { value, label }}
-				<option {value}>{label}</option>
-			{/each}
-		</select>
+		<MultiSelect {id} {options} {initialValues} bind:values={selected} />
 	{/if}
-	<input type="hidden" name={`${inputName}.id`} value={selected} />
+	{#each selected as id, i}
+		<input type="hidden" name={`${inputGroupName}.set[${i}].id`} value={id} />
+	{/each}
 </div>
