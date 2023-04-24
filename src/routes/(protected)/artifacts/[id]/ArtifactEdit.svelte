@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { parseFormData } from 'parse-nested-form-data';
 	import { fragment, graphql, UpdateArtifactStore, type ArtifactEditFields } from '$houdini';
 	import { LayoutEdit } from '$lib/components/DetailPage';
+	import RelatedItemSelect from '$lib/components/RelatedItemSelect.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
-	import { parseFormData } from 'parse-nested-form-data';
-	import RelatedItemSelect from '../RelatedItemSelect.svelte';
 
 	const updateArtifact = new UpdateArtifactStore();
 

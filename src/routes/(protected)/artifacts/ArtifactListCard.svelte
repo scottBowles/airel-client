@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fromGlobalId } from 'graphql-relay';
 	import { fragment, graphql, type ArtifactListCardFields } from '$houdini';
-	import ItemTypeIcons from '../items/ItemTypeIcons.svelte';
+	import ItemTypeIcons from '$lib/components/ItemTypeIcons.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 
 	export let artifact: ArtifactListCardFields;

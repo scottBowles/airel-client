@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { fragment, graphql, ArtifactLockStore, type ArtifactDetailFields } from '$houdini';
 	import { LayoutDisplay } from '$lib/components/DetailPage';
+	import ItemListDisplay from '$lib/components/ItemListDisplay.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
-	import ItemListDisplay from '../../items/ItemListDisplay.svelte';
 
 	const lockForEditMutation = new ArtifactLockStore();
 

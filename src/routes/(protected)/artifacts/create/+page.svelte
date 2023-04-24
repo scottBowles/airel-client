@@ -4,9 +4,9 @@
 	import { goto } from '$app/navigation';
 	import { CreateArtifactStore } from '$houdini';
 	import { LayoutCreate } from '$lib/components/DetailPage';
+	import RelatedItemSelect from '$lib/components/RelatedItemSelect.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { parseFormData } from 'parse-nested-form-data';
-	import RelatedItemSelect from '../RelatedItemSelect.svelte';
 
 	const createMutation = new CreateArtifactStore();
 

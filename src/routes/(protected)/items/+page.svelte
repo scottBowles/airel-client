@@ -1,11 +1,11 @@
 <script lang="ts">
-	import AddLink from '$lib/components/AddLink.svelte';
-	import BannerImage from '$lib/components/BannerImage.svelte';
-	import { alphabeticallyBy } from '$lib/utils';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import type { PageData } from './$houdini';
-	import ItemListDisplay from './ItemListDisplay.svelte';
+	import AddLink from '$lib/components/AddLink.svelte';
+	import BannerImage from '$lib/components/BannerImage.svelte';
 	import { Loading } from '$lib/components/DetailPage';
+	import ItemListDisplay from '$lib/components/ItemListDisplay.svelte';
+	import { alphabeticallyBy } from '$lib/utils';
 
 	export let data: PageData;
 
