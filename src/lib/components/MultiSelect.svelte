@@ -3,7 +3,7 @@
 
 	export let id: string;
 	export let options: any;
-	export let initialValues: any;
+	export let initialValues: any = [];
 	export let values;
 
 	let selected = options?.filter((option: any) => initialValues.includes(option.value)) ?? [];

@@ -1,0 +1,10 @@
+query ItemNamesAndIds @load {
+	items {
+		edges {
+			node {
+				id
+				name
+			}
+		}
+	}
+}

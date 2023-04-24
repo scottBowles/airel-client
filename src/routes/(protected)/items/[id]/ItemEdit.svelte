@@ -36,7 +36,6 @@
 	const handleSubmit = async (event: Event) => {
 		const data = new FormData(event.target as HTMLFormElement);
 		const parsed = parseFormData(data);
-		console.log({ parsed });
 
 		updateItem.mutate({
 			id,

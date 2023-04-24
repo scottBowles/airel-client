@@ -4,6 +4,7 @@ mutation CreateArtifact(
 	$markdownNotes: String
 	$imageIds: [String!]
 	$logs: [GlobalID!]
+	$items: NodePartialListInput
 ) {
 	createArtifact(
 		input: {
@@ -12,6 +13,7 @@ mutation CreateArtifact(
 			markdownNotes: $markdownNotes
 			imageIds: $imageIds
 			logs: $logs
+			items: $items
 		}
 	) {
 		... on Artifact {
