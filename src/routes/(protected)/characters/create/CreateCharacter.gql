@@ -4,6 +4,8 @@ mutation CreateCharacter(
 	$markdownNotes: String
 	$imageIds: [String!]
 	$logs: [GlobalID!]
+	$race: NodeInput
+	$associations: NodePartialListInput
 ) {
 	createCharacter(
 		input: {
@@ -12,6 +14,8 @@ mutation CreateCharacter(
 			markdownNotes: $markdownNotes
 			imageIds: $imageIds
 			logs: $logs
+			race: $race
+			associations: $associations
 		}
 	) {
 		... on Character {
