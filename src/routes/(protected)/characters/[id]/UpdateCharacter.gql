@@ -3,9 +3,18 @@ mutation UpdateCharacter(
 	$name: String
 	$description: String
 	$markdownNotes: String
+	$race: NodeInput
+	$associations: NodePartialListInput
 ) {
 	updateCharacter(
-		input: { id: $id, name: $name, description: $description, markdownNotes: $markdownNotes }
+		input: {
+			id: $id
+			name: $name
+			description: $description
+			markdownNotes: $markdownNotes
+			race: $race
+			associations: $associations
+		}
 	) {
 		... on Character {
 			id
@@ -17,6 +26,18 @@ mutation UpdateCharacter(
 			lockUser {
 				id
 				username
+			}
+			race {
+				id
+				name
+			}
+			associations {
+				edges {
+					node {
+						id
+						name
+					}
+				}
 			}
 		}
 	}

@@ -1,0 +1,10 @@
+query RaceNamesAndIds @load {
+	races {
+		edges {
+			node {
+				id
+				name
+			}
+		}
+	}
+}
