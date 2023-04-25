@@ -3,21 +3,20 @@ mutation UpdateAssociation(
 	$name: String
 	$description: String
 	$markdownNotes: String
+	$characters: NodePartialListInput
 ) {
 	updateAssociation(
-		input: { id: $id, name: $name, description: $description, markdownNotes: $markdownNotes }
+		input: {
+			id: $id
+			name: $name
+			description: $description
+			markdownNotes: $markdownNotes
+			characters: $characters
+		}
 	) {
 		... on Association {
-			id
-			name
-			description
-			markdownNotes
-			lockTime
-			lockedBySelf
-			lockUser {
-				id
-				username
-			}
+			...AssociationLockedBySelf
+			...AssociationDetailFields
 		}
 	}
 }

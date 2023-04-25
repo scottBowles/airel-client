@@ -4,6 +4,7 @@ mutation CreateAssociation(
 	$markdownNotes: String
 	$imageIds: [String!]
 	$logs: [GlobalID!]
+	$characters: NodePartialListInput
 ) {
 	createAssociation(
 		input: {
@@ -12,10 +13,12 @@ mutation CreateAssociation(
 			markdownNotes: $markdownNotes
 			imageIds: $imageIds
 			logs: $logs
+			characters: $characters
 		}
 	) {
 		... on Association {
-			id
+			...AssociationLockedBySelf
+			...AssociationDetailFields
 		}
 	}
 }

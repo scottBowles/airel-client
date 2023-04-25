@@ -4,20 +4,22 @@
 	import { goto } from '$app/navigation';
 	import { CreateAssociationStore } from '$houdini';
 	import { LayoutCreate } from '$lib/components/DetailPage';
+	import Spacer from '$lib/components/Spacer.svelte';
+	import RelatedCharacterMultiSelect from '$lib/components/RelatedCharacterMultiSelect.svelte';
+	import { parseFormData } from 'parse-nested-form-data';
 
 	const createMutation = new CreateAssociationStore();
 
 	const handleSubmit = async (event: Event) => {
 		const data = new FormData(event.target as HTMLFormElement);
+		const parsed = parseFormData(data);
 		const name = data.get('name')?.toString();
-		const description = data.get('description')?.toString();
-		const markdownNotes = data.get('markdownNotes')?.toString();
 		const imageIds = data.get('imageIds')?.toString().split(',').filter(Boolean);
 		const logs = data.get('logs')?.toString().split(',').filter(Boolean);
 
 		if (!name) throw error(400, 'Name is required');
 
-		const res = await createMutation.mutate({ name, description, markdownNotes, imageIds, logs });
+		const res = await createMutation.mutate({ ...parsed, name, imageIds, logs });
 
 		if (res.data) {
 			const { id: globalId } = res.data.createAssociation;
@@ -30,5 +32,11 @@
 </script>
 
 <form method="POST" on:submit|preventDefault={handleSubmit}>
-	<LayoutCreate />
+	<LayoutCreate>
+		<svelte:fragment slot="properties">
+			<Spacer lg />
+			<RelatedCharacterMultiSelect entityDisplayName="Members" />
+			<Spacer lg />
+		</svelte:fragment>
+	</LayoutCreate>
 </form>

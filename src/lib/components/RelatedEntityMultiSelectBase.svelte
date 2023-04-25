@@ -20,7 +20,7 @@
 
 <div class="form-control w-full max-w-xs">
 	<label class="label" for={id}>
-		<span class="label-text">Select Related {capitalize(entityDisplayName)}</span>
+		<span class="label-text">Select {capitalize(entityDisplayName)}</span>
 	</label>
 	{#if fetching}
 		Loading {capitalize(entityDisplayName)}...
