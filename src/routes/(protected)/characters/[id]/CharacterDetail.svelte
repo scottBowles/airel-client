@@ -2,6 +2,7 @@
 	import { fragment, graphql, CharacterLockStore, type CharacterDetailFields } from '$houdini';
 	import { LayoutDisplay } from '$lib/components/DetailPage';
 	import Spacer from '$lib/components/Spacer.svelte';
+	import { fromGlobalId } from 'graphql-relay';
 
 	const lockForEditMutation = new CharacterLockStore();
 
@@ -44,7 +45,7 @@
 			<Spacer xs />
 			{#if race}
 				<div>
-					<a class="link link-accent link-hover" href={`/races/${race.id}`}>
+					<a class="link link-accent link-hover" href={`/races/${fromGlobalId(race.id).id}`}>
 						{race.name}
 					</a>
 				</div>
@@ -60,10 +61,10 @@
 				<Spacer xs />
 				<div>
 					{#each associations as association, i}
-						<a class="link link-accent link-hover" href={`/associations/${association.id}`}>
-							{association.name}
-						</a>
-						{i < associations.length - 1 ? ', ' : ''}
+						<a
+							class="link link-accent link-hover"
+							href={`/associations/${fromGlobalId(association.id).id}`}>{association.name}</a
+						>{i < associations.length - 1 ? ', ' : ''}
 					{/each}
 				</div>
 			</div>
