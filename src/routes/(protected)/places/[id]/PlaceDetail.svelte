@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fragment, graphql, PlaceLockStore, type PlaceDetailFields } from '$houdini';
 	import { LayoutDisplay } from '$lib/components/DetailPage';
+	import Breadcrumbs from '../Breadcrumbs.svelte';
 
 	const lockForEditMutation = new PlaceLockStore();
 
@@ -11,6 +12,7 @@
 		graphql(`
 			fragment PlaceDetailFields on Place {
 				id
+				...PlaceBreadcrumbFields
 				...EntityDetailFields
 			}
 		`)
@@ -21,4 +23,5 @@
 	const onEditClick = () => lockForEditMutation.mutate({ id });
 </script>
 
+<Breadcrumbs place={$data} />
 <LayoutDisplay entity={$data} {onEditClick} />

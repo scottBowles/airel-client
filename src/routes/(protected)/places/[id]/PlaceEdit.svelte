@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fragment, graphql, UpdatePlaceStore, type PlaceEditFields } from '$houdini';
 	import { LayoutEdit } from '$lib/components/DetailPage';
+	import Breadcrumbs from '../Breadcrumbs.svelte';
 
 	const updatePlace = new UpdatePlaceStore();
 
@@ -11,6 +12,7 @@
 		graphql(`
 			fragment PlaceEditFields on Place {
 				id
+				...PlaceBreadcrumbFields
 				...EntityEditFields
 			}
 		`)
@@ -29,5 +31,6 @@
 </script>
 
 <form method="POST" on:submit|preventDefault={handleSubmit}>
+	<Breadcrumbs place={$data} />
 	<LayoutEdit entity={$data} />
 </form>
