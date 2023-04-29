@@ -1,18 +1,26 @@
-mutation UpdatePlace($id: GlobalID!, $name: String, $description: String, $markdownNotes: String) {
+mutation UpdatePlace(
+	$id: GlobalID!
+	$name: String
+	$description: String
+	$markdownNotes: String
+	$parent: NodeInput
+	$children: NodeListInput
+	$placeType: PlaceType
+) {
 	updatePlace(
-		input: { id: $id, name: $name, description: $description, markdownNotes: $markdownNotes }
+		input: {
+			id: $id
+			name: $name
+			description: $description
+			markdownNotes: $markdownNotes
+			parent: $parent
+			children: $children
+			placeType: $placeType
+		}
 	) {
 		... on Place {
-			id
-			name
-			description
-			markdownNotes
-			lockTime
-			lockedBySelf
-			lockUser {
-				id
-				username
-			}
+			...PlaceLockedBySelf
+			...PlaceDetailFields
 		}
 	}
 }

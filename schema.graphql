@@ -1111,11 +1111,6 @@ input NodePartialListInput {
   set: [NodeInputPartial!]
 }
 
-"""Generic type for objects that implements the `Node` interface."""
-type NodeType implements Node {
-  id: GlobalID!
-}
-
 """
 
     encapsulates token data, and refresh token data if `JWT_LONG_RUNNING_REFRESH_TOKEN` is on.
@@ -1181,6 +1176,19 @@ type PageInfo {
 
 type Place implements Entity & Node {
   associations: [DjangoModelType!]!
+  children(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
   commonRaces: [DjangoModelType!]!
   created: DateTime!
   description: String
@@ -1211,8 +1219,8 @@ type Place implements Entity & Node {
   ): GameLogConnection!
   markdownNotes: String
   name: String!
-  parent: NodeType
-  placeType: String
+  parent: Place
+  placeType: PlaceType
   population: Int!
   thumbnailId: String
   updated: DateTime!
@@ -1248,20 +1256,26 @@ type PlaceEdge {
 }
 
 input PlaceInput {
+  children: NodeListInput
   description: String
   imageIds: [String!]
   logs: [GlobalID!]
   markdownNotes: String
   name: String!
+  parent: NodeInput
+  placeType: PlaceType
   thumbnailId: String
 }
 
 input PlaceInputPartial {
+  children: NodeListInput
   description: String
   id: GlobalID!
   imageIds: [String!]
   markdownNotes: String
   name: String
+  parent: NodeInput
+  placeType: PlaceType
   thumbnailId: String
 }
 
@@ -1278,6 +1292,16 @@ input PlaceReleaseLockInput {
 }
 
 union PlaceReleaseLockPayload = OperationInfo | Place
+
+enum PlaceType {
+  DISTRICT
+  LOCATION
+  MOON
+  PLANET
+  REGION
+  STAR
+  TOWN
+}
 
 type Proficiency implements Node {
   characters(

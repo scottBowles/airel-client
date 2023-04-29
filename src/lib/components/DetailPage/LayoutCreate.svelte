@@ -10,6 +10,8 @@
 
 	const getOrCreateLogMutation = new GetOrCreateGameLogStore();
 
+	export let name: string = '';
+
 	let imageIds: string[] = [];
 	let logs: any = [];
 
@@ -49,6 +51,7 @@
 			type="text"
 			id="name-input"
 			name="name"
+			bind:value={name}
 			class="input input-bordered w-full max-w-xs"
 			required
 		/>

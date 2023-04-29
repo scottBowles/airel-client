@@ -4,6 +4,9 @@ mutation CreatePlace(
 	$markdownNotes: String
 	$imageIds: [String!]
 	$logs: [GlobalID!]
+	$parent: NodeInput
+	$children: NodeListInput
+	$placeType: PlaceType
 ) {
 	createPlace(
 		input: {
@@ -12,6 +15,9 @@ mutation CreatePlace(
 			markdownNotes: $markdownNotes
 			imageIds: $imageIds
 			logs: $logs
+			parent: $parent
+			children: $children
+			placeType: $placeType
 		}
 	) {
 		... on Place {

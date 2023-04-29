@@ -16,6 +16,11 @@ declare global {
 			token?: string;
 		}
 	}
+
+	interface SelectOption {
+		value: string;
+		label: string;
+	}
 }
 
 export {};
