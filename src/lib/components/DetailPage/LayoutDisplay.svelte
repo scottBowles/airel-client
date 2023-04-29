@@ -102,7 +102,7 @@
 	</svelte:fragment>
 
 	<!-- DESCRIPTION -->
-	<p slot="description" class="italic">{description}</p>
+	<p slot="description" class="italic">{description ?? ''}</p>
 
 	<!-- PROPERTIES -->
 	<slot name="properties" slot="properties">
@@ -113,6 +113,6 @@
 
 	<!-- MARKDOWN NOTES -->
 	<div slot="markdownNotes" class="prose inline">
-		{@html markdownNotes}
+		{@html markdownNotes ?? ''}
 	</div>
 </LayoutBase>
