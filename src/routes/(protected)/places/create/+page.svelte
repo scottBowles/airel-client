@@ -40,13 +40,11 @@
 	const handleSubmit = async (event: Event) => {
 		const data = new FormData(event.target as HTMLFormElement);
 		const parsed = parseFormData(data);
-		const name = data.get('name')?.toString();
-		const imageIds = data.get('imageIds')?.toString().split(',').filter(Boolean);
-		const logs = data.get('logs')?.toString().split(',').filter(Boolean);
+		const name = parsed.name as string | undefined;
 
 		if (!name) throw error(400, 'Name is required');
 
-		const res = await createMutation.mutate({ name, imageIds, logs, ...parsed });
+		const res = await createMutation.mutate({ ...parsed, name });
 
 		if (res.data) {
 			const { id: globalId } = res.data.createPlace;

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { fromGlobalId } from 'graphql-relay';
+	import { parseFormData } from 'parse-nested-form-data';
 	import { error } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
 	import { CreateRaceStore } from '$houdini';
@@ -9,15 +10,12 @@
 
 	const handleSubmit = async (event: Event) => {
 		const data = new FormData(event.target as HTMLFormElement);
-		const name = data.get('name')?.toString();
-		const description = data.get('description')?.toString();
-		const markdownNotes = data.get('markdownNotes')?.toString();
-		const imageIds = data.get('imageIds')?.toString().split(',').filter(Boolean);
-		const logs = data.get('logs')?.toString().split(',').filter(Boolean);
+		const parsed = parseFormData(data);
+		const name = parsed.name as string | undefined;
 
 		if (!name) throw error(400, 'Name is required');
 
-		const res = await createMutation.mutate({ name, description, markdownNotes, imageIds, logs });
+		const res = await createMutation.mutate({ ...parsed, name });
 
 		if (res.data) {
 			const { id: globalId } = res.data.createRace;

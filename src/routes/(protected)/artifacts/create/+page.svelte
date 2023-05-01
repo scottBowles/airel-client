@@ -14,12 +14,10 @@
 		const data = new FormData(event.target as HTMLFormElement);
 		const parsed = parseFormData(data);
 		const name = parsed.name as string | undefined;
-		const imageIds = data.get('imageIds')?.toString().split(',').filter(Boolean);
-		const logs = data.get('logs')?.toString().split(',').filter(Boolean);
 
 		if (!name) throw error(400, 'Name is required');
 
-		const res = await createMutation.mutate({ ...parsed, name, imageIds, logs });
+		const res = await createMutation.mutate({ ...parsed, name });
 
 		if (res.data) {
 			const { id: globalId } = res.data.createArtifact;

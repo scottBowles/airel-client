@@ -2,7 +2,7 @@
 	import { fromGlobalId } from 'graphql-relay';
 	import { error } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
-	import { CreateCharacterStore, type CreateCharacter$input } from '$houdini';
+	import { CreateCharacterStore } from '$houdini';
 	import { LayoutCreate } from '$lib/components/DetailPage';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import RelatedRaceSelect from '$lib/components/RelatedRaceSelect.svelte';
@@ -14,16 +14,11 @@
 	const handleSubmit = async (event: Event) => {
 		const data = new FormData(event.target as HTMLFormElement);
 		const parsed = parseFormData(data);
-		const imageIds = data.get('imageIds')?.toString().split(',').filter(Boolean);
-		const logs = data.get('logs')?.toString().split(',').filter(Boolean);
+		const name = parsed.name as string | undefined;
 
-		if (!parsed.name) throw error(400, 'Name is required');
+		if (!name) throw error(400, 'Name is required');
 
-		const res = await createMutation.mutate({
-			...(parsed as CreateCharacter$input),
-			imageIds,
-			logs
-		});
+		const res = await createMutation.mutate({ ...parsed, name });
 
 		if (res.data) {
 			const { id: globalId } = res.data.createCharacter;

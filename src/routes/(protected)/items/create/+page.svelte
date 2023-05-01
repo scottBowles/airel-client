@@ -3,7 +3,7 @@
 	import { parseFormData } from 'parse-nested-form-data';
 	import { error } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
-	import { CreateItemStore, type CreateItem$input } from '$houdini';
+	import { CreateItemStore } from '$houdini';
 	import { LayoutCreate } from '$lib/components/DetailPage';
 	import AddBlock from '../AddBlock.svelte';
 	import ItemArmorInputs from '../ItemArmorInputs.svelte';
@@ -14,21 +14,12 @@
 
 	const handleSubmit = async (event: Event) => {
 		const formData = new FormData(event.target as HTMLFormElement);
-
-		// Validate required fields
-		if (!formData.get('name')) throw error(400, 'Name is required');
-
-		// Parse nested form data
 		const parsed = parseFormData(formData);
+		const name = parsed.name as string | undefined;
 
-		// Split comma-separated strings into an array of strings.
-		// In the event of an empty string or undefined, return an empty array.
-		const logs = parsed.logs ? (parsed.logs as string)?.split(',') : [];
-		const imageIds = parsed.imageIds ? (parsed.imageIds as string)?.split(',') : [];
+		if (!name) throw error(400, 'Name is required');
 
-		// Make the create request
-		const data = { ...parsed, logs, imageIds } as CreateItem$input;
-		const res = await createMutation.mutate(data);
+		const res = await createMutation.mutate({ ...parsed, name });
 
 		// Redirect to the new item's detail page
 		if (res.data) {

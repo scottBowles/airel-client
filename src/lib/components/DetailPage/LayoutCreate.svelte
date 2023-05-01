@@ -65,15 +65,23 @@
 		<CloudinaryUpload {onImageUpload}>
 			<ImageCarousel {imageIds} alt={'uploaded images'} />
 		</CloudinaryUpload>
-		<input type="hidden" name="imageIds" bind:value={imageIds} />
 		<Spacer />
+
+		<!-- Hidden inputs -->
+		{#each imageIds as imageId, i}
+			<input type="hidden" name={`imageIds[${i}]`} value={imageId} />
+		{/each}
 	</div>
 
 	<!-- LOGS -->
 	<svelte:fragment slot="logs">
 		<LogsDisplay {logs} {onLogAdd} {onLogRemove} />
-		<input type="hidden" name="logs" value={logIds} />
 		<Spacer />
+
+		<!-- Hidden inputs -->
+		{#each logIds as logId, i}
+			<input type="hidden" name={`logs[${i}]`} value={logId} />
+		{/each}
 	</svelte:fragment>
 
 	<!-- DESCRIPTION -->
