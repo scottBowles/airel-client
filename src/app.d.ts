@@ -13,7 +13,9 @@ declare global {
 
 		// Houdini's Session type
 		interface Session {
+			user?: string;
 			token?: string;
+			refresh_token?: string;
 		}
 	}
 

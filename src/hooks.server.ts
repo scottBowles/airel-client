@@ -26,9 +26,13 @@ const populateUserToLocals = (async ({ event, resolve }) => {
 		const decoded = JSON.parse(decodedJson.payload) as JwtPayload;
 		event.locals.user = decoded.username;
 
-		const isExpired = decoded?.exp && decoded.exp < Date.now() / 1000;
+		const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+		const buffer = 15 * 1000;
+		const now = new Date().valueOf();
+		const exp = new Date(decoded.exp).valueOf() - timezoneOffset - buffer;
+		const shouldRefresh = exp < now;
 
-		if (isExpired) {
+		if (shouldRefresh) {
 			const tokensRes = await refreshAuthToken(event.locals.refresh_token);
 			if (tokensRes.success) {
 				event.locals.token = tokensRes.token.token;
@@ -66,8 +70,8 @@ const setCookies = (async ({ event, resolve }) => {
 }) satisfies Handle;
 
 const setHoudiniSession = (async ({ event, resolve }) => {
-	const authToken = event.locals.token;
-	setSession(event, { token: authToken });
+	const { token, refresh_token } = event.locals;
+	setSession(event, { token, refresh_token });
 	return await resolve(event);
 }) satisfies Handle;
 

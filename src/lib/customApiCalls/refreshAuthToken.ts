@@ -6,7 +6,7 @@ const refreshAuthToken = async (refresh_token: string) => {
 		payload: {
 			query: `
 			mutation RefreshToken($refresh_token: String!) {
-				refreshToken(refreshToken: $refresh_token) {
+				refreshToken(input: { refreshToken: $refresh_token }) {
 					success
 					errors
 					token {
