@@ -1,12 +1,10 @@
 <script lang="ts">
-	import { fragment, graphql, PlaceLockStore, type PlaceDetailFields } from '$houdini';
+	import { fragment, graphql, type PlaceDetailFields } from '$houdini';
 	import { LayoutDisplay } from '$lib/components/DetailPage';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { capitalize } from '$lib/utils';
 	import Breadcrumbs from '../Breadcrumbs.svelte';
 	import { getChildrenName } from '../utils';
-
-	const lockForEditMutation = new PlaceLockStore();
 
 	export let place: PlaceDetailFields;
 
@@ -14,7 +12,6 @@
 		place,
 		graphql(`
 			fragment PlaceDetailFields on Place {
-				id
 				placeType
 				children {
 					edges {
@@ -30,15 +27,13 @@
 		`)
 	);
 
-	$: ({ id, placeType, children: childrenConnection } = $data);
+	$: ({ placeType, children: childrenConnection } = $data);
 	$: placeTypeDisplay = placeType ? capitalize(placeType) : '';
 	$: children = childrenConnection?.edges?.map((edge) => edge.node) || [];
-
-	const onEditClick = () => lockForEditMutation.mutate({ id });
 </script>
 
 <Breadcrumbs place={$data} />
-<LayoutDisplay entity={$data} {onEditClick}>
+<LayoutDisplay entity={$data}>
 	<svelte:fragment slot="properties">
 		<Spacer lg />
 		{#if placeTypeDisplay}

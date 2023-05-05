@@ -1,7 +1,8 @@
 <script lang="ts">
+	import FaUndoAlt from 'svelte-icons/fa/FaUndoAlt.svelte';
+	import FaSave from 'svelte-icons/fa/FaSave.svelte';
 	import CloudinaryUpload from '$lib/components/CloudinaryUpload.svelte';
 	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
-	import { onMount } from 'svelte';
 	import QuillEditor from '../QuillEditor.svelte';
 	import Spacer from '../Spacer.svelte';
 	import LayoutBase from './LayoutBase.svelte';
@@ -70,11 +71,6 @@
 		const res = await addImageMutation.mutate({ id, imageId });
 		if (res.errors) somethingWentWrong(res.errors[0].message);
 	};
-
-	let isMounted = false;
-	onMount(() => {
-		isMounted = true;
-	});
 </script>
 
 <LayoutBase clearfix>

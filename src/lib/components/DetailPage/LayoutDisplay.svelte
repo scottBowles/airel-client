@@ -1,10 +1,12 @@
 <script lang="ts">
+	import FaEdit from 'svelte-icons/fa/FaEdit.svelte';
 	import {
+		fragment,
+		graphql,
 		AddEntityLogStore,
 		RemoveEntityLogStore,
 		EntityAddImageStore,
-		fragment,
-		graphql,
+		LockStore,
 		type EntityDetailFields
 	} from '$houdini';
 	import CloudinaryUpload from '$lib/components/CloudinaryUpload.svelte';
@@ -15,12 +17,12 @@
 	import LayoutBase from './LayoutBase.svelte';
 	import LogsDisplay from './LogsDisplay.svelte';
 
+	const lockForEditMutation = new LockStore();
 	const addLogMutation = new AddEntityLogStore();
 	const removeLogMutation = new RemoveEntityLogStore();
 	const addImageMutation = new EntityAddImageStore();
 
 	export let properties: { [key: string]: string | number } = {};
-	export let onEditClick: () => void;
 
 	export let entity: EntityDetailFields;
 
@@ -51,6 +53,8 @@
 	);
 
 	$: ({ id, name, description, imageIds = [], markdownNotes, logs, lockUser } = $data);
+
+	const onEditClick = () => lockForEditMutation.mutate({ id });
 
 	const onLogAdd = async (logUrl: string) => {
 		const res = await addLogMutation.mutate({ entityId: id, logUrl });

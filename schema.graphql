@@ -52,7 +52,7 @@ input ArmorTraitsInput {
   delete: Boolean = false
 }
 
-type Artifact implements Entity & Node {
+type Artifact implements Entity & Lockable & Node {
   created: DateTime!
   description: String
   id: GlobalID!
@@ -164,7 +164,7 @@ input ArtifactReleaseLockInput {
 
 union ArtifactReleaseLockPayload = Artifact | OperationInfo
 
-type Association implements Entity & Node {
+type Association implements Entity & Lockable & Node {
   characters(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -273,7 +273,7 @@ input AssociationReleaseLockInput {
 
 union AssociationReleaseLockPayload = Association | OperationInfo
 
-type Character implements Entity & Node {
+type Character implements Entity & Lockable & Node {
   associations(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -483,7 +483,7 @@ type DjangoModelType {
   pk: ID!
 }
 
-interface Entity {
+interface Entity implements Lockable {
   created: DateTime!
   description: String
   id: GlobalID!
@@ -560,7 +560,7 @@ input EquipmentTraitsInput {
 """
 scalar ExpectedError
 
-type Export implements Entity & Node {
+type Export implements Entity & Lockable & Node {
   created: DateTime!
   description: String
   id: GlobalID!
@@ -724,7 +724,7 @@ The `ID` scalar type represents a unique identifier, often used to refetch an ob
 """
 scalar GlobalID
 
-type Item implements Entity & Node {
+type Item implements Entity & Lockable & Node {
   armor: ArmorTraits
   artifacts(
     """Returns the items in the list that come after the specified cursor."""
@@ -883,6 +883,19 @@ input LanguageInputPartial {
   script: NodeInput
 }
 
+interface Lockable {
+  id: GlobalID!
+  lockTime: DateTime
+  lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
+}
+
 type Mutation {
   addEntityLog(input: AddEntityLogInput!): Node!
   artifactAddImage(
@@ -1012,6 +1025,7 @@ type Mutation {
     """Input data for `itemReleaseLock` mutation"""
     input: ItemReleaseLockInput!
   ): ItemReleaseLockPayload!
+  lock(input: NodeInput!): Lockable!
   placeAddImage(
     """Input data for `placeAddImage` mutation"""
     input: PlaceAddImageInput!
@@ -1057,6 +1071,7 @@ type Mutation {
       
   """
   revokeToken(input: RevokeTokenInput!): RevokeRefreshTokenType!
+  unlock(input: NodeInput!): Node!
   updateAbilityScoreIncrease(input: AbilityScoreIncreaseInputPartial!): UpdateAbilityScoreIncreasePayload!
   updateArtifact(input: ArtifactInputPartial!): UpdateArtifactPayload!
   updateAssociation(input: AssociationInputPartial!): UpdateAssociationPayload!
@@ -1174,7 +1189,7 @@ type PageInfo {
   startCursor: String
 }
 
-type Place implements Entity & Node {
+type Place implements Entity & Lockable & Node {
   associations: [DjangoModelType!]!
   children(
     """Returns the items in the list that come after the specified cursor."""
@@ -1787,7 +1802,7 @@ type Query {
   ): UserConnection!
 }
 
-type Race implements Entity & Node {
+type Race implements Entity & Lockable & Node {
   characters(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null

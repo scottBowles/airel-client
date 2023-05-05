@@ -1,11 +1,9 @@
 <script lang="ts">
-	import { fragment, graphql, ItemLockStore, type ItemDetailFields } from '$houdini';
+	import { fragment, graphql, type ItemDetailFields } from '$houdini';
 	import { LayoutDisplay } from '$lib/components/DetailPage';
 	import ItemArmorBlock from '../ItemArmorBlock.svelte';
 	import ItemEquipmentBlock from '../ItemEquipmentBlock.svelte';
 	import ItemWeaponBlock from '../ItemWeaponBlock.svelte';
-
-	const lockForEditMutation = new ItemLockStore();
 
 	export let item: ItemDetailFields;
 
@@ -13,7 +11,6 @@
 		item,
 		graphql(`
 			fragment ItemDetailFields on Item {
-				id
 				armor {
 					acBonus
 				}
@@ -31,12 +28,10 @@
 		`)
 	);
 
-	$: ({ id, armor, weapon, equipment } = $data);
-
-	const onEditClick = () => lockForEditMutation.mutate({ id });
+	$: ({ armor, weapon, equipment } = $data);
 </script>
 
-<LayoutDisplay entity={$data} {onEditClick}>
+<LayoutDisplay entity={$data}>
 	<svelte:fragment slot="properties">
 		<div class="spacer" />
 		<div class="stat-block-container">

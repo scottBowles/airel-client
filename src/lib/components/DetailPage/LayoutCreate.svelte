@@ -10,7 +10,7 @@
 
 	const getOrCreateLogMutation = new GetOrCreateGameLogStore();
 
-	export let name: string = '';
+	export let name = '';
 
 	let imageIds: string[] = [];
 	let logs: any = [];

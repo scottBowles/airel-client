@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { fragment, graphql, AssociationLockStore, type AssociationDetailFields } from '$houdini';
+	import { fromGlobalId } from 'graphql-relay';
+	import { fragment, graphql, type AssociationDetailFields } from '$houdini';
 	import { LayoutDisplay } from '$lib/components/DetailPage';
 	import Spacer from '$lib/components/Spacer.svelte';
-	import { fromGlobalId } from 'graphql-relay';
-
-	const lockForEditMutation = new AssociationLockStore();
 
 	export let association: AssociationDetailFields;
 
@@ -12,7 +10,6 @@
 		association,
 		graphql(`
 			fragment AssociationDetailFields on Association {
-				id
 				...EntityDetailFields
 				characters {
 					edges {
@@ -26,13 +23,11 @@
 		`)
 	);
 
-	$: ({ id, characters: charactersConnection } = $data);
+	$: ({ characters: charactersConnection } = $data);
 	$: characters = charactersConnection?.edges.map(({ node }) => node) || [];
-
-	const onEditClick = () => lockForEditMutation.mutate({ id });
 </script>
 
-<LayoutDisplay entity={$data} {onEditClick}>
+<LayoutDisplay entity={$data}>
 	<svelte:fragment slot="properties">
 		<Spacer lg />
 		<div class="items-container">
