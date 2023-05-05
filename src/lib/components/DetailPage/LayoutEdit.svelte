@@ -13,10 +13,12 @@
 		RemoveEntityLogStore,
 		fragment,
 		graphql,
-		type EntityEditFields
+		type EntityEditFields,
+		UnlockStore
 	} from '$houdini';
 	import { somethingWentWrong } from '$lib/utils';
 
+	const unlockMutation = new UnlockStore();
 	const addLogMutation = new AddEntityLogStore();
 	const removeLogMutation = new RemoveEntityLogStore();
 	const addImageMutation = new EntityAddImageStore();
@@ -50,6 +52,10 @@
 	);
 
 	$: ({ id, name, description, markdownNotes, logs, imageIds = [], lockUser } = $data);
+
+	const modalId = `discard-changes-modal-${id}`;
+
+	const unlock = () => unlockMutation.mutate({ id });
 
 	const onLogAdd = async (logUrl: string) => {
 		const res = await addLogMutation.mutate({ entityId: id, logUrl });
@@ -91,7 +97,28 @@
 
 	<!-- EDIT / SAVE + LOCKED BY {USER} -->
 	<svelte:fragment slot="lockedBy">
-		<span>Locked by {lockUser?.username ?? 'Unknown'}</span> <button type="submit">Save</button>
+		<span>Locked by {lockUser?.username ?? 'Unknown'}</span>
+		<label for={modalId} class="btn btn-ghost btn-sm icon-btn modal-button"
+			><div class="tooltip" data-tip="Discard changes">
+				<span class="icon"><FaUndoAlt /></span>
+			</div></label
+		>
+
+		<input type="checkbox" id={modalId} class="modal-toggle" />
+		<label for={modalId} class="modal modal-bottom sm:modal-middle cursor-pointer">
+			<label class="modal-box relative" for="">
+				<h3 class="font-bold text-lg">Discard changes</h3>
+				<p class="py-4">Are you sure you want to discard any unsaved changes?</p>
+				<div class="modal-action">
+					<label for={modalId} class="btn" on:click={unlock} on:keypress={unlock}>Yes</label>
+					<label for={modalId} class="btn">No</label>
+				</div>
+			</label>
+		</label>
+
+		<button type="submit" class="btn btn-ghost btn-sm icon-btn"
+			><div class="tooltip" data-tip="Save"><span class="icon"><FaSave /></span></div></button
+		>
 	</svelte:fragment>
 
 	<!-- MAIN IMAGE -->
@@ -127,3 +154,19 @@
 	<!-- MARKDOWN NOTES -->
 	<QuillEditor init={markdownNotes ?? undefined} slot="markdownNotes" />
 </LayoutBase>
+
+<style>
+	.icon {
+		display: inline-block;
+		height: 16px;
+		width: 16px;
+	}
+
+	.icon-btn:hover {
+		color: #908149;
+	}
+
+	.tooltip {
+		text-transform: none;
+	}
+</style>

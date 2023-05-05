@@ -58,7 +58,8 @@
 	</div>
 
 	<!-- EDIT / SAVE + LOCKED BY {USER} -->
-	<button slot="lockedBy" class="ml-auto" type="submit">Save</button>
+	<button slot="lockedBy" type="submit" class="btn btn-ghost btn-sm btn-custom ml-auto">Save</button
+	>
 
 	<!-- MAIN IMAGE -->
 	<div slot="mainImage" class="w-full max-w-xs mx-auto">
@@ -102,3 +103,12 @@
 	<!-- MARKDOWN NOTES -->
 	<QuillEditor slot="markdownNotes" init="" />
 </LayoutBase>
+
+<style>
+	.btn-custom {
+		text-transform: none;
+	}
+	.btn-custom:hover {
+		color: #908149;
+	}
+</style>

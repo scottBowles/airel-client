@@ -1,0 +1,14 @@
+mutation Unlock($id: GlobalID!) {
+	unlock(input: { id: $id }) {
+		id
+		... on Lockable {
+			id
+			lockedBySelf
+			lockTime
+			lockUser {
+				id
+				username
+			}
+		}
+	}
+}

@@ -85,9 +85,18 @@
 	<!-- EDIT / SAVE + LOCKED BY {USER} -->
 	<svelte:fragment slot="lockedBy">
 		{#if lockUser}
-			Locked by {lockUser.username} <button type="button" disabled>Edit</button>
+			Locked by {lockUser.username}
+			<div class="tooltip ml-auto" data-tip="Edit">
+				<button type="button" class="btn btn-ghost btn-sm icon-btn" disabled>
+					<span class="icon"><FaEdit /></span>
+				</button>
+			</div>
 		{:else}
-			<button class="ml-auto" type="button" on:click={onEditClick}>Edit</button>
+			<div class="tooltip ml-auto" data-tip="Edit">
+				<button type="button" class="btn btn-ghost btn-sm icon-btn" on:click={onEditClick}>
+					<span class="icon"><FaEdit /></span>
+				</button>
+			</div>
 		{/if}
 	</svelte:fragment>
 
@@ -120,3 +129,19 @@
 		{@html markdownNotes ?? ''}
 	</div>
 </LayoutBase>
+
+<style>
+	.icon {
+		display: inline-block;
+		height: 16px;
+		width: 16px;
+	}
+
+	.icon-btn:hover {
+		color: #908149;
+	}
+
+	.tooltip {
+		text-transform: none;
+	}
+</style>
