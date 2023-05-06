@@ -8,14 +8,22 @@
 	import Spacer from '../Spacer.svelte';
 	import QuillEditor from '../QuillEditor.svelte';
 
+	type Log = {
+		googleId: string | null;
+		id: string;
+		name: string | null;
+		url: string;
+		__typename: 'GameLog';
+	};
+
 	const getOrCreateLogMutation = new GetOrCreateGameLogStore();
 
 	export let name = '';
 
 	let imageIds: string[] = [];
-	let logs: any = [];
+	let logs: Log[] = [];
 
-	$: logIds = logs.map((log: any) => log.id);
+	$: logIds = logs.map((log) => log.id);
 
 	const onImageUpload = async (error: any, result: any) => {
 		if (error) return somethingWentWrong(error.message);
@@ -31,13 +39,13 @@
 		if (res.errors) {
 			somethingWentWrong(res.errors[0].message);
 		}
-		if (res.data) {
+		if (res.data?.getOrCreateGameLog.__typename === 'GameLog') {
 			logs = [...logs, res.data.getOrCreateGameLog];
 		}
 	};
 
 	const onLogRemove = (logId: string) => {
-		logs = logs.filter((log: any) => log.id !== logId);
+		logs = logs.filter((log) => log.id !== logId);
 	};
 </script>
 
