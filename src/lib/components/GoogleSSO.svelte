@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 
-	const login_uri = 'http://localhost:5173/endpoints/google_auth?' + $page.url.searchParams;
+	const login_uri = $page.url.origin + '/endpoints/google_auth?' + $page.url.searchParams;
 
 	onMount(() => {
 		const script = document.createElement('script');
