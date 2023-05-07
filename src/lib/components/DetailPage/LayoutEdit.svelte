@@ -122,7 +122,7 @@
 	</svelte:fragment>
 
 	<!-- MAIN IMAGE -->
-	<div slot="mainImage" class="w-full max-w-xs mx-auto">
+	<div slot="mainImage" class="w-full mx-auto">
 		<CloudinaryUpload {onImageUpload}>
 			<ImageCarousel {imageIds} alt={name ?? ''} />
 		</CloudinaryUpload>
@@ -144,7 +144,7 @@
 			id="description-input"
 			name="description"
 			value={description}
-			class="textarea textarea-bordered w-full max-w-xs"
+			class="textarea textarea-bordered"
 		/>
 	</div>
 

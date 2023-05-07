@@ -3,7 +3,7 @@
 	export let clearfix = false;
 </script>
 
-<div class="container mx-auto mt-2">
+<div class="container mx-auto mt-2 mb-32 px-8">
 	<slot />
 
 	<!-- TOP ROW -->
@@ -24,9 +24,9 @@
 
 	<div class:clearfix class="max-w-full">
 		<!-- FLOAT AREA -->
-		<div class="float-right w-full sm:max-w-xs sm:w-2/5 ml-2">
+		<div class="sm:float-right w-full sm:w-2/5 ml-2">
 			<!-- IMAGES -->
-			<slot name="mainImage" />
+			<slot name="mainImage" class="w-full" />
 
 			<slot name="logs" />
 			<Spacer />
