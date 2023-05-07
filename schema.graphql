@@ -1071,7 +1071,7 @@ type Mutation {
       
   """
   revokeToken(input: RevokeTokenInput!): RevokeRefreshTokenType!
-  unlock(input: NodeInput!): Node!
+  unlock(input: NodeInput!): Lockable!
   updateAbilityScoreIncrease(input: AbilityScoreIncreaseInputPartial!): UpdateAbilityScoreIncreasePayload!
   updateArtifact(input: ArtifactInputPartial!): UpdateArtifactPayload!
   updateAssociation(input: AssociationInputPartial!): UpdateAssociationPayload!
