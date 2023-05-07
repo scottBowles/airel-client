@@ -1,9 +1,10 @@
 import jwt_decode from 'jwt-decode';
 import { HoudiniClient } from '$houdini';
 import refreshAuthToken from '$lib/customApiCalls/refreshAuthToken';
+import { PUBLIC_GRAPHQL_URL } from '$env/static/public';
 
 export default new HoudiniClient({
-	url: 'http://127.0.0.1:8000/graphql/',
+	url: PUBLIC_GRAPHQL_URL,
 
 	// uncomment this to configure the network call (for things like authentication)
 	// for more information, please visit here: https://www.houdinigraphql.com/guides/authentication
