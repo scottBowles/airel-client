@@ -1,5 +1,4 @@
 <script>
-	import { dev } from '$app/env';
 	import { page } from '$app/stores';
 </script>
 
@@ -10,11 +9,7 @@
 <div class="col-md-9">
 	<h1>{$page.status}</h1>
 
-	<p>{$page.error.message}</p>
-
-	{#if dev && $page.error.stack}
-		<pre>{$page.error.stack}</pre>
-	{/if}
+	<p>{$page.error?.message}</p>
 </div>
 
 <style>

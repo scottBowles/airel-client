@@ -1,9 +1,0 @@
-query associations {
-	associations {
-		edges {
-			node {
-				...AssociationFields
-			}
-		}
-	}
-}

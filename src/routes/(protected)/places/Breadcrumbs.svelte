@@ -1,0 +1,72 @@
+<script lang="ts">
+	import { fragment, type PlaceBreadcrumbFields, type PlaceBreadcrumbFields$data } from '$houdini';
+	import { graphql } from 'graphql';
+	import { fromGlobalId } from 'graphql-relay';
+
+	export let place: PlaceBreadcrumbFields;
+
+	$: data = fragment(
+		place,
+		graphql(`
+			fragment PlaceBreadcrumbFields on Place {
+				id
+				name
+				parent {
+					id
+					name
+					parent {
+						id
+						name
+						parent {
+							id
+							name
+							parent {
+								id
+								name
+								parent {
+									id
+									name
+									parent {
+										id
+										name
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		`)
+	);
+
+	type BreadcrumbNode = { id: string; name: string; parent?: BreadcrumbNode | null };
+
+	function getBreadcrumbs(node?: BreadcrumbNode | null): BreadcrumbNode[] {
+		return node ? [...getBreadcrumbs(node.parent), node] : [];
+	}
+	$: breadcrumbs = getBreadcrumbs($data);
+</script>
+
+{#if breadcrumbs.length > 0}
+	<div class="container mx-auto mt-2">
+		<div class="text-sm breadcrumbs">
+			{#if breadcrumbs.length > 1}
+				<ul>
+					{#each breadcrumbs as { id, name }, i}
+						<li>
+							{#if i === breadcrumbs.length - 1}
+								{name}
+							{:else}
+								<a href={`/places/${fromGlobalId(id).id}`} class="text-accent">
+									{name}
+								</a>
+							{/if}
+						</li>
+					{/each}
+				</ul>
+			{:else}
+				&nbsp;
+			{/if}
+		</div>
+	</div>
+{/if}

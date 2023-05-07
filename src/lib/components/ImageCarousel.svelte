@@ -5,8 +5,8 @@
 	import { Splide, SplideSlide, SplideTrack } from '@splidejs/svelte-splide';
 	import '@splidejs/svelte-splide/css';
 
-	export let imageIds;
-	export let alt;
+	export let imageIds: string[];
+	export let alt: string;
 
 	let defaultImageSrc = 'dnd:placeholder.jpg';
 
@@ -19,7 +19,7 @@
 		return src;
 	}
 
-	$: imageIds = imageIds.length > 0 ? imageIds : [defaultImageSrc];
+	$: imageIds = imageIds.length > 0 ? [...new Set(imageIds)] : [defaultImageSrc];
 </script>
 
 <Splide
@@ -29,7 +29,7 @@
 >
 	<div class="splide__arrows" class:hidden={imageIds.length < 2} on:click|stopPropagation />
 	<SplideTrack>
-		{#each imageIds as imageId}
+		{#each imageIds as imageId (imageId)}
 			{@const src = getImageSrc(imageId)}
 			<SplideSlide>
 				<img data-splide-lazy={src} {alt} />

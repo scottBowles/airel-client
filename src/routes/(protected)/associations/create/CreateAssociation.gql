@@ -1,0 +1,24 @@
+mutation CreateAssociation(
+	$name: String!
+	$description: String
+	$markdownNotes: String
+	$imageIds: [String!]
+	$logs: [GlobalID!]
+	$characters: NodePartialListInput
+) {
+	createAssociation(
+		input: {
+			name: $name
+			description: $description
+			markdownNotes: $markdownNotes
+			imageIds: $imageIds
+			logs: $logs
+			characters: $characters
+		}
+	) {
+		... on Association {
+			...AssociationLockedBySelf
+			...AssociationDetailFields
+		}
+	}
+}

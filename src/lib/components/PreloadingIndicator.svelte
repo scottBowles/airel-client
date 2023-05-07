@@ -1,7 +1,9 @@
 <script>
 	import { onMount } from 'svelte';
+
 	let p = 0;
 	let visible = false;
+
 	onMount(() => {
 		visible = true;
 		function next() {

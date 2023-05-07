@@ -1,9 +1,0 @@
-query npcs {
-	npcs {
-		edges {
-			node {
-				...NpcFields
-			}
-		}
-	}
-}

@@ -1,2 +1,4 @@
-export { default as showAlgoliaSearch } from './showAlgoliaSearch';
-export { default as theme } from './theme';
+export { default as initShowAlgoliaSearchStore } from './initShowAlgoliaSearchStore';
+export type { ShowAlgoliaSearch } from './initShowAlgoliaSearchStore';
+export { default as initThemeStore } from './initThemeStore';
+export type { Theme } from './initThemeStore';

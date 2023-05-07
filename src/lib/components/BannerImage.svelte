@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
 
 	/** Cloudinary actions */
@@ -23,11 +23,11 @@
 	export let height = 300;
 	export let overlay = '';
 	export let alt = '';
-	export let gravity = undefined;
+	export let gravity: ReturnType<typeof compass> | undefined = undefined;
 
-	let src;
-	let loaded;
-	let imgElement;
+	let src: string;
+	let loaded: boolean;
+	let imgElement: HTMLImageElement;
 
 	$: heightToWeightRatio = height / width;
 

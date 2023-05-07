@@ -1,15 +1,26 @@
 <script>
 	import { navigating } from '$app/stores';
-	import Algolia from '$lib/components/Algolia.svelte';
-	import CustomLayout from '$lib/components/nav/CustomLayout.svelte';
-	import NavBar from '$lib/components/nav/NavBar.svelte';
-	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
-	import { KQL__Init } from '$lib/graphql/_kitql/graphqlStores';
-	import { showAlgoliaSearch, theme } from '$lib/stores';
+	import { onMount, setContext } from 'svelte';
 	import { SvelteToast } from '@zerodevx/svelte-toast';
+	import { themeChange } from 'theme-change';
+
+	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
+	import { initShowAlgoliaSearchStore, initThemeStore } from '$lib/stores';
 	import '../app.css';
 
-	KQL__Init();
+	// Initialize stores
+	const theme = initThemeStore();
+	const showAlgoliaSearch = initShowAlgoliaSearchStore();
+
+	$: console.log('theme', $theme);
+
+	// Add stores to context
+	setContext('theme', theme);
+	setContext('showAlgoliaSearch', showAlgoliaSearch);
+
+	onMount(() => {
+		themeChange(false);
+	});
 </script>
 
 {#if $navigating}
@@ -18,20 +29,8 @@
 
 <!-- TODO: put NavBar outside of main and handle min-height accordingly -->
 <main>
-	<!-- <AllDrawers><slot /></AllDrawers> -->
-	{#if $theme === 'trek'}
-		<CustomLayout><slot /></CustomLayout>
-	{:else}
-		<NavBar><slot /></NavBar>
-	{/if}
-
 	<SvelteToast options={{ pausable: true }} />
-
-	{#if $showAlgoliaSearch}
-		<div class="search-modal">
-			<Algolia placeholder="Search" />
-		</div>
-	{/if}
+	<slot />
 </main>
 
 <style>
@@ -40,13 +39,5 @@
 		width: 100vw;
 		overflow: hidden;
 		position: relative;
-	}
-	.search-modal {
-		--algolia-search-width: clamp(50%, 500px, 90%);
-		width: var(--algolia-search-width);
-		height: 500px;
-		position: absolute;
-		top: 10%;
-		left: calc(50% - var(--algolia-search-width) / 2);
 	}
 </style>

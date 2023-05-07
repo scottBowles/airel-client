@@ -1,0 +1,12 @@
+query Items {
+	items {
+		edges {
+			node {
+				id
+				name
+				...ItemListFields
+				...EntityListFields
+			}
+		}
+	}
+}

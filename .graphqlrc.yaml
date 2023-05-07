@@ -1,34 +1,9 @@
 projects:
   default:
     schema:
-      - https://apirel.onrender.com/graphql/ # or a local file
-        # headers:
-        #   Authorization: 'Bearer ${TOKEN}'
+      - ./schema.graphql
+      - ./$houdini/graphql/schema.graphql
     documents:
       - '**/*.gql'
-    extensions:
-      endpoints:
-        default:
-          url: https://apirel.onrender.com/graphql/
-      codegen:
-        generates:
-          ./src/lib/graphql/schema.json:
-            plugins:
-              - introspection
-
-          ./src/lib/graphql/_kitql/graphqlTypes.ts:
-            plugins:
-              - typescript
-              - typescript-operations
-              - typed-document-node
-              - typescript-document-nodes
-
-          ./src/lib/graphql/_kitql/graphqlStores.ts:
-            plugins:
-              - '@kitql/graphql-codegen'
-            config:
-              importBaseTypesFrom: $lib/graphql/_kitql/graphqlTypes
-              operationPrefix: 'KQL_'
-
-        config:
-          useTypeImports: true
+      - '**/*.svelte'
+      - ./$houdini/graphql/documents.gql

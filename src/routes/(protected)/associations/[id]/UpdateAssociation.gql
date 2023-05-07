@@ -1,0 +1,22 @@
+mutation UpdateAssociation(
+	$id: GlobalID!
+	$name: String
+	$description: String
+	$markdownNotes: String
+	$characters: NodePartialListInput
+) {
+	updateAssociation(
+		input: {
+			id: $id
+			name: $name
+			description: $description
+			markdownNotes: $markdownNotes
+			characters: $characters
+		}
+	) {
+		... on Association {
+			...AssociationLockedBySelf
+			...AssociationDetailFields
+		}
+	}
+}

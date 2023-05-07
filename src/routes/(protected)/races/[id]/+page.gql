@@ -1,0 +1,7 @@
+query Race($id: ID!) {
+	race(pk: $id) {
+		...RaceLockedBySelf
+		...RaceDetailFields
+		...RaceEditFields
+	}
+}

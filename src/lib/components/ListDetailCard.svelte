@@ -1,25 +1,38 @@
-<script>
+<script lang="ts">
+	import { fragment, graphql, type EntityListFields } from '$houdini';
 	import Thumbnail from '$lib/components/Thumbnail.svelte';
 
-	export let thumbnailId;
-	export let name = '';
-	export let description = '';
-	export let href = '';
+	export let href: string;
+	export let entity: EntityListFields;
+
+	$: data = fragment(
+		entity,
+		graphql(`
+			fragment EntityListFields on Entity {
+				name
+				description
+				thumbnailId
+				imageIds
+			}
+		`)
+	);
+
+	$: ({ name, description, thumbnailId, imageIds } = $data);
 </script>
 
 <div class="_card">
 	<slot name="thumbnail">
-		<Thumbnail {thumbnailId} />
+		<Thumbnail thumbnailId={thumbnailId || imageIds?.[0]} />
 	</slot>
 	<div>
 		<p class="title">
 			<slot name="title">
-				<a {href} sveltekit:prefetch>{name}</a>
+				<a {href}>{name}</a>
 			</slot>
 		</p>
 		<p class="description">
 			<slot name="description">
-				{description}
+				{description ?? ''}
 			</slot>
 		</p>
 	</div>

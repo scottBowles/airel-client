@@ -1,9 +1,0 @@
-mutation artifactReleaseLock($id: ID!) {
-	artifactReleaseLock(input: { id: $id }) {
-		ok
-		errors
-		artifact {
-			...ArtifactFields
-		}
-	}
-}

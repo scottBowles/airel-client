@@ -1,9 +1,15 @@
 <script lang="ts">
+	import { getContext } from 'svelte';
 	import { algoliaCloseOnNavigation, algoliaEventListeners } from '$lib/actions';
-	import { showAlgoliaSearch } from '$lib/stores';
+	import type { ShowAlgoliaSearch } from '$lib/stores/initShowAlgoliaSearchStore';
+
+	const showAlgoliaSearch = getContext<ShowAlgoliaSearch>('showAlgoliaSearch');
 </script>
 
-<svelte:body use:algoliaEventListeners use:algoliaCloseOnNavigation />
+<svelte:body
+	use:algoliaEventListeners={showAlgoliaSearch}
+	use:algoliaCloseOnNavigation={showAlgoliaSearch}
+/>
 
 <div class="form-control">
 	<input

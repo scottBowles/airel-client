@@ -1,17 +1,39 @@
-<script>
+<script lang="ts">
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
+	import { fromGlobalId } from 'graphql-relay';
 	import ItemTypeIcons from './ItemTypeIcons.svelte';
+	import { fragment, graphql, type ItemListFields } from '$houdini';
 
-	export let item;
+	export let item: ItemListFields;
 
-	$: ({ id, name, description, thumbnailId, imageIds, weapon, armor, equipment } = item);
-	$: href = `/items/${id}`;
+	$: data = fragment(
+		item,
+		graphql(`
+			fragment ItemListFields on Item {
+				id
+				name
+				armor {
+					acBonus
+				}
+				weapon {
+					attackBonus
+				}
+				equipment {
+					briefDescription
+				}
+				...EntityListFields
+			}
+		`)
+	);
+
+	$: ({ id, name, weapon, armor, equipment } = $data);
+	$: href = `items/${fromGlobalId(id).id}`;
 </script>
 
-<ListDetailCard {description} thumbnailId={thumbnailId || imageIds[0]}>
+<ListDetailCard entity={$data} {href}>
 	<svelte:fragment slot="title">
-		<a {href} sveltekit:prefetch class="name">{name}</a>
-		<ItemTypeIcons isWeapon={weapon} isArmor={armor} isEquipment={equipment} />
+		<a {href} class="name">{name}</a>
+		<ItemTypeIcons isWeapon={!!weapon} isArmor={!!armor} isEquipment={!!equipment} />
 	</svelte:fragment>
 </ListDetailCard>
 

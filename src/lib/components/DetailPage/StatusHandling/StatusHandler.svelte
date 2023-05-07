@@ -1,14 +1,14 @@
-<script>
+<script lang="ts">
 	import Error from './Error.svelte';
 	import Loading from './Loading.svelte';
 	import NotFound from './NotFound.svelte';
 	import SomethingWentWrong from './SomethingWentWrong.svelte';
 
-	export let status;
-	export let entityName;
-	export let errors;
-	export let value;
-	export let creating;
+	export let status: any;
+	export let entityName: any;
+	export let errors: any;
+	export let value: any;
+	export let creating: any;
 </script>
 
 {#if creating}

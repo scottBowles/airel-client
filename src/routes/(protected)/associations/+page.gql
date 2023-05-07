@@ -1,0 +1,11 @@
+query Associations {
+	associations {
+		edges {
+			node {
+				id
+				name
+				...EntityListFields
+			}
+		}
+	}
+}

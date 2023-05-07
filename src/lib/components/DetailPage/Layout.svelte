@@ -7,20 +7,20 @@
 	import Spacer from '../Spacer.svelte';
 	import LogsDisplay from './LogsDisplay.svelte';
 
-	export let id;
+	export let id: string | undefined = undefined;
 	export let form = undefined;
-	export let name = '';
-	export let description = '';
+	export let name: string | null = '';
+	export let description: string | null = '';
 	export let properties: { [key: string]: string | number } = {};
-	export let imageIds = [];
-	export let logs = undefined;
+	export let imageIds: string[] = [];
+	export let logs: any = undefined;
 	export let onEditClick = () => {};
 	export let onFormSubmit = () => {};
-	export let lockUser = undefined;
+	export let lockUser: any = undefined;
 	export let lockedBySelf = false;
 	export let creating = false;
 	export let onImageUpload = () => {};
-	export let markdownNotes = '';
+	export let markdownNotes: string | null = '';
 	export let patchStore: ((patch: Record<string, any>) => void) | undefined = undefined;
 
 	let isMounted = false;
@@ -38,7 +38,8 @@
 			<span class="name-container">
 				<!-- NAME -->
 				{#if editing}
-					<div class="form-control">
+					EDITING NOT IMPLEMENTED
+					<!-- <div class="form-control">
 						<label for="name-input" class="label">
 							<span class="label-text">Name</span>
 						</label>
@@ -50,7 +51,7 @@
 							class="input input-bordered w-full max-w-xs"
 							required
 						/>
-					</div>
+					</div> -->
 				{:else}
 					<h1 class="text-3xl font-bold">{name}</h1>
 				{/if}
@@ -82,7 +83,8 @@
 				<slot name="mainImage">
 					<div class="w-full max-w-xs mx-auto">
 						<CloudinaryUpload {onImageUpload}>
-							<ImageCarousel imageIds={editing ? $form.imageIds : imageIds} alt={name} />
+							<ImageCarousel {imageIds} alt={name ?? ''} />
+							<!-- <ImageCarousel imageIds={editing ? $form.imageIds : imageIds} alt={name} /> -->
 						</CloudinaryUpload>
 						<Spacer />
 					</div>
@@ -90,7 +92,7 @@
 				<!-- LOGS -->
 				{#if !creating}
 					<slot name="logs">
-						<LogsDisplay {logs} {id} {patchStore} />
+						<LogsDisplay {logs} {id} />
 						<Spacer />
 					</slot>
 				{/if}
@@ -105,9 +107,14 @@
 					<textarea
 						name="description"
 						id="description-input"
-						bind:value={$form.description}
 						class="textarea textarea-bordered w-full max-w-xs"
 					/>
+					<!-- <textarea
+						name="description"
+						id="description-input"
+						bind:value={$form.description}
+						class="textarea textarea-bordered w-full max-w-xs"
+					/> -->
 				</div>
 			{:else}
 				<p class="italic">{description}</p>
@@ -123,11 +130,12 @@
 
 		<Spacer />
 
-		<!-- FREEFORM -->
-		<slot name="freeform">
+		<!-- MARKDOWN NOTES -->
+		<slot name="markdownNotes">
 			<Spacer lg />
 			{#if editing}
-				<QuillEditor bind:html={$form.markdownNotes} />
+				EDITING NOT IMPLEMENTED
+				<!-- <QuillEditor bind:html={$form.markdownNotes} /> -->
 			{:else}
 				<div class="prose inline">
 					{@html markdownNotes}

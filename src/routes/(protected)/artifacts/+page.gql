@@ -1,0 +1,11 @@
+query Artifacts {
+	artifacts {
+		edges {
+			node {
+				id
+				name
+				...ArtifactListCardFields
+			}
+		}
+	}
+}

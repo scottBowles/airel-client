@@ -1,0 +1,10 @@
+query AssociationNamesAndIds @load {
+	associations {
+		edges {
+			node {
+				id
+				name
+			}
+		}
+	}
+}

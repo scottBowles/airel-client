@@ -1,0 +1,11 @@
+query Places {
+	places {
+		edges {
+			node {
+				id
+				name
+				...EntityListFields
+			}
+		}
+	}
+}

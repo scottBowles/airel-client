@@ -1,6 +1,6 @@
-export const PUBLIC_PAGES = ['/login'];
+export const PUBLIC_PAGES = ['/login'] as const;
 
-export const themes = ['light', 'dark', 'trek'];
+export const themes = ['light', 'dark', 'trek'] as const;
 
 // export const themes = [
 // 	'light',

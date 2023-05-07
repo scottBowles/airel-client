@@ -1,0 +1,13 @@
+mutation ItemLock($id: GlobalID!) {
+	itemLock(input: { id: $id }) {
+		... on Item {
+			id
+			lockedBySelf
+			lockTime
+			lockUser {
+				id
+				username
+			}
+		}
+	}
+}

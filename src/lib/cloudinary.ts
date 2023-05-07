@@ -16,7 +16,7 @@ const cloudinary = new Cloudinary({
 });
 
 export function getThumbnailUrl(
-	imageId,
+	imageId: string,
 	{ width = 75, height = 75, radius = 0, defaultSrc = 'dnd:placeholder.jpg' } = {}
 ) {
 	return cloudinary

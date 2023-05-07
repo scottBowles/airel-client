@@ -1,9 +1,0 @@
-mutation artifactAddImage($id: ID!, $imageId: String) {
-	artifactAddImage(input: { id: $id, imageId: $imageId }) {
-		ok
-		errors
-		artifact {
-			...ArtifactFields
-		}
-	}
-}

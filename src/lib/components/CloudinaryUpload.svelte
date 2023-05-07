@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 
-	export let onImageUpload;
+	export let onImageUpload: (error: any, result: any) => Promise<void>;
 
-	let uploadWidget;
+	let uploadWidget: any;
 
 	async function destroyWidget() {
 		await uploadWidget?.destroy();
@@ -33,7 +33,8 @@
 		src="https://upload-widget.cloudinary.com/global/all.js"
 		type="text/javascript"
 		async
-		on:load={loadWidget}></script>
+		on:load={loadWidget}
+	></script>
 </svelte:head>
 
 <span on:click={openWidget}>

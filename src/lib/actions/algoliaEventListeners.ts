@@ -1,7 +1,7 @@
-import { showAlgoliaSearch } from '$lib/stores';
 import { navigating } from '$app/stores';
+import type { ShowAlgoliaSearch } from '$lib/stores';
 
-export function algoliaCloseOnNavigation(_node: HTMLElement) {
+export function algoliaCloseOnNavigation(_node: HTMLElement, showAlgoliaSearch: ShowAlgoliaSearch) {
 	/** CLOSE ON PAGE CHANGE */
 	const unsubscribeFromNavigating = navigating.subscribe((navigating) => {
 		if (navigating) showAlgoliaSearch.close();
@@ -12,12 +12,12 @@ export function algoliaCloseOnNavigation(_node: HTMLElement) {
 	};
 }
 
-export function algoliaEventListeners(_node: HTMLElement) {
+export function algoliaEventListeners(_node: HTMLElement, showAlgoliaSearch: ShowAlgoliaSearch) {
 	/**
 	 * OPEN ON CMD/CTRL + K
 	 * CLOSE ON ESCAPE
 	 */
-	function searchEventListener(event) {
+	function searchEventListener(event: KeyboardEvent) {
 		if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
 			showAlgoliaSearch.open();
 		}

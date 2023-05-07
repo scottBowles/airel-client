@@ -1,9 +1,0 @@
-mutation itemAddImage($id: ID!, $imageId: String) {
-	itemAddImage(input: { id: $id, imageId: $imageId }) {
-		ok
-		errors
-		item {
-			...ItemFields
-		}
-	}
-}

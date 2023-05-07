@@ -1,12 +1,28 @@
-/// <reference types="@sveltejs/kit" />
-
-// See https://kit.svelte.dev/docs/types#the-app-namespace
+// See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
-declare namespace App {
-	interface Locals {
-		isLoggedIn: boolean;
-		token: string;
+declare global {
+	namespace App {
+		// interface Error {}
+		interface Locals {
+			user?: string;
+			token?: string;
+			refresh_token?: string;
+		}
+		// interface PageData {}
+		// interface Platform {}
+
+		// Houdini's Session type
+		interface Session {
+			user?: string;
+			token?: string;
+			refresh_token?: string;
+		}
 	}
-	// interface Platform {}
-	// interface Stuff {}
+
+	interface SelectOption {
+		value: string;
+		label: string;
+	}
 }
+
+export {};

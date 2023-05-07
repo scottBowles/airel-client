@@ -1,0 +1,43 @@
+mutation UpdateItem(
+	$id: GlobalID!
+	$name: String
+	$description: String
+	$markdownNotes: String
+	$armor: ArmorTraitsInput
+	$weapon: WeaponTraitsInput
+	$equipment: EquipmentTraitsInput
+) {
+	updateItem(
+		input: {
+			id: $id
+			name: $name
+			description: $description
+			markdownNotes: $markdownNotes
+			armor: $armor
+			weapon: $weapon
+			equipment: $equipment
+		}
+	) {
+		... on Item {
+			id
+			name
+			description
+			markdownNotes
+			lockTime
+			lockedBySelf
+			lockUser {
+				id
+				username
+			}
+			armor {
+				acBonus
+			}
+			weapon {
+				attackBonus
+			}
+			equipment {
+				briefDescription
+			}
+		}
+	}
+}

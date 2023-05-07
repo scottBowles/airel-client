@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
 	import { BasicProperty, Layout } from '$lib/components/DetailPage';
-	export let errors;
+	export let errors: { message: string }[] = [];
 </script>
 
 <Layout name="Something went wrong">

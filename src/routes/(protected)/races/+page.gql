@@ -1,0 +1,11 @@
+query Races {
+	races {
+		edges {
+			node {
+				id
+				name
+				...EntityListFields
+			}
+		}
+	}
+}

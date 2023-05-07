@@ -1,0 +1,13 @@
+mutation PlaceLock($id: GlobalID!) {
+	placeLock(input: { id: $id }) {
+		... on Place {
+			id
+			lockedBySelf
+			lockTime
+			lockUser {
+				id
+				username
+			}
+		}
+	}
+}

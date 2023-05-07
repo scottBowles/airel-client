@@ -1,0 +1,7 @@
+query Association($id: ID!) {
+	association(pk: $id) {
+		...AssociationLockedBySelf
+		...AssociationDetailFields
+		...AssociationEditFields
+	}
+}

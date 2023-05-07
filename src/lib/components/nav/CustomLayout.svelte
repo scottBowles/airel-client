@@ -1,20 +1,15 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { navigating, page } from '$app/stores';
+	import { page } from '$app/stores';
 	import { algoliaCloseOnNavigation, algoliaEventListeners } from '$lib/actions';
-	import Algolia from '$lib/components/Algolia.svelte';
 	import { themes } from '$lib/constants';
-	import { showAlgoliaSearch, theme } from '$lib/stores';
+	import type { Theme } from '$lib/stores';
+	import type { ShowAlgoliaSearch } from '$lib/stores';
 	import { capitalize, post } from '$lib/utils';
-	import { onMount } from 'svelte';
-	import { themeChange } from 'theme-change';
-	import SearchButton from '../SearchButton.svelte';
-	import NavLinks from './NavLinks.svelte';
-	import Title from './Title.svelte';
+	import { getContext } from 'svelte';
 
-	onMount(() => {
-		themeChange(false);
-	});
+	const showAlgoliaSearch = getContext<ShowAlgoliaSearch>('showAlgoliaSearch');
+	const theme = getContext<Theme>('theme');
 
 	const links = [
 		{
@@ -62,7 +57,10 @@
 	}
 </script>
 
-<svelte:body use:algoliaEventListeners use:algoliaCloseOnNavigation />
+<svelte:body
+	use:algoliaEventListeners={showAlgoliaSearch}
+	use:algoliaCloseOnNavigation={showAlgoliaSearch}
+/>
 
 <div class="w-screen h-screen flex bg-black">
 	<div class="h-screen w-40 pl-4 py-4">
@@ -74,7 +72,6 @@
 				</div>
 				{#each links as link}
 					<a
-						sveltekit:prefetch
 						href={link.href}
 						class={`grow ${
 							activeLink === link ? 'bg-yellow-300' : 'bg-yellow-200'
@@ -84,9 +81,13 @@
 					</a>
 				{/each}
 				<button class="grow bg-yellow-200 hover:bg-yellow-300 flex items-center justify-end px-4">
-					<span type="button" on:click={logout} class="text-black flex items-center justify-end"
-						>LOGOUT</span
+					<span
+						on:click={logout}
+						on:keypress={logout}
+						class="text-black flex items-center justify-end"
 					>
+						LOGOUT
+					</span>
 				</button>
 			</ul>
 			<div class="h-[84px] w-full" />
@@ -112,6 +113,7 @@
 			<div
 				class="pure-yellow border-x-4 border-x-black text-xl px-2 flex items-center text-black"
 				on:click={showAlgoliaSearch.open}
+				on:keypress={showAlgoliaSearch.open}
 			>
 				SEARCH CTRL + K
 			</div>

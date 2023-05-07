@@ -1,16 +1,11 @@
 <script lang="ts">
 	import { navigating } from '$app/stores';
-	import Algolia from '$lib/components/Algolia.svelte';
-	import { themes } from '$lib/constants';
-	import { capitalize } from '$lib/utils';
-	import { onMount } from 'svelte';
-	import { themeChange } from 'theme-change';
 	import SearchButton from '../SearchButton.svelte';
 	import NavLinks from './NavLinks.svelte';
 	import Title from './Title.svelte';
 
-	let innerWidth;
-	let inputToggle;
+	let innerWidth: number;
+	let inputToggle: HTMLInputElement;
 
 	function closeDrawer() {
 		if (inputToggle) {
@@ -21,10 +16,6 @@
 	$: drawerShouldClose = innerWidth >= 1024;
 	$: if (drawerShouldClose) closeDrawer();
 	$: if ($navigating) closeDrawer();
-
-	onMount(() => {
-		themeChange(false);
-	});
 </script>
 
 <svelte:window bind:innerWidth />

@@ -1,0 +1,10 @@
+query CharacterNamesAndIds @load {
+	characters {
+		edges {
+			node {
+				id
+				name
+			}
+		}
+	}
+}

@@ -1,0 +1,13 @@
+mutation RaceLock($id: GlobalID!) {
+	raceLock(input: { id: $id }) {
+		... on Race {
+			id
+			lockedBySelf
+			lockTime
+			lockUser {
+				id
+				username
+			}
+		}
+	}
+}

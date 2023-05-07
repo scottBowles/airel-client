@@ -1,9 +1,0 @@
-mutation itemLock($id: ID!) {
-	itemLock(input: { id: $id }) {
-		ok
-		errors
-		item {
-			...ItemFields
-		}
-	}
-}

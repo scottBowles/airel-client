@@ -1,9 +1,0 @@
-query artifacts {
-	artifacts {
-		edges {
-			node {
-				...ArtifactFields
-			}
-		}
-	}
-}

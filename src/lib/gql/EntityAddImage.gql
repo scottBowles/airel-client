@@ -1,0 +1,28 @@
+mutation EntityAddImage($id: GlobalID!, $imageId: String!) {
+	entityAddImage(input: { id: $id, imageId: $imageId }) {
+		... on Artifact {
+			id
+			imageIds
+		}
+		... on Association {
+			id
+			imageIds
+		}
+		... on Character {
+			id
+			imageIds
+		}
+		... on Item {
+			id
+			imageIds
+		}
+		... on Place {
+			id
+			imageIds
+		}
+		... on Race {
+			id
+			imageIds
+		}
+	}
+}

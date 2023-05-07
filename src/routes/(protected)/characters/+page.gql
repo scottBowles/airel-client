@@ -1,0 +1,11 @@
+query Characters {
+	characters {
+		edges {
+			node {
+				id
+				name
+				...EntityListFields
+			}
+		}
+	}
+}

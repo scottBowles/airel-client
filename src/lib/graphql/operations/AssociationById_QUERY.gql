@@ -1,5 +1,0 @@
-query associationById($id: ID!) {
-	association(id: $id) {
-		...AssociationFields
-	}
-}

@@ -12,10 +12,7 @@ const base = {
 	CACHE_MS: 5000
 };
 
-const environmentSpecificConfig = {
-	development,
-	production
-}[mode];
+const environmentSpecificConfig = mode === 'development' ? development : production;
 
 export default {
 	...base,

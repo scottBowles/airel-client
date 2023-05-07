@@ -1,0 +1,27 @@
+mutation CreateItem(
+	$name: String!
+	$description: String
+	$markdownNotes: String
+	$imageIds: [String!]
+	$logs: [GlobalID!]
+	$armor: ArmorTraitsInput
+	$weapon: WeaponTraitsInput
+	$equipment: EquipmentTraitsInput
+) {
+	createItem(
+		input: {
+			name: $name
+			description: $description
+			markdownNotes: $markdownNotes
+			imageIds: $imageIds
+			logs: $logs
+			armor: $armor
+			weapon: $weapon
+			equipment: $equipment
+		}
+	) {
+		... on Item {
+			id
+		}
+	}
+}

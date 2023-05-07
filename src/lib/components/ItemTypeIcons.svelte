@@ -3,9 +3,9 @@
 	import GiCheckedShield from 'svelte-icons/gi/GiCheckedShield.svelte';
 	import GiRoundBottomFlask from 'svelte-icons/gi/GiRoundBottomFlask.svelte';
 
-	export let isWeapon;
-	export let isArmor;
-	export let isEquipment;
+	export let isWeapon: boolean;
+	export let isArmor: boolean;
+	export let isEquipment: boolean;
 </script>
 
 {#if isWeapon}
