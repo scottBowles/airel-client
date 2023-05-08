@@ -28,7 +28,9 @@
 			<h3 class="font-bold text-lg">Remove log</h3>
 			<p class="py-4">You sure bro?</p>
 			<div class="modal-action">
-				<label for={modalId} class="btn" on:click={handleRemoveLog}>Yes</label>
+				<label for={modalId} class="btn" on:click={handleRemoveLog} on:keypress={handleRemoveLog}
+					>Yes</label
+				>
 				<label for={modalId} class="btn">No</label>
 			</div>
 		</label>
