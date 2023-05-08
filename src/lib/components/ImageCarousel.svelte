@@ -27,7 +27,12 @@
 	aria-label="My Favorite Images"
 	options={{ type: 'fade', rewind: true, height: 400, lazyLoad: 'nearby', speed: 1000 }}
 >
-	<div class="splide__arrows" class:hidden={imageIds.length < 2} on:click|stopPropagation />
+	<div
+		class="splide__arrows"
+		class:hidden={imageIds.length < 2}
+		on:click|stopPropagation
+		on:keypress|stopPropagation
+	/>
 	<SplideTrack>
 		{#each imageIds as imageId (imageId)}
 			{@const src = getImageSrc(imageId)}

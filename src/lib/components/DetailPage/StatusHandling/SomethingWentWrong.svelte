@@ -1,5 +1,8 @@
 <script>
-	import { Layout } from '$lib/components/DetailPage';
+	import { LayoutBase } from '$lib/components/DetailPage';
 </script>
 
-<Layout name="Something went wrong here" />
+<LayoutBase>
+	<!-- NAME -->
+	<h1 slot="name" class="text-3xl font-bold">Something went wrong here</h1>
+</LayoutBase>

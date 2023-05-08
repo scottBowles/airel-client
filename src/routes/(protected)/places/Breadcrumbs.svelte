@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fragment, type PlaceBreadcrumbFields, type PlaceBreadcrumbFields$data } from '$houdini';
+	import { fragment, type PlaceBreadcrumbFields } from '$houdini';
 	import { graphql } from 'graphql';
 	import { fromGlobalId } from 'graphql-relay';
 

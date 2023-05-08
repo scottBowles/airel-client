@@ -2,21 +2,17 @@
 	import { onMount } from 'svelte';
 
 	/** Cloudinary actions */
-	import { thumbnail, fill } from '@cloudinary/url-gen/actions/resize';
-	import { byRadius } from '@cloudinary/url-gen/actions/roundCorners';
+	import { fill } from '@cloudinary/url-gen/actions/resize';
 	/** Cloudinary qualifiers */
-	import { compass, focusOn } from '@cloudinary/url-gen/qualifiers/gravity';
-	import { FocusOn } from '@cloudinary/url-gen/qualifiers/focusOn';
+	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 
 	/** Cloudinary instance store */
 	import cloudinary from '$lib/cloudinary';
-	import { artisticFilter, colorize } from '@cloudinary/url-gen/actions/effect';
 	import { opacity } from '@cloudinary/url-gen/actions/adjust';
 	import { source } from '@cloudinary/url-gen/actions/overlay';
 	import { text } from '@cloudinary/url-gen/qualifiers/source';
 	import { TextStyle } from '@cloudinary/url-gen/qualifiers/textStyle';
 	import { Position } from '@cloudinary/url-gen/qualifiers';
-	import Transformation from '@cloudinary/url-gen/backwards/transformation';
 
 	export let imageId = 'dnd/City_guard_and_magister-5e_uk2sr0';
 	export let width = 2400;

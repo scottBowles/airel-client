@@ -21,13 +21,7 @@
 	);
 </script>
 
-<StatusHandler
-	creating="false"
-	status="DONE"
-	errors={''}
-	value={association}
-	entityName="association"
->
+<StatusHandler entityName="association" queryResult={$Association}>
 	{#if !association}
 		<Loading />
 	{:else if $lockedBySelfData?.lockedBySelf}

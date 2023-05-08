@@ -37,7 +37,7 @@
 	></script>
 </svelte:head>
 
-<span on:click={openWidget}>
+<span on:click={openWidget} on:keypress={openWidget}>
 	<slot>this is a slot for a component which will open the cloudinary upload widget on click</slot>
 </span>
 

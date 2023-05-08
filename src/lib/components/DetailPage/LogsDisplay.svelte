@@ -45,6 +45,7 @@
 		<Spacer sm />
 		{#if logInputOpen}
 			<div class="flex items-center justify-between gap-2" use:callOnEsc={closeLogInput}>
+				<!-- svelte-ignore a11y-autofocus -->
 				<input
 					type="text"
 					id="log-input"
