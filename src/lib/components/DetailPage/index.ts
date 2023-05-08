@@ -1,5 +1,4 @@
 export { default as BasicProperty } from './BasicProperty.svelte';
-export { default as Layout } from './Layout.svelte';
 export { default as LayoutBase } from './LayoutBase.svelte';
 export { default as LayoutCreate } from './LayoutCreate.svelte';
 export { default as LayoutDisplay } from './LayoutDisplay.svelte';
