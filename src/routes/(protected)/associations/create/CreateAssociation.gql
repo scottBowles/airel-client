@@ -17,6 +17,7 @@ mutation CreateAssociation(
 		}
 	) {
 		... on Association {
+			id
 			...AssociationLockedBySelf
 			...AssociationDetailFields
 		}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fromGlobalId } from 'graphql-relay';
+	import { fromGlobalId } from '$lib/utils';
 	import { parseFormData } from 'parse-nested-form-data';
 	import { error } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
@@ -22,7 +22,7 @@
 		const res = await createMutation.mutate({ ...parsed, name });
 
 		// Redirect to the new item's detail page
-		if (res.data) {
+		if (res.data?.createItem.__typename === 'Item') {
 			const { id: globalId } = res.data.createItem;
 			const { id } = fromGlobalId(globalId);
 			goto(`/items/${id}`);

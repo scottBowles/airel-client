@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
-	import { fromGlobalId } from 'graphql-relay';
+	import { fromGlobalId } from '$lib/utils';
 	import ItemTypeIcons from './ItemTypeIcons.svelte';
 	import { fragment, graphql, type ItemListFields } from '$houdini';
 
