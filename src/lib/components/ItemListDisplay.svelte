@@ -31,6 +31,7 @@
 	$: console.log({ fromGlobalId });
 	$: globalId = fromGlobalId(id).id;
 	$: href = `items/${globalId}`;
+	$: console.log({ id, globalId, href });
 </script>
 
 <ListDetailCard entity={$data} {href}>
