@@ -21,7 +21,7 @@
 	);
 </script>
 
-<StatusHandler creating="false" status="DONE" errors={''} value={artifact} entityName="artifact">
+<StatusHandler entityName="artifact" queryResult={$Artifact}>
 	{#if !artifact}
 		<Loading />
 	{:else if $lockedBySelfData?.lockedBySelf}
