@@ -27,6 +27,8 @@
 	);
 
 	$: ({ id, name, weapon, armor, equipment } = $data);
+	console.log('first render fromGlobalId', fromGlobalId);
+	$: console.log({ fromGlobalId });
 	$: globalId = fromGlobalId(id).id;
 	$: href = `items/${globalId}`;
 </script>
