@@ -36,9 +36,9 @@
 			{#if characters?.length > 0}
 				<div>
 					{#each characters as character, i}
-						<a
-							href={`/characters/${fromGlobalId(character.id).id}`}
-							class="link link-accent link-hover">{character.name}</a
+						{@const globalId = fromGlobalId(character.id).id}
+						<a href={`/characters/${globalId}`} class="link link-accent link-hover"
+							>{character.name}</a
 						>{i < characters.length - 1 ? ', ' : ''}
 					{/each}
 				</div>

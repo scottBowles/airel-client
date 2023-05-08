@@ -26,7 +26,8 @@
 
 	{#each races as race (race.id)}
 		{@const { id } = race}
-		{@const href = `races/${fromGlobalId(id).id}`}
+		{@const globalId = fromGlobalId(id).id}
+		{@const href = `races/${globalId}`}
 		<ListDetailCard entity={race} {href} />
 	{/each}
 </div>

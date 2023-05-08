@@ -28,7 +28,8 @@
 
 	{#each associations as association (association.id)}
 		{@const { id } = association}
-		{@const href = `associations/${fromGlobalId(id).id}`}
+		{@const globalId = fromGlobalId(id).id}
+		{@const href = `associations/${globalId}`}
 		<ListDetailCard entity={association} {href} />
 	{/each}
 </div>

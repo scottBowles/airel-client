@@ -27,7 +27,8 @@
 	);
 
 	$: ({ id, name, weapon, armor, equipment } = $data);
-	$: href = `items/${fromGlobalId(id).id}`;
+	$: globalId = fromGlobalId(id).id;
+	$: href = `items/${globalId}`;
 </script>
 
 <ListDetailCard entity={$data} {href}>

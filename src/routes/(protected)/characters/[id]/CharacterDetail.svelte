@@ -29,6 +29,7 @@
 
 	$: ({ race, associations: associationConnection } = $data);
 	$: associations = associationConnection?.edges.map(({ node }) => node) || [];
+	$: raceGlobalId = race && fromGlobalId(race.id).id;
 </script>
 
 <LayoutDisplay entity={$data}>
@@ -40,7 +41,7 @@
 			<Spacer xs />
 			{#if race}
 				<div>
-					<a class="link link-accent link-hover" href={`/races/${fromGlobalId(race.id).id}`}>
+					<a class="link link-accent link-hover" href={`/races/${raceGlobalId}`}>
 						{race.name}
 					</a>
 				</div>
@@ -56,9 +57,9 @@
 				<Spacer xs />
 				<div>
 					{#each associations as association, i}
-						<a
-							class="link link-accent link-hover"
-							href={`/associations/${fromGlobalId(association.id).id}`}>{association.name}</a
+						{@const globalId = fromGlobalId(association.id).id}
+						<a class="link link-accent link-hover" href={`/associations/${globalId}`}
+							>{association.name}</a
 						>{i < associations.length - 1 ? ', ' : ''}
 					{/each}
 				</div>
