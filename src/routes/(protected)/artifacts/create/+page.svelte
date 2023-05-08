@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fromGlobalId } from 'graphql-relay';
+	import { fromGlobalId } from '$lib/utils';
 	import { error } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
 	import { CreateArtifactStore } from '$houdini';
@@ -19,7 +19,7 @@
 
 		const res = await createMutation.mutate({ ...parsed, name });
 
-		if (res.data) {
+		if (res.data?.createArtifact.__typename === 'Artifact') {
 			const { id: globalId } = res.data.createArtifact;
 			const { id } = fromGlobalId(globalId);
 			goto(`/artifacts/${id}`);

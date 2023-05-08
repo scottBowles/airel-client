@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fromGlobalId } from 'graphql-relay';
+	import { fromGlobalId } from '$lib/utils';
 	import { error } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
 	import { CreateCharacterStore } from '$houdini';
@@ -20,7 +20,7 @@
 
 		const res = await createMutation.mutate({ ...parsed, name });
 
-		if (res.data) {
+		if (res.data?.createCharacter.__typename === 'Character') {
 			const { id: globalId } = res.data.createCharacter;
 			const { id } = fromGlobalId(globalId);
 			goto(`/characters/${id}`);

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { fragment, graphql, type PlaceBreadcrumbFields } from '$houdini';
-	import { fromGlobalId } from 'graphql-relay';
+	import { fromGlobalId } from '$lib/utils';
 
 	export let place: PlaceBreadcrumbFields;
 

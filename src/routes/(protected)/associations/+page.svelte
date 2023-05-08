@@ -5,7 +5,7 @@
 	import { alphabeticallyBy } from '$lib/utils';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import type { PageData } from './$houdini';
-	import { fromGlobalId } from 'graphql-relay';
+	import { fromGlobalId } from '$lib/utils';
 
 	export let data: PageData;
 

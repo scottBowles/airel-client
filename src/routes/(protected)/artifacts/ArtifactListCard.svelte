@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fromGlobalId } from 'graphql-relay';
+	import { fromGlobalId } from '$lib/utils';
 	import { fragment, graphql, type ArtifactListCardFields } from '$houdini';
 	import ItemTypeIcons from '$lib/components/ItemTypeIcons.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
