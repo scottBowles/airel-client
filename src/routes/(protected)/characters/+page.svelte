@@ -27,7 +27,8 @@
 
 	{#each characters as character (character.id)}
 		{@const { id } = character}
-		{@const href = `characters/${fromGlobalId(id).id}`}
+		{@const globalId = fromGlobalId(id).id}
+		{@const href = `characters/${globalId}`}
 		<ListDetailCard entity={character} {href} />
 	{/each}
 </div>

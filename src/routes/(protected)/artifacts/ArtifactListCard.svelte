@@ -34,7 +34,8 @@
 
 	$: ({ id, name, items } = $data);
 
-	$: href = `artifacts/${fromGlobalId(id).id}`;
+	$: globalId = fromGlobalId(id).id;
+	$: href = `artifacts/${globalId}`;
 	$: itemNodes = items.edges?.map((edge) => edge.node) || [];
 	$: isWeapon = itemNodes.some((item) => !!item.weapon);
 	$: isArmor = itemNodes.some((item) => !!item.armor);

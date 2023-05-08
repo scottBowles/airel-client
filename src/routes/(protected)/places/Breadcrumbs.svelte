@@ -44,7 +44,7 @@
 	function getBreadcrumbs(node?: BreadcrumbNode | null): BreadcrumbNode[] {
 		return node ? [...getBreadcrumbs(node.parent), node] : [];
 	}
-	$: breadcrumbs = getBreadcrumbs($data);
+	$: breadcrumbs = getBreadcrumbs($data).map((b) => ({ ...b, globalId: fromGlobalId(b.id).id }));
 </script>
 
 {#if breadcrumbs.length > 0}
@@ -52,12 +52,12 @@
 		<div class="text-sm breadcrumbs">
 			{#if breadcrumbs.length > 1}
 				<ul>
-					{#each breadcrumbs as { id, name }, i}
+					{#each breadcrumbs as { globalId, name }, i}
 						<li>
 							{#if i === breadcrumbs.length - 1}
 								{name}
 							{:else}
-								<a href={`/places/${fromGlobalId(id).id}`} class="text-accent">
+								<a href={`/places/${globalId}`} class="text-accent">
 									{name}
 								</a>
 							{/if}
