@@ -13,7 +13,7 @@
 
 <div class="flex items-center justify-between">
 	<a href={log.url} class="link link-accent link-hover" rel="external noopener noreferrer">
-		{log.name || log.url}
+		{log.title || log.url}
 	</a>
 
 	<!-- The button to open modal -->

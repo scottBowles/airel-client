@@ -3,7 +3,7 @@ mutation GetOrCreateGameLog($url: String!) {
 		... on GameLog {
 			id
 			url
-			name
+			title
 			googleId
 		}
 	}
