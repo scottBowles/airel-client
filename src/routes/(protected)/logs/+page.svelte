@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { logByGameDate } from '$lib/utils';
+	import { fromGlobalId, logByGameDate } from '$lib/utils';
 	import type { PageData } from './$houdini';
 	import FaCaretDown from 'svelte-icons/fa/FaCaretDown.svelte';
 	import FaExternalLinkAlt from 'svelte-icons/fa/FaExternalLinkAlt.svelte';
@@ -22,6 +22,8 @@
 	<h1 class="text-4xl font-bold mb-8">Game Logs</h1>
 	<ul>
 		{#each logs as log (log.id)}
+			{@const id = fromGlobalId(log.id).id}
+			{@const detailUrl = `/logs/${id}`}
 			<li class="mb-8">
 				<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 				<article tabindex="0" class={`collapse group`}>
@@ -30,8 +32,8 @@
 							<div class="md:flex justify-between gap-4">
 								<h2 class="card-title mb-2">
 									<span>
-										{log.title}
-										<a href={log.url} target="_blank" rel="noopener noreferrer" class="ml-2 flex-1">
+										<a href={detailUrl} class="hover:text-accent">{log.title}</a>
+										<a href={log.url} target="_blank" rel="noopener noreferrer" class="ml-2">
 											<span class="icon inline-block hover:text-accent"><FaExternalLinkAlt /></span>
 										</a>
 									</span>
