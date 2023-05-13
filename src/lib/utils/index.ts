@@ -57,3 +57,6 @@ type PlaceType = keyof typeof placePrecendence;
 
 export const placeByPrecendence = <T extends { placeType: PlaceType }>(a: T, b: T) =>
 	placePrecendence[b.placeType] - placePrecendence[a.placeType];
+
+export const logByGameDate = <T extends { gameDate: Date | null }>(a: T, b: T) =>
+	(b.gameDate?.getTime() || 0) - (a.gameDate?.getTime() || 0);

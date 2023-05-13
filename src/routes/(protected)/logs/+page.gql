@@ -1,0 +1,23 @@
+query GameLogs {
+	gameLogs {
+		edges {
+			node {
+				id
+				url
+				title
+				googleId
+				gameDate
+				brief
+				synopsis
+				placesSetIn {
+					edges {
+						node {
+							name
+							description
+						}
+					}
+				}
+			}
+		}
+	}
+}
