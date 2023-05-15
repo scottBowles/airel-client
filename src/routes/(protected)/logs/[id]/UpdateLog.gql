@@ -1,0 +1,25 @@
+mutation UpdateLog(
+	$id: GlobalID!
+	$title: String
+	$gameDate: DateTime
+	$brief: String
+	$synopsis: String
+	$placesSetIn: NodePartialListInput
+) {
+	updateGamelog(
+		input: {
+			id: $id
+			title: $title
+			gameDate: $gameDate
+			brief: $brief
+			synopsis: $synopsis
+			placesSetIn: $placesSetIn
+		}
+	) {
+		... on GameLog {
+			id
+			...LogLockedBySelf
+			...LogDetailFields
+		}
+	}
+}

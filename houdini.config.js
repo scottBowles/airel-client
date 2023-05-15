@@ -15,7 +15,7 @@ const config = {
 				return new Date(value);
 			},
 			marshal(date) {
-				return date.getTime();
+				return date;
 			}
 		},
 		GlobalID: {

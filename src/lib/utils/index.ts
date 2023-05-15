@@ -55,8 +55,19 @@ const placePrecendence = {
 } as const;
 type PlaceType = keyof typeof placePrecendence;
 
-export const placeByPrecendence = <T extends { placeType: PlaceType }>(a: T, b: T) =>
-	placePrecendence[b.placeType] - placePrecendence[a.placeType];
+export const placeByPrecendence = <T extends { readonly placeType: PlaceType | null }>(
+	a: T,
+	b: T
+) => {
+	const aPrecedence = a?.placeType ? placePrecendence[a.placeType] : 0;
+	const bPrecedence = b?.placeType ? placePrecendence[b.placeType] : 0;
+	return bPrecedence - aPrecedence;
+};
 
 export const logByGameDate = <T extends { gameDate: Date | null }>(a: T, b: T) =>
 	(b.gameDate?.getTime() || 0) - (a.gameDate?.getTime() || 0);
+
+export function adjustForTimezone(date: Date) {
+	const offset = date.getTimezoneOffset();
+	return new Date(date.getTime() + offset * 60 * 1000);
+}

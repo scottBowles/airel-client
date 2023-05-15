@@ -685,11 +685,20 @@ input FeatureInputPartial {
   name: String
 }
 
-type GameLog implements Node {
+type GameLog implements Lockable & Node {
   brief: String
   gameDate: DateTime
   googleId: String
   id: GlobalID!
+  lockTime: DateTime
+  lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
   placesSetIn(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -732,6 +741,29 @@ type GameLogEdge {
 input GameLogInput {
   url: String!
 }
+
+input GameLogInputPartial {
+  brief: String
+  gameDate: DateTime
+  id: GlobalID!
+  placesSetIn: NodePartialListInput
+  synopsis: String
+  title: String
+}
+
+"""Input data for `gamelogLock` mutation"""
+input GamelogLockInput {
+  id: GlobalID!
+}
+
+union GamelogLockPayload = GameLog | OperationInfo
+
+"""Input data for `gamelogReleaseLock` mutation"""
+input GamelogReleaseLockInput {
+  id: GlobalID!
+}
+
+union GamelogReleaseLockPayload = GameLog | OperationInfo
 
 union GetOrCreateGameLogPayload = GameLog | OperationInfo
 
@@ -1027,6 +1059,14 @@ type Mutation {
     input: NodeInput!
   ): DeleteTraitPayload!
   entityAddImage(input: EntityAddImageInput!): Node!
+  gamelogLock(
+    """Input data for `gamelogLock` mutation"""
+    input: GamelogLockInput!
+  ): GamelogLockPayload!
+  gamelogReleaseLock(
+    """Input data for `gamelogReleaseLock` mutation"""
+    input: GamelogReleaseLockInput!
+  ): GamelogReleaseLockPayload!
   getOrCreateGameLog(input: GameLogInput!): GetOrCreateGameLogPayload!
   googleLogin(googleToken: String!): ObtainJSONWebTokenType!
   itemAddImage(
@@ -1094,6 +1134,7 @@ type Mutation {
   updateCharacter(input: CharacterInputPartial!): UpdateCharacterPayload!
   updateExport(input: ExportInputPartial!): UpdateExportPayload!
   updateFeature(input: FeatureInputPartial!): UpdateFeaturePayload!
+  updateGamelog(input: GameLogInputPartial!): UpdateGamelogPayload!
   updateItem(input: ItemInputPartial!): UpdateItemPayload!
   updateLanguage(input: LanguageInputPartial!): UpdateLanguagePayload!
   updatePlace(input: PlaceInputPartial!): UpdatePlacePayload!
@@ -2139,6 +2180,8 @@ union UpdateCharacterPayload = Character | OperationInfo
 union UpdateExportPayload = Export | OperationInfo
 
 union UpdateFeaturePayload = Feature | OperationInfo
+
+union UpdateGamelogPayload = GameLog | OperationInfo
 
 union UpdateItemPayload = Item | OperationInfo
 
