@@ -1,8 +1,12 @@
 <script lang="ts">
+	import { fromGlobalId } from '$lib/utils';
 	import FaTimes from 'svelte-icons/fa/FaTimes.svelte';
+	import FaExternalLinkAlt from 'svelte-icons/fa/FaExternalLinkAlt.svelte';
 
 	export let log: any;
 	export let removeLog: (id: string) => void;
+	$: id = fromGlobalId(log.id).id;
+	$: href = `/logs/${id}`;
 
 	const modalId = `log-modal-${log.id}`;
 
@@ -12,9 +16,17 @@
 </script>
 
 <div class="flex items-center justify-between">
-	<a href={log.url} class="link link-accent link-hover" rel="external noopener noreferrer">
-		{log.title || log.url}
-	</a>
+	<span>
+		<a {href} class="link link-accent link-hover" rel="external noopener noreferrer">
+			{log.title || log.url}
+		</a>
+
+		<a href={log.url} target="_blank" rel="noopener noreferrer" class="ml-2">
+			<span class="ext-icon hover:text-accent">
+				<FaExternalLinkAlt />
+			</span>
+		</a>
+	</span>
 
 	<!-- The button to open modal -->
 	<label for={modalId} class="btn btn-ghost btn-sm modal-button">
@@ -38,6 +50,11 @@
 </div>
 
 <style>
+	.ext-icon {
+		display: inline-block;
+		height: 16px;
+		width: 16px;
+	}
 	.icon {
 		height: 1.125em;
 		width: 1.125em;
