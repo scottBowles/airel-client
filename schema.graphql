@@ -42,6 +42,33 @@ input AddEntityLogInput {
   logUrl: String
 }
 
+type Alias implements Node {
+  id: GlobalID!
+  isPrimary: Boolean!
+  name: String!
+}
+
+"""A connection to a list of items."""
+type AliasConnection {
+  """Contains the nodes in this connection"""
+  edges: [AliasEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type AliasEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Alias!
+}
+
 type ArmorTraits implements Node {
   acBonus: Int!
   id: GlobalID!
@@ -53,6 +80,19 @@ input ArmorTraitsInput {
 }
 
 type Artifact implements Entity & Lockable & Node {
+  aliases(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AliasConnection!
   created: DateTime!
   description: String
   id: GlobalID!
@@ -165,6 +205,19 @@ input ArtifactReleaseLockInput {
 union ArtifactReleaseLockPayload = Artifact | OperationInfo
 
 type Association implements Entity & Lockable & Node {
+  aliases(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AliasConnection!
   characters(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -274,6 +327,19 @@ input AssociationReleaseLockInput {
 union AssociationReleaseLockPayload = Association | OperationInfo
 
 type Character implements Entity & Lockable & Node {
+  aliases(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AliasConnection!
   associations(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -484,6 +550,19 @@ type DjangoModelType {
 }
 
 interface Entity implements Lockable {
+  aliases(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AliasConnection!
   created: DateTime!
   description: String
   id: GlobalID!
@@ -561,6 +640,19 @@ input EquipmentTraitsInput {
 scalar ExpectedError
 
 type Export implements Entity & Lockable & Node {
+  aliases(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AliasConnection!
   created: DateTime!
   description: String
   id: GlobalID!
@@ -738,10 +830,6 @@ type GameLogEdge {
   node: GameLog!
 }
 
-input GameLogInput {
-  url: String!
-}
-
 input GameLogInputPartial {
   brief: String
   gameDate: DateTime
@@ -765,6 +853,11 @@ input GamelogReleaseLockInput {
 
 union GamelogReleaseLockPayload = GameLog | OperationInfo
 
+input GetOrCreateGameLogInput {
+  lock: Boolean! = false
+  url: String!
+}
+
 union GetOrCreateGameLogPayload = GameLog | OperationInfo
 
 """
@@ -773,6 +866,19 @@ The `ID` scalar type represents a unique identifier, often used to refetch an ob
 scalar GlobalID
 
 type Item implements Entity & Lockable & Node {
+  aliases(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AliasConnection!
   armor: ArmorTraits
   artifacts(
     """Returns the items in the list that come after the specified cursor."""
@@ -1067,7 +1173,7 @@ type Mutation {
     """Input data for `gamelogReleaseLock` mutation"""
     input: GamelogReleaseLockInput!
   ): GamelogReleaseLockPayload!
-  getOrCreateGameLog(input: GameLogInput!): GetOrCreateGameLogPayload!
+  getOrCreateGameLog(input: GetOrCreateGameLogInput!): GetOrCreateGameLogPayload!
   googleLogin(googleToken: String!): ObtainJSONWebTokenType!
   itemAddImage(
     """Input data for `itemAddImage` mutation"""
@@ -1247,6 +1353,19 @@ type PageInfo {
 }
 
 type Place implements Entity & Lockable & Node {
+  aliases(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AliasConnection!
   associations: [DjangoModelType!]!
   children(
     """Returns the items in the list that come after the specified cursor."""
@@ -1860,6 +1979,19 @@ type Query {
 }
 
 type Race implements Entity & Lockable & Node {
+  aliases(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AliasConnection!
   characters(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null

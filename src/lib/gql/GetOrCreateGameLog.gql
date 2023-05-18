@@ -1,10 +1,11 @@
-mutation GetOrCreateGameLog($url: String!) {
-	getOrCreateGameLog(input: { url: $url }) {
+mutation GetOrCreateGameLog($url: String!, $lock: Boolean) {
+	getOrCreateGameLog(input: { url: $url, lock: $lock }) {
 		... on GameLog {
 			id
 			url
 			title
 			googleId
+			lockedBySelf
 		}
 	}
 }

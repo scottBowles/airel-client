@@ -3,6 +3,7 @@
 	import type { PageData } from './$houdini';
 	import FaCaretDown from 'svelte-icons/fa/FaCaretDown.svelte';
 	import FaExternalLinkAlt from 'svelte-icons/fa/FaExternalLinkAlt.svelte';
+	import AddALog from './AddALog.svelte';
 
 	export let data: PageData;
 	$: ({ GameLogs } = data);
@@ -19,7 +20,11 @@
 </script>
 
 <div class="container max-w-5xl mx-auto p-4">
-	<h1 class="text-4xl font-bold mb-8">Game Logs</h1>
+	<div class="flex justify-between items-center flex-wrap mb-8">
+		<h1 class="text-4xl font-bold">Game Logs</h1>
+
+		<AddALog />
+	</div>
 	<ul>
 		{#each logs as log (log.id)}
 			{@const id = fromGlobalId(log.id).id}
