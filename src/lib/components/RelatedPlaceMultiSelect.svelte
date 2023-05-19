@@ -12,6 +12,7 @@
 	export { initialValues as initialPlaceIds };
 	export let id = `place-select`;
 	export let name = 'places';
+	export let displayName = name;
 
 	$: optionNamesAndIdNodes = $placeNamesIdsAndTypesQuery.data?.places.edges
 		.map(prop('node'))
@@ -32,4 +33,5 @@
 	{fetching}
 	{optionNamesAndIdNodes}
 	{initialValues}
+	entityDisplayName={displayName}
 />
