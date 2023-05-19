@@ -8,7 +8,7 @@
 
 	let selected = options?.filter((option: any) => initialValues.includes(option.value)) ?? [];
 
-	$: values = selected.map((association: any) => association.value);
+	$: values = selected.map((s: any) => s.value);
 </script>
 
 <MultiSelect {id} {options} bind:selected outerDivClass="select select-bordered" {...$$restProps} />
@@ -17,5 +17,6 @@
 	:global(div.multiselect) {
 		@apply select select-bordered;
 		margin: 0;
+		height: auto;
 	}
 </style>
