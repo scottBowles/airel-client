@@ -1,0 +1,10 @@
+query ArtifactNamesAndIds @load {
+	artifacts {
+		edges {
+			node {
+				id
+				name
+			}
+		}
+	}
+}
