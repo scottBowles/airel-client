@@ -2,7 +2,7 @@ import { toast } from '@zerodevx/svelte-toast';
 
 export { fromGlobalId } from './fromGlobalId';
 
-export const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+export const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 export function post(endpoint: string, data = {}) {
 	return fetch(endpoint, {
