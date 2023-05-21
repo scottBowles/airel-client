@@ -11,8 +11,8 @@
 	let initialValues: string[] = [];
 	export { initialValues as initialPlaceIds };
 	export let id = `place-select`;
-	export let name = 'places';
-	export let displayName = name;
+	export let inputGroupName = 'places';
+	export let displayName = inputGroupName;
 
 	$: optionNamesAndIdNodes = $placeNamesIdsAndTypesQuery.data?.places.edges
 		.map(prop('node'))
@@ -29,7 +29,7 @@
 
 <RelatedEntityMultiSelectBase
 	{id}
-	inputGroupName={name}
+	{inputGroupName}
 	{fetching}
 	{optionNamesAndIdNodes}
 	{initialValues}

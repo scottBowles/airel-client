@@ -9,6 +9,7 @@
 	let initialValues: string[] = [];
 	export { initialValues as initialRaceIds };
 	export let id = `race-select`;
+	export let inputGroupName = 'races';
 
 	$: optionNamesAndIdNodes = $raceNamesAndIdsQuery.data?.races.edges;
 	$: ({ fetching } = $raceNamesAndIdsQuery);
@@ -16,7 +17,7 @@
 
 <RelatedEntityMultiSelectBase
 	{id}
-	inputGroupName="races"
+	{inputGroupName}
 	{fetching}
 	{optionNamesAndIdNodes}
 	{initialValues}
