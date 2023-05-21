@@ -5,6 +5,12 @@ mutation UpdateLog(
 	$brief: String
 	$synopsis: String
 	$placesSetIn: NodePartialListInput
+	$artifacts: NodePartialListInput
+	$associations: NodePartialListInput
+	$characters: NodePartialListInput
+	$items: NodePartialListInput
+	$places: NodePartialListInput
+	$races: NodePartialListInput
 ) {
 	updateGamelog(
 		input: {
@@ -14,6 +20,12 @@ mutation UpdateLog(
 			brief: $brief
 			synopsis: $synopsis
 			placesSetIn: $placesSetIn
+			artifacts: $artifacts
+			associations: $associations
+			characters: $characters
+			items: $items
+			places: $places
+			races: $races
 		}
 	) {
 		... on GameLog {
