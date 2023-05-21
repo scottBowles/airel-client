@@ -778,10 +778,62 @@ input FeatureInputPartial {
 }
 
 type GameLog implements Lockable & Node {
+  artifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  associations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
   brief: String
+  characters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
   gameDate: DateTime
   googleId: String
   id: GlobalID!
+  items(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
   lockTime: DateTime
   lockUser: User
 
@@ -791,6 +843,19 @@ type GameLog implements Lockable & Node {
   locked_by_self: bool = gql.field(resolver=locked_by_self)
   """
   lockedBySelf: Boolean!
+  places(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
   placesSetIn(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -804,6 +869,19 @@ type GameLog implements Lockable & Node {
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
   ): PlaceConnection!
+  races(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): RaceConnection!
   synopsis: String
   title: String
   url: String!
@@ -831,10 +909,16 @@ type GameLogEdge {
 }
 
 input GameLogInputPartial {
+  artifacts: NodePartialListInput
+  associations: NodePartialListInput
   brief: String
+  characters: NodePartialListInput
   gameDate: DateTime
   id: GlobalID!
+  items: NodePartialListInput
+  places: NodePartialListInput
   placesSetIn: NodePartialListInput
+  races: NodePartialListInput
   synopsis: String
   title: String
 }
