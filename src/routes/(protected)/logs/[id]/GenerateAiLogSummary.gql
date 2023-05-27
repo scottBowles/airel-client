@@ -1,0 +1,79 @@
+query GenerateAiLogSummary($id: GlobalID!) {
+	aiLogSummary(id: $id) {
+		title
+		brief
+		synopsis
+		places
+		characters
+		races
+		associations
+		items
+		artifacts
+		foundArtifacts {
+			id
+			name
+			aliases {
+				edges {
+					node {
+						name
+					}
+				}
+			}
+		}
+		foundAssociations {
+			id
+			name
+			aliases {
+				edges {
+					node {
+						name
+					}
+				}
+			}
+		}
+		foundCharacters {
+			id
+			name
+			aliases {
+				edges {
+					node {
+						name
+					}
+				}
+			}
+		}
+		foundItems {
+			id
+			name
+			aliases {
+				edges {
+					node {
+						name
+					}
+				}
+			}
+		}
+		foundPlaces {
+			id
+			name
+			aliases {
+				edges {
+					node {
+						name
+					}
+				}
+			}
+		}
+		foundRaces {
+			id
+			name
+			aliases {
+				edges {
+					node {
+						name
+					}
+				}
+			}
+		}
+	}
+}
