@@ -1,6 +1,16 @@
 <script lang="ts">
 	import { parseFormData } from 'parse-nested-form-data';
-	import { fragment, graphql, UnlockStore, UpdateLogStore, type LogEditFields } from '$houdini';
+	import {
+		fragment,
+		graphql,
+		UnlockStore,
+		UpdateLogStore,
+		type LogEditFields,
+		ArtifactNamesAndIdsStore,
+		GenerateAiLogSummaryStore,
+		type LogEditFields$data
+	} from '$houdini';
+	import FaRobot from 'svelte-icons/fa/FaRobot.svelte';
 	import FaSave from 'svelte-icons/fa/FaSave.svelte';
 	import FaUndoAlt from 'svelte-icons/fa/FaUndoAlt.svelte';
 	import RelatedPlaceMultiSelect from '$lib/components/RelatedPlaceMultiSelect.svelte';
@@ -11,9 +21,14 @@
 	import RelatedArtifactMultiSelect from '$lib/components/RelatedArtifactMultiSelect.svelte';
 	import { idFromEdge } from '../../places/utils';
 	import { somethingWentWrong } from '$lib/utils';
+	import { browser } from '$app/environment';
+	import uniqStrArrStore from '$lib/utils/clientOnly/strArrStore';
 
+	const generateAiLogSummary = new GenerateAiLogSummaryStore();
 	const unlockMutation = new UnlockStore();
 	const updateLog = new UpdateLogStore();
+	const artifactNamesAndIdsQuery = new ArtifactNamesAndIdsStore();
+	$: browser && artifactNamesAndIdsQuery.fetch();
 
 	export let log: LogEditFields;
 
@@ -82,15 +97,29 @@
 		`)
 	);
 
+	$: aiLogSummary = $generateAiLogSummary.data?.aiLogSummary;
+
 	$: ({ id, title, gameDate, brief, synopsis, lockUser } = $data);
 
 	$: placesSetInIds = $data.placesSetIn.edges.map(idFromEdge);
-	$: initialArtifactIds = $data.artifacts.edges.map(idFromEdge);
-	$: initialAssociationIds = $data.associations.edges.map(idFromEdge);
-	$: initialCharacterIds = $data.characters.edges.map(idFromEdge);
-	$: initialItemIds = $data.items.edges.map(idFromEdge);
-	$: initialPlaceIds = $data.places.edges.map(idFromEdge);
-	$: initialRaceIds = $data.races.edges.map(idFromEdge);
+
+	const artifactIds = uniqStrArrStore();
+	const associationIds = uniqStrArrStore();
+	const characterIds = uniqStrArrStore();
+	const itemIds = uniqStrArrStore();
+	const placeIds = uniqStrArrStore();
+	const raceIds = uniqStrArrStore();
+
+	function setStoresFromData(data: LogEditFields$data) {
+		artifactIds.set(data.artifacts.edges.map(idFromEdge));
+		associationIds.set(data.associations.edges.map(idFromEdge));
+		characterIds.set(data.characters.edges.map(idFromEdge));
+		itemIds.set(data.items.edges.map(idFromEdge));
+		placeIds.set(data.places.edges.map(idFromEdge));
+		raceIds.set(data.races.edges.map(idFromEdge));
+	}
+
+	$: setStoresFromData($data);
 
 	const unlock = () => unlockMutation.mutate({ id });
 
@@ -205,7 +234,7 @@
 						id={`log-${id}-place-select`}
 						inputGroupName="placesSetIn"
 						displayName="Places Set In"
-						initialPlaceIds={placesSetInIds}
+						ids={placesSetInIds}
 					/>
 				</div>
 			</div>
@@ -215,40 +244,239 @@
 
 				<div class="flex flex-col gap-2 w-full">
 					<RelatedArtifactMultiSelect
-						id="related-artifact-select"
+						id={`log-${id}-artifact-select`}
 						inputGroupName="artifacts"
-						{initialArtifactIds}
+						entityDisplayName="Artifacts"
+						bind:ids={$artifactIds}
 					/>
 					<RelatedAssociationMultiSelect
 						id="related-association-select"
 						inputGroupName="associations"
-						{initialAssociationIds}
+						bind:ids={$associationIds}
 					/>
 					<RelatedCharacterMultiSelect
 						id="related-character-select"
 						inputGroupName="characters"
-						{initialCharacterIds}
+						bind:ids={$characterIds}
 					/>
 					<RelatedItemMultiSelect
 						id="related-item-select"
 						inputGroupName="items"
-						{initialItemIds}
+						bind:ids={$itemIds}
 					/>
 					<RelatedPlaceMultiSelect
 						id="related-place-select"
 						inputGroupName="places"
-						{initialPlaceIds}
+						bind:ids={$placeIds}
 					/>
 					<RelatedRaceMultiSelect
 						id="related-race-select"
 						inputGroupName="races"
-						{initialRaceIds}
+						bind:ids={$raceIds}
 					/>
 				</div>
 			</div>
 		</div>
 	</div>
 </form>
+
+<div>
+	<button
+		type="button"
+		on:click={() => generateAiLogSummary.fetch({ variables: { id } })}
+		class="btn btn-ghost btn-sm icon-btn"
+	>
+		<div class="tooltip" data-tip="Generate AI Log Summary">
+			<span class="icon"><FaRobot /></span>
+		</div>
+	</button>
+</div>
+
+{#if aiLogSummary}
+	<div class="container mx-auto mt-8 mb-32 px-8">
+		<div class="mb-6">
+			<div class="mb-4">
+				<div class="text-lg font-bold">Title</div>
+				<div>{aiLogSummary.title}</div>
+				<button
+					type="button"
+					on:click={() => (title = aiLogSummary?.title ?? null)}
+					class="link text-accent no-underline hover:underline">Use</button
+				>
+			</div>
+			<div class="mb-4">
+				<div class="text-lg font-bold">Brief</div>
+				<div>{aiLogSummary.brief}</div>
+				<button
+					type="button"
+					on:click={() => (brief = aiLogSummary?.brief ?? null)}
+					class="link text-accent no-underline hover:underline">Use</button
+				>
+			</div>
+			<div class="mb-4">
+				<div class="text-lg font-bold">Synopsis</div>
+				<div>{aiLogSummary.synopsis}</div>
+				<button
+					type="button"
+					on:click={() => (synopsis = aiLogSummary?.synopsis ?? null)}
+					class="link text-accent no-underline hover:underline">Use</button
+				>
+			</div>
+		</div>
+
+		<h3 class="text-xl font-bold mb-4">Possible Entities</h3>
+		<div class="grid grid-cols-6 mb-6">
+			<div>
+				<div class="text-lg font-bold">Artifacts</div>
+				{#each aiLogSummary.artifacts as artifact (artifact)}
+					<div>
+						<button type="button" class="link text-accent no-underline hover:underline"
+							>&plus;</button
+						>
+						{artifact}
+					</div>
+				{/each}
+			</div>
+			<div>
+				<div class="text-lg font-bold">Associations</div>
+				{#each aiLogSummary.associations as association (association)}
+					<div>
+						<button type="button" class="link text-accent no-underline hover:underline"
+							>&plus;</button
+						>
+						{association}
+					</div>
+				{/each}
+			</div>
+			<div>
+				<div class="text-lg font-bold">Characters</div>
+				{#each aiLogSummary.characters as character (character)}
+					<div>
+						<button type="button" class="link text-accent no-underline hover:underline"
+							>&plus;</button
+						>
+						{character}
+					</div>
+				{/each}
+			</div>
+			<div>
+				<div class="text-lg font-bold">Items</div>
+				{#each aiLogSummary.items as item (item)}
+					<div>
+						<button type="button" class="link text-accent no-underline hover:underline"
+							>&plus;</button
+						>
+						{item}
+					</div>
+				{/each}
+			</div>
+			<div>
+				<div class="text-lg font-bold">Places</div>
+				{#each aiLogSummary.places as place (place)}
+					<div>
+						<button type="button" class="link text-accent no-underline hover:underline"
+							>&plus;</button
+						>
+						{place}
+					</div>
+				{/each}
+			</div>
+			<div>
+				<div class="text-lg font-bold">Races</div>
+				{#each aiLogSummary.races as race (race)}
+					<div>
+						<button type="button" class="link text-accent no-underline hover:underline"
+							>&plus;</button
+						>
+						{race}
+					</div>
+				{/each}
+			</div>
+		</div>
+
+		<h3 class="text-xl font-bold mb-4">Found Entities</h3>
+		<div class="grid grid-cols-6 mb-6">
+			<div>
+				<div class="text-lg font-bold">Artifacts</div>
+				{#each aiLogSummary.foundArtifacts.filter((a) => !$artifactIds.includes(a.id)) as foundArtifact (foundArtifact.id)}
+					<div>
+						<button
+							type="button"
+							class="link text-accent no-underline hover:underline"
+							on:click={() => artifactIds.add(foundArtifact.id)}>&plus;</button
+						>
+						{foundArtifact.name}
+					</div>
+				{/each}
+			</div>
+			<div>
+				<div class="text-lg font-bold">Associations</div>
+				{#each aiLogSummary.foundAssociations.filter((a) => !$associationIds.includes(a.id)) as foundAssociation (foundAssociation.id)}
+					<div>
+						<button
+							type="button"
+							class="link text-accent no-underline hover:underline"
+							on:click={() => associationIds.add(foundAssociation.id)}>&plus;</button
+						>
+						{foundAssociation.name}
+					</div>
+				{/each}
+			</div>
+			<div>
+				<div class="text-lg font-bold">Characters</div>
+				{#each aiLogSummary.foundCharacters.filter((c) => !$characterIds.includes(c.id)) as foundCharacter (foundCharacter.id)}
+					<div>
+						<button
+							type="button"
+							class="link text-accent no-underline hover:underline"
+							on:click={() => characterIds.add(foundCharacter.id)}>&plus;</button
+						>
+						{foundCharacter.name}
+					</div>
+				{/each}
+			</div>
+			<div class="flex flex-col">
+				<div class="text-lg font-bold">Items</div>
+				{#each aiLogSummary.foundItems.filter((i) => !$itemIds.includes(i.id)) as foundItem (foundItem.id)}
+					<div>
+						<button
+							type="button"
+							class="link text-accent no-underline hover:underline"
+							on:click={() => itemIds.add(foundItem.id)}>&plus;</button
+						>
+						{foundItem.name}
+					</div>
+				{/each}
+			</div>
+			<div>
+				<div class="text-lg font-bold">Places</div>
+				{#each aiLogSummary.foundPlaces.filter((p) => !$placeIds.includes(p.id)) as foundPlace (foundPlace.id)}
+					<div>
+						<button
+							type="button"
+							class="link text-accent no-underline hover:underline"
+							on:click={() => placeIds.add(foundPlace.id)}>&plus;</button
+						>
+						{foundPlace.name}
+					</div>
+				{/each}
+			</div>
+			<div>
+				<div class="text-lg font-bold">Races</div>
+				{#each aiLogSummary.foundRaces.filter((r) => !$raceIds.includes(r.id)) as foundRace (foundRace.id)}
+					<div>
+						<button
+							type="button"
+							class="link text-accent no-underline hover:underline"
+							on:click={() => raceIds.add(foundRace.id)}>&plus;</button
+						>
+						{foundRace.name}
+					</div>
+				{/each}
+			</div>
+		</div>
+	</div>
+{/if}
 
 <style>
 	.icon {
