@@ -40,7 +40,7 @@
 	<LayoutEdit entity={$data}>
 		<svelte:fragment slot="properties">
 			<Spacer lg />
-			<RelatedItemMultiSelect id={`artifact-${id}-item-select`} {initialItemIds} />
+			<RelatedItemMultiSelect id={`artifact-${id}-item-select`} ids={initialItemIds} />
 		</svelte:fragment>
 	</LayoutEdit>
 </form>

@@ -8,8 +8,7 @@
 	const placeNamesIdsAndTypesQuery = new PlaceNamesIdsAndTypesStore();
 	$: browser && placeNamesIdsAndTypesQuery.fetch();
 
-	let initialValues: string[] = [];
-	export { initialValues as initialPlaceIds };
+	export let ids: string[] = [];
 	export let id = `place-select`;
 	export let inputGroupName = 'places';
 	export let displayName = inputGroupName;
@@ -32,6 +31,6 @@
 	{inputGroupName}
 	{fetching}
 	{optionNamesAndIdNodes}
-	{initialValues}
+	bind:ids
 	entityDisplayName={displayName}
 />

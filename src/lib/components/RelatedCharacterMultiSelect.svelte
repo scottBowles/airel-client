@@ -6,8 +6,7 @@
 	const characterNamesAndIdsQuery = new CharacterNamesAndIdsStore();
 	$: browser && characterNamesAndIdsQuery.fetch();
 
-	let initialValues: string[] = [];
-	export { initialValues as initialCharacterIds };
+	export let ids: string[] = [];
 	export let id = `character-select`;
 	export let inputGroupName = 'characters';
 	export let entityDisplayName = inputGroupName;
@@ -22,5 +21,5 @@
 	{entityDisplayName}
 	{fetching}
 	{optionNamesAndIdNodes}
-	{initialValues}
+	bind:ids
 />

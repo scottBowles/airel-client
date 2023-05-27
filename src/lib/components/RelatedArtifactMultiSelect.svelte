@@ -6,8 +6,7 @@
 	const artifactNamesAndIdsQuery = new ArtifactNamesAndIdsStore();
 	$: browser && artifactNamesAndIdsQuery.fetch();
 
-	let initialValues: string[] = [];
-	export { initialValues as initialArtifactIds };
+	export let ids: string[] = [];
 	export let id = `artifact-select`;
 	export let inputGroupName = 'artifacts';
 	export let entityDisplayName = inputGroupName;
@@ -22,5 +21,5 @@
 	{entityDisplayName}
 	{fetching}
 	{optionNamesAndIdNodes}
-	{initialValues}
+	bind:ids
 />

@@ -46,7 +46,7 @@
 			<Spacer lg />
 			<RelatedRaceSelect initialRaceId={race?.id} />
 			<Spacer lg />
-			<RelatedAssociationMultiSelect {initialAssociationIds} />
+			<RelatedAssociationMultiSelect ids={initialAssociationIds} />
 			<Spacer lg />
 		</svelte:fragment>
 	</LayoutEdit>

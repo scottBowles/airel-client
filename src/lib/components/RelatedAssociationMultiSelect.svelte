@@ -6,8 +6,7 @@
 	const associationNamesAndIdsQuery = new AssociationNamesAndIdsStore();
 	$: browser && associationNamesAndIdsQuery.fetch();
 
-	let initialValues: string[] = [];
-	export { initialValues as initialAssociationIds };
+	export let ids: string[] = [];
 	export let id = `association-select`;
 	export let inputGroupName = 'associations';
 
@@ -15,10 +14,4 @@
 	$: ({ fetching } = $associationNamesAndIdsQuery);
 </script>
 
-<RelatedEntityMultiSelectBase
-	{id}
-	{inputGroupName}
-	{fetching}
-	{optionNamesAndIdNodes}
-	{initialValues}
-/>
+<RelatedEntityMultiSelectBase {id} {inputGroupName} {fetching} {optionNamesAndIdNodes} bind:ids />
