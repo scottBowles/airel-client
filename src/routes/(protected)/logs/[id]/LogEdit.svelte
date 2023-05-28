@@ -23,6 +23,8 @@
 	import { somethingWentWrong } from '$lib/utils';
 	import { browser } from '$app/environment';
 	import uniqStrArrStore from '$lib/utils/clientOnly/strArrStore';
+	import PossibleEntityList from './PossibleEntityList.svelte';
+	import { ENTITY_TYPE } from '$lib/constants';
 
 	const generateAiLogSummary = new GenerateAiLogSummaryStore();
 	const unlockMutation = new UnlockStore();
@@ -326,72 +328,24 @@
 
 		<h3 class="text-xl font-bold mb-4">Possible Entities</h3>
 		<div class="grid grid-cols-6 mb-6">
-			<div>
-				<div class="text-lg font-bold">Artifacts</div>
-				{#each aiLogSummary.artifacts as artifact (artifact)}
-					<div>
-						<button type="button" class="link text-accent no-underline hover:underline"
-							>&plus;</button
-						>
-						{artifact}
-					</div>
-				{/each}
-			</div>
-			<div>
-				<div class="text-lg font-bold">Associations</div>
-				{#each aiLogSummary.associations as association (association)}
-					<div>
-						<button type="button" class="link text-accent no-underline hover:underline"
-							>&plus;</button
-						>
-						{association}
-					</div>
-				{/each}
-			</div>
-			<div>
-				<div class="text-lg font-bold">Characters</div>
-				{#each aiLogSummary.characters as character (character)}
-					<div>
-						<button type="button" class="link text-accent no-underline hover:underline"
-							>&plus;</button
-						>
-						{character}
-					</div>
-				{/each}
-			</div>
-			<div>
-				<div class="text-lg font-bold">Items</div>
-				{#each aiLogSummary.items as item (item)}
-					<div>
-						<button type="button" class="link text-accent no-underline hover:underline"
-							>&plus;</button
-						>
-						{item}
-					</div>
-				{/each}
-			</div>
-			<div>
-				<div class="text-lg font-bold">Places</div>
-				{#each aiLogSummary.places as place (place)}
-					<div>
-						<button type="button" class="link text-accent no-underline hover:underline"
-							>&plus;</button
-						>
-						{place}
-					</div>
-				{/each}
-			</div>
-			<div>
-				<div class="text-lg font-bold">Races</div>
-				{#each aiLogSummary.races as race (race)}
-					<div>
-						<button type="button" class="link text-accent no-underline hover:underline"
-							>&plus;</button
-						>
-						{race}
-					</div>
-				{/each}
-			</div>
+			<PossibleEntityList
+				suggestedEntityType={ENTITY_TYPE.ARTIFACT}
+				entityNames={aiLogSummary.artifacts}
+			/>
+			<PossibleEntityList
+				suggestedEntityType={ENTITY_TYPE.ASSOCIATION}
+				entityNames={aiLogSummary.associations}
+			/>
+			<PossibleEntityList
+				suggestedEntityType={ENTITY_TYPE.CHARACTER}
+				entityNames={aiLogSummary.characters}
+			/>
+			<PossibleEntityList suggestedEntityType={ENTITY_TYPE.ITEM} entityNames={aiLogSummary.items} />
+			<PossibleEntityList
+				suggestedEntityType={ENTITY_TYPE.PLACE}
+				entityNames={aiLogSummary.places}
+			/>
+			<PossibleEntityList suggestedEntityType={ENTITY_TYPE.RACE} entityNames={aiLogSummary.races} />
 		</div>
 
 		<h3 class="text-xl font-bold mb-4">Found Entities</h3>
