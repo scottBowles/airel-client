@@ -21,7 +21,7 @@
 	import RelatedCharacterMultiSelect from '$lib/components/RelatedCharacterMultiSelect.svelte';
 	import RelatedArtifactMultiSelect from '$lib/components/RelatedArtifactMultiSelect.svelte';
 	import { idFromEdge } from '../../places/utils';
-	import { somethingWentWrong } from '$lib/utils';
+	import { fromGlobalId, somethingWentWrong } from '$lib/utils';
 	import { browser } from '$app/environment';
 	import uniqStrArrStore from '$lib/utils/clientOnly/strArrStore';
 	import PossibleEntityList from './PossibleEntityList.svelte';
@@ -153,6 +153,19 @@
 		itemIds.set(data.items.edges.map(idFromEdge));
 		placeIds.set(data.places.edges.map(idFromEdge));
 		raceIds.set(data.races.edges.map(idFromEdge));
+	}
+
+	function updateLogEntitiesInForm(id: string) {
+		const entityType = fromGlobalId(id).type as EntityType;
+		const store = {
+			[ENTITY_TYPE.ARTIFACT]: artifactIds,
+			[ENTITY_TYPE.ASSOCIATION]: associationIds,
+			[ENTITY_TYPE.CHARACTER]: characterIds,
+			[ENTITY_TYPE.ITEM]: itemIds,
+			[ENTITY_TYPE.PLACE]: placeIds,
+			[ENTITY_TYPE.RACE]: raceIds
+		}[entityType];
+		store.add(id);
 	}
 
 	$: setStoresFromData($data);
@@ -366,31 +379,37 @@
 				suggestedEntityType={ENTITY_TYPE.ARTIFACT}
 				entityNames={aiLogSummary.artifacts}
 				{updateFoundEntities}
+				{updateLogEntitiesInForm}
 			/>
 			<PossibleEntityList
 				suggestedEntityType={ENTITY_TYPE.ASSOCIATION}
 				entityNames={aiLogSummary.associations}
 				{updateFoundEntities}
+				{updateLogEntitiesInForm}
 			/>
 			<PossibleEntityList
 				suggestedEntityType={ENTITY_TYPE.CHARACTER}
 				entityNames={aiLogSummary.characters}
 				{updateFoundEntities}
+				{updateLogEntitiesInForm}
 			/>
 			<PossibleEntityList
 				suggestedEntityType={ENTITY_TYPE.ITEM}
 				entityNames={aiLogSummary.items}
 				{updateFoundEntities}
+				{updateLogEntitiesInForm}
 			/>
 			<PossibleEntityList
 				suggestedEntityType={ENTITY_TYPE.PLACE}
 				entityNames={aiLogSummary.places}
 				{updateFoundEntities}
+				{updateLogEntitiesInForm}
 			/>
 			<PossibleEntityList
 				suggestedEntityType={ENTITY_TYPE.RACE}
 				entityNames={aiLogSummary.races}
 				{updateFoundEntities}
+				{updateLogEntitiesInForm}
 			/>
 		</div>
 

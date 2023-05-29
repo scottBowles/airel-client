@@ -7,6 +7,7 @@
 	export let suggestedEntityType: EntityType;
 	export let entityNames: string[];
 	export let updateFoundEntities: (type: EntityType, newEntity: any) => void;
+	export let updateLogEntitiesInForm: (id: string) => void;
 
 	$: title = capitalize(entityPlural(suggestedEntityType));
 </script>
@@ -17,7 +18,12 @@
 	{#each entityNames as entityName (entityName)}
 		<div>
 			<AddAliasBtn {entityName} {suggestedEntityType} {updateFoundEntities} />
-			<AddEntityBtn {entityName} {suggestedEntityType} />
+			<AddEntityBtn
+				{entityName}
+				{suggestedEntityType}
+				{updateFoundEntities}
+				{updateLogEntitiesInForm}
+			/>
 			{entityName}
 		</div>
 	{/each}
