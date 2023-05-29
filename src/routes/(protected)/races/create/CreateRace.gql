@@ -16,6 +16,7 @@ mutation CreateRace(
 	) {
 		... on Race {
 			id
+			name
 		}
 	}
 }

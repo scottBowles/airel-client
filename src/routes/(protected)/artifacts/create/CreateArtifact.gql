@@ -18,6 +18,7 @@ mutation CreateArtifact(
 	) {
 		... on Artifact {
 			id
+			name
 		}
 	}
 }
