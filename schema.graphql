@@ -595,6 +595,11 @@ interface Entity implements Lockable {
   updated: DateTime!
 }
 
+input EntityAddAliasInput {
+  alias: String!
+  id: GlobalID!
+}
+
 input EntityAddImageInput {
   id: GlobalID!
   imageId: String!
@@ -1266,6 +1271,7 @@ type Mutation {
     """Input of an object that implements the `Node` interface."""
     input: NodeInput!
   ): DeleteTraitPayload!
+  entityAddAlias(input: EntityAddAliasInput!): Node!
   entityAddImage(input: EntityAddImageInput!): Node!
   gamelogLock(
     """Input data for `gamelogLock` mutation"""

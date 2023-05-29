@@ -1,0 +1,70 @@
+mutation EntityAddAlias($id: GlobalID!, $alias: String!) {
+	entityAddAlias(input: { id: $id, alias: $alias }) {
+		... on Artifact {
+			id
+			name
+			aliases {
+				edges {
+					node {
+						name
+					}
+				}
+			}
+		}
+		... on Association {
+			id
+			name
+			aliases {
+				edges {
+					node {
+						name
+					}
+				}
+			}
+		}
+		... on Character {
+			id
+			name
+			aliases {
+				edges {
+					node {
+						name
+					}
+				}
+			}
+		}
+		... on Item {
+			id
+			name
+			aliases {
+				edges {
+					node {
+						name
+					}
+				}
+			}
+		}
+		... on Place {
+			id
+			name
+			aliases {
+				edges {
+					node {
+						name
+					}
+				}
+			}
+		}
+		... on Race {
+			id
+			name
+			aliases {
+				edges {
+					node {
+						name
+					}
+				}
+			}
+		}
+	}
+}

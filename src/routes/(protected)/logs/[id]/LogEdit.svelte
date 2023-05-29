@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { parseFormData } from 'parse-nested-form-data';
+	import { uniq } from 'ramda';
 	import {
 		fragment,
 		graphql,
@@ -24,7 +25,7 @@
 	import { browser } from '$app/environment';
 	import uniqStrArrStore from '$lib/utils/clientOnly/strArrStore';
 	import PossibleEntityList from './PossibleEntityList.svelte';
-	import { ENTITY_TYPE } from '$lib/constants';
+	import { ENTITY_TYPE, type EntityType } from '$lib/constants';
 
 	const generateAiLogSummary = new GenerateAiLogSummaryStore();
 	const unlockMutation = new UnlockStore();
@@ -100,6 +101,39 @@
 	);
 
 	$: aiLogSummary = $generateAiLogSummary.data?.aiLogSummary;
+	$: ({ foundArtifacts, foundAssociations, foundCharacters, foundItems, foundPlaces, foundRaces } =
+		aiLogSummary || {
+			foundArtifacts: [],
+			foundAssociations: [],
+			foundCharacters: [],
+			foundItems: [],
+			foundPlaces: [],
+			foundRaces: []
+		});
+	$: updateFoundEntities = (type: EntityType, newEntity: any) => {
+		switch (type) {
+			case 'Artifact':
+				foundArtifacts = uniq([...foundArtifacts, newEntity]);
+				break;
+			case 'Association':
+				foundAssociations = uniq([...foundAssociations, newEntity]);
+				break;
+			case 'Character':
+				foundCharacters = uniq([...foundCharacters, newEntity]);
+				break;
+			case 'Item':
+				foundItems = uniq([...foundItems, newEntity]);
+				break;
+			case 'Place':
+				foundPlaces = uniq([...foundPlaces, newEntity]);
+				break;
+			case 'Race':
+				foundRaces = uniq([...foundRaces, newEntity]);
+				break;
+			default:
+				throw new Error(`Unknown entity type: ${type}`);
+		}
+	};
 
 	$: ({ id, title, gameDate, brief, synopsis, lockUser } = $data);
 
@@ -331,28 +365,40 @@
 			<PossibleEntityList
 				suggestedEntityType={ENTITY_TYPE.ARTIFACT}
 				entityNames={aiLogSummary.artifacts}
+				{updateFoundEntities}
 			/>
 			<PossibleEntityList
 				suggestedEntityType={ENTITY_TYPE.ASSOCIATION}
 				entityNames={aiLogSummary.associations}
+				{updateFoundEntities}
 			/>
 			<PossibleEntityList
 				suggestedEntityType={ENTITY_TYPE.CHARACTER}
 				entityNames={aiLogSummary.characters}
+				{updateFoundEntities}
 			/>
-			<PossibleEntityList suggestedEntityType={ENTITY_TYPE.ITEM} entityNames={aiLogSummary.items} />
+			<PossibleEntityList
+				suggestedEntityType={ENTITY_TYPE.ITEM}
+				entityNames={aiLogSummary.items}
+				{updateFoundEntities}
+			/>
 			<PossibleEntityList
 				suggestedEntityType={ENTITY_TYPE.PLACE}
 				entityNames={aiLogSummary.places}
+				{updateFoundEntities}
 			/>
-			<PossibleEntityList suggestedEntityType={ENTITY_TYPE.RACE} entityNames={aiLogSummary.races} />
+			<PossibleEntityList
+				suggestedEntityType={ENTITY_TYPE.RACE}
+				entityNames={aiLogSummary.races}
+				{updateFoundEntities}
+			/>
 		</div>
 
 		<h3 class="text-xl font-bold mb-4">Found Entities</h3>
 		<div class="grid grid-cols-6 mb-6">
 			<div>
 				<div class="text-lg font-bold">Artifacts</div>
-				{#each aiLogSummary.foundArtifacts.filter((a) => !$artifactIds.includes(a.id)) as foundArtifact (foundArtifact.id)}
+				{#each foundArtifacts.filter((a) => !$artifactIds.includes(a.id)) as foundArtifact (foundArtifact.id)}
 					<div>
 						<button
 							type="button"
@@ -365,7 +411,7 @@
 			</div>
 			<div>
 				<div class="text-lg font-bold">Associations</div>
-				{#each aiLogSummary.foundAssociations.filter((a) => !$associationIds.includes(a.id)) as foundAssociation (foundAssociation.id)}
+				{#each foundAssociations.filter((a) => !$associationIds.includes(a.id)) as foundAssociation (foundAssociation.id)}
 					<div>
 						<button
 							type="button"
@@ -378,7 +424,7 @@
 			</div>
 			<div>
 				<div class="text-lg font-bold">Characters</div>
-				{#each aiLogSummary.foundCharacters.filter((c) => !$characterIds.includes(c.id)) as foundCharacter (foundCharacter.id)}
+				{#each foundCharacters.filter((c) => !$characterIds.includes(c.id)) as foundCharacter (foundCharacter.id)}
 					<div>
 						<button
 							type="button"
@@ -391,7 +437,7 @@
 			</div>
 			<div class="flex flex-col">
 				<div class="text-lg font-bold">Items</div>
-				{#each aiLogSummary.foundItems.filter((i) => !$itemIds.includes(i.id)) as foundItem (foundItem.id)}
+				{#each foundItems.filter((i) => !$itemIds.includes(i.id)) as foundItem (foundItem.id)}
 					<div>
 						<button
 							type="button"
@@ -404,7 +450,7 @@
 			</div>
 			<div>
 				<div class="text-lg font-bold">Places</div>
-				{#each aiLogSummary.foundPlaces.filter((p) => !$placeIds.includes(p.id)) as foundPlace (foundPlace.id)}
+				{#each foundPlaces.filter((p) => !$placeIds.includes(p.id)) as foundPlace (foundPlace.id)}
 					<div>
 						<button
 							type="button"
@@ -417,7 +463,7 @@
 			</div>
 			<div>
 				<div class="text-lg font-bold">Races</div>
-				{#each aiLogSummary.foundRaces.filter((r) => !$raceIds.includes(r.id)) as foundRace (foundRace.id)}
+				{#each foundRaces.filter((r) => !$raceIds.includes(r.id)) as foundRace (foundRace.id)}
 					<div>
 						<button
 							type="button"
