@@ -385,13 +385,7 @@
 		</div>
 
 		<h3 class="text-xl font-bold mb-4">Possible Entities</h3>
-		<div class="grid grid-cols-6 mb-6">
-			<PossibleEntityList
-				suggestedEntityType={ENTITY_TYPE.ARTIFACT}
-				entityNames={aiLogSummary.artifacts}
-				{updateFoundEntities}
-				{updateLogEntitiesInForm}
-			/>
+		<div class="grid grid-cols-5 mb-6">
 			<PossibleEntityList
 				suggestedEntityType={ENTITY_TYPE.ASSOCIATION}
 				entityNames={aiLogSummary.associations}

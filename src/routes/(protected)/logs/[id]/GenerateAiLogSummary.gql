@@ -1,5 +1,5 @@
 query GenerateAiLogSummary($id: GlobalID!) {
-	aiLogSummary(id: $id) {
+	aiLogSuggestions(id: $id) {
 		title
 		brief
 		synopsis
@@ -8,7 +8,6 @@ query GenerateAiLogSummary($id: GlobalID!) {
 		races
 		associations
 		items
-		artifacts
 		foundArtifacts {
 			id
 			name
