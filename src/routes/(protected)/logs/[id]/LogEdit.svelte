@@ -102,7 +102,8 @@
 		`)
 	);
 
-	$: aiLogSummary = $generateAiLogSummary.data?.aiLogSummary;
+	$: aiLogSummary = $generateAiLogSummary.data?.aiLogSuggestions;
+	$: aiLogSummaryErrors = $generateAiLogSummary.errors;
 	$: ({ foundArtifacts, foundAssociations, foundCharacters, foundItems, foundPlaces, foundRaces } =
 		aiLogSummary || {
 			foundArtifacts: [],
@@ -499,6 +500,14 @@
 				{/each}
 			</div>
 		</div>
+	</div>
+{/if}
+
+{#if aiLogSummaryErrors?.length}
+	<div class="mb-96">
+		{#each aiLogSummaryErrors as error}
+			<div class="text-red-500">{error.message}</div>
+		{/each}
 	</div>
 {/if}
 
