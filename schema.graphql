@@ -1855,7 +1855,7 @@ type Query {
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
   ): AbilityScoreIncreaseConnection!
-  aiLogSummary(id: GlobalID!): GameLogAiSummary!
+  aiLogSuggestions(id: GlobalID!): GameLogAiSummary!
   artifact(pk: ID!): Artifact
   artifacts(
     """Returns the items in the list that come after the specified cursor."""
