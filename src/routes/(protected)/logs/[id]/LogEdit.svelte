@@ -26,6 +26,8 @@
 	import uniqStrArrStore from '$lib/utils/clientOnly/strArrStore';
 	import PossibleEntityList from './PossibleEntityList.svelte';
 	import { ENTITY_TYPE, type EntityType } from '$lib/constants';
+	import AddAliasBtn from './AddAliasBtn.svelte';
+	import AddEntityBtn from './AddEntityBtn.svelte';
 
 	const generateAiLogSummary = new GenerateAiLogSummaryStore();
 	const unlockMutation = new UnlockStore();
@@ -370,6 +372,15 @@
 					on:click={() => (synopsis = aiLogSummary?.synopsis ?? null)}
 					class="link text-accent no-underline hover:underline">Use</button
 				>
+			</div>
+		</div>
+
+		<div class="flex gap-8 mb-6">
+			<div>
+				<AddAliasBtn entityName={''} {updateFoundEntities} verbose />
+			</div>
+			<div>
+				<AddEntityBtn entityName={''} {updateFoundEntities} {updateLogEntitiesInForm} verbose />
 			</div>
 		</div>
 

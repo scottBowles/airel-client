@@ -46,8 +46,9 @@
 		.map((node) => ({ label: node.name, value: node.id }));
 
 	export let entityName: string;
-	export let suggestedEntityType: EntityType;
+	export let suggestedEntityType: EntityType | undefined = undefined;
 	export let updateFoundEntities: (type: EntityType, newEntity: any) => void;
+	export let verbose = false;
 
 	let entitySelected: Option[];
 	let isOpen: boolean;
@@ -78,6 +79,7 @@
 
 <label for={ALIAS_MODAL_ID} class="link hover:accent modal-button">
 	<div class="icon"><FaUsers /></div>
+	{#if verbose} Add Any Alias{/if}
 </label>
 
 <input type="checkbox" id={ALIAS_MODAL_ID} class="modal-toggle" bind:checked={isOpen} />

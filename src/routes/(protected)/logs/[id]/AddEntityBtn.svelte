@@ -26,9 +26,11 @@
 	const createRaceMutation = new CreateRaceStore();
 
 	export let entityName: string;
-	export let suggestedEntityType: EntityType;
+	export let suggestedEntityType: EntityType | undefined = undefined;
 	export let updateFoundEntities: (type: EntityType, newEntity: any) => void;
 	export let updateLogEntitiesInForm: (id: string) => void;
+	export let verbose = false;
+
 	const artifactNamesAndIdsQuery = new ArtifactNamesAndIdsStore();
 	const associationNamesAndIdsQuery = new AssociationNamesAndIdsStore();
 	const characterNamesAndIdsQuery = new CharacterNamesAndIdsStore();
@@ -124,6 +126,7 @@
 
 <label for={ADD_MODAL_ID} class="link hover:accent modal-button">
 	<div class="icon"><FaUserPlus /></div>
+	{#if verbose} Add Any Entity{/if}
 </label>
 
 <input type="checkbox" id={ADD_MODAL_ID} class="modal-toggle" bind:checked={isOpen} />
@@ -160,13 +163,5 @@
 		display: inline-block;
 		height: 16px;
 		width: 16px;
-	}
-
-	.icon-btn:hover {
-		color: #908149;
-	}
-
-	.tooltip {
-		text-transform: none;
 	}
 </style>
