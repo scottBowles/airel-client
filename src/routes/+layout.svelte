@@ -7,9 +7,11 @@
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
 	import { initShowAlgoliaSearchStore, initThemeStore } from '$lib/stores';
 	import '../app.css';
+	import { browser } from '$app/environment';
 
 	// Initialize stores
-	const theme = initThemeStore();
+	const userPrefersLight = browser && window.matchMedia('(prefers-color-scheme: light)').matches;
+	const theme = initThemeStore(userPrefersLight ? 'light' : 'dark');
 	const showAlgoliaSearch = initShowAlgoliaSearchStore();
 
 	$: console.log('theme', $theme);
