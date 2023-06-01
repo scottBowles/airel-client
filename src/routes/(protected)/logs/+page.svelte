@@ -4,8 +4,11 @@
 	import FaCaretDown from 'svelte-icons/fa/FaCaretDown.svelte';
 	import FaExternalLinkAlt from 'svelte-icons/fa/FaExternalLinkAlt.svelte';
 	import AddALog from './AddALog.svelte';
+	import { page } from '$app/stores';
 
 	export let data: PageData;
+
+	$: ({ me } = $page.data);
 	$: ({ GameLogs } = data);
 	$: logs = $GameLogs?.data?.gameLogs?.edges?.map(({ node }) => node).sort(logByGameDate) || [];
 
@@ -23,7 +26,9 @@
 	<div class="flex justify-between items-center flex-wrap mb-8">
 		<h1 class="text-4xl font-bold">Game Logs</h1>
 
-		<AddALog />
+		{#if me?.isStaff}
+			<AddALog />
+		{/if}
 	</div>
 	<ul>
 		{#each logs as log (log.id)}

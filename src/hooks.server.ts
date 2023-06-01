@@ -75,24 +75,24 @@ const setHoudiniSession = (async ({ event, resolve }) => {
 	return await resolve(event);
 }) satisfies Handle;
 
-const gatekeep = (async ({ event, resolve }) => {
-	if (
-		!event.locals.user &&
-		!PUBLIC_PAGES.includes(event.url.pathname) &&
-		!event.url.pathname.startsWith('/endpoints')
-	) {
-		throw redirect(302, '/login');
-	}
+// const gatekeep = (async ({ event, resolve }) => {
+// 	if (
+// 		!event.locals.user &&
+// 		!PUBLIC_PAGES.includes(event.url.pathname) &&
+// 		!event.url.pathname.startsWith('/endpoints')
+// 	) {
+// 		throw redirect(302, '/login');
+// 	}
 
-	return await resolve(event);
-}) satisfies Handle;
+// 	return await resolve(event);
+// }) satisfies Handle;
 
 export const handle = sequence(
 	populateTokensToLocals,
 	populateUserToLocals,
 	setCookies,
-	setHoudiniSession,
-	gatekeep
+	setHoudiniSession
+	// gatekeep
 );
 
 // Moving to the new api and current SvelteKit and Houdini, this will change a little.

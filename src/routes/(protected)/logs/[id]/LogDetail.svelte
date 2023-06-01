@@ -5,11 +5,13 @@
 	import FaEdit from 'svelte-icons/fa/FaEdit.svelte';
 	import { adjustForTimezone, fromGlobalId } from '$lib/utils';
 	import FoundInThisLogEntity from './FoundInThisLogEntity.svelte';
+	import { page } from '$app/stores';
 
 	const lockForEditMutation = new LockStore();
 
 	export let log: LogDetailFields;
 
+	$: ({ me } = $page.data);
 	$: data = fragment(
 		log,
 		graphql(`
@@ -136,19 +138,21 @@
 			</span>
 		</h2>
 
-		{#if lockUser}
-			Locked by {lockUser.username}
+		{#if me?.isStaff}
+			{#if lockUser}
+				Locked by {lockUser.username}
+			{/if}
+			<div class="tooltip ml-auto" data-tip="Edit">
+				<button
+					type="button"
+					class="btn btn-ghost btn-sm icon-btn"
+					disabled={!!lockUser}
+					on:click={onEditClick}
+				>
+					<span class="icon"><FaEdit /></span>
+				</button>
+			</div>
 		{/if}
-		<div class="tooltip ml-auto" data-tip="Edit">
-			<button
-				type="button"
-				class="btn btn-ghost btn-sm icon-btn"
-				disabled={!!lockUser}
-				on:click={onEditClick}
-			>
-				<span class="icon"><FaEdit /></span>
-			</button>
-		</div>
 	</div>
 
 	<hr class="mb-8" />

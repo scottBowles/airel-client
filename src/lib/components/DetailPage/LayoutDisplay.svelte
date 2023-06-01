@@ -16,6 +16,7 @@
 	import Spacer from '../Spacer.svelte';
 	import LayoutBase from './LayoutBase.svelte';
 	import LogsDisplay from './LogsDisplay.svelte';
+	import { page } from '$app/stores';
 
 	const lockForEditMutation = new LockStore();
 	const addLogMutation = new AddEntityLogStore();
@@ -26,6 +27,7 @@
 
 	export let entity: EntityDetailFields;
 
+	$: ({ me } = $page.data);
 	$: data = fragment(
 		entity,
 		graphql(`
@@ -84,19 +86,21 @@
 
 	<!-- EDIT / SAVE + LOCKED BY {USER} -->
 	<svelte:fragment slot="lockedBy">
-		{#if lockUser}
-			Locked by {lockUser.username}
-			<div class="tooltip ml-auto" data-tip="Edit">
-				<button type="button" class="btn btn-ghost btn-sm icon-btn" disabled>
-					<span class="icon"><FaEdit /></span>
-				</button>
-			</div>
-		{:else}
-			<div class="tooltip ml-auto" data-tip="Edit">
-				<button type="button" class="btn btn-ghost btn-sm icon-btn" on:click={onEditClick}>
-					<span class="icon"><FaEdit /></span>
-				</button>
-			</div>
+		{#if me?.isStaff}
+			{#if lockUser}
+				Locked by {lockUser.username}
+				<div class="tooltip ml-auto" data-tip="Edit">
+					<button type="button" class="btn btn-ghost btn-sm icon-btn" disabled>
+						<span class="icon"><FaEdit /></span>
+					</button>
+				</div>
+			{:else}
+				<div class="tooltip ml-auto" data-tip="Edit">
+					<button type="button" class="btn btn-ghost btn-sm icon-btn" on:click={onEditClick}>
+						<span class="icon"><FaEdit /></span>
+					</button>
+				</div>
+			{/if}
 		{/if}
 	</svelte:fragment>
 
