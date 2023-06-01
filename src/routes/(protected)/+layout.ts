@@ -6,9 +6,9 @@ export const load = async (event) => {
 
 	const result = await MeQuery.fetch({ event });
 
-	if (result.errors) {
-		throw redirect(301, `/login?redirect=${event.url.pathname}`);
-	}
+	// if (result.errors) {
+	// 	throw redirect(301, `/login?redirect=${event.url.pathname}`);
+	// }
 
-	return { MeQuery };
+	return { me: result.data?.me };
 };

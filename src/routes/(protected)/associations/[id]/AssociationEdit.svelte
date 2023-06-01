@@ -43,7 +43,7 @@
 	<LayoutEdit entity={$data}>
 		<svelte:fragment slot="properties">
 			<Spacer lg />
-			<RelatedCharacterMultiSelect {initialCharacterIds} entityDisplayName="Members" />
+			<RelatedCharacterMultiSelect ids={initialCharacterIds} entityDisplayName="Members" />
 			<Spacer lg />
 		</svelte:fragment>
 	</LayoutEdit>

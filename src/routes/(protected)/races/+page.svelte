@@ -6,9 +6,11 @@
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import type { PageData } from './$houdini';
 	import { fromGlobalId } from '$lib/utils';
+	import { page } from '$app/stores';
 
 	export let data: PageData;
 
+	$: ({ me } = $page.data);
 	$: ({ Races } = data);
 	$: races =
 		$Races?.data?.races?.edges?.map(({ node }) => node).sort(alphabeticallyBy('name')) || [];
@@ -22,7 +24,9 @@
 />
 
 <div class="container mx-auto mt-12 mb-32 grid gap-y-4">
-	<div><AddLink href="races/create" /></div>
+	{#if me?.isStaff}
+		<div><AddLink href="races/create" /></div>
+	{/if}
 
 	{#each races as race (race.id)}
 		{@const { id } = race}

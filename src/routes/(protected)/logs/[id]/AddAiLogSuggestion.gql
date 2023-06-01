@@ -1,0 +1,62 @@
+mutation AddAiLogSuggestion(
+	$id: GlobalID!
+	$title: String!
+	$brief: String!
+	$synopsis: String!
+	$associations: [String!]!
+	$characters: [String!]!
+	$items: [String!]!
+	$places: [String!]!
+	$races: [String!]!
+) {
+	addAiLogSuggestion(
+		input: {
+			id: $id
+			title: $title
+			brief: $brief
+			synopsis: $synopsis
+			associations: $associations
+			characters: $characters
+			items: $items
+			places: $places
+			races: $races
+		}
+	) {
+		... on GameLog {
+			aiSuggestions {
+				titles
+				briefs
+				synopses
+				associations
+				characters
+				items
+				places
+				races
+				foundArtifacts {
+					id
+					name
+				}
+				foundAssociations {
+					id
+					name
+				}
+				foundCharacters {
+					id
+					name
+				}
+				foundItems {
+					id
+					name
+				}
+				foundPlaces {
+					id
+					name
+				}
+				foundRaces {
+					id
+					name
+				}
+			}
+		}
+	}
+}

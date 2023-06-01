@@ -1,0 +1,11 @@
+query PlaceNamesIdsAndTypes @load {
+	places {
+		edges {
+			node {
+				id
+				name
+				placeType
+			}
+		}
+	}
+}

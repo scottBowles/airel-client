@@ -6,7 +6,7 @@
 	import SomethingWentWrong from './SomethingWentWrong.svelte';
 
 	export let entityName: string;
-	export let queryResult: QueryResult;
+	export let queryResult: QueryResult<unknown, unknown>;
 
 	$: ({ data, errors, fetching } = queryResult);
 </script>

@@ -6,10 +6,10 @@
 	const characterNamesAndIdsQuery = new CharacterNamesAndIdsStore();
 	$: browser && characterNamesAndIdsQuery.fetch();
 
-	let initialValues: string[] = [];
-	export { initialValues as initialCharacterIds };
+	export let ids: string[] = [];
 	export let id = `character-select`;
-	export let entityDisplayName: string | undefined;
+	export let inputGroupName = 'characters';
+	export let entityDisplayName = inputGroupName;
 
 	$: optionNamesAndIdNodes = $characterNamesAndIdsQuery.data?.characters.edges;
 	$: ({ fetching } = $characterNamesAndIdsQuery);
@@ -17,9 +17,9 @@
 
 <RelatedEntityMultiSelectBase
 	{id}
-	inputGroupName="characters"
+	{inputGroupName}
 	{entityDisplayName}
 	{fetching}
 	{optionNamesAndIdNodes}
-	{initialValues}
+	bind:ids
 />

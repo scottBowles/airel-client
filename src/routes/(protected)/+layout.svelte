@@ -14,8 +14,9 @@
 	import type { LayoutData } from './$houdini';
 
 	export let data: LayoutData;
-	$: ({ Me } = data);
-	$: console.log({ me: $Me });
+
+	$: ({ me } = data);
+	// $: console.log(me);
 </script>
 
 {#if $navigating}

@@ -34,3 +34,30 @@ export const themes = ['light', 'dark', 'trek'] as const;
 // 	'coffee',
 // 	'winter'
 // ];
+
+export const ENTITY_TYPE = {
+	ARTIFACT: 'Artifact',
+	ASSOCIATION: 'Association',
+	CHARACTER: 'Character',
+	ITEM: 'Item',
+	PLACE: 'Place',
+	RACE: 'Race'
+} as const;
+
+export const ENTITY_TYPES = Object.values(ENTITY_TYPE);
+
+export type EntityType = (typeof ENTITY_TYPE)[keyof typeof ENTITY_TYPE];
+
+export const ENTITY_TYPE_PLURALS = {
+	[ENTITY_TYPE.ARTIFACT]: 'Artifacts',
+	[ENTITY_TYPE.ASSOCIATION]: 'Associations',
+	[ENTITY_TYPE.CHARACTER]: 'Characters',
+	[ENTITY_TYPE.ITEM]: 'Items',
+	[ENTITY_TYPE.PLACE]: 'Places',
+	[ENTITY_TYPE.RACE]: 'Races'
+} as const;
+
+export type EntityTypePlural = (typeof ENTITY_TYPE_PLURALS)[keyof typeof ENTITY_TYPE_PLURALS];
+
+export const entityPlural = (entityType: EntityType): EntityTypePlural =>
+	ENTITY_TYPE_PLURALS[entityType];

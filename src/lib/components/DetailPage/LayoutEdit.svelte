@@ -43,7 +43,7 @@
 						node {
 							id
 							url
-							name
+							title
 						}
 					}
 				}

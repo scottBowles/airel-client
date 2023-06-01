@@ -20,6 +20,7 @@ mutation CreateCharacter(
 	) {
 		... on Character {
 			id
+			name
 		}
 	}
 }

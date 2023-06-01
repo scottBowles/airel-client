@@ -6,18 +6,12 @@
 	const raceNamesAndIdsQuery = new RaceNamesAndIdsStore();
 	$: browser && raceNamesAndIdsQuery.fetch();
 
-	let initialValues: string[] = [];
-	export { initialValues as initialRaceIds };
+	export let ids: string[] = [];
 	export let id = `race-select`;
+	export let inputGroupName = 'races';
 
 	$: optionNamesAndIdNodes = $raceNamesAndIdsQuery.data?.races.edges;
 	$: ({ fetching } = $raceNamesAndIdsQuery);
 </script>
 
-<RelatedEntityMultiSelectBase
-	{id}
-	inputGroupName="races"
-	{fetching}
-	{optionNamesAndIdNodes}
-	{initialValues}
-/>
+<RelatedEntityMultiSelectBase {id} {inputGroupName} {fetching} {optionNamesAndIdNodes} bind:ids />

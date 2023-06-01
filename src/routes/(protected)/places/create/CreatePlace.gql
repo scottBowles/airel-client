@@ -22,6 +22,7 @@ mutation CreatePlace(
 	) {
 		... on Place {
 			id
+			name
 		}
 	}
 }

@@ -6,18 +6,12 @@
 	const itemNamesAndIdsQuery = new ItemNamesAndIdsStore();
 	$: browser && itemNamesAndIdsQuery.fetch();
 
-	let initialValues: string[] = [];
-	export { initialValues as initialItemIds };
+	export let ids: string[] = [];
 	export let id = `item-select`;
+	export let inputGroupName = 'items';
 
 	$: optionNamesAndIdNodes = $itemNamesAndIdsQuery.data?.items.edges;
 	$: ({ fetching } = $itemNamesAndIdsQuery);
 </script>
 
-<RelatedEntityMultiSelectBase
-	{id}
-	inputGroupName="items"
-	{fetching}
-	{optionNamesAndIdNodes}
-	{initialValues}
-/>
+<RelatedEntityMultiSelectBase {id} {inputGroupName} {fetching} {optionNamesAndIdNodes} bind:ids />

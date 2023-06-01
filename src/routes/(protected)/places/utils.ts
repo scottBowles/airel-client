@@ -99,3 +99,5 @@ export function getSelectOptionFromEdge({ node }: PlaceSelectEdge) {
 		value: node.id
 	};
 }
+
+export const idFromEdge = <T extends { node: { id: string } }>(edge: T) => edge.node.id;

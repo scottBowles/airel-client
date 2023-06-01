@@ -6,9 +6,11 @@
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import type { PageData } from './$houdini';
 	import { fromGlobalId } from '$lib/utils';
+	import { page } from '$app/stores';
 
 	export let data: PageData;
 
+	$: ({ me } = $page.data);
 	$: ({ Associations } = data);
 	$: associations =
 		$Associations?.data?.associations?.edges
@@ -24,7 +26,9 @@
 />
 
 <div class="container mx-auto mt-12 mb-32 grid gap-y-4">
-	<div><AddLink href="associations/create" /></div>
+	{#if me?.isStaff}
+		<div><AddLink href="associations/create" /></div>
+	{/if}
 
 	{#each associations as association (association.id)}
 		{@const { id } = association}

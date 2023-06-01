@@ -1,0 +1,22 @@
+query GameLog($id: ID!) {
+	gameLog(pk: $id) {
+		id
+		url
+		title
+		googleId
+		gameDate
+		brief
+		synopsis
+		placesSetIn {
+			edges {
+				node {
+					name
+					description
+				}
+			}
+		}
+		...LogLockedBySelf
+		...LogEditFields
+		...LogDetailFields
+	}
+}

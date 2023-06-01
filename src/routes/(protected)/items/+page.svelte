@@ -6,9 +6,11 @@
 	import { Loading } from '$lib/components/DetailPage';
 	import ItemListDisplay from '$lib/components/ItemListDisplay.svelte';
 	import { alphabeticallyBy } from '$lib/utils';
+	import { page } from '$app/stores';
 
 	export let data: PageData;
 
+	$: ({ me } = $page.data);
 	$: ({ Items } = data);
 	$: items =
 		$Items?.data?.items?.edges?.map((edge) => edge.node).sort(alphabeticallyBy('name')) || [];
@@ -25,7 +27,10 @@
 	{#if !items}
 		<Loading />
 	{:else}
-		<div><AddLink href="items/create" /></div>
+		{#if me?.isStaff}
+			<div><AddLink href="items/create" /></div>
+		{/if}
+
 		{#each items as item (item.id)}
 			<ItemListDisplay {item} />
 		{/each}

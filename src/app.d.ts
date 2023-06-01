@@ -1,3 +1,4 @@
+import { Me$result } from '$houdini';
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 declare global {
@@ -8,7 +9,9 @@ declare global {
 			token?: string;
 			refresh_token?: string;
 		}
-		// interface PageData {}
+		interface PageData {
+			me?: Me$result['me'];
+		}
 		// interface Platform {}
 
 		// Houdini's Session type
