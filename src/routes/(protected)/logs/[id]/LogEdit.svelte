@@ -30,6 +30,7 @@
 	import AddAliasBtn from './AddAliasBtn.svelte';
 	import AddEntityBtn from './AddEntityBtn.svelte';
 	import { page } from '$app/stores';
+	import AddAiSuggestion from './AddAiSuggestion.svelte';
 
 	const aiLogSuggestions = new AiLogSuggestionsStore();
 	const generateAiLogSummary = new GenerateAiLogSummaryStore();
@@ -337,6 +338,7 @@
 	</div>
 </form>
 
+<AddAiSuggestion {id} />
 
 {#if $aiLogSuggestions.errors}
 	Error loading AI Suggestions: {new Intl.ListFormat('en-US', { style: 'long' }).format(
