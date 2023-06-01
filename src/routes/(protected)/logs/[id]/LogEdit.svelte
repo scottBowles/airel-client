@@ -9,7 +9,8 @@
 		type LogEditFields,
 		ArtifactNamesAndIdsStore,
 		GenerateAiLogSummaryStore,
-		type LogEditFields$data
+		type LogEditFields$data,
+		AiLogSuggestionsStore
 	} from '$houdini';
 	import FaRobot from 'svelte-icons/fa/FaRobot.svelte';
 	import FaSave from 'svelte-icons/fa/FaSave.svelte';
@@ -28,12 +29,15 @@
 	import { ENTITY_TYPE, type EntityType } from '$lib/constants';
 	import AddAliasBtn from './AddAliasBtn.svelte';
 	import AddEntityBtn from './AddEntityBtn.svelte';
+	import { page } from '$app/stores';
 
+	const aiLogSuggestions = new AiLogSuggestionsStore();
 	const generateAiLogSummary = new GenerateAiLogSummaryStore();
 	const unlockMutation = new UnlockStore();
 	const updateLog = new UpdateLogStore();
 	const artifactNamesAndIdsQuery = new ArtifactNamesAndIdsStore();
 	$: browser && artifactNamesAndIdsQuery.fetch();
+	$: pk = $page.params.id;
 
 	export let log: LogEditFields;
 
@@ -102,10 +106,11 @@
 		`)
 	);
 
+	$: aiSuggestions = $aiLogSuggestions.data?.gameLog?.aiSuggestions;
 	$: aiLogSummary = $generateAiLogSummary.data?.aiLogSuggestions;
 	$: aiLogSummaryErrors = $generateAiLogSummary.errors;
 	$: ({ foundArtifacts, foundAssociations, foundCharacters, foundItems, foundPlaces, foundRaces } =
-		aiLogSummary || {
+		aiSuggestions || {
 			foundArtifacts: [],
 			foundAssociations: [],
 			foundCharacters: [],
@@ -332,7 +337,189 @@
 	</div>
 </form>
 
-<div>
+
+{#if $aiLogSuggestions.errors}
+	Error loading AI Suggestions: {new Intl.ListFormat('en-US', { style: 'long' }).format(
+		$aiLogSuggestions.errors.map((error) => error.message)
+	)}
+{:else if aiSuggestions}
+	<div>
+		<div class="text-lg font-bold">Load Ai Suggestions</div>
+
+		<div class="container mx-auto mt-8 mb-32 px-8">
+			<div class="mb-6">
+				<div class="mb-4">
+					<div class="text-lg font-bold">Titles</div>
+					{#each aiSuggestions.titles as suggestedTitle}
+						<div>{suggestedTitle}</div>
+						<button
+							type="button"
+							on:click={() => (title = suggestedTitle ?? null)}
+							class="link text-accent no-underline hover:underline">Use</button
+						>
+					{/each}
+				</div>
+				<div class="mb-4">
+					<div class="text-lg font-bold">Briefs</div>
+					{#each aiSuggestions.briefs as suggestedBrief}
+						<div>{suggestedBrief}</div>
+						<button
+							type="button"
+							on:click={() => (brief = suggestedBrief ?? null)}
+							class="link text-accent no-underline hover:underline">Use</button
+						>
+					{/each}
+				</div>
+				<div class="mb-4">
+					<div class="text-lg font-bold">Synopses</div>
+					{#each aiSuggestions.synopses as suggestedSynopsis}
+						<div>{suggestedSynopsis}</div>
+						<button
+							type="button"
+							on:click={() => (synopsis = suggestedSynopsis ?? null)}
+							class="link text-accent no-underline hover:underline">Use</button
+						>
+					{/each}
+				</div>
+			</div>
+
+			<div class="flex gap-8 mb-6">
+				<div>
+					<AddAliasBtn entityName={''} {updateFoundEntities} verbose />
+				</div>
+				<div>
+					<AddEntityBtn entityName={''} {updateFoundEntities} {updateLogEntitiesInForm} verbose />
+				</div>
+			</div>
+
+			<h3 class="text-xl font-bold mb-4">Possible Entities</h3>
+			<div class="grid grid-cols-5 mb-6">
+				<PossibleEntityList
+					suggestedEntityType={ENTITY_TYPE.ASSOCIATION}
+					entityNames={aiSuggestions.associations}
+					{updateFoundEntities}
+					{updateLogEntitiesInForm}
+				/>
+				<PossibleEntityList
+					suggestedEntityType={ENTITY_TYPE.CHARACTER}
+					entityNames={aiSuggestions.characters}
+					{updateFoundEntities}
+					{updateLogEntitiesInForm}
+				/>
+				<PossibleEntityList
+					suggestedEntityType={ENTITY_TYPE.ITEM}
+					entityNames={aiSuggestions.items}
+					{updateFoundEntities}
+					{updateLogEntitiesInForm}
+				/>
+				<PossibleEntityList
+					suggestedEntityType={ENTITY_TYPE.PLACE}
+					entityNames={aiSuggestions.places}
+					{updateFoundEntities}
+					{updateLogEntitiesInForm}
+				/>
+				<PossibleEntityList
+					suggestedEntityType={ENTITY_TYPE.RACE}
+					entityNames={aiSuggestions.races}
+					{updateFoundEntities}
+					{updateLogEntitiesInForm}
+				/>
+			</div>
+
+			<h3 class="text-xl font-bold mb-4">Found Entities</h3>
+			<div class="grid grid-cols-6 mb-6">
+				<div>
+					<div class="text-lg font-bold">Artifacts</div>
+					{#each foundArtifacts.filter((a) => !$artifactIds.includes(a.id)) as foundArtifact (foundArtifact.id)}
+						<div>
+							<button
+								type="button"
+								class="link text-accent no-underline hover:underline"
+								on:click={() => artifactIds.add(foundArtifact.id)}>&plus;</button
+							>
+							{foundArtifact.name}
+						</div>
+					{/each}
+				</div>
+				<div>
+					<div class="text-lg font-bold">Associations</div>
+					{#each foundAssociations.filter((a) => !$associationIds.includes(a.id)) as foundAssociation (foundAssociation.id)}
+						<div>
+							<button
+								type="button"
+								class="link text-accent no-underline hover:underline"
+								on:click={() => associationIds.add(foundAssociation.id)}>&plus;</button
+							>
+							{foundAssociation.name}
+						</div>
+					{/each}
+				</div>
+				<div>
+					<div class="text-lg font-bold">Characters</div>
+					{#each foundCharacters.filter((c) => !$characterIds.includes(c.id)) as foundCharacter (foundCharacter.id)}
+						<div>
+							<button
+								type="button"
+								class="link text-accent no-underline hover:underline"
+								on:click={() => characterIds.add(foundCharacter.id)}>&plus;</button
+							>
+							{foundCharacter.name}
+						</div>
+					{/each}
+				</div>
+				<div class="flex flex-col">
+					<div class="text-lg font-bold">Items</div>
+					{#each foundItems.filter((i) => !$itemIds.includes(i.id)) as foundItem (foundItem.id)}
+						<div>
+							<button
+								type="button"
+								class="link text-accent no-underline hover:underline"
+								on:click={() => itemIds.add(foundItem.id)}>&plus;</button
+							>
+							{foundItem.name}
+						</div>
+					{/each}
+				</div>
+				<div>
+					<div class="text-lg font-bold">Places</div>
+					{#each foundPlaces.filter((p) => !$placeIds.includes(p.id)) as foundPlace (foundPlace.id)}
+						<div>
+							<button
+								type="button"
+								class="link text-accent no-underline hover:underline"
+								on:click={() => placeIds.add(foundPlace.id)}>&plus;</button
+							>
+							{foundPlace.name}
+						</div>
+					{/each}
+				</div>
+				<div>
+					<div class="text-lg font-bold">Races</div>
+					{#each foundRaces.filter((r) => !$raceIds.includes(r.id)) as foundRace (foundRace.id)}
+						<div>
+							<button
+								type="button"
+								class="link text-accent no-underline hover:underline"
+								on:click={() => raceIds.add(foundRace.id)}>&plus;</button
+							>
+							{foundRace.name}
+						</div>
+					{/each}
+				</div>
+			</div>
+		</div>
+	</div>
+{:else}
+	<button
+		type="button"
+		class="btn btn-ghost btn-sm"
+		on:click={() => aiLogSuggestions.fetch({ variables: { pk } })}
+	>
+		Load AI Suggestions (This may discard any existing changes?)
+	</button>
+{/if}
+
+<!-- <div>
 	<button
 		type="button"
 		on:click={() => generateAiLogSummary.fetch({ variables: { id } })}
@@ -509,7 +696,7 @@
 			<div class="text-red-500">{error.message}</div>
 		{/each}
 	</div>
-{/if}
+{/if} -->
 
 <style>
 	.icon {

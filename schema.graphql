@@ -36,6 +36,21 @@ input AbilityScoreIncreaseInputPartial {
   increase: Int
 }
 
+"""Input data for `addAiLogSuggestion` mutation"""
+input AddAiLogSuggestionInput {
+  associations: [String!]!
+  brief: String!
+  characters: [String!]!
+  id: GlobalID!
+  items: [String!]!
+  places: [String!]!
+  races: [String!]!
+  synopsis: String!
+  title: String!
+}
+
+union AddAiLogSuggestionPayload = GameLog | OperationInfo
+
 input AddEntityLogInput {
   entityId: GlobalID!
   logId: GlobalID
@@ -484,6 +499,23 @@ input CharacterReleaseLockInput {
 
 union CharacterReleaseLockPayload = Character | OperationInfo
 
+type CombinedGameLogAiSummary {
+  associations: [String!]!
+  briefs: [String!]!
+  characters: [String!]!
+  foundArtifacts: [Artifact!]!
+  foundAssociations: [Association!]!
+  foundCharacters: [Character!]!
+  foundItems: [Item!]!
+  foundPlaces: [Place!]!
+  foundRaces: [Race!]!
+  items: [String!]!
+  places: [String!]!
+  races: [String!]!
+  synopses: [String!]!
+  titles: [String!]!
+}
+
 union CreateAbilityScoreIncreasePayload = AbilityScoreIncrease | OperationInfo
 
 union CreateArtifactPayload = Artifact | OperationInfo
@@ -783,6 +815,7 @@ input FeatureInputPartial {
 }
 
 type GameLog implements Lockable & Node {
+  aiSuggestions: CombinedGameLogAiSummary
   artifacts(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -1158,6 +1191,10 @@ interface Lockable {
 }
 
 type Mutation {
+  addAiLogSuggestion(
+    """Input data for `addAiLogSuggestion` mutation"""
+    input: AddAiLogSuggestionInput!
+  ): AddAiLogSuggestionPayload!
   addEntityLog(input: AddEntityLogInput!): Node!
   artifactAddImage(
     """Input data for `artifactAddImage` mutation"""
@@ -1912,6 +1949,7 @@ type Query {
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
   ): CharacterConnection!
+  consolidatedAiLogSuggestions(id: GlobalID!): CombinedGameLogAiSummary!
   export(pk: ID!): Export
   exports(
     """Returns the items in the list that come after the specified cursor."""
