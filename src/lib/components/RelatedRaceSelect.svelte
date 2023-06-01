@@ -6,7 +6,7 @@
 	const raceNamesAndIdsQuery = new RaceNamesAndIdsStore();
 	$: browser && raceNamesAndIdsQuery.fetch();
 
-	let initialValue: string = '';
+	let initialValue = '';
 	export { initialValue as initialRaceId };
 	export let id = `race-select`;
 

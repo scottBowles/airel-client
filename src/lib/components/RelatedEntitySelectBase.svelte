@@ -31,5 +31,7 @@
 			{/each}
 		</select>
 	{/if}
-	<input type="hidden" name={`${inputName}.id`} value={selected} />
+	{#if selected}
+		<input type="hidden" name={`${inputName}.id`} value={selected} />
+	{/if}
 </div>
