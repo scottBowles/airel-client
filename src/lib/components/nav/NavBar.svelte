@@ -32,7 +32,7 @@
 	<div class="drawer-content flex flex-col">
 		<!-- Navbar -->
 		<div class="w-full navbar bg-base-300 justify-between gap-2">
-			<div class="lg:hidden">
+			<div class="xl:hidden">
 				<label for="mobile-drawer" class="btn btn-square btn-ghost">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +60,7 @@
 			<select
 				data-choose-theme
 				bind:value={$theme}
-				class="select select-sm select-bordered hidden lg:block"
+				class="select select-sm select-bordered hidden xl:block"
 			>
 				<option value="">Select a theme</option>
 				{#each themes as theme}
@@ -68,7 +68,7 @@
 				{/each}
 			</select>
 
-			<div class="hidden lg:block">
+			<div class="hidden xl:block">
 				<ul class="flex gap-1">
 					<!-- Navbar menu content here -->
 					<NavLinks btnSize="sm" />
@@ -80,10 +80,12 @@
 	</div>
 	<div class="drawer-side">
 		<label for="mobile-drawer" class="drawer-overlay" />
-		<ul class="menu p-4 overflow-y-auto w-80 bg-base-100 gap-1">
+		<div class="menu p-4 overflow-y-auto w-80 bg-base-100 gap-1">
 			<!-- Sidebar content here -->
 			<div class="text-4xl text-center font-bold mt-4 mb-8">Airel</div>
-			<NavLinks btnSize="lg" />
-		</ul>
+			<ul>
+				<NavLinks btnSize="lg" />
+			</ul>
+		</div>
 	</div>
 </div>

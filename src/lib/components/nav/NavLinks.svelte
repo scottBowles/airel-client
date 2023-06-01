@@ -6,10 +6,10 @@
 	export let btnSize = '';
 
 	const links = [
-		{
-			label: 'Home',
-			href: '/'
-		},
+		// {
+		// 	label: 'Home',
+		// 	href: '/'
+		// },
 		{
 			label: 'Items',
 			href: '/items'
@@ -33,6 +33,10 @@
 		{
 			label: 'Races',
 			href: '/races'
+		},
+		{
+			label: 'Logs',
+			href: '/logs'
 		}
 	];
 
