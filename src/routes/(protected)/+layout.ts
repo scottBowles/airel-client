@@ -10,5 +10,5 @@ export const load = async (event) => {
 		throw redirect(301, `/login?redirect=${event.url.pathname}`);
 	}
 
-	return { MeQuery };
+	return { me: result.data?.me };
 };
