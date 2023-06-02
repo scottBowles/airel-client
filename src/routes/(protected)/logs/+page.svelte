@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fromGlobalId, logByGameDate } from '$lib/utils';
+	import { dateAdjustedForUtcOffset, fromGlobalId, logByGameDate } from '$lib/utils';
 	import type { PageData } from './$houdini';
 	import FaCaretDown from 'svelte-icons/fa/FaCaretDown.svelte';
 	import FaExternalLinkAlt from 'svelte-icons/fa/FaExternalLinkAlt.svelte';
@@ -41,7 +41,7 @@
 								</h2>
 								<h6 class="card-subtitle whitespace-nowrap">
 									{log.gameDate
-										? new Date(log.gameDate).toLocaleDateString('en-US', {
+										? dateAdjustedForUtcOffset(new Date(log.gameDate)).toLocaleDateString('en-US', {
 												year: 'numeric',
 												month: 'short',
 												day: 'numeric'
