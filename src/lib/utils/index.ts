@@ -71,3 +71,12 @@ export function adjustForTimezone(date: Date) {
 	const offset = date.getTimezoneOffset();
 	return new Date(date.getTime() + offset * 60 * 1000);
 }
+
+/**
+ * Tries to make it timezone naive by adding the current timezone offset
+ * plus an extra hour to account for daylight savings time
+ */
+export function dateAdjustedForUtcOffset(date: Date) {
+	const timezoneOffset = (new Date().getTimezoneOffset() + 60) * 60 * 1000;
+	return new Date(date.valueOf() + timezoneOffset);
+}
