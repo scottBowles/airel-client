@@ -121,6 +121,14 @@
 			foundPlaces: [],
 			foundRaces: []
 		});
+	$: allFoundEntityNames = [
+		...foundArtifacts.map((a) => a.name),
+		...foundAssociations.map((a) => a.name),
+		...foundCharacters.map((a) => a.name),
+		...foundItems.map((a) => a.name),
+		...foundPlaces.map((a) => a.name),
+		...foundRaces.map((a) => a.name)
+	];
 	$: updateFoundEntities = (type: EntityType, newEntity: any) => {
 		switch (type) {
 			case 'Artifact':
@@ -401,31 +409,31 @@
 				<div class="grid grid-cols-5 mb-6">
 					<PossibleEntityList
 						suggestedEntityType={ENTITY_TYPE.ASSOCIATION}
-						entityNames={aiSuggestions.associations}
+						entityNames={aiSuggestions.associations.filter((a) => !allFoundEntityNames.includes(a))}
 						{updateFoundEntities}
 						{updateLogEntitiesInForm}
 					/>
 					<PossibleEntityList
 						suggestedEntityType={ENTITY_TYPE.CHARACTER}
-						entityNames={aiSuggestions.characters}
+						entityNames={aiSuggestions.characters.filter((c) => !allFoundEntityNames.includes(c))}
 						{updateFoundEntities}
 						{updateLogEntitiesInForm}
 					/>
 					<PossibleEntityList
 						suggestedEntityType={ENTITY_TYPE.ITEM}
-						entityNames={aiSuggestions.items}
+						entityNames={aiSuggestions.items.filter((i) => !allFoundEntityNames.includes(i))}
 						{updateFoundEntities}
 						{updateLogEntitiesInForm}
 					/>
 					<PossibleEntityList
 						suggestedEntityType={ENTITY_TYPE.PLACE}
-						entityNames={aiSuggestions.places}
+						entityNames={aiSuggestions.places.filter((p) => !allFoundEntityNames.includes(p))}
 						{updateFoundEntities}
 						{updateLogEntitiesInForm}
 					/>
 					<PossibleEntityList
 						suggestedEntityType={ENTITY_TYPE.RACE}
-						entityNames={aiSuggestions.races}
+						entityNames={aiSuggestions.races.filter((r) => !allFoundEntityNames.includes(r))}
 						{updateFoundEntities}
 						{updateLogEntitiesInForm}
 					/>
