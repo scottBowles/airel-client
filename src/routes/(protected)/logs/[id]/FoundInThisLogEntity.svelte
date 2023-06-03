@@ -4,7 +4,7 @@
 	export let name: string;
 	export let entities: { id: string; name: string }[];
 	export let getUrl: (entity: { id: string; name: string }) => string = (entity) => {
-		const entityName = entity.name.toLowerCase();
+		const entityName = name.toLowerCase();
 		const id = fromGlobalId(entity.id).id;
 		return `/${entityName}/${id}`;
 	};
