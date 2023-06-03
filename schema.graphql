@@ -920,6 +920,7 @@ type GameLog implements Lockable & Node {
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
   ): RaceConnection!
+  summary: String
   synopsis: String
   title: String
   url: String!
@@ -975,6 +976,7 @@ input GameLogInputPartial {
   places: NodePartialListInput
   placesSetIn: NodePartialListInput
   races: NodePartialListInput
+  summary: String
   synopsis: String
   title: String
 }
