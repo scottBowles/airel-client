@@ -4,6 +4,7 @@ query CharacterNamesAndIds @load {
 			node {
 				id
 				name
+				__typename
 			}
 		}
 	}

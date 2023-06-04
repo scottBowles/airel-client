@@ -4,6 +4,7 @@ query AssociationNamesAndIds @load {
 			node {
 				id
 				name
+				__typename
 			}
 		}
 	}

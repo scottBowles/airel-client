@@ -1,7 +1,7 @@
 <script lang="ts">
 	import MultiSelect, { type Option } from 'svelte-multiselect';
 	import FaUsers from 'svelte-icons/fa/FaUsers.svelte';
-	import { type EntityType } from '$lib/constants';
+	import type { EntityType } from '$lib/constants';
 	import {
 		ArtifactNamesAndIdsStore,
 		AssociationNamesAndIdsStore,

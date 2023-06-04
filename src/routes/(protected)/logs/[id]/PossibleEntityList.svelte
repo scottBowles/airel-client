@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { capitalize } from '$lib/utils';
-	import AddAliasBtn from './AddAliasBtn.svelte';
-	import AddEntityBtn from './AddEntityBtn.svelte';
 	import { entityPlural, type EntityType } from '$lib/constants';
+	import AddEntityOrAliasBtn from './AddEntityOrAliasBtn.svelte';
 
 	export let suggestedEntityType: EntityType;
 	export let entityNames: string[];
@@ -17,8 +16,7 @@
 
 	{#each entityNames as entityName (entityName)}
 		<div>
-			<AddAliasBtn {entityName} {suggestedEntityType} {updateFoundEntities} />
-			<AddEntityBtn
+			<AddEntityOrAliasBtn
 				{entityName}
 				{suggestedEntityType}
 				{updateFoundEntities}

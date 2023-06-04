@@ -27,10 +27,9 @@
 	import uniqStrArrStore from '$lib/utils/clientOnly/strArrStore';
 	import PossibleEntityList from './PossibleEntityList.svelte';
 	import { ENTITY_TYPE, type EntityType } from '$lib/constants';
-	import AddAliasBtn from './AddAliasBtn.svelte';
-	import AddEntityBtn from './AddEntityBtn.svelte';
 	import { page } from '$app/stores';
 	import AddAiSuggestion from './AddAiSuggestion.svelte';
+	import AddEntityOrAliasBtn from './AddEntityOrAliasBtn.svelte';
 
 	const aiLogSuggestions = new AiLogSuggestionsStore();
 	const generateAiLogSummary = new GenerateAiLogSummaryStore();
@@ -292,7 +291,8 @@
 					<textarea
 						id="synopsis"
 						name="synopsis"
-						class="textarea textarea-bordered w-full"
+						class="textarea h-auto textarea-bordered w-full"
+						rows="6"
 						value={synopsis}
 						required
 					/>
@@ -398,10 +398,12 @@
 
 				<div class="flex gap-8 mb-6">
 					<div>
-						<AddAliasBtn entityName={''} {updateFoundEntities} verbose />
-					</div>
-					<div>
-						<AddEntityBtn entityName={''} {updateFoundEntities} {updateLogEntitiesInForm} verbose />
+						<AddEntityOrAliasBtn
+							entityName={''}
+							{updateFoundEntities}
+							{updateLogEntitiesInForm}
+							verbose
+						/>
 					</div>
 				</div>
 

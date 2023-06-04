@@ -4,6 +4,7 @@ query RaceNamesAndIds @load {
 			node {
 				id
 				name
+				__typename
 			}
 		}
 	}

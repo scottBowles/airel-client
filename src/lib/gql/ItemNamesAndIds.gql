@@ -4,6 +4,7 @@ query ItemNamesAndIds @load {
 			node {
 				id
 				name
+				__typename
 			}
 		}
 	}

@@ -4,6 +4,7 @@ query ArtifactNamesAndIds @load {
 			node {
 				id
 				name
+				__typename
 			}
 		}
 	}

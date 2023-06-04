@@ -5,6 +5,7 @@ query PlaceNamesIdsAndTypes @load {
 				id
 				name
 				placeType
+				__typename
 			}
 		}
 	}
