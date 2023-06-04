@@ -5,12 +5,19 @@
 	import FaExternalLinkAlt from 'svelte-icons/fa/FaExternalLinkAlt.svelte';
 	import AddALog from './AddALog.svelte';
 	import { page } from '$app/stores';
+	import InfiniteLoading, { type InfiniteEvent } from 'svelte-infinite-loading';
 
 	export let data: PageData;
 
 	$: ({ me } = $page.data);
 	$: ({ GameLogs } = data);
 	$: logs = $GameLogs?.data?.gameLogs?.edges?.map(({ node }) => node).sort(logByGameDate) || [];
+
+	function infiniteHandler({ detail: { complete, error, loaded } }: InfiniteEvent) {
+		data.GameLogs.loadNextPage()
+			.then($GameLogs.pageInfo.hasNextPage ? loaded : complete)
+			.catch(error);
+	}
 </script>
 
 <div class="container max-w-5xl mx-auto p-4">
@@ -21,6 +28,7 @@
 			<AddALog />
 		{/if}
 	</div>
+
 	<ul>
 		{#each logs as log (log.id)}
 			{@const id = fromGlobalId(log.id).id}
@@ -62,6 +70,14 @@
 			</li>
 		{/each}
 	</ul>
+
+	<div>
+		<InfiniteLoading on:infinite={infiniteHandler} distance={1500}>
+			<div slot="noMore" />
+			<div slot="noResults">No results</div>
+			<div slot="error">Something went wrong loading logs</div>
+		</InfiniteLoading>
+	</div>
 </div>
 
 <style>

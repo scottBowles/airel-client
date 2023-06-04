@@ -981,6 +981,10 @@ input GameLogInputPartial {
   title: String
 }
 
+input GameLogOrder {
+  gameDate: Ordering
+}
+
 """Input data for `gamelogLock` mutation"""
 input GamelogLockInput {
   id: GlobalID!
@@ -1477,6 +1481,11 @@ enum OperationMessageKind {
   PERMISSION
   VALIDATION
   WARNING
+}
+
+enum Ordering {
+  ASC
+  DESC
 }
 
 interface OutputInterface {
@@ -1993,6 +2002,7 @@ type Query {
 
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
+    order: GameLogOrder
   ): GameLogConnection!
   item(pk: ID!): Item
   items(
