@@ -17,6 +17,7 @@
 		UnlockStore
 	} from '$houdini';
 	import { somethingWentWrong } from '$lib/utils';
+	import { page } from '$app/stores';
 
 	const unlockMutation = new UnlockStore();
 	const addLogMutation = new AddEntityLogStore();
@@ -123,9 +124,14 @@
 
 	<!-- MAIN IMAGE -->
 	<div slot="mainImage" class="w-full mx-auto">
-		<CloudinaryUpload {onImageUpload}>
+		{#if $page.data.me?.isStaff}
+			<CloudinaryUpload {onImageUpload}>
+				<ImageCarousel {imageIds} alt={name ?? ''} />
+			</CloudinaryUpload>
+		{:else}
 			<ImageCarousel {imageIds} alt={name ?? ''} />
-		</CloudinaryUpload>
+		{/if}
+
 		<Spacer />
 	</div>
 

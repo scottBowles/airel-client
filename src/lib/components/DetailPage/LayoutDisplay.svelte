@@ -106,9 +106,14 @@
 
 	<!-- MAIN IMAGE -->
 	<div slot="mainImage" class="w-full max-w-xs mx-auto">
-		<CloudinaryUpload {onImageUpload}>
+		{#if me?.isStaff}
+			<CloudinaryUpload {onImageUpload}>
+				<ImageCarousel imageIds={imageIds ?? []} alt={name ?? ''} />
+			</CloudinaryUpload>
+		{:else}
 			<ImageCarousel imageIds={imageIds ?? []} alt={name ?? ''} />
-		</CloudinaryUpload>
+		{/if}
+
 		<Spacer />
 	</div>
 

@@ -7,13 +7,15 @@
 	import LogsDisplay from './LogsDisplay.svelte';
 	import Spacer from '../Spacer.svelte';
 	import QuillEditor from '../QuillEditor.svelte';
+	import { page } from '$app/stores';
 
 	type Log = {
-		googleId: string | null;
-		id: string;
-		name: string | null;
-		url: string;
-		__typename: 'GameLog';
+		readonly id: string;
+		readonly url: string;
+		readonly title: string | null;
+		readonly googleId: string | null;
+		readonly lockedBySelf: boolean;
+		readonly __typename: 'GameLog';
 	};
 
 	const getOrCreateLogMutation = new GetOrCreateGameLogStore();
@@ -71,9 +73,14 @@
 
 	<!-- MAIN IMAGE -->
 	<div slot="mainImage" class="w-full max-w-xs mx-auto">
-		<CloudinaryUpload {onImageUpload}>
+		{#if $page.data.me?.isStaff}
+			<CloudinaryUpload {onImageUpload}>
+				<ImageCarousel {imageIds} alt={'uploaded images'} />
+			</CloudinaryUpload>
+		{:else}
 			<ImageCarousel {imageIds} alt={'uploaded images'} />
-		</CloudinaryUpload>
+		{/if}
+
 		<Spacer />
 
 		<!-- Hidden inputs -->

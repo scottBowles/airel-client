@@ -2,6 +2,7 @@
 	import { fromGlobalId } from '$lib/utils';
 	import FaTimes from 'svelte-icons/fa/FaTimes.svelte';
 	import FaExternalLinkAlt from 'svelte-icons/fa/FaExternalLinkAlt.svelte';
+	import { page } from '$app/stores';
 
 	export let log: any;
 	export let removeLog: (id: string) => void;
@@ -28,25 +29,27 @@
 		</a>
 	</span>
 
-	<!-- The button to open modal -->
-	<label for={modalId} class="btn btn-ghost btn-sm modal-button">
-		<div class="icon"><FaTimes /></div>
-	</label>
-
-	<!-- Put this part before </body> tag -->
-	<input type="checkbox" id={modalId} class="modal-toggle" />
-	<label for={modalId} class="modal modal-bottom sm:modal-middle cursor-pointer">
-		<label class="modal-box relative" for="">
-			<h3 class="font-bold text-lg">Remove log</h3>
-			<p class="py-4">You sure bro?</p>
-			<div class="modal-action">
-				<label for={modalId} class="btn" on:click={handleRemoveLog} on:keypress={handleRemoveLog}
-					>Yes</label
-				>
-				<label for={modalId} class="btn">No</label>
-			</div>
+	{#if $page.data.me?.isStaff}
+		<!-- The button to open modal -->
+		<label for={modalId} class="btn btn-ghost btn-sm modal-button">
+			<div class="icon"><FaTimes /></div>
 		</label>
-	</label>
+
+		<!-- Put this part before </body> tag -->
+		<input type="checkbox" id={modalId} class="modal-toggle" />
+		<label for={modalId} class="modal modal-bottom sm:modal-middle cursor-pointer">
+			<label class="modal-box relative" for="">
+				<h3 class="font-bold text-lg">Remove log</h3>
+				<p class="py-4">You sure bro?</p>
+				<div class="modal-action">
+					<label for={modalId} class="btn" on:click={handleRemoveLog} on:keypress={handleRemoveLog}
+						>Yes</label
+					>
+					<label for={modalId} class="btn">No</label>
+				</div>
+			</label>
+		</label>
+	{/if}
 </div>
 
 <style>

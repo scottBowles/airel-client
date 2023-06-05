@@ -6,6 +6,7 @@
 	import { callOnEsc } from '$lib/actions';
 	import Spacer from '../Spacer.svelte';
 	import LogDisplay from './LogDisplay.svelte';
+	import { page } from '$app/stores';
 
 	export let logs: any;
 	export let onLogAdd: (logUrl: string) => Promise<void>;
@@ -43,31 +44,33 @@
 			<LogDisplay {log} removeLog={onLogRemove} />
 		{/each}
 		<Spacer sm />
-		{#if logInputOpen}
-			<div class="flex items-center justify-between gap-2" use:callOnEsc={closeLogInput}>
-				<!-- svelte-ignore a11y-autofocus -->
-				<input
-					type="text"
-					id="log-input"
-					name="log"
-					placeholder="Log url"
-					bind:value={logInput}
-					class="input input-bordered w-full max-w-xs flex-1"
-					autofocus
-				/>
-				<div>
-					<button class="btn btn-square btn-ghost btn-sm" on:click={addLog} type="button">
-						<div class="icon"><FaCheck /></div>
-					</button>
-					<button class="btn btn-square btn-ghost btn-sm" on:click={closeLogInput} type="button">
-						<div class="icon"><FaTimes /></div>
-					</button>
+		{#if $page.data.me?.isStaff}
+			{#if logInputOpen}
+				<div class="flex items-center justify-between gap-2" use:callOnEsc={closeLogInput}>
+					<!-- svelte-ignore a11y-autofocus -->
+					<input
+						type="text"
+						id="log-input"
+						name="log"
+						placeholder="Log url"
+						bind:value={logInput}
+						class="input input-bordered w-full max-w-xs flex-1"
+						autofocus
+					/>
+					<div>
+						<button class="btn btn-square btn-ghost btn-sm" on:click={addLog} type="button">
+							<div class="icon"><FaCheck /></div>
+						</button>
+						<button class="btn btn-square btn-ghost btn-sm" on:click={closeLogInput} type="button">
+							<div class="icon"><FaTimes /></div>
+						</button>
+					</div>
 				</div>
-			</div>
-		{:else}
-			<div class="icon" on:click={openLogInput} on:keypress={openLogInput}>
-				<FaPlus />
-			</div>
+			{:else}
+				<div class="icon" on:click={openLogInput} on:keypress={openLogInput}>
+					<FaPlus />
+				</div>
+			{/if}
 		{/if}
 	</div>
 </div>
