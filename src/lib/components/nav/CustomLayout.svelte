@@ -81,13 +81,22 @@
 					</a>
 				{/each}
 				<button class="grow bg-yellow-200 hover:bg-yellow-300 flex items-center justify-end px-4">
-					<span
-						on:click={logout}
-						on:keypress={logout}
-						class="text-black flex items-center justify-end"
-					>
-						LOGOUT
-					</span>
+					{#if $page.data.me}
+						<span
+							on:click={logout}
+							on:keypress={logout}
+							class="text-black flex items-center justify-end"
+						>
+							LOGOUT
+						</span>
+					{:else}
+						<a
+							href={`/login?redirect=${$page.url.pathname}`}
+							class="text-black flex items-center justify-end"
+						>
+							LOGIN
+						</a>
+					{/if}
 				</button>
 			</ul>
 			<div class="h-[84px] w-full" />

@@ -68,7 +68,16 @@
 	</li>
 {/each}
 <li>
-	<button class="btn btn-ghost no-animation normal-case btn-{btnSize}" on:click={logout}>
-		Logout
-	</button>
+	{#if $page.data.me}
+		<button class="btn btn-ghost no-animation normal-case btn-{btnSize}" on:click={logout}>
+			Logout
+		</button>
+	{:else}
+		<a
+			href={`/login?redirect=${$page.url.pathname}`}
+			class="btn btn-ghost no-animation normal-case btn-{btnSize}"
+		>
+			Login
+		</a>
+	{/if}
 </li>
