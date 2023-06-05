@@ -74,7 +74,7 @@
 	<div>
 		<InfiniteLoading on:infinite={infiniteHandler} distance={1500}>
 			<div slot="noMore" />
-			<div slot="noResults">No results</div>
+			<div slot="noResults">{$GameLogs.fetching ? 'Loading...' : 'No results'}</div>
 			<div slot="error">Something went wrong loading logs</div>
 		</InfiniteLoading>
 	</div>
