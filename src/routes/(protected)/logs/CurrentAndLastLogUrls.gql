@@ -1,0 +1,9 @@
+query CurrentAndLastLogUrls {
+	gameLogs(first: 2, order: { gameDate: DESC }) {
+		edges {
+			node {
+				url
+			}
+		}
+	}
+}
