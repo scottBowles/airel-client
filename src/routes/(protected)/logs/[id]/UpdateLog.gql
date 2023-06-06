@@ -33,5 +33,13 @@ mutation UpdateLog(
 			...LogLockedBySelf
 			...LogDetailFields
 		}
+		... on OperationInfo {
+			messages {
+				field
+				kind
+				message
+				__typename
+			}
+		}
 	}
 }
