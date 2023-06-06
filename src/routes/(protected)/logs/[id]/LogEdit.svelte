@@ -28,7 +28,7 @@
 	import PossibleEntityList from './PossibleEntityList.svelte';
 	import { ENTITY_TYPE, type EntityType } from '$lib/constants';
 	import { page } from '$app/stores';
-	// import AddAiSuggestion from './AddAiSuggestion.svelte';
+	import AddAiSuggestion from './AddAiSuggestion.svelte';
 	import AddEntityOrAliasBtn from './AddEntityOrAliasBtn.svelte';
 
 	const aiLogSuggestions = new AiLogSuggestionsStore();
@@ -351,7 +351,7 @@
 </form>
 
 {#if me?.isStaff}
-	<!-- <AddAiSuggestion {id} /> (from JSON) -->
+	<AddAiSuggestion {id} />
 
 	{#if $aiLogSuggestions.errors}
 		Error loading AI Suggestions: {new Intl.ListFormat('en-US', { style: 'long' }).format(

@@ -25,11 +25,11 @@
 	}
 </script>
 
-<label for={MODAL_ID} class="btn btn-ghost btn-sm icon-btn hover:accent modal-button">
-	<div class="tooltip" data-tip="Add Ai Suggestion from Json">
+<div class="tooltip mx-auto" data-tip="Add Ai Suggestion from Json">
+	<label for={MODAL_ID} class="btn btn-ghost btn-sm icon-btn hover:accent modal-button">
 		<div class="icon"><MdPlaylistAdd /></div>
-	</div>
-</label>
+	</label>
+</div>
 
 <input type="checkbox" id={MODAL_ID} class="modal-toggle" bind:checked={isOpen} />
 <label for={MODAL_ID} class="modal modal-bottom sm:modal-middle cursor-pointer">
