@@ -2,7 +2,7 @@ mutation AddAiLogSuggestion(
 	$id: GlobalID!
 	$title: String!
 	$brief: String!
-	$synopsis: String!
+	$synopsis: String
 	$associations: [String!]!
 	$characters: [String!]!
 	$items: [String!]!
