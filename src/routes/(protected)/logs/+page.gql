@@ -1,5 +1,5 @@
 query GameLogs {
-	gameLogs(order: { gameDate: DESC }, first: 30) @paginate {
+	gameLogs(order: { gameDate: DESC }, first: 15) @paginate {
 		edges {
 			node {
 				id

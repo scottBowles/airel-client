@@ -13,10 +13,16 @@
 	$: ({ GameLogs } = data);
 	$: logs = $GameLogs?.data?.gameLogs?.edges?.map(({ node }) => node).sort(logByGameDate) || [];
 
+	let onFetchingComplete: (value: void | PromiseLike<void>) => void;
+	$: !$GameLogs.fetching && onFetchingComplete?.();
+	const awaitLoading = () => new Promise<void>((resolve) => (onFetchingComplete = resolve));
+
 	function infiniteHandler({ detail: { complete, error, loaded } }: InfiniteEvent) {
-		data.GameLogs.loadNextPage()
-			.then($GameLogs.pageInfo.hasNextPage ? loaded : complete)
-			.catch(error);
+		awaitLoading().then(() => {
+			data.GameLogs.loadNextPage()
+				.then($GameLogs.pageInfo.hasNextPage ? loaded : complete)
+				.catch(error);
+		});
 	}
 </script>
 
@@ -72,7 +78,7 @@
 	</ul>
 
 	<div>
-		<InfiniteLoading on:infinite={infiniteHandler} distance={1500}>
+		<InfiniteLoading on:infinite={infiniteHandler} distance={5000}>
 			<div slot="noMore" />
 			<div slot="noResults">{$GameLogs.fetching ? 'Loading...' : 'No results'}</div>
 			<div slot="error">Something went wrong loading logs</div>
