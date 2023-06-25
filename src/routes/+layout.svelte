@@ -14,8 +14,6 @@
 	const theme = initThemeStore(userPrefersLight ? 'light' : 'dark');
 	const showAlgoliaSearch = initShowAlgoliaSearchStore();
 
-	$: console.log('theme', $theme);
-
 	// Add stores to context
 	setContext('theme', theme);
 	setContext('showAlgoliaSearch', showAlgoliaSearch);
