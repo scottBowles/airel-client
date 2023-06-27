@@ -150,6 +150,84 @@ type Artifact implements Entity & Lockable & Node {
   markdownNotes: String
   name: String!
   notes: String
+  relatedArtifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  relatedAssociations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  relatedCharacters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  relatedItems(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
+  relatedPlaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  relatedRaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): RaceConnection!
   thumbnailId: String
   updated: DateTime!
 }
@@ -191,6 +269,12 @@ input ArtifactInput {
   markdownNotes: String
   name: String!
   notes: String
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
   thumbnailId: String
 }
 
@@ -202,6 +286,12 @@ input ArtifactInputPartial {
   markdownNotes: String
   name: String
   notes: String
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
   thumbnailId: String
 }
 
@@ -274,6 +364,84 @@ type Association implements Entity & Lockable & Node {
   ): GameLogConnection!
   markdownNotes: String
   name: String!
+  relatedArtifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  relatedAssociations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  relatedCharacters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  relatedItems(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
+  relatedPlaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  relatedRaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): RaceConnection!
   thumbnailId: String
   updated: DateTime!
 }
@@ -314,6 +482,12 @@ input AssociationInput {
   logs: [GlobalID!]
   markdownNotes: String
   name: String!
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
   thumbnailId: String
 }
 
@@ -324,6 +498,12 @@ input AssociationInputPartial {
   imageIds: [String!]
   markdownNotes: String
   name: String
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
   thumbnailId: String
 }
 
@@ -423,6 +603,84 @@ type Character implements Entity & Lockable & Node {
     last: Int = null
   ): ProficiencyConnection!
   race: Race
+  relatedArtifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  relatedAssociations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  relatedCharacters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  relatedItems(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
+  relatedPlaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  relatedRaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): RaceConnection!
   size: String
   thumbnailId: String
   updated: DateTime!
@@ -467,6 +725,12 @@ input CharacterInput {
   name: String!
   proficiencies: NodePartialListInput
   race: NodeInput
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
   size: String
   thumbnailId: String
 }
@@ -481,6 +745,12 @@ input CharacterInputPartial {
   name: String
   proficiencies: NodePartialListInput
   race: NodeInput
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
   size: String
   thumbnailId: String
 }
@@ -623,6 +893,84 @@ interface Entity implements Lockable {
   ): GameLogConnection!
   markdownNotes: String
   name: String!
+  relatedArtifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  relatedAssociations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  relatedCharacters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  relatedItems(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
+  relatedPlaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  relatedRaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): RaceConnection!
   thumbnailId: String
   updated: DateTime!
 }
@@ -718,6 +1066,84 @@ type Export implements Entity & Lockable & Node {
   ): GameLogConnection!
   markdownNotes: String
   name: String!
+  relatedArtifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  relatedAssociations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  relatedCharacters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  relatedItems(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
+  relatedPlaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  relatedRaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): RaceConnection!
   thumbnailId: String
   updated: DateTime!
 }
@@ -1068,6 +1494,84 @@ type Item implements Entity & Lockable & Node {
   ): GameLogConnection!
   markdownNotes: String
   name: String!
+  relatedArtifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  relatedAssociations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  relatedCharacters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  relatedItems(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
+  relatedPlaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  relatedRaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): RaceConnection!
   thumbnailId: String
   updated: DateTime!
   weapon: WeaponTraits
@@ -1111,6 +1615,12 @@ input ItemInput {
   logs: [GlobalID!]
   markdownNotes: String
   name: String!
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
   thumbnailId: String
   weapon: WeaponTraitsInput
 }
@@ -1124,6 +1634,12 @@ input ItemInputPartial {
   imageIds: [String!]
   markdownNotes: String
   name: String
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
   thumbnailId: String
   weapon: WeaponTraitsInput
 }
@@ -1569,6 +2085,84 @@ type Place implements Entity & Lockable & Node {
   parent: Place
   placeType: PlaceType
   population: Int!
+  relatedArtifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  relatedAssociations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  relatedCharacters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  relatedItems(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
+  relatedPlaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  relatedRaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): RaceConnection!
   thumbnailId: String
   updated: DateTime!
 }
@@ -1611,6 +2205,12 @@ input PlaceInput {
   name: String!
   parent: NodeInput
   placeType: PlaceType
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
   thumbnailId: String
 }
 
@@ -1623,6 +2223,12 @@ input PlaceInputPartial {
   name: String
   parent: NodeInput
   placeType: PlaceType
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
   thumbnailId: String
 }
 
@@ -2192,6 +2798,84 @@ type Race implements Entity & Lockable & Node {
   ): GameLogConnection!
   markdownNotes: String
   name: String!
+  relatedArtifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  relatedAssociations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  relatedCharacters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  relatedItems(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
+  relatedPlaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  relatedRaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): RaceConnection!
   thumbnailId: String
   updated: DateTime!
 }
@@ -2232,6 +2916,12 @@ input RaceInput {
   logs: [GlobalID!]
   markdownNotes: String
   name: String!
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
   thumbnailId: String
 }
 
@@ -2242,6 +2932,12 @@ input RaceInputPartial {
   imageIds: [String!]
   markdownNotes: String
   name: String
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
   thumbnailId: String
 }
 

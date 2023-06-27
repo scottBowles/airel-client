@@ -102,3 +102,7 @@ export function fromGlobalId(globalId: string): ResolvedGlobalId {
 		id: unbasedGlobalId.substring(delimiterPos + 1)
 	};
 }
+
+export function idFromGlobalId(globalId: string): string {
+	return fromGlobalId(globalId).id;
+}

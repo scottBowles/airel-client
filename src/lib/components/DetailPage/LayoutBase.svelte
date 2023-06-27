@@ -34,9 +34,14 @@
 
 		<!-- DESCRIPTION -->
 		<slot name="description" />
+		<Spacer />
 
 		<!-- PROPERTIES -->
 		<slot name="properties" />
+		<Spacer />
+
+		<!-- RELATED -->
+		<slot name="related" />
 	</div>
 
 	<Spacer />
