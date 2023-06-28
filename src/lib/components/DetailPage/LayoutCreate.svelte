@@ -8,6 +8,12 @@
 	import Spacer from '../Spacer.svelte';
 	import QuillEditor from '../QuillEditor.svelte';
 	import { page } from '$app/stores';
+	import RelatedArtifactMultiSelect from '../RelatedArtifactMultiSelect.svelte';
+	import RelatedAssociationMultiSelect from '../RelatedAssociationMultiSelect.svelte';
+	import RelatedCharacterMultiSelect from '../RelatedCharacterMultiSelect.svelte';
+	import RelatedItemMultiSelect from '../RelatedItemMultiSelect.svelte';
+	import RelatedPlaceMultiSelect from '../RelatedPlaceMultiSelect.svelte';
+	import RelatedRaceMultiSelect from '../RelatedRaceMultiSelect.svelte';
 
 	type Log = {
 		readonly id: string;
@@ -110,6 +116,41 @@
 
 	<!-- PROPERTIES -->
 	<slot name="properties" slot="properties" />
+
+	<!-- RELATED -->
+	<div slot="related">
+		<h2 class="text-2xl font-bold">Related</h2>
+		<RelatedArtifactMultiSelect
+			id="related-artifacts"
+			inputGroupName="relatedArtifacts"
+			entityDisplayName="Artifacts"
+		/>
+		<RelatedAssociationMultiSelect
+			id="related-associations"
+			inputGroupName="relatedAssociations"
+			entityDisplayName="Associations"
+		/>
+		<RelatedCharacterMultiSelect
+			id="related-characters"
+			inputGroupName="relatedCharacters"
+			entityDisplayName="Characters"
+		/>
+		<RelatedItemMultiSelect
+			id="related-items"
+			inputGroupName="relatedItems"
+			entityDisplayName="Items"
+		/>
+		<RelatedPlaceMultiSelect
+			id="related-places"
+			inputGroupName="relatedPlaces"
+			entityDisplayName="Places"
+		/>
+		<RelatedRaceMultiSelect
+			id="related-races"
+			inputGroupName="relatedRaces"
+			entityDisplayName="Races"
+		/>
+	</div>
 
 	<!-- MARKDOWN NOTES -->
 	<QuillEditor slot="markdownNotes" init="" />

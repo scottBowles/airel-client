@@ -7,6 +7,12 @@ mutation CreateItem(
 	$armor: ArmorTraitsInput
 	$weapon: WeaponTraitsInput
 	$equipment: EquipmentTraitsInput
+	$relatedArtifacts: NodePartialListInput
+	$relatedAssociations: NodePartialListInput
+	$relatedCharacters: NodePartialListInput
+	$relatedItems: NodePartialListInput
+	$relatedPlaces: NodePartialListInput
+	$relatedRaces: NodePartialListInput
 ) {
 	createItem(
 		input: {
@@ -18,6 +24,12 @@ mutation CreateItem(
 			armor: $armor
 			weapon: $weapon
 			equipment: $equipment
+			relatedArtifacts: $relatedArtifacts
+			relatedAssociations: $relatedAssociations
+			relatedCharacters: $relatedCharacters
+			relatedItems: $relatedItems
+			relatedPlaces: $relatedPlaces
+			relatedRaces: $relatedRaces
 		}
 	) {
 		... on Item {

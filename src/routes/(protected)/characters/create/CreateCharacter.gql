@@ -6,6 +6,12 @@ mutation CreateCharacter(
 	$logs: [GlobalID!]
 	$race: NodeInput
 	$associations: NodePartialListInput
+	$relatedArtifacts: NodePartialListInput
+	$relatedAssociations: NodePartialListInput
+	$relatedCharacters: NodePartialListInput
+	$relatedItems: NodePartialListInput
+	$relatedPlaces: NodePartialListInput
+	$relatedRaces: NodePartialListInput
 ) {
 	createCharacter(
 		input: {
@@ -16,6 +22,12 @@ mutation CreateCharacter(
 			logs: $logs
 			race: $race
 			associations: $associations
+			relatedArtifacts: $relatedArtifacts
+			relatedAssociations: $relatedAssociations
+			relatedCharacters: $relatedCharacters
+			relatedItems: $relatedItems
+			relatedPlaces: $relatedPlaces
+			relatedRaces: $relatedRaces
 		}
 	) {
 		... on Character {

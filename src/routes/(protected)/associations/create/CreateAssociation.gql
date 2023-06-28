@@ -5,6 +5,12 @@ mutation CreateAssociation(
 	$imageIds: [String!]
 	$logs: [GlobalID!]
 	$characters: NodePartialListInput
+	$relatedArtifacts: NodePartialListInput
+	$relatedAssociations: NodePartialListInput
+	$relatedCharacters: NodePartialListInput
+	$relatedItems: NodePartialListInput
+	$relatedPlaces: NodePartialListInput
+	$relatedRaces: NodePartialListInput
 ) {
 	createAssociation(
 		input: {
@@ -14,6 +20,12 @@ mutation CreateAssociation(
 			imageIds: $imageIds
 			logs: $logs
 			characters: $characters
+			relatedArtifacts: $relatedArtifacts
+			relatedAssociations: $relatedAssociations
+			relatedCharacters: $relatedCharacters
+			relatedItems: $relatedItems
+			relatedPlaces: $relatedPlaces
+			relatedRaces: $relatedRaces
 		}
 	) {
 		... on Association {

@@ -5,6 +5,12 @@ mutation CreateArtifact(
 	$imageIds: [String!]
 	$logs: [GlobalID!]
 	$items: NodePartialListInput
+	$relatedArtifacts: NodePartialListInput
+	$relatedAssociations: NodePartialListInput
+	$relatedCharacters: NodePartialListInput
+	$relatedItems: NodePartialListInput
+	$relatedPlaces: NodePartialListInput
+	$relatedRaces: NodePartialListInput
 ) {
 	createArtifact(
 		input: {
@@ -14,6 +20,12 @@ mutation CreateArtifact(
 			imageIds: $imageIds
 			logs: $logs
 			items: $items
+			relatedArtifacts: $relatedArtifacts
+			relatedAssociations: $relatedAssociations
+			relatedCharacters: $relatedCharacters
+			relatedItems: $relatedItems
+			relatedPlaces: $relatedPlaces
+			relatedRaces: $relatedRaces
 		}
 	) {
 		... on Artifact {
