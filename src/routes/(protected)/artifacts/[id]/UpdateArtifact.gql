@@ -4,6 +4,12 @@ mutation UpdateArtifact(
 	$description: String
 	$markdownNotes: String
 	$items: NodePartialListInput
+	$relatedArtifacts: NodePartialListInput
+	$relatedAssociations: NodePartialListInput
+	$relatedCharacters: NodePartialListInput
+	$relatedItems: NodePartialListInput
+	$relatedPlaces: NodePartialListInput
+	$relatedRaces: NodePartialListInput
 ) {
 	updateArtifact(
 		input: {
@@ -12,26 +18,17 @@ mutation UpdateArtifact(
 			description: $description
 			markdownNotes: $markdownNotes
 			items: $items
+			relatedArtifacts: $relatedArtifacts
+			relatedAssociations: $relatedAssociations
+			relatedCharacters: $relatedCharacters
+			relatedItems: $relatedItems
+			relatedPlaces: $relatedPlaces
+			relatedRaces: $relatedRaces
 		}
 	) {
 		... on Artifact {
-			id
-			name
-			description
-			markdownNotes
-			lockTime
-			lockedBySelf
-			lockUser {
-				id
-				username
-			}
-			items {
-				edges {
-					node {
-						...ItemListFields
-					}
-				}
-			}
+			...ArtifactLockedBySelf
+			...ArtifactDetailFields
 		}
 	}
 }

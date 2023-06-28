@@ -18,6 +18,12 @@
 	} from '$houdini';
 	import { somethingWentWrong } from '$lib/utils';
 	import { page } from '$app/stores';
+	import RelatedArtifactMultiSelect from '../RelatedArtifactMultiSelect.svelte';
+	import RelatedAssociationMultiSelect from '../RelatedAssociationMultiSelect.svelte';
+	import RelatedCharacterMultiSelect from '../RelatedCharacterMultiSelect.svelte';
+	import RelatedItemMultiSelect from '../RelatedItemMultiSelect.svelte';
+	import RelatedPlaceMultiSelect from '../RelatedPlaceMultiSelect.svelte';
+	import RelatedRaceMultiSelect from '../RelatedRaceMultiSelect.svelte';
 
 	const unlockMutation = new UnlockStore();
 	const addLogMutation = new AddEntityLogStore();
@@ -48,11 +54,65 @@
 						}
 					}
 				}
+				relatedArtifacts {
+					edges {
+						node {
+							id
+							name
+						}
+					}
+				}
+				relatedAssociations {
+					edges {
+						node {
+							id
+							name
+						}
+					}
+				}
+				relatedCharacters {
+					edges {
+						node {
+							id
+							name
+						}
+					}
+				}
+				relatedItems {
+					edges {
+						node {
+							id
+							name
+						}
+					}
+				}
+				relatedPlaces {
+					edges {
+						node {
+							id
+							name
+						}
+					}
+				}
+				relatedRaces {
+					edges {
+						node {
+							id
+							name
+						}
+					}
+				}
 			}
 		`)
 	);
 
 	$: ({ id, name, description, markdownNotes, logs, imageIds = [], lockUser } = $data);
+	$: relatedArtifactIds = $data.relatedArtifacts?.edges.map(({ node }) => node.id) || [];
+	$: relatedAssociationsIds = $data.relatedAssociations?.edges.map(({ node }) => node.id) || [];
+	$: relatedCharactersIds = $data.relatedCharacters?.edges.map(({ node }) => node.id) || [];
+	$: relatedItemsIds = $data.relatedItems?.edges.map(({ node }) => node.id) || [];
+	$: relatedPlacesIds = $data.relatedPlaces?.edges.map(({ node }) => node.id) || [];
+	$: relatedRacesIds = $data.relatedRaces?.edges.map(({ node }) => node.id) || [];
 
 	const modalId = `discard-changes-modal-${id}`;
 
@@ -156,6 +216,47 @@
 
 	<!-- PROPERTIES -->
 	<slot name="properties" slot="properties" />
+
+	<!-- RELATED -->
+	<div slot="related">
+		<h2 class="text-2xl font-bold">Related</h2>
+		<RelatedArtifactMultiSelect
+			id="related-artifacts"
+			inputGroupName="relatedArtifacts"
+			entityDisplayName="Artifacts"
+			ids={relatedArtifactIds}
+		/>
+		<RelatedAssociationMultiSelect
+			id="related-associations"
+			inputGroupName="relatedAssociations"
+			entityDisplayName="Associations"
+			ids={relatedAssociationsIds}
+		/>
+		<RelatedCharacterMultiSelect
+			id="related-characters"
+			inputGroupName="relatedCharacters"
+			entityDisplayName="Characters"
+			ids={relatedCharactersIds}
+		/>
+		<RelatedItemMultiSelect
+			id="related-items"
+			inputGroupName="relatedItems"
+			entityDisplayName="Items"
+			ids={relatedItemsIds}
+		/>
+		<RelatedPlaceMultiSelect
+			id="related-places"
+			inputGroupName="relatedPlaces"
+			entityDisplayName="Places"
+			ids={relatedPlacesIds}
+		/>
+		<RelatedRaceMultiSelect
+			id="related-races"
+			inputGroupName="relatedRaces"
+			entityDisplayName="Races"
+			ids={relatedRacesIds}
+		/>
+	</div>
 
 	<!-- MARKDOWN NOTES -->
 	<QuillEditor init={markdownNotes ?? undefined} slot="markdownNotes" />

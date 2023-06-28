@@ -6,6 +6,12 @@ mutation UpdateItem(
 	$armor: ArmorTraitsInput
 	$weapon: WeaponTraitsInput
 	$equipment: EquipmentTraitsInput
+	$relatedArtifacts: NodePartialListInput
+	$relatedAssociations: NodePartialListInput
+	$relatedCharacters: NodePartialListInput
+	$relatedItems: NodePartialListInput
+	$relatedPlaces: NodePartialListInput
+	$relatedRaces: NodePartialListInput
 ) {
 	updateItem(
 		input: {
@@ -16,28 +22,17 @@ mutation UpdateItem(
 			armor: $armor
 			weapon: $weapon
 			equipment: $equipment
+			relatedArtifacts: $relatedArtifacts
+			relatedAssociations: $relatedAssociations
+			relatedCharacters: $relatedCharacters
+			relatedItems: $relatedItems
+			relatedPlaces: $relatedPlaces
+			relatedRaces: $relatedRaces
 		}
 	) {
 		... on Item {
-			id
-			name
-			description
-			markdownNotes
-			lockTime
-			lockedBySelf
-			lockUser {
-				id
-				username
-			}
-			armor {
-				acBonus
-			}
-			weapon {
-				attackBonus
-			}
-			equipment {
-				briefDescription
-			}
+			...ItemLockedBySelf
+			...ItemDetailFields
 		}
 	}
 }

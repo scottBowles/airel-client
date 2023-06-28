@@ -5,6 +5,12 @@ mutation UpdateCharacter(
 	$markdownNotes: String
 	$race: NodeInput
 	$associations: NodePartialListInput
+	$relatedArtifacts: NodePartialListInput
+	$relatedAssociations: NodePartialListInput
+	$relatedCharacters: NodePartialListInput
+	$relatedItems: NodePartialListInput
+	$relatedPlaces: NodePartialListInput
+	$relatedRaces: NodePartialListInput
 ) {
 	updateCharacter(
 		input: {
@@ -14,31 +20,17 @@ mutation UpdateCharacter(
 			markdownNotes: $markdownNotes
 			race: $race
 			associations: $associations
+			relatedArtifacts: $relatedArtifacts
+			relatedAssociations: $relatedAssociations
+			relatedCharacters: $relatedCharacters
+			relatedItems: $relatedItems
+			relatedPlaces: $relatedPlaces
+			relatedRaces: $relatedRaces
 		}
 	) {
 		... on Character {
-			id
-			name
-			description
-			markdownNotes
-			lockTime
-			lockedBySelf
-			lockUser {
-				id
-				username
-			}
-			race {
-				id
-				name
-			}
-			associations {
-				edges {
-					node {
-						id
-						name
-					}
-				}
-			}
+			...CharacterLockedBySelf
+			...CharacterDetailFields
 		}
 	}
 }
