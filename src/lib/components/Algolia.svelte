@@ -48,14 +48,13 @@
 						return html`<a href=${getUrlFromId(item.objectID)}>
 							<div class="aa-ItemWrapper">
 								<div class="aa-ItemContent">
-									<div class="aa-ItemIcon aa-ItemIcon--alignTop">
-										<img
-											src="${getThumbnailUrl(item.thumbnail)}"
-											alt="${item.name}"
-											width="40"
-											height="40"
-										/>
-									</div>
+									<img
+										src="${getThumbnailUrl(item.thumbnail)}"
+										alt="${item.name}"
+										width="67"
+										height="67"
+										class="border border-grey-700 rounded-sm"
+									/>
 									<div class="aa-ItemContentBody">
 										<div class="aa-ItemContentTitle">
 											${components.Highlight({
