@@ -1,18 +1,32 @@
-mutation UpdateRace($id: GlobalID!, $name: String, $description: String, $markdownNotes: String) {
+mutation UpdateRace(
+	$id: GlobalID!
+	$name: String
+	$description: String
+	$markdownNotes: String
+	$relatedArtifacts: NodePartialListInput
+	$relatedAssociations: NodePartialListInput
+	$relatedCharacters: NodePartialListInput
+	$relatedItems: NodePartialListInput
+	$relatedPlaces: NodePartialListInput
+	$relatedRaces: NodePartialListInput
+) {
 	updateRace(
-		input: { id: $id, name: $name, description: $description, markdownNotes: $markdownNotes }
+		input: {
+			id: $id
+			name: $name
+			description: $description
+			markdownNotes: $markdownNotes
+			relatedArtifacts: $relatedArtifacts
+			relatedAssociations: $relatedAssociations
+			relatedCharacters: $relatedCharacters
+			relatedItems: $relatedItems
+			relatedPlaces: $relatedPlaces
+			relatedRaces: $relatedRaces
+		}
 	) {
 		... on Race {
-			id
-			name
-			description
-			markdownNotes
-			lockTime
-			lockedBySelf
-			lockUser {
-				id
-				username
-			}
+			...RaceLockedBySelf
+			...RaceDetailFields
 		}
 	}
 }

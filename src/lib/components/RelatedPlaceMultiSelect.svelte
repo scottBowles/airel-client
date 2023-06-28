@@ -11,7 +11,7 @@
 	export let ids: string[] = [];
 	export let id = `place-select`;
 	export let inputGroupName = 'places';
-	export let displayName = inputGroupName;
+	export let entityDisplayName = inputGroupName;
 
 	$: optionNamesAndIdNodes = $placeNamesIdsAndTypesQuery.data?.places.edges
 		.map(prop('node'))
@@ -32,5 +32,5 @@
 	{fetching}
 	{optionNamesAndIdNodes}
 	bind:ids
-	entityDisplayName={displayName}
+	{entityDisplayName}
 />

@@ -4,6 +4,12 @@ mutation UpdateAssociation(
 	$description: String
 	$markdownNotes: String
 	$characters: NodePartialListInput
+	$relatedArtifacts: NodePartialListInput
+	$relatedAssociations: NodePartialListInput
+	$relatedCharacters: NodePartialListInput
+	$relatedItems: NodePartialListInput
+	$relatedPlaces: NodePartialListInput
+	$relatedRaces: NodePartialListInput
 ) {
 	updateAssociation(
 		input: {
@@ -12,6 +18,12 @@ mutation UpdateAssociation(
 			description: $description
 			markdownNotes: $markdownNotes
 			characters: $characters
+			relatedArtifacts: $relatedArtifacts
+			relatedAssociations: $relatedAssociations
+			relatedCharacters: $relatedCharacters
+			relatedItems: $relatedItems
+			relatedPlaces: $relatedPlaces
+			relatedRaces: $relatedRaces
 		}
 	) {
 		... on Association {

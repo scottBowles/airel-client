@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { prop } from 'ramda';
 	import FaEdit from 'svelte-icons/fa/FaEdit.svelte';
+	import { page } from '$app/stores';
 	import {
 		fragment,
 		graphql,
@@ -12,11 +14,10 @@
 	import CloudinaryUpload from '$lib/components/CloudinaryUpload.svelte';
 	import { BasicProperty } from '$lib/components/DetailPage';
 	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
-	import { somethingWentWrong } from '$lib/utils';
+	import { idFromGlobalId, somethingWentWrong } from '$lib/utils';
 	import Spacer from '../Spacer.svelte';
 	import LayoutBase from './LayoutBase.svelte';
 	import LogsDisplay from './LogsDisplay.svelte';
-	import { page } from '$app/stores';
 
 	const lockForEditMutation = new LockStore();
 	const addLogMutation = new AddEntityLogStore();
@@ -50,11 +51,82 @@
 						}
 					}
 				}
+				relatedArtifacts {
+					edges {
+						node {
+							id
+							name
+						}
+					}
+				}
+				relatedAssociations {
+					edges {
+						node {
+							id
+							name
+						}
+					}
+				}
+				relatedCharacters {
+					edges {
+						node {
+							id
+							name
+						}
+					}
+				}
+				relatedItems {
+					edges {
+						node {
+							id
+							name
+						}
+					}
+				}
+				relatedPlaces {
+					edges {
+						node {
+							id
+							name
+						}
+					}
+				}
+				relatedRaces {
+					edges {
+						node {
+							id
+							name
+						}
+					}
+				}
 			}
 		`)
 	);
 
+	const withUrl = (entity: string) => (node: { id: string; name: string }) => ({
+		...node,
+		url: `/${entity}/${idFromGlobalId(node.id)}`
+	});
+
 	$: ({ id, name, description, imageIds = [], markdownNotes, logs, lockUser } = $data);
+
+	$: relatedArtifacts =
+		$data.relatedArtifacts?.edges.map(prop('node')).map(withUrl('artifacts')) || [];
+	$: relatedAssociations =
+		$data.relatedAssociations?.edges.map(prop('node')).map(withUrl('associations')) || [];
+	$: relatedCharacters =
+		$data.relatedCharacters?.edges.map(prop('node')).map(withUrl('characters')) || [];
+	$: relatedItems = $data.relatedItems?.edges.map(prop('node')).map(withUrl('items')) || [];
+	$: relatedPlaces = $data.relatedPlaces?.edges.map(prop('node')).map(withUrl('places')) || [];
+	$: relatedRaces = $data.relatedRaces?.edges.map(prop('node')).map(withUrl('races')) || [];
+	$: allRelated = [
+		...relatedArtifacts,
+		...relatedAssociations,
+		...relatedCharacters,
+		...relatedItems,
+		...relatedPlaces,
+		...relatedRaces
+	];
 
 	const onEditClick = () => lockForEditMutation.mutate({ id });
 
@@ -131,6 +203,19 @@
 		{#each Object.entries(properties) as [name, value]}
 			<BasicProperty {name} {value} />
 		{/each}
+	</slot>
+
+	<!-- RELATED -->
+	<slot name="related" slot="related">
+		{#if allRelated.length > 0}
+			<h2 class="text-xl font-bold">Associated With</h2>
+			{#each allRelated as { id, name, url } (id)}
+				<div class="badge badge-accent badge-outline">
+					<a href={url} class="link-hover">{name}</a>
+				</div>
+				{' '}
+			{/each}
+		{/if}
 	</slot>
 
 	<!-- MARKDOWN NOTES -->

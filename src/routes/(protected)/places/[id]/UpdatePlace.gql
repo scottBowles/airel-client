@@ -6,6 +6,12 @@ mutation UpdatePlace(
 	$parent: NodeInput
 	$children: NodeListInput
 	$placeType: PlaceType
+	$relatedArtifacts: NodePartialListInput
+	$relatedAssociations: NodePartialListInput
+	$relatedCharacters: NodePartialListInput
+	$relatedItems: NodePartialListInput
+	$relatedPlaces: NodePartialListInput
+	$relatedRaces: NodePartialListInput
 ) {
 	updatePlace(
 		input: {
@@ -16,6 +22,12 @@ mutation UpdatePlace(
 			parent: $parent
 			children: $children
 			placeType: $placeType
+			relatedArtifacts: $relatedArtifacts
+			relatedAssociations: $relatedAssociations
+			relatedCharacters: $relatedCharacters
+			relatedItems: $relatedItems
+			relatedPlaces: $relatedPlaces
+			relatedRaces: $relatedRaces
 		}
 	) {
 		... on Place {
