@@ -2,32 +2,34 @@ import { capitalize } from '$lib/utils';
 
 export const getChildrenName = (type: string | null) => {
 	const mapping = {
-		Star: 'Planets',
-		Planet: 'Moons, Regions, or Towns',
-		Moon: 'Regions or Towns',
-		Region: 'Towns, Districts, or Locations',
-		Town: 'Districts or Locations',
-		District: 'Locations',
-		Location: 'Locations'
+		STAR: 'Planets',
+		PLANET: 'Moons, Regions, Towns, Districts, or Locations',
+		MOON: 'Regions, Towns, Districts, or Locations',
+		REGION: 'Towns, Districts, or Locations',
+		TOWN: 'Districts or Locations',
+		DISTRICT: 'Locations',
+		LOCATION: 'Locations'
 	};
 
-	if (type && type in mapping) {
-		return mapping[type as keyof typeof mapping];
+	if (type && type.toUpperCase() in mapping) {
+		return mapping[type.toUpperCase() as keyof typeof mapping];
 	}
 
 	return 'Children';
 };
 
 export const getParentName = (type: string) => {
-	return {
-		Star: '',
-		Planet: 'Star',
-		Moon: 'Planet',
-		Region: 'Planet or Moon',
-		Town: 'Planet, Moon, or Region',
-		District: 'Region or Town',
-		Location: 'Region, Town, District, or Location'
-	}[type];
+	return (
+		{
+			STAR: '',
+			PLANET: 'Star',
+			MOON: 'Planet',
+			REGION: 'Planet or Moon',
+			TOWN: 'Planet, Moon, or Region',
+			DISTRICT: 'Planet, Moon, Region or Town',
+			LOCATION: 'Planet, Moon, Region, Town, District, or Location'
+		}[type.toUpperCase()] ?? 'Parent'
+	);
 };
 
 export const PLACE_TYPE_OPTIONS = [
@@ -71,8 +73,8 @@ export const filterForParent = (placeType: PlaceType) => {
 		MOON: ['PLANET'],
 		REGION: ['PLANET', 'MOON'],
 		TOWN: ['PLANET', 'MOON', 'REGION'],
-		DISTRICT: ['REGION', 'TOWN'],
-		LOCATION: ['REGION', 'TOWN', 'DISTRICT']
+		DISTRICT: ['PLANET', 'MOON', 'REGION', 'TOWN'],
+		LOCATION: ['PLANET', 'MOON', 'REGION', 'TOWN', 'DISTRICT', 'LOCATION']
 	};
 	const parentTypes = parentTypesForChild[placeType];
 	return (edge: PlaceSelectEdge) => parentTypes.includes(edge.node.placeType ?? '');
@@ -81,8 +83,8 @@ export const filterForParent = (placeType: PlaceType) => {
 export const filterForChildren = (placeType: PlaceType) => {
 	const childrenTypesForParent = {
 		STAR: ['PLANET'],
-		PLANET: ['MOON', 'REGION', 'TOWN'],
-		MOON: ['REGION', 'TOWN'],
+		PLANET: ['MOON', 'REGION', 'TOWN', 'DISTRICT', 'LOCATION'],
+		MOON: ['REGION', 'TOWN', 'DISTRICT', 'LOCATION'],
 		REGION: ['TOWN', 'DISTRICT', 'LOCATION'],
 		TOWN: ['DISTRICT', 'LOCATION'],
 		DISTRICT: ['LOCATION'],
