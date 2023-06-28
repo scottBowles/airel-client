@@ -303,7 +303,7 @@
 					<RelatedPlaceMultiSelect
 						id={`log-${id}-place-select`}
 						inputGroupName="placesSetIn"
-						displayName="Places Set In"
+						entityDisplayName="Places Set In"
 						ids={placesSetInIds}
 					/>
 				</div>

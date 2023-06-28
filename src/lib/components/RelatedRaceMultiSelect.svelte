@@ -9,9 +9,17 @@
 	export let ids: string[] = [];
 	export let id = `race-select`;
 	export let inputGroupName = 'races';
+	export let entityDisplayName = inputGroupName;
 
 	$: optionNamesAndIdNodes = $raceNamesAndIdsQuery.data?.races.edges;
 	$: ({ fetching } = $raceNamesAndIdsQuery);
 </script>
 
-<RelatedEntityMultiSelectBase {id} {inputGroupName} {fetching} {optionNamesAndIdNodes} bind:ids />
+<RelatedEntityMultiSelectBase
+	{id}
+	{inputGroupName}
+	{entityDisplayName}
+	{fetching}
+	{optionNamesAndIdNodes}
+	bind:ids
+/>
