@@ -13,8 +13,13 @@
 	$: ({ me } = $page.data);
 	$: ({ GameLogs } = data);
 	$: logs = $GameLogs?.data?.gameLogs?.edges?.map(({ node }) => node).sort(logByGameDate) || [];
-	const planetSetIn = (log: (typeof logs)[number] | undefined) =>
-		log?.placesSetIn?.edges?.find((edge) => edge.node.placeType === 'PLANET')?.node?.name;
+	const planetSetIn = (log: (typeof logs)[number] | undefined) => {
+		const planet = log?.placesSetIn?.edges?.find((edge) => edge.node.placeType === 'PLANET')?.node
+			?.name;
+		if (planet) return planet;
+		const isInSpace = log?.placesSetIn?.edges?.some((edge) => edge.node.name === 'Space');
+		return isInSpace ? 'Space' : 'Unknown';
+	};
 	$: logsGroupedWithPlanet = logs.reduce((acc, log, i, arr) => {
 		const location = planetSetIn(log);
 		const lastLocation = planetSetIn(arr[i - 1]);
