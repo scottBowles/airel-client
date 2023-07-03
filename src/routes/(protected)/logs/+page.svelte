@@ -6,12 +6,24 @@
 	import AddALog from './AddALog.svelte';
 	import { page } from '$app/stores';
 	import InfiniteLoading, { type InfiniteEvent } from 'svelte-infinite-loading';
+	import Sticky from '$lib/components/Sticky.svelte';
 
 	export let data: PageData;
 
 	$: ({ me } = $page.data);
 	$: ({ GameLogs } = data);
 	$: logs = $GameLogs?.data?.gameLogs?.edges?.map(({ node }) => node).sort(logByGameDate) || [];
+	const planetSetIn = (log: (typeof logs)[number] | undefined) =>
+		log?.placesSetIn?.edges?.find((edge) => edge.node.placeType === 'PLANET')?.node?.name;
+	$: logsGroupedWithPlanet = logs.reduce((acc, log, i, arr) => {
+		const location = planetSetIn(log);
+		const lastLocation = planetSetIn(arr[i - 1]);
+		if (i === 0 || location !== lastLocation) {
+			acc.push({ location, logs: [] });
+		}
+		acc[acc.length - 1].logs.push(log);
+		return acc;
+	}, [] as { location: string | undefined; logs: (typeof logs)[number][] }[]);
 
 	let onFetchingComplete: (value: void | PromiseLike<void>) => void;
 	$: !$GameLogs.fetching && onFetchingComplete?.();
@@ -36,44 +48,70 @@
 	</div>
 
 	<ul>
-		{#each logs as log (log.id)}
-			{@const id = fromGlobalId(log.id).id}
-			{@const detailUrl = `/logs/${id}`}
-			<li class="mb-8">
-				<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-				<article tabindex="0" class={`collapse group`}>
-					<div class="card w-full bg-base-200 group-focus:bg-base-300 text-base-content shadow-xl">
-						<div class="card-body collapse-title">
-							<div class="md:flex justify-between gap-4">
-								<h2 class="card-title mb-2">
-									<span>
-										<a href={detailUrl} class="hover:text-accent">{log.title}</a>
-										<a href={log.url} target="_blank" rel="noopener noreferrer" class="ml-2">
-											<span class="icon inline-block hover:text-accent"><FaExternalLinkAlt /></span>
-										</a>
-									</span>
-								</h2>
-								<h6 class="card-subtitle whitespace-nowrap">
-									{log.gameDate
-										? dateAdjustedForUtcOffset(new Date(log.gameDate)).toLocaleDateString('en-US', {
-												year: 'numeric',
-												month: 'short',
-												day: 'numeric'
-										  })
-										: '(date unknown)'}
-								</h6>
-							</div>
-							<p>{log.brief || '(brief tbd)'}</p>
-						</div>
-						<div class="collapse-content">
-							{log.synopsis || '(synopsis tbd)'}
-						</div>
-						<div class="w-full text-center">
-							<span class="icon group-focus:hidden"><FaCaretDown /></span>
-						</div>
-					</div>
-				</article>
-			</li>
+		{#each logsGroupedWithPlanet as logGrouping}
+			<Sticky tag="li">
+				<div slot="sticky" let:isStuck class="bg-base-100 h-16 flex items-center">
+					<h2 class="font-bold text-2xl" class:text-3xl={isStuck}>
+						{logGrouping.location}
+					</h2>
+				</div>
+				<div slot="content">
+					{#each logGrouping.logs as log (log.id)}
+						{@const id = fromGlobalId(log.id).id}
+						{@const detailUrl = `/logs/${id}`}
+						<ul>
+							<!-- <p>{planetSetIn(log)}</p> -->
+							<li class="mb-8">
+								<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+								<article tabindex="0" class={`collapse group`}>
+									<div
+										class="card w-full bg-base-200 group-focus:bg-base-300 text-base-content shadow-xl"
+									>
+										<div class="card-body collapse-title">
+											<div class="md:flex justify-between gap-4">
+												<h2 class="card-title mb-2">
+													<span>
+														<a href={detailUrl} class="hover:text-accent">{log.title}</a>
+														<a
+															href={log.url}
+															target="_blank"
+															rel="noopener noreferrer"
+															class="ml-2"
+														>
+															<span class="icon inline-block hover:text-accent"
+																><FaExternalLinkAlt /></span
+															>
+														</a>
+													</span>
+												</h2>
+												<h6 class="card-subtitle whitespace-nowrap">
+													{log.gameDate
+														? dateAdjustedForUtcOffset(new Date(log.gameDate)).toLocaleDateString(
+																'en-US',
+																{
+																	year: 'numeric',
+																	month: 'short',
+																	day: 'numeric'
+																}
+														  )
+														: '(date unknown)'}
+												</h6>
+											</div>
+											<p>{log.brief || '(brief tbd)'}</p>
+										</div>
+										<div class="collapse-content">
+											{log.synopsis || '(synopsis tbd)'}
+										</div>
+										<div class="w-full text-center">
+											<span class="icon group-focus:hidden"><FaCaretDown /></span>
+										</div>
+									</div>
+								</article>
+							</li>
+						</ul>
+					{/each}
+				</div>
+			</Sticky>
 		{/each}
 	</ul>
 
@@ -91,5 +129,10 @@
 		display: inline-block;
 		height: 16px;
 		width: 16px;
+	}
+	.inputContainer {
+		display: flex;
+		align-items: baseline;
+		margin-bottom: 1rem;
 	}
 </style>
