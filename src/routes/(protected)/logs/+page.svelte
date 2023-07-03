@@ -16,9 +16,11 @@
 	const planetSetIn = (log: (typeof logs)[number] | undefined) => {
 		const planet = log?.placesSetIn?.edges?.find((edge) => edge.node.placeType === 'PLANET')?.node
 			?.name;
-		if (planet) return planet;
-		const isInSpace = log?.placesSetIn?.edges?.some((edge) => edge.node.name === 'Space');
-		return isInSpace ? 'Space' : 'Unknown';
+		const inSpace = log?.placesSetIn?.edges?.find((edge) => edge.node.name === 'Space')?.node?.name;
+		const inTheRedream = log?.placesSetIn?.edges?.find(
+			(edge) => edge.node.name === 'In the ReDream'
+		)?.node?.name;
+		return planet || inSpace || inTheRedream;
 	};
 	$: logsGroupedWithPlanet = logs.reduce((acc, log, i, arr) => {
 		const location = planetSetIn(log);
