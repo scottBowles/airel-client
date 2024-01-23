@@ -39,7 +39,7 @@ export async function POST(event) {
 
 	const { errors, token, refreshToken } = await googleLogin(credential);
 
-	if (errors) throw error(400, { message: JSON.stringify(errors) });
+	if (errors) error(400, { message: JSON.stringify(errors) });
 
 	// redirect to the home page with the cookie set
 	event.cookies.set('token', token.token, {
@@ -60,5 +60,5 @@ export async function POST(event) {
 
 	const redirectUrl = event.url.searchParams.get('redirect') || '/';
 
-	throw redirect(303, redirectUrl);
+	redirect(303, redirectUrl);
 }
