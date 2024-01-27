@@ -9,5 +9,5 @@ export const load = (async (event) => {
 	if (!url) {
 		return {};
 	}
-	throw redirect(302, url);
+	redirect(302, url);
 }) satisfies PageServerLoad;

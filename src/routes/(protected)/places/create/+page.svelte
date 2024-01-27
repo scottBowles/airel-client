@@ -42,7 +42,7 @@
 		const parsed = parseFormData(data);
 		const name = parsed.name as string | undefined;
 
-		if (!name) throw error(400, 'Name is required');
+		if (!name) error(400, 'Name is required');
 
 		const res = await createMutation.mutate({ ...parsed, name });
 
