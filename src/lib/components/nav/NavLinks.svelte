@@ -59,23 +59,26 @@
 	<li>
 		<a
 			href={link.href}
-			class="btn no-animation normal-case btn-{btnSize}"
+			class="btn no-animation normal-case btn-{btnSize} content-center"
 			class:btn-primary={link === activeLink}
 			class:btn-ghost={link !== activeLink}
 		>
-			{link.label}
+			<div>{link.label}</div>
 		</a>
 	</li>
 {/each}
 <li>
 	{#if $page.data.me}
-		<button class="btn btn-ghost no-animation normal-case btn-{btnSize}" on:click={logout}>
+		<button
+			class="btn btn-ghost no-animation normal-case btn-{btnSize} content-center"
+			on:click={logout}
+		>
 			Logout
 		</button>
 	{:else}
 		<a
 			href={`/login?redirect=${$page.url.pathname}`}
-			class="btn btn-ghost no-animation normal-case btn-{btnSize}"
+			class="btn btn-ghost no-animation normal-case btn-{btnSize} content-center"
 		>
 			Login
 		</a>

@@ -80,7 +80,7 @@
 	</div>
 	<div class="drawer-side">
 		<label for="mobile-drawer" class="drawer-overlay" />
-		<div class="menu p-4 overflow-y-auto w-80 bg-base-100 gap-1">
+		<div class="menu p-4 overflow-y-auto w-80 bg-base-100 gap-1 h-screen">
 			<!-- Sidebar content here -->
 			<div class="text-4xl text-center font-bold mt-4 mb-8">Airel</div>
 			<ul>
