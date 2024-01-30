@@ -54,7 +54,11 @@
 		animation: fade 0.4s;
 	}
 
-	:global(html).dark .fade {
+	:global(html.dark) {
+		background-color: rgba(0, 0, 0, 0.3);
+	}
+
+	:global(html.fade) {
 		background-color: rgba(0, 0, 0, 0.3);
 	}
 
