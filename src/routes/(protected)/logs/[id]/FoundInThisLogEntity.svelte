@@ -1,13 +1,21 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { capitalize, fromGlobalId } from '$lib/utils';
 
-	export let name: string;
-	export let entities: { id: string; name: string }[];
-	export let getUrl: (entity: { id: string; name: string }) => string = (entity) => {
-		const entityName = name.toLowerCase();
-		const id = fromGlobalId(entity.id).id;
-		return `/${entityName}/${id}`;
-	};
+	let {
+		name,
+		entities,
+		getUrl = (entity) => {
+			const entityName = name.toLowerCase();
+			const id = fromGlobalId(entity.id).id;
+			return `/${entityName}/${id}`;
+		}
+	} = $props<{
+		name: string;
+		entities: { id: string; name: string }[];
+		getUrl?: (entity: { id: string; name: string }) => string;
+	}>();
 </script>
 
 <div class="mb-3">

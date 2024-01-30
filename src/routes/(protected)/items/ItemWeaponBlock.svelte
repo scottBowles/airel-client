@@ -1,21 +1,25 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { fragment, graphql, type ItemWeaponBlock } from '$houdini';
 	import Spacer from '$lib/components/Spacer.svelte';
 
-	export let item: ItemWeaponBlock;
+	let { item } = $props<{ item: ItemWeaponBlock }>();
 
-	$: data = fragment(
-		item,
-		graphql(`
-			fragment ItemWeaponBlock on Item {
-				weapon {
-					attackBonus
+	let data = $derived(
+		fragment(
+			item,
+			graphql(`
+				fragment ItemWeaponBlock on Item {
+					weapon {
+						attackBonus
+					}
 				}
-			}
-		`)
+			`)
+		)
 	);
 
-	$: ({ weapon } = $data);
+	let { weapon } = $derived($data);
 </script>
 
 <h3 class="text-xl font-bold">Weapon</h3>

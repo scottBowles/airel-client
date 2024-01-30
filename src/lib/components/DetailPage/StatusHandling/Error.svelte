@@ -1,6 +1,8 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { BasicProperty, LayoutBase } from '$lib/components/DetailPage';
-	export let errors: { message: string }[] = [];
+	let { errors } = $props<{ errors: { message: string }[] }>();
 </script>
 
 <LayoutBase>

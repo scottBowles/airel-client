@@ -1,105 +1,110 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { fragment, graphql, LockStore, type LogDetailFields } from '$houdini';
 	import FaExternalLinkAlt from 'svelte-icons/fa/FaExternalLinkAlt.svelte';
-	import { prop } from 'ramda';
 	import FaEdit from 'svelte-icons/fa/FaEdit.svelte';
+	import { prop } from 'ramda';
 	import { adjustForTimezone, fromGlobalId } from '$lib/utils';
 	import FoundInThisLogEntity from './FoundInThisLogEntity.svelte';
 	import { page } from '$app/stores';
 
 	const lockForEditMutation = new LockStore();
 
-	export let log: LogDetailFields;
+	let { log } = $props<{ log: LogDetailFields }>();
 
-	$: ({ me } = $page.data);
-	$: data = fragment(
-		log,
-		graphql(`
-			fragment LogDetailFields on GameLog {
-				id
-				url
-				title
-				gameDate
-				brief
-				synopsis
-				lockUser {
-					username
-				}
-				placesSetIn {
-					edges {
-						node {
-							id
-							name
+	let { me } = $derived($page.data);
+	let data = $derived(
+		fragment(
+			log,
+			graphql(`
+				fragment LogDetailFields on GameLog {
+					id
+					url
+					title
+					gameDate
+					brief
+					synopsis
+					lockUser {
+						username
+					}
+					placesSetIn {
+						edges {
+							node {
+								id
+								name
+							}
+						}
+					}
+					artifacts {
+						edges {
+							node {
+								id
+								name
+							}
+						}
+					}
+					associations {
+						edges {
+							node {
+								id
+								name
+							}
+						}
+					}
+					characters {
+						edges {
+							node {
+								id
+								name
+							}
+						}
+					}
+					items {
+						edges {
+							node {
+								id
+								name
+							}
+						}
+					}
+					places {
+						edges {
+							node {
+								id
+								name
+							}
+						}
+					}
+					races {
+						edges {
+							node {
+								id
+								name
+							}
 						}
 					}
 				}
-				artifacts {
-					edges {
-						node {
-							id
-							name
-						}
-					}
-				}
-				associations {
-					edges {
-						node {
-							id
-							name
-						}
-					}
-				}
-				characters {
-					edges {
-						node {
-							id
-							name
-						}
-					}
-				}
-				items {
-					edges {
-						node {
-							id
-							name
-						}
-					}
-				}
-				places {
-					edges {
-						node {
-							id
-							name
-						}
-					}
-				}
-				races {
-					edges {
-						node {
-							id
-							name
-						}
-					}
-				}
-			}
-		`)
+			`)
+		)
 	);
 
-	$: ({ id, url, title, gameDate, brief, synopsis, lockUser } = $data);
-	$: placesSetIn = $data.placesSetIn?.edges?.map(prop('node'));
-	$: artifacts = $data.artifacts?.edges?.map(prop('node'));
-	$: associations = $data.associations?.edges?.map(prop('node'));
-	$: characters = $data.characters?.edges?.map(prop('node'));
-	$: items = $data.items?.edges?.map(prop('node'));
-	$: places = $data.places?.edges?.map(prop('node'));
-	$: races = $data.races?.edges?.map(prop('node'));
-	$: dateDisplay =
+	let { id, url, title, gameDate, brief, synopsis, lockUser } = $derived($data);
+	let placesSetIn = $derived($data.placesSetIn?.edges?.map(prop('node')));
+	let artifacts = $derived($data.artifacts?.edges?.map(prop('node')));
+	let associations = $derived($data.associations?.edges?.map(prop('node')));
+	let characters = $derived($data.characters?.edges?.map(prop('node')));
+	let items = $derived($data.items?.edges?.map(prop('node')));
+	let places = $derived($data.places?.edges?.map(prop('node')));
+	let races = $derived($data.races?.edges?.map(prop('node')));
+	let dateDisplay = $derived(
 		gameDate &&
-		adjustForTimezone(gameDate).toLocaleDateString('en-US', {
-			year: 'numeric',
-			month: 'short',
-			day: 'numeric'
-		});
+			adjustForTimezone(gameDate).toLocaleDateString('en-US', {
+				year: 'numeric',
+				month: 'short',
+				day: 'numeric'
+			})
+	);
 
 	const onEditClick = () => lockForEditMutation.mutate({ id });
 

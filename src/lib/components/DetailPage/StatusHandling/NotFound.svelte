@@ -1,8 +1,10 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { BasicProperty, LayoutBase } from '$lib/components/DetailPage';
 	import { capitalize } from '$lib/utils';
 
-	export let entityName: string;
+	let { entityName } = $props<{ entityName: string }>();
 </script>
 
 <LayoutBase>

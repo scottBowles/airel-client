@@ -1,3 +1,5 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import type { PageData } from './$houdini';
@@ -6,14 +8,12 @@
 	import { Loading } from '$lib/components/DetailPage';
 	import ItemListDisplay from '$lib/components/ItemListDisplay.svelte';
 	import { alphabeticallyBy } from '$lib/utils';
-	import { page } from '$app/stores';
 
-	export let data: PageData;
-
-	$: ({ me } = $page.data);
-	$: ({ Items } = data);
-	$: items =
-		$Items?.data?.items?.edges?.map((edge) => edge.node).sort(alphabeticallyBy('name')) || [];
+	let { data } = $props<{ data: PageData }>();
+	let { Items, me } = $derived(data);
+	let items = $derived(
+		$Items?.data?.items?.edges?.map((edge) => edge.node).sort(alphabeticallyBy('name')) || []
+	);
 </script>
 
 <BannerImage

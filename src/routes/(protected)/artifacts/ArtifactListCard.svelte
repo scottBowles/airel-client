@@ -1,45 +1,49 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { fromGlobalId } from '$lib/utils';
 	import { fragment, graphql, type ArtifactListCardFields } from '$houdini';
 	import ItemTypeIcons from '$lib/components/ItemTypeIcons.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 
-	export let artifact: ArtifactListCardFields;
+	let { artifact } = $props<{ artifact: ArtifactListCardFields }>();
 
-	$: data = fragment(
-		artifact,
-		graphql(`
-			fragment ArtifactListCardFields on Artifact {
-				id
-				name
-				items {
-					edges {
-						node {
-							armor {
-								acBonus
-							}
-							weapon {
-								attackBonus
-							}
-							equipment {
-								briefDescription
+	let data = $derived(
+		fragment(
+			artifact,
+			graphql(`
+				fragment ArtifactListCardFields on Artifact {
+					id
+					name
+					items {
+						edges {
+							node {
+								armor {
+									acBonus
+								}
+								weapon {
+									attackBonus
+								}
+								equipment {
+									briefDescription
+								}
 							}
 						}
 					}
+					...EntityListFields
 				}
-				...EntityListFields
-			}
-		`)
+			`)
+		)
 	);
 
-	$: ({ id, name, items } = $data);
+	let { id, name, items } = $derived($data);
 
-	$: globalId = fromGlobalId(id).id;
-	$: href = `artifacts/${globalId}`;
-	$: itemNodes = items.edges?.map((edge) => edge.node) || [];
-	$: isWeapon = itemNodes.some((item) => !!item.weapon);
-	$: isArmor = itemNodes.some((item) => !!item.armor);
-	$: isEquipment = itemNodes.some((item) => !!item.equipment);
+	let globalId = $derived(fromGlobalId(id).id);
+	let href = $derived(`artifacts/${globalId}`);
+	let itemNodes = $derived(items.edges?.map((edge) => edge.node) || []);
+	let isWeapon = $derived(itemNodes.some((item) => !!item.weapon));
+	let isArmor = $derived(itemNodes.some((item) => !!item.armor));
+	let isEquipment = $derived(itemNodes.some((item) => !!item.equipment));
 </script>
 
 <ListDetailCard entity={$data} {href}>

@@ -1,6 +1,11 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
-	export let name = 'No property name provided';
-	export let value: string | number = `No value provided for property ${name}`;
+	let { name = 'No property name provided', value = `No value provided for property ${name}` } =
+		$props<{
+			name: string;
+			value: string | number;
+		}>();
 </script>
 
 <h3 class="text-xl font-bold">{name}</h3>

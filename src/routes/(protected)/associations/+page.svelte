@@ -1,3 +1,5 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import AddLink from '$lib/components/AddLink.svelte';
 	import BannerImage from '$lib/components/BannerImage.svelte';
@@ -8,14 +10,15 @@
 	import { fromGlobalId } from '$lib/utils';
 	import { page } from '$app/stores';
 
-	export let data: PageData;
+	let { data } = $props<{ data: PageData }>();
 
-	$: ({ me } = $page.data);
-	$: ({ Associations } = data);
-	$: associations =
+	let { me } = $derived($page.data);
+	let { Associations } = $derived(data);
+	let associations = $derived(
 		$Associations?.data?.associations?.edges
 			?.map(({ node }) => node)
-			.sort(alphabeticallyBy('name')) || [];
+			.sort(alphabeticallyBy('name')) || []
+	);
 </script>
 
 <BannerImage

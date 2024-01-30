@@ -1,16 +1,16 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { fragment, graphql, type PlaceBreadcrumbFields } from '$houdini';
 	import { fromGlobalId } from '$lib/utils';
 
-	export let place: PlaceBreadcrumbFields;
+	let { place } = $props<{ place: PlaceBreadcrumbFields }>();
 
-	$: data = fragment(
-		place,
-		graphql(`
-			fragment PlaceBreadcrumbFields on Place {
-				id
-				name
-				parent {
+	let data = $derived(
+		fragment(
+			place,
+			graphql(`
+				fragment PlaceBreadcrumbFields on Place {
 					id
 					name
 					parent {
@@ -28,14 +28,18 @@
 									parent {
 										id
 										name
+										parent {
+											id
+											name
+										}
 									}
 								}
 							}
 						}
 					}
 				}
-			}
-		`)
+			`)
+		)
 	);
 
 	type BreadcrumbNode = { id: string; name: string; parent?: BreadcrumbNode | null };
@@ -43,7 +47,9 @@
 	function getBreadcrumbs(node?: BreadcrumbNode | null): BreadcrumbNode[] {
 		return node ? [...getBreadcrumbs(node.parent), node] : [];
 	}
-	$: breadcrumbs = getBreadcrumbs($data).map((b) => ({ ...b, globalId: fromGlobalId(b.id).id }));
+	let breadcrumbs = $derived(
+		getBreadcrumbs($data).map((b) => ({ ...b, globalId: fromGlobalId(b.id).id }))
+	);
 </script>
 
 {#if breadcrumbs.length > 0}

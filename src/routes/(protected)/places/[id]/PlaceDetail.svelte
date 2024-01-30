@@ -1,3 +1,5 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { fragment, graphql, type PlaceDetailFields } from '$houdini';
 	import { LayoutDisplay } from '$lib/components/DetailPage';
@@ -6,30 +8,32 @@
 	import Breadcrumbs from '../Breadcrumbs.svelte';
 	import { getChildrenName } from '../utils';
 
-	export let place: PlaceDetailFields;
+	let { place } = $props<{ place: PlaceDetailFields }>();
 
-	$: data = fragment(
-		place,
-		graphql(`
-			fragment PlaceDetailFields on Place {
-				placeType
-				children {
-					edges {
-						node {
-							id
-							name
+	let data = $derived(
+		fragment(
+			place,
+			graphql(`
+				fragment PlaceDetailFields on Place {
+					placeType
+					children {
+						edges {
+							node {
+								id
+								name
+							}
 						}
 					}
+					...PlaceBreadcrumbFields
+					...EntityDetailFields
 				}
-				...PlaceBreadcrumbFields
-				...EntityDetailFields
-			}
-		`)
+			`)
+		)
 	);
 
-	$: ({ placeType, children: childrenConnection } = $data);
-	$: placeTypeDisplay = placeType ? capitalize(placeType) : '';
-	$: children = childrenConnection?.edges?.map((edge) => edge.node) || [];
+	let { placeType, children: childrenConnection } = $derived($data);
+	let placeTypeDisplay = $derived(placeType ? capitalize(placeType) : '');
+	let children = $derived(childrenConnection?.edges?.map((edge) => edge.node) || []);
 </script>
 
 <Breadcrumbs place={$data} />

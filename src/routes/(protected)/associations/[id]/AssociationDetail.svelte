@@ -1,30 +1,34 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { fromGlobalId } from '$lib/utils';
 	import { fragment, graphql, type AssociationDetailFields } from '$houdini';
 	import { LayoutDisplay } from '$lib/components/DetailPage';
 	import Spacer from '$lib/components/Spacer.svelte';
 
-	export let association: AssociationDetailFields;
+	let { association } = $props<{ association: AssociationDetailFields }>();
 
-	$: data = fragment(
-		association,
-		graphql(`
-			fragment AssociationDetailFields on Association {
-				...EntityDetailFields
-				characters {
-					edges {
-						node {
-							id
-							name
+	let data = $derived(
+		fragment(
+			association,
+			graphql(`
+				fragment AssociationDetailFields on Association {
+					...EntityDetailFields
+					characters {
+						edges {
+							node {
+								id
+								name
+							}
 						}
 					}
 				}
-			}
-		`)
+			`)
+		)
 	);
 
-	$: ({ characters: charactersConnection } = $data);
-	$: characters = charactersConnection?.edges.map(({ node }) => node) || [];
+	let { characters: charactersConnection } = $derived($data);
+	let characters = $derived(charactersConnection?.edges.map(({ node }) => node) || []);
 </script>
 
 <LayoutDisplay entity={$data}>

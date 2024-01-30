@@ -1,23 +1,26 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { fragment, graphql, type EntityListFields } from '$houdini';
 	import Thumbnail from '$lib/components/Thumbnail.svelte';
 
-	export let href: string;
-	export let entity: EntityListFields;
+	let { href, entity } = $props<{ href: string; entity: EntityListFields }>();
 
-	$: data = fragment(
-		entity,
-		graphql(`
-			fragment EntityListFields on Entity {
-				name
-				description
-				thumbnailId
-				imageIds
-			}
-		`)
+	let data = $derived(
+		fragment(
+			entity,
+			graphql(`
+				fragment EntityListFields on Entity {
+					name
+					description
+					thumbnailId
+					imageIds
+				}
+			`)
+		)
 	);
 
-	$: ({ name, description, thumbnailId, imageIds } = $data);
+	let { name, description, thumbnailId, imageIds } = $derived($data);
 </script>
 
 <div class="_card">

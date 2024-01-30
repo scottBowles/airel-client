@@ -1,5 +1,7 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
-	export let href: string;
+	let { href } = $props<{ href: string }>();
 </script>
 
 <a {href}>+ Add</a>

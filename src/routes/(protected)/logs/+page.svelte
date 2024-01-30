@@ -1,3 +1,5 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { dateAdjustedForUtcOffset, fromGlobalId, logByGameDate } from '$lib/utils';
 	import type { PageData } from './$houdini';
@@ -8,12 +10,26 @@
 	import InfiniteLoading, { type InfiniteEvent } from 'svelte-infinite-loading';
 	import Sticky from '$lib/components/Sticky.svelte';
 
-	export let data: PageData;
+	let { data } = $props<{ data: PageData }>();
 
-	$: ({ me } = $page.data);
-	$: ({ GameLogs } = data);
-	$: logs = $GameLogs?.data?.gameLogs?.edges?.map(({ node }) => node).sort(logByGameDate) || [];
-	const planetSetIn = (log: (typeof logs)[number] | undefined) => {
+	let { me } = $derived($page.data);
+	let { GameLogs } = $derived(data);
+	let logs = $derived(
+		$GameLogs?.data?.gameLogs?.edges?.map(({ node }) => node).sort(logByGameDate) || []
+	);
+	let logsGroupedWithPlanet = $derived(
+		logs.reduce((acc, log, i, arr) => {
+			const location = planetSetIn(log);
+			const lastLocation = planetSetIn(arr[i - 1]);
+			if (i === 0 || location !== lastLocation) {
+				acc.push({ location, logs: [] });
+			}
+			acc[acc.length - 1].logs.push(log);
+			return acc;
+		}, [] as { location: string | undefined; logs: (typeof logs)[number][] }[])
+	);
+
+	function planetSetIn(log: (typeof logs)[number] | undefined) {
 		const planet = log?.placesSetIn?.edges?.find((edge) => edge.node.placeType === 'PLANET')?.node
 			?.name;
 		const inSpace = log?.placesSetIn?.edges?.find((edge) => edge.node.name === 'Space')?.node?.name;
@@ -21,19 +37,16 @@
 			(edge) => edge.node.name === 'In the ReDream'
 		)?.node?.name;
 		return planet || inSpace || inTheRedream;
-	};
-	$: logsGroupedWithPlanet = logs.reduce((acc, log, i, arr) => {
-		const location = planetSetIn(log);
-		const lastLocation = planetSetIn(arr[i - 1]);
-		if (i === 0 || location !== lastLocation) {
-			acc.push({ location, logs: [] });
-		}
-		acc[acc.length - 1].logs.push(log);
-		return acc;
-	}, [] as { location: string | undefined; logs: (typeof logs)[number][] }[]);
+	}
 
-	let onFetchingComplete: (value: void | PromiseLike<void>) => void;
-	$: !$GameLogs.fetching && onFetchingComplete?.();
+	let onFetchingComplete = $state<(value: void | PromiseLike<void>) => void>((value) => {});
+
+	$effect(() => {
+		if (!$GameLogs.fetching) {
+			onFetchingComplete?.();
+		}
+	});
+
 	const awaitLoading = () => new Promise<void>((resolve) => (onFetchingComplete = resolve));
 
 	function infiniteHandler({ detail: { complete, error, loaded } }: InfiniteEvent) {

@@ -1,5 +1,7 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
-	export let equipment: { briefDescription: string } | null | undefined = undefined;
+	let { equipment = undefined } = $props<{ equipment: { briefDescription: string } | null }>();
 
 	const BRIEF_DESCRIPTION_ID = 'equipment.briefDescription';
 </script>

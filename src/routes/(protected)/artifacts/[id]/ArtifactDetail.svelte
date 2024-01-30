@@ -1,30 +1,34 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { fragment, graphql, type ArtifactDetailFields } from '$houdini';
 	import { LayoutDisplay } from '$lib/components/DetailPage';
 	import ItemListDisplay from '$lib/components/ItemListDisplay.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 
-	export let artifact: ArtifactDetailFields;
+	let { artifact } = $props<{ artifact: ArtifactDetailFields }>();
 
-	$: data = fragment(
-		artifact,
-		graphql(`
-			fragment ArtifactDetailFields on Artifact {
-				items {
-					edges {
-						node {
-							id
-							...ItemListFields
+	let data = $derived(
+		fragment(
+			artifact,
+			graphql(`
+				fragment ArtifactDetailFields on Artifact {
+					items {
+						edges {
+							node {
+								id
+								...ItemListFields
+							}
 						}
 					}
+					...EntityDetailFields
 				}
-				...EntityDetailFields
-			}
-		`)
+			`)
+		)
 	);
 
-	$: ({ items } = $data);
-	$: itemNodes = items?.edges?.map(({ node }) => node) || [];
+	let { items } = $derived($data);
+	let itemNodes = $derived(items?.edges?.map(({ node }) => node) || []);
 </script>
 
 <LayoutDisplay entity={$data}>

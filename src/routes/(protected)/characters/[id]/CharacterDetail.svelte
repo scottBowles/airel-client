@@ -1,35 +1,39 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { fromGlobalId } from '$lib/utils';
 	import { fragment, graphql, type CharacterDetailFields } from '$houdini';
 	import { LayoutDisplay } from '$lib/components/DetailPage';
 	import Spacer from '$lib/components/Spacer.svelte';
 
-	export let character: CharacterDetailFields;
+	let { character } = $props<{ character: CharacterDetailFields }>();
 
-	$: data = fragment(
-		character,
-		graphql(`
-			fragment CharacterDetailFields on Character {
-				race {
-					id
-					name
-				}
-				associations {
-					edges {
-						node {
-							id
-							name
+	let data = $derived(
+		fragment(
+			character,
+			graphql(`
+				fragment CharacterDetailFields on Character {
+					race {
+						id
+						name
+					}
+					associations {
+						edges {
+							node {
+								id
+								name
+							}
 						}
 					}
+					...EntityDetailFields
 				}
-				...EntityDetailFields
-			}
-		`)
+			`)
+		)
 	);
 
-	$: ({ race, associations: associationConnection } = $data);
-	$: associations = associationConnection?.edges.map(({ node }) => node) || [];
-	$: raceGlobalId = race && fromGlobalId(race.id).id;
+	let { race, associations: associationConnection } = $derived($data);
+	let associations = $derived(associationConnection?.edges.map(({ node }) => node) || []);
+	let raceGlobalId = $derived(race && fromGlobalId(race.id).id);
 </script>
 
 <LayoutDisplay entity={$data}>

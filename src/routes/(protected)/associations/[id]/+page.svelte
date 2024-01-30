@@ -1,3 +1,5 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { fragment, graphql } from '$houdini';
 	import { Loading, StatusHandler } from '$lib/components/DetailPage';
@@ -5,19 +7,21 @@
 	import AssociationDetail from './AssociationDetail.svelte';
 	import AssociationEdit from './AssociationEdit.svelte';
 
-	export let data: PageData;
+	let { data } = $props<{ data: PageData }>();
 
-	$: ({ Association } = data);
-	$: association = $Association.data?.association;
+	let { Association } = $derived(data);
+	let association = $derived($Association.data?.association);
 
-	$: lockedBySelfData = fragment(
-		association,
-		graphql(`
-			fragment AssociationLockedBySelf on Association {
-				id
-				lockedBySelf
-			}
-		`)
+	let lockedBySelfData = $derived(
+		fragment(
+			association,
+			graphql(`
+				fragment AssociationLockedBySelf on Association {
+					id
+					lockedBySelf
+				}
+			`)
+		)
 	);
 </script>
 
