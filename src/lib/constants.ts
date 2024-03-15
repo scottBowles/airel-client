@@ -61,3 +61,6 @@ export type EntityTypePlural = (typeof ENTITY_TYPE_PLURALS)[keyof typeof ENTITY_
 
 export const entityPlural = (entityType: EntityType): EntityTypePlural =>
 	ENTITY_TYPE_PLURALS[entityType];
+
+// Must use `:` rather than `/` as separator for DEFAULT_IMAGE_SRC
+export const DEFAULT_IMAGE_SRC = 'dnd:placeholder.jpg';

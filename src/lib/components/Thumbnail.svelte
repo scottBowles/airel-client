@@ -2,18 +2,16 @@
 
 <script lang="ts">
 	import { getThumbnailUrl } from '$lib/cloudinary';
+	import { DEFAULT_IMAGE_SRC } from '$lib/constants';
 
-	// Must use `:` rather than `/` as separator for defaultImageSrc
-	let DEFAULT_ID = 'dnd:placeholder.jpg';
-
-	let { thumbnailId = DEFAULT_ID, width = 75, height = 75, radius = 0 } = $props();
+	let { thumbnailId = DEFAULT_IMAGE_SRC, width = 75, height = 75, radius = 0 } = $props();
 
 	let src = $derived(
-		getThumbnailUrl(thumbnailId ?? DEFAULT_ID, {
+		getThumbnailUrl(thumbnailId ?? DEFAULT_IMAGE_SRC, {
 			width,
 			height,
 			radius,
-			defaultSrc: DEFAULT_ID
+			defaultSrc: DEFAULT_IMAGE_SRC
 		})
 	);
 </script>
