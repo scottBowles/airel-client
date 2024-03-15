@@ -1,8 +1,10 @@
+<svelte:options runes={true} />
+
 <script>
 	import { onMount } from 'svelte';
 
-	let p = 0;
-	let visible = false;
+	let p = $state(0);
+	let visible = $state(false);
 
 	onMount(() => {
 		visible = true;

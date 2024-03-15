@@ -1,9 +1,11 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { post } from '$lib/utils';
 
-	export let btnSize = '';
+	let { btnSize = '' } = $props();
 
 	const links = [
 		// {
@@ -46,8 +48,8 @@
 		href: '/404'
 	};
 
-	$: currentHref = '/' + $page.url.pathname.split('/')[1];
-	$: activeLink = links.find((link) => link.href === currentHref) || defaultLink;
+	let currentHref = $derived('/' + $page.url.pathname.split('/')[1]);
+	let activeLink = $derived(links.find((link) => link.href === currentHref) || defaultLink);
 
 	async function logout() {
 		await post('/endpoints/logout');
@@ -69,7 +71,7 @@
 {/each}
 <li>
 	{#if $page.data.me}
-		<button class="btn btn-ghost no-animation normal-case btn-{btnSize}" on:click={logout}>
+		<button class="btn btn-ghost no-animation normal-case btn-{btnSize}" onclick={logout}>
 			Logout
 		</button>
 	{:else}
