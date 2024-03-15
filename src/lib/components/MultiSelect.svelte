@@ -7,11 +7,3 @@
 </script>
 
 <MultiSelect {id} {options} bind:selected outerDivClass="select select-bordered" {...$$restProps} />
-
-<style>
-	:global(div.multiselect) {
-		@apply select select-bordered;
-		margin: 0;
-		height: auto;
-	}
-</style>
