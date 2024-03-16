@@ -10,7 +10,9 @@
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
         "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
         "lint": "prettier --plugin-search-dir . --check . && eslint .",
-        "format": "prettier --plugin-search-dir . --write ."
+        "format": "prettier --plugin-search-dir . --write .",
+        "grats": "grats",
+        "grats:watch": "grats --watch"
     },
     "devDependencies": {
         "@algolia/autocomplete-js": "^1.15.0",
@@ -23,6 +25,7 @@
         "@sveltejs/vite-plugin-svelte": "^3.0.1",
         "@tailwindcss/typography": "^0.5.10",
         "@total-typescript/ts-reset": "^0.4.2",
+        "@types/node": "^20.11.28",
         "@types/quill": "^2.0.14",
         "@types/ramda": "^0.29.10",
         "@typescript-eslint/eslint-plugin": "^5.62.0",
@@ -36,6 +39,7 @@
         "eslint-plugin-svelte": "^2.35.1",
         "graphql": "^16.8.1",
         "graphql-relay": "^0.10.0",
+        "grats": "^0.0.24",
         "houdini": "^1.2.36",
         "houdini-svelte": "^1.2.36",
         "jwt-decode": "^3.1.2",
@@ -59,5 +63,8 @@
     "type": "module",
     "engines": {
         "node": "20.5.0"
+    },
+    "dependencies": {
+        "graphql-yoga": "^5.2.0"
     }
 }

@@ -1,11 +1,13 @@
 const mode = import.meta.env.MODE;
 
 const development = {
-	API_PATH: 'http://127.0.0.1:8000/graphql/'
+	API_PATH: 'http://127.0.0.1:5173/endpoints/api/'
+	// API_PATH: 'http://127.0.0.1:8000/graphql/'
 };
 
 const production = {
-	API_PATH: 'https://apirel.onrender.com/graphql/'
+	API_PATH: 'https://apirel.onrender.com/endpoints/api/'
+	// API_PATH: 'https://apirel.onrender.com/graphql/'
 };
 
 const base = {

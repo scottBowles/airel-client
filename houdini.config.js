@@ -2,9 +2,10 @@
 
 /** @type {import('houdini').ConfigFile} */
 const config = {
-	watchSchema: {
-		url: 'env:PUBLIC_GRAPHQL_URL'
-	},
+	// watchSchema: {
+	// 	url: 'env:PUBLIC_GRAPHQL_URL'
+	// },
+	schemaPath: 'src/lib/api/schema.graphql',
 	plugins: {
 		'houdini-svelte': {}
 	},
