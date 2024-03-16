@@ -88,9 +88,9 @@ const setHoudiniSession = (async ({ event, resolve }) => {
 // }) satisfies Handle;
 
 export const handle = sequence(
-	populateTokensToLocals,
-	populateUserToLocals,
-	setCookies,
+	// populateTokensToLocals,
+	// populateUserToLocals,
+	// setCookies,
 	setHoudiniSession
 	// gatekeep
 );

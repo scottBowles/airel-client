@@ -1,0 +1,3289 @@
+type AbilityScoreIncrease implements Node {
+  abilityScore: String!
+  id: GlobalID!
+  increase: Int!
+}
+
+"""A connection to a list of items."""
+type AbilityScoreIncreaseConnection {
+  """Contains the nodes in this connection"""
+  edges: [AbilityScoreIncreaseEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type AbilityScoreIncreaseEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: AbilityScoreIncrease!
+}
+
+input AbilityScoreIncreaseInput {
+  abilityScore: String!
+  increase: Int!
+}
+
+input AbilityScoreIncreaseInputPartial {
+  abilityScore: String
+  id: GlobalID!
+  increase: Int
+}
+
+"""Input data for `addAiLogSuggestion` mutation"""
+input AddAiLogSuggestionInput {
+  associations: [String!]!
+  brief: String!
+  characters: [String!]!
+  id: GlobalID!
+  items: [String!]!
+  places: [String!]!
+  races: [String!]!
+  synopsis: String
+  title: String!
+}
+
+union AddAiLogSuggestionPayload = GameLog | OperationInfo
+
+input AddEntityLogInput {
+  entityId: GlobalID!
+  logId: GlobalID
+  logUrl: String
+}
+
+type Alias implements Node {
+  id: GlobalID!
+  isPrimary: Boolean!
+  name: String!
+}
+
+"""A connection to a list of items."""
+type AliasConnection {
+  """Contains the nodes in this connection"""
+  edges: [AliasEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type AliasEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Alias!
+}
+
+type ArmorTraits implements Node {
+  acBonus: Int!
+  id: GlobalID!
+}
+
+input ArmorTraitsInput {
+  acBonus: Int
+  delete: Boolean = false
+}
+
+type Artifact implements Entity & Lockable & Node {
+  aliases(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AliasConnection!
+  created: DateTime!
+  description: String
+  id: GlobalID!
+  imageIds: [String!]!
+  items(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
+  lockTime: DateTime
+  lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
+  logs(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): GameLogConnection!
+  markdownNotes: String
+  name: String!
+  notes: String
+  relatedArtifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  relatedAssociations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  relatedCharacters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  relatedItems(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
+  relatedPlaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  relatedRaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): RaceConnection!
+  thumbnailId: String
+  updated: DateTime!
+}
+
+"""Input data for `artifactAddImage` mutation"""
+input ArtifactAddImageInput {
+  id: GlobalID!
+  imageId: String!
+}
+
+union ArtifactAddImagePayload = Artifact | OperationInfo
+
+"""A connection to a list of items."""
+type ArtifactConnection {
+  """Contains the nodes in this connection"""
+  edges: [ArtifactEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type ArtifactEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Artifact!
+}
+
+input ArtifactInput {
+  description: String
+  imageIds: [String!]
+  items: NodePartialListInput
+  logs: [GlobalID!]
+  markdownNotes: String
+  name: String!
+  notes: String
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
+  thumbnailId: String
+}
+
+input ArtifactInputPartial {
+  description: String
+  id: GlobalID!
+  imageIds: [String!]
+  items: NodePartialListInput
+  markdownNotes: String
+  name: String
+  notes: String
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
+  thumbnailId: String
+}
+
+"""Input data for `artifactLock` mutation"""
+input ArtifactLockInput {
+  id: GlobalID!
+}
+
+union ArtifactLockPayload = Artifact | OperationInfo
+
+"""Input data for `artifactReleaseLock` mutation"""
+input ArtifactReleaseLockInput {
+  id: GlobalID!
+}
+
+union ArtifactReleaseLockPayload = Artifact | OperationInfo
+
+type Association implements Entity & Lockable & Node {
+  aliases(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AliasConnection!
+  characters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  created: DateTime!
+  description: String
+  id: GlobalID!
+  imageIds: [String!]!
+  lockTime: DateTime
+  lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
+  logs(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): GameLogConnection!
+  markdownNotes: String
+  name: String!
+  relatedArtifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  relatedAssociations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  relatedCharacters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  relatedItems(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
+  relatedPlaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  relatedRaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): RaceConnection!
+  thumbnailId: String
+  updated: DateTime!
+}
+
+"""Input data for `associationAddImage` mutation"""
+input AssociationAddImageInput {
+  id: GlobalID!
+  imageId: String!
+}
+
+union AssociationAddImagePayload = Association | OperationInfo
+
+"""A connection to a list of items."""
+type AssociationConnection {
+  """Contains the nodes in this connection"""
+  edges: [AssociationEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type AssociationEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Association!
+}
+
+input AssociationInput {
+  characters: NodePartialListInput
+  description: String
+  imageIds: [String!]
+  logs: [GlobalID!]
+  markdownNotes: String
+  name: String!
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
+  thumbnailId: String
+}
+
+input AssociationInputPartial {
+  characters: NodePartialListInput
+  description: String
+  id: GlobalID!
+  imageIds: [String!]
+  markdownNotes: String
+  name: String
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
+  thumbnailId: String
+}
+
+"""Input data for `associationLock` mutation"""
+input AssociationLockInput {
+  id: GlobalID!
+}
+
+union AssociationLockPayload = Association | OperationInfo
+
+"""Input data for `associationReleaseLock` mutation"""
+input AssociationReleaseLockInput {
+  id: GlobalID!
+}
+
+union AssociationReleaseLockPayload = Association | OperationInfo
+
+type Character implements Entity & Lockable & Node {
+  aliases(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AliasConnection!
+  associations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  created: DateTime!
+  description: String
+  featuresAndTraits(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): FeatureConnection!
+  id: GlobalID!
+  imageIds: [String!]!
+  lockTime: DateTime
+  lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
+  logs(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): GameLogConnection!
+  markdownNotes: String
+  name: String!
+  proficiencies(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ProficiencyConnection!
+  race: Race
+  relatedArtifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  relatedAssociations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  relatedCharacters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  relatedItems(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
+  relatedPlaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  relatedRaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): RaceConnection!
+  size: String
+  thumbnailId: String
+  updated: DateTime!
+}
+
+"""Input data for `characterAddImage` mutation"""
+input CharacterAddImageInput {
+  id: GlobalID!
+  imageId: String!
+}
+
+union CharacterAddImagePayload = Character | OperationInfo
+
+"""A connection to a list of items."""
+type CharacterConnection {
+  """Contains the nodes in this connection"""
+  edges: [CharacterEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type CharacterEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Character!
+}
+
+input CharacterInput {
+  associations: NodePartialListInput
+  description: String
+  featuresAndTraits: NodePartialListInput
+  imageIds: [String!]
+  logs: [GlobalID!]
+  markdownNotes: String
+  name: String!
+  proficiencies: NodePartialListInput
+  race: NodeInput
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
+  size: String
+  thumbnailId: String
+}
+
+input CharacterInputPartial {
+  associations: NodePartialListInput
+  description: String
+  featuresAndTraits: NodePartialListInput
+  id: GlobalID!
+  imageIds: [String!]
+  markdownNotes: String
+  name: String
+  proficiencies: NodePartialListInput
+  race: NodeInput
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
+  size: String
+  thumbnailId: String
+}
+
+"""Input data for `characterLock` mutation"""
+input CharacterLockInput {
+  id: GlobalID!
+}
+
+union CharacterLockPayload = Character | OperationInfo
+
+"""Input data for `characterReleaseLock` mutation"""
+input CharacterReleaseLockInput {
+  id: GlobalID!
+}
+
+union CharacterReleaseLockPayload = Character | OperationInfo
+
+type CombinedGameLogAiSummary {
+  associations: [String!]!
+  briefs: [String!]!
+  characters: [String!]!
+  foundArtifacts: [Artifact!]!
+  foundAssociations: [Association!]!
+  foundCharacters: [Character!]!
+  foundItems: [Item!]!
+  foundPlaces: [Place!]!
+  foundRaces: [Race!]!
+  items: [String!]!
+  places: [String!]!
+  races: [String!]!
+  synopses: [String!]!
+  titles: [String!]!
+}
+
+union CreateAbilityScoreIncreasePayload = AbilityScoreIncrease | OperationInfo
+
+union CreateArtifactPayload = Artifact | OperationInfo
+
+union CreateAssociationPayload = Association | OperationInfo
+
+union CreateCharacterPayload = Character | OperationInfo
+
+union CreateExportPayload = Export | OperationInfo
+
+union CreateFeaturePayload = Feature | OperationInfo
+
+union CreateItemPayload = Item | OperationInfo
+
+union CreateLanguagePayload = Language | OperationInfo
+
+union CreatePlacePayload = OperationInfo | Place
+
+union CreateProficiencyPayload = OperationInfo | Proficiency
+
+union CreateRacePayload = OperationInfo | Race
+
+union CreateScriptPayload = OperationInfo | Script
+
+union CreateSkillPayload = OperationInfo | Skill
+
+union CreateTraitPayload = OperationInfo | Trait
+
+"""Date with time (isoformat)"""
+scalar DateTime
+
+union DeleteAbilityScoreIncreasePayload = AbilityScoreIncrease | OperationInfo
+
+union DeleteArtifactPayload = Artifact | OperationInfo
+
+union DeleteAssociationPayload = Association | OperationInfo
+
+union DeleteCharacterPayload = Character | OperationInfo
+
+union DeleteExportPayload = Export | OperationInfo
+
+union DeleteFeaturePayload = Feature | OperationInfo
+
+union DeleteGameLogPayload = GameLog | OperationInfo
+
+union DeleteItemPayload = Item | OperationInfo
+
+union DeleteLanguagePayload = Language | OperationInfo
+
+union DeletePlacePayload = OperationInfo | Place
+
+union DeleteProficiencyPayload = OperationInfo | Proficiency
+
+union DeleteRacePayload = OperationInfo | Race
+
+union DeleteScriptPayload = OperationInfo | Script
+
+union DeleteSkillPayload = OperationInfo | Skill
+
+union DeleteTraitPayload = OperationInfo | Trait
+
+type DjangoModelType {
+  pk: ID!
+}
+
+interface Entity implements Lockable {
+  aliases(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AliasConnection!
+  created: DateTime!
+  description: String
+  id: GlobalID!
+  imageIds: [String!]!
+  lockTime: DateTime
+  lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
+  logs(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): GameLogConnection!
+  markdownNotes: String
+  name: String!
+  relatedArtifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  relatedAssociations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  relatedCharacters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  relatedItems(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
+  relatedPlaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  relatedRaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): RaceConnection!
+  thumbnailId: String
+  updated: DateTime!
+}
+
+input EntityAddAliasInput {
+  alias: String!
+  id: GlobalID!
+}
+
+input EntityAddImageInput {
+  id: GlobalID!
+  imageId: String!
+}
+
+type EquipmentTraits implements Node {
+  briefDescription: String!
+  id: GlobalID!
+}
+
+input EquipmentTraitsInput {
+  briefDescription: String
+  delete: Boolean = false
+}
+
+"""
+
+     Errors messages and codes mapped to
+    fields or non fields errors.
+    Example:
+    {
+        field_name: [
+            {
+                "message": "error message",
+                "code": "error_code"
+            }
+        ],
+        other_field: [
+            {
+                "message": "error message",
+                "code": "error_code"
+            }
+        ],
+        nonFieldErrors: [
+            {
+                "message": "error message",
+                "code": "error_code"
+            }
+        ]
+    }
+    
+"""
+scalar ExpectedError
+
+type Export implements Entity & Lockable & Node {
+  aliases(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AliasConnection!
+  created: DateTime!
+  description: String
+  id: GlobalID!
+  imageIds: [String!]!
+  lockTime: DateTime
+  lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
+  logs(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): GameLogConnection!
+  markdownNotes: String
+  name: String!
+  relatedArtifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  relatedAssociations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  relatedCharacters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  relatedItems(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
+  relatedPlaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  relatedRaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): RaceConnection!
+  thumbnailId: String
+  updated: DateTime!
+}
+
+"""A connection to a list of items."""
+type ExportConnection {
+  """Contains the nodes in this connection"""
+  edges: [ExportEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type ExportEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Export!
+}
+
+input ExportInput {
+  description: String
+  imageIds: [String!]
+  logs: [GlobalID!]
+  markdownNotes: String
+  name: String!
+  thumbnailId: String
+}
+
+input ExportInputPartial {
+  description: String
+  id: GlobalID!
+  imageIds: [String!]
+  markdownNotes: String
+  name: String
+  thumbnailId: String
+}
+
+type Feature implements Node {
+  characters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  description: String!
+  id: GlobalID!
+  name: String!
+}
+
+"""A connection to a list of items."""
+type FeatureConnection {
+  """Contains the nodes in this connection"""
+  edges: [FeatureEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type FeatureEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Feature!
+}
+
+input FeatureInput {
+  characters: NodePartialListInput
+  description: String!
+  name: String!
+}
+
+input FeatureInputPartial {
+  characters: NodePartialListInput
+  description: String
+  id: GlobalID!
+  name: String
+}
+
+type GameLog implements Lockable & Node {
+  aiSuggestions: CombinedGameLogAiSummary
+  artifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  associations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  brief: String
+  characters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  gameDate: DateTime
+  googleId: String
+  id: GlobalID!
+  items(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
+  lockTime: DateTime
+  lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
+  places(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  placesSetIn(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  races(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): RaceConnection!
+  summary: String
+  synopsis: String
+  title: String
+  url: String!
+}
+
+type GameLogAiSummary {
+  artifacts: [String!]!
+  associations: [String!]!
+  brief: String!
+  characters: [String!]!
+  foundArtifacts: [Artifact!]!
+  foundAssociations: [Association!]!
+  foundCharacters: [Character!]!
+  foundItems: [Item!]!
+  foundPlaces: [Place!]!
+  foundRaces: [Race!]!
+  items: [String!]!
+  places: [String!]!
+  races: [String!]!
+  synopsis: String!
+  title: String!
+}
+
+"""A connection to a list of items."""
+type GameLogConnection {
+  """Contains the nodes in this connection"""
+  edges: [GameLogEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type GameLogEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: GameLog!
+}
+
+input GameLogInputPartial {
+  artifacts: NodePartialListInput
+  associations: NodePartialListInput
+  brief: String
+  characters: NodePartialListInput
+  gameDate: DateTime
+  id: GlobalID!
+  items: NodePartialListInput
+  places: NodePartialListInput
+  placesSetIn: NodePartialListInput
+  races: NodePartialListInput
+  summary: String
+  synopsis: String
+  title: String
+}
+
+input GameLogOrder {
+  gameDate: Ordering
+}
+
+"""Input data for `gamelogLock` mutation"""
+input GamelogLockInput {
+  id: GlobalID!
+}
+
+union GamelogLockPayload = GameLog | OperationInfo
+
+"""Input data for `gamelogReleaseLock` mutation"""
+input GamelogReleaseLockInput {
+  id: GlobalID!
+}
+
+union GamelogReleaseLockPayload = GameLog | OperationInfo
+
+input GetOrCreateGameLogInput {
+  lock: Boolean! = false
+  url: String!
+}
+
+union GetOrCreateGameLogPayload = GameLog | OperationInfo
+
+"""
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+"""
+scalar GlobalID
+
+type Item implements Entity & Lockable & Node {
+  aliases(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AliasConnection!
+  armor: ArmorTraits
+  artifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  created: DateTime!
+  description: String
+  equipment: EquipmentTraits
+  id: GlobalID!
+  imageIds: [String!]!
+  lockTime: DateTime
+  lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
+  logs(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): GameLogConnection!
+  markdownNotes: String
+  name: String!
+  relatedArtifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  relatedAssociations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  relatedCharacters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  relatedItems(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
+  relatedPlaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  relatedRaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): RaceConnection!
+  thumbnailId: String
+  updated: DateTime!
+  weapon: WeaponTraits
+}
+
+"""Input data for `itemAddImage` mutation"""
+input ItemAddImageInput {
+  id: GlobalID!
+  imageId: String!
+}
+
+union ItemAddImagePayload = Item | OperationInfo
+
+"""A connection to a list of items."""
+type ItemConnection {
+  """Contains the nodes in this connection"""
+  edges: [ItemEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type ItemEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Item!
+}
+
+input ItemInput {
+  armor: ArmorTraitsInput
+  artifacts: NodePartialListInput
+  description: String
+  equipment: EquipmentTraitsInput
+  imageIds: [String!]
+  logs: [GlobalID!]
+  markdownNotes: String
+  name: String!
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
+  thumbnailId: String
+  weapon: WeaponTraitsInput
+}
+
+input ItemInputPartial {
+  armor: ArmorTraitsInput
+  artifacts: NodePartialListInput
+  description: String
+  equipment: EquipmentTraitsInput
+  id: GlobalID!
+  imageIds: [String!]
+  markdownNotes: String
+  name: String
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
+  thumbnailId: String
+  weapon: WeaponTraitsInput
+}
+
+"""Input data for `itemLock` mutation"""
+input ItemLockInput {
+  id: GlobalID!
+}
+
+union ItemLockPayload = Item | OperationInfo
+
+"""Input data for `itemReleaseLock` mutation"""
+input ItemReleaseLockInput {
+  id: GlobalID!
+}
+
+union ItemReleaseLockPayload = Item | OperationInfo
+
+type Language implements Node {
+  description: String!
+  id: GlobalID!
+  name: String!
+  script: Script!
+}
+
+"""A connection to a list of items."""
+type LanguageConnection {
+  """Contains the nodes in this connection"""
+  edges: [LanguageEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type LanguageEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Language!
+}
+
+input LanguageInput {
+  description: String
+  name: String!
+  script: NodeInput
+}
+
+input LanguageInputPartial {
+  description: String
+  id: GlobalID!
+  name: String
+  script: NodeInput
+}
+
+interface Lockable {
+  id: GlobalID!
+  lockTime: DateTime
+  lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
+}
+
+type Mutation {
+  addAiLogSuggestion(
+    """Input data for `addAiLogSuggestion` mutation"""
+    input: AddAiLogSuggestionInput!
+  ): AddAiLogSuggestionPayload!
+  addEntityLog(input: AddEntityLogInput!): Node!
+  artifactAddImage(
+    """Input data for `artifactAddImage` mutation"""
+    input: ArtifactAddImageInput!
+  ): ArtifactAddImagePayload!
+  artifactLock(
+    """Input data for `artifactLock` mutation"""
+    input: ArtifactLockInput!
+  ): ArtifactLockPayload!
+  artifactReleaseLock(
+    """Input data for `artifactReleaseLock` mutation"""
+    input: ArtifactReleaseLockInput!
+  ): ArtifactReleaseLockPayload!
+  associationAddImage(
+    """Input data for `associationAddImage` mutation"""
+    input: AssociationAddImageInput!
+  ): AssociationAddImagePayload!
+  associationLock(
+    """Input data for `associationLock` mutation"""
+    input: AssociationLockInput!
+  ): AssociationLockPayload!
+  associationReleaseLock(
+    """Input data for `associationReleaseLock` mutation"""
+    input: AssociationReleaseLockInput!
+  ): AssociationReleaseLockPayload!
+  characterAddImage(
+    """Input data for `characterAddImage` mutation"""
+    input: CharacterAddImageInput!
+  ): CharacterAddImagePayload!
+  characterLock(
+    """Input data for `characterLock` mutation"""
+    input: CharacterLockInput!
+  ): CharacterLockPayload!
+  characterReleaseLock(
+    """Input data for `characterReleaseLock` mutation"""
+    input: CharacterReleaseLockInput!
+  ): CharacterReleaseLockPayload!
+  createAbilityScoreIncrease(input: AbilityScoreIncreaseInput!): CreateAbilityScoreIncreasePayload!
+  createArtifact(input: ArtifactInput!): CreateArtifactPayload!
+  createAssociation(input: AssociationInput!): CreateAssociationPayload!
+  createCharacter(input: CharacterInput!): CreateCharacterPayload!
+  createExport(input: ExportInput!): CreateExportPayload!
+  createFeature(input: FeatureInput!): CreateFeaturePayload!
+
+  """Create an item with traits if present."""
+  createItem(input: ItemInput!): CreateItemPayload!
+  createLanguage(input: LanguageInput!): CreateLanguagePayload!
+  createPlace(input: PlaceInput!): CreatePlacePayload!
+  createProficiency(input: ProficiencyInput!): CreateProficiencyPayload!
+  createRace(input: RaceInput!): CreateRacePayload!
+  createScript(input: ScriptInput!): CreateScriptPayload!
+  createSkill(input: SkillInput!): CreateSkillPayload!
+  createTrait(input: TraitInput!): CreateTraitPayload!
+  deleteAbilityScoreIncrease(
+    """Input of an object that implements the `Node` interface."""
+    input: NodeInput!
+  ): DeleteAbilityScoreIncreasePayload!
+  deleteArtifact(
+    """Input of an object that implements the `Node` interface."""
+    input: NodeInput!
+  ): DeleteArtifactPayload!
+  deleteAssociation(
+    """Input of an object that implements the `Node` interface."""
+    input: NodeInput!
+  ): DeleteAssociationPayload!
+  deleteCharacter(
+    """Input of an object that implements the `Node` interface."""
+    input: NodeInput!
+  ): DeleteCharacterPayload!
+  deleteExport(
+    """Input of an object that implements the `Node` interface."""
+    input: NodeInput!
+  ): DeleteExportPayload!
+  deleteFeature(
+    """Input of an object that implements the `Node` interface."""
+    input: NodeInput!
+  ): DeleteFeaturePayload!
+  deleteGameLog(
+    """Input of an object that implements the `Node` interface."""
+    input: NodeInput!
+  ): DeleteGameLogPayload!
+  deleteItem(
+    """Input of an object that implements the `Node` interface."""
+    input: NodeInput!
+  ): DeleteItemPayload!
+  deleteLanguage(
+    """Input of an object that implements the `Node` interface."""
+    input: NodeInput!
+  ): DeleteLanguagePayload!
+  deletePlace(
+    """Input of an object that implements the `Node` interface."""
+    input: NodeInput!
+  ): DeletePlacePayload!
+  deleteProficiency(
+    """Input of an object that implements the `Node` interface."""
+    input: NodeInput!
+  ): DeleteProficiencyPayload!
+  deleteRace(
+    """Input of an object that implements the `Node` interface."""
+    input: NodeInput!
+  ): DeleteRacePayload!
+  deleteScript(
+    """Input of an object that implements the `Node` interface."""
+    input: NodeInput!
+  ): DeleteScriptPayload!
+  deleteSkill(
+    """Input of an object that implements the `Node` interface."""
+    input: NodeInput!
+  ): DeleteSkillPayload!
+  deleteTrait(
+    """Input of an object that implements the `Node` interface."""
+    input: NodeInput!
+  ): DeleteTraitPayload!
+  entityAddAlias(input: EntityAddAliasInput!): Node!
+  entityAddImage(input: EntityAddImageInput!): Node!
+  gamelogLock(
+    """Input data for `gamelogLock` mutation"""
+    input: GamelogLockInput!
+  ): GamelogLockPayload!
+  gamelogReleaseLock(
+    """Input data for `gamelogReleaseLock` mutation"""
+    input: GamelogReleaseLockInput!
+  ): GamelogReleaseLockPayload!
+  getOrCreateGameLog(input: GetOrCreateGameLogInput!): GetOrCreateGameLogPayload!
+  googleLogin(googleToken: String!): ObtainJSONWebTokenType!
+  itemAddImage(
+    """Input data for `itemAddImage` mutation"""
+    input: ItemAddImageInput!
+  ): ItemAddImagePayload!
+  itemLock(
+    """Input data for `itemLock` mutation"""
+    input: ItemLockInput!
+  ): ItemLockPayload!
+  itemReleaseLock(
+    """Input data for `itemReleaseLock` mutation"""
+    input: ItemReleaseLockInput!
+  ): ItemReleaseLockPayload!
+  lock(input: NodeInput!): Lockable!
+  placeAddImage(
+    """Input data for `placeAddImage` mutation"""
+    input: PlaceAddImageInput!
+  ): PlaceAddImagePayload!
+  placeLock(
+    """Input data for `placeLock` mutation"""
+    input: PlaceLockInput!
+  ): PlaceLockPayload!
+  placeReleaseLock(
+    """Input data for `placeReleaseLock` mutation"""
+    input: PlaceReleaseLockInput!
+  ): PlaceReleaseLockPayload!
+  raceAddImage(
+    """Input data for `raceAddImage` mutation"""
+    input: RaceAddImageInput!
+  ): RaceAddImagePayload!
+  raceLock(
+    """Input data for `raceLock` mutation"""
+    input: RaceLockInput!
+  ): RaceLockPayload!
+  raceReleaseLock(
+    """Input data for `raceReleaseLock` mutation"""
+    input: RaceReleaseLockInput!
+  ): RaceReleaseLockPayload!
+
+  """
+  ### refreshToken to generate a new login token:
+  
+      *Use this only if `JWT_LONG_RUNNING_REFRESH_TOKEN` is True*
+  
+      using the refresh-token you already got during authorization, and
+      obtain a brand-new token (and possibly a new refresh token if you revoked the previous).
+      This is an alternative to log in when your token expired.
+      
+  """
+  refreshToken(input: RefreshTokenInput!): ObtainJSONWebTokenType!
+  removeEntityLog(input: RemoveEntityLogInput!): Node!
+
+  """
+  ### Suspends a refresh token.
+  
+      *token must exist to be revoked.*
+      
+  """
+  revokeToken(input: RevokeTokenInput!): RevokeRefreshTokenType!
+  unlock(input: NodeInput!): Lockable!
+  updateAbilityScoreIncrease(input: AbilityScoreIncreaseInputPartial!): UpdateAbilityScoreIncreasePayload!
+  updateArtifact(input: ArtifactInputPartial!): UpdateArtifactPayload!
+  updateAssociation(input: AssociationInputPartial!): UpdateAssociationPayload!
+  updateCharacter(input: CharacterInputPartial!): UpdateCharacterPayload!
+  updateExport(input: ExportInputPartial!): UpdateExportPayload!
+  updateFeature(input: FeatureInputPartial!): UpdateFeaturePayload!
+  updateGamelog(input: GameLogInputPartial!): UpdateGamelogPayload!
+  updateItem(input: ItemInputPartial!): UpdateItemPayload!
+  updateLanguage(input: LanguageInputPartial!): UpdateLanguagePayload!
+  updatePlace(input: PlaceInputPartial!): UpdatePlacePayload!
+  updateProficiency(input: ProficiencyInputPartial!): UpdateProficiencyPayload!
+  updateRace(input: RaceInputPartial!): UpdateRacePayload!
+  updateScript(input: ScriptInputPartial!): UpdateScriptPayload!
+  updateSkill(input: SkillInputPartial!): UpdateSkillPayload!
+  updateTrait(input: TraitInputPartial!): UpdateTraitPayload!
+
+  """
+  ### Checks if a token is not expired and correct.
+  
+      *Note that this is not for refresh tokens.*
+      
+  """
+  verifyToken(input: VerifyTokenInput!): VerifyTokenType!
+}
+
+"""An object with a Globally Unique ID"""
+interface Node {
+  """The Globally Unique ID of this object"""
+  id: GlobalID!
+}
+
+"""Input of an object that implements the `Node` interface."""
+input NodeInput {
+  id: GlobalID!
+}
+
+"""Input of an object that implements the `Node` interface."""
+input NodeInputPartial {
+  id: GlobalID
+}
+
+"""Add/remove/set the selected nodes."""
+input NodeListInput {
+  add: [NodeInput!]
+  remove: [NodeInput!]
+  set: [NodeInput!]
+}
+
+"""Add/remove/set the selected nodes."""
+input NodePartialListInput {
+  add: [NodeInputPartial!]
+  remove: [NodeInputPartial!]
+  set: [NodeInputPartial!]
+}
+
+"""
+
+    encapsulates token data, and refresh token data if `JWT_LONG_RUNNING_REFRESH_TOKEN` is on.
+    with an output interface.
+    
+"""
+type ObtainJSONWebTokenType implements OutputInterface {
+  errors: ExpectedError
+  refreshToken: RefreshTokenType
+  success: Boolean!
+  token: TokenType
+  user: UserType
+}
+
+"""Multiple messages returned by an operation."""
+type OperationInfo {
+  """List of messages returned by the operation."""
+  messages: [OperationMessage!]!
+}
+
+"""An error that happened while executing an operation."""
+type OperationMessage {
+  """
+  The field that caused the error, or `null` if it isn't associated with any particular field.
+  """
+  field: String
+
+  """The kind of this message."""
+  kind: OperationMessageKind!
+
+  """The error message."""
+  message: String!
+}
+
+"""The kind of the returned message."""
+enum OperationMessageKind {
+  ERROR
+  INFO
+  PERMISSION
+  VALIDATION
+  WARNING
+}
+
+enum Ordering {
+  ASC
+  DESC
+}
+
+interface OutputInterface {
+  errors: ExpectedError
+  success: Boolean!
+}
+
+"""Information to aid in pagination."""
+type PageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+}
+
+type Place implements Entity & Lockable & Node {
+  aliases(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AliasConnection!
+  associations: [DjangoModelType!]!
+  children(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  commonRaces: [DjangoModelType!]!
+  created: DateTime!
+  description: String
+  exports: [DjangoModelType!]!
+  id: GlobalID!
+  imageIds: [String!]!
+  lockTime: DateTime
+  lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
+  logs(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): GameLogConnection!
+  markdownNotes: String
+  name: String!
+  parent: Place
+  placeType: PlaceType
+  population: Int!
+  relatedArtifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  relatedAssociations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  relatedCharacters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  relatedItems(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
+  relatedPlaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  relatedRaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): RaceConnection!
+  thumbnailId: String
+  updated: DateTime!
+}
+
+"""Input data for `placeAddImage` mutation"""
+input PlaceAddImageInput {
+  id: GlobalID!
+  imageId: String!
+}
+
+union PlaceAddImagePayload = OperationInfo | Place
+
+"""A connection to a list of items."""
+type PlaceConnection {
+  """Contains the nodes in this connection"""
+  edges: [PlaceEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type PlaceEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Place!
+}
+
+input PlaceInput {
+  children: NodeListInput
+  description: String
+  imageIds: [String!]
+  logs: [GlobalID!]
+  markdownNotes: String
+  name: String!
+  parent: NodeInput
+  placeType: PlaceType
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
+  thumbnailId: String
+}
+
+input PlaceInputPartial {
+  children: NodeListInput
+  description: String
+  id: GlobalID!
+  imageIds: [String!]
+  markdownNotes: String
+  name: String
+  parent: NodeInput
+  placeType: PlaceType
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
+  thumbnailId: String
+}
+
+"""Input data for `placeLock` mutation"""
+input PlaceLockInput {
+  id: GlobalID!
+}
+
+union PlaceLockPayload = OperationInfo | Place
+
+"""Input data for `placeReleaseLock` mutation"""
+input PlaceReleaseLockInput {
+  id: GlobalID!
+}
+
+union PlaceReleaseLockPayload = OperationInfo | Place
+
+enum PlaceType {
+  DISTRICT
+  LOCATION
+  MOON
+  PLANET
+  REGION
+  STAR
+  TOWN
+}
+
+type Proficiency implements Node {
+  characters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  description: String!
+  id: GlobalID!
+  name: String!
+  proficiencyType: String!
+}
+
+"""A connection to a list of items."""
+type ProficiencyConnection {
+  """Contains the nodes in this connection"""
+  edges: [ProficiencyEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type ProficiencyEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Proficiency!
+}
+
+input ProficiencyInput {
+  characters: NodePartialListInput
+  description: String
+  name: String!
+  proficiencyType: String
+}
+
+input ProficiencyInputPartial {
+  characters: NodePartialListInput
+  description: String
+  id: GlobalID!
+  name: String
+  proficiencyType: String
+}
+
+type Query {
+  AbilityScoreIncreasesConnectionFiltered(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+    nameStartswith: String!
+  ): AbilityScoreIncreaseConnection!
+  ArtifactsConnectionFiltered(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+    nameStartswith: String!
+  ): ArtifactConnection!
+  CharactersConnectionFiltered(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+    nameStartswith: String!
+  ): CharacterConnection!
+  ExportsConnectionFiltered(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+    nameStartswith: String!
+  ): ExportConnection!
+  FeaturesConnectionFiltered(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+    nameStartswith: String!
+  ): FeatureConnection!
+  ItemsConnectionFiltered(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+    nameStartswith: String!
+  ): ItemConnection!
+  LanguagesConnectionFiltered(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+    nameStartswith: String!
+  ): LanguageConnection!
+  PlacesConnectionFiltered(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+    nameStartswith: String!
+  ): PlaceConnection!
+  ProficiencysConnectionFiltered(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+    nameStartswith: String!
+  ): ProficiencyConnection!
+  RacesConnectionFiltered(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+    nameStartswith: String!
+  ): RaceConnection!
+  ScriptsConnectionFiltered(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+    nameStartswith: String!
+  ): ScriptConnection!
+  SkillsConnectionFiltered(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+    nameStartswith: String!
+  ): SkillConnection!
+  TraitsConnectionFiltered(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+    nameStartswith: String!
+  ): TraitConnection!
+  abilityScoreIncrease(pk: ID!): AbilityScoreIncrease
+  abilityScoreIncreases(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AbilityScoreIncreaseConnection!
+  aiLogSuggestions(id: GlobalID!): GameLogAiSummary!
+  artifact(pk: ID!): Artifact
+  artifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  association(pk: ID!): Association
+  associations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  associationsConnectionFiltered(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+    nameStartswith: String!
+  ): AssociationConnection!
+  character(pk: ID!): Character
+  characters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  consolidatedAiLogSuggestions(id: GlobalID!): CombinedGameLogAiSummary!
+  export(pk: ID!): Export
+  exports(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ExportConnection!
+  feature(pk: ID!): Feature
+  features(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): FeatureConnection!
+  gameLog(pk: ID!): GameLog
+  gameLogs(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+    order: GameLogOrder
+  ): GameLogConnection!
+  item(pk: ID!): Item
+  items(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
+  language(pk: ID!): Language
+  languages(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): LanguageConnection!
+  me: UserType!
+  node(id: GlobalID!): Node
+  place(pk: ID!): Place
+  places(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  proficiencies(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ProficiencyConnection!
+  proficiency(pk: ID!): Proficiency
+
+  """Returns the current user if he is not anonymous."""
+  publicUser: UserType
+  race(pk: ID!): Race
+  races(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): RaceConnection!
+  script(pk: ID!): Script
+  scripts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ScriptConnection!
+  skill(pk: ID!): Skill
+  skills(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): SkillConnection!
+  trait(pk: ID!): Trait
+  traits(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): TraitConnection!
+  user(pk: ID!): User
+  users(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): UserConnection!
+}
+
+type Race implements Entity & Lockable & Node {
+  aliases(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AliasConnection!
+  characters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  created: DateTime!
+  description: String
+  id: GlobalID!
+  imageIds: [String!]!
+  lockTime: DateTime
+  lockUser: User
+
+  """
+  Add this as a resolver on any type that has a lock_user field like this:
+  
+  locked_by_self: bool = gql.field(resolver=locked_by_self)
+  """
+  lockedBySelf: Boolean!
+  logs(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): GameLogConnection!
+  markdownNotes: String
+  name: String!
+  relatedArtifacts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ArtifactConnection!
+  relatedAssociations(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AssociationConnection!
+  relatedCharacters(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): CharacterConnection!
+  relatedItems(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ItemConnection!
+  relatedPlaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PlaceConnection!
+  relatedRaces(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): RaceConnection!
+  thumbnailId: String
+  updated: DateTime!
+}
+
+"""Input data for `raceAddImage` mutation"""
+input RaceAddImageInput {
+  id: GlobalID!
+  imageId: String!
+}
+
+union RaceAddImagePayload = OperationInfo | Race
+
+"""A connection to a list of items."""
+type RaceConnection {
+  """Contains the nodes in this connection"""
+  edges: [RaceEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type RaceEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Race!
+}
+
+input RaceInput {
+  characters: NodeListInput
+  description: String
+  imageIds: [String!]
+  logs: [GlobalID!]
+  markdownNotes: String
+  name: String!
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
+  thumbnailId: String
+}
+
+input RaceInputPartial {
+  characters: NodeListInput
+  description: String
+  id: GlobalID!
+  imageIds: [String!]
+  markdownNotes: String
+  name: String
+  relatedArtifacts: NodePartialListInput
+  relatedAssociations: NodePartialListInput
+  relatedCharacters: NodePartialListInput
+  relatedItems: NodePartialListInput
+  relatedPlaces: NodePartialListInput
+  relatedRaces: NodePartialListInput
+  thumbnailId: String
+}
+
+"""Input data for `raceLock` mutation"""
+input RaceLockInput {
+  id: GlobalID!
+}
+
+union RaceLockPayload = OperationInfo | Race
+
+"""Input data for `raceReleaseLock` mutation"""
+input RaceReleaseLockInput {
+  id: GlobalID!
+}
+
+union RaceReleaseLockPayload = OperationInfo | Race
+
+"""
+If `revoke_refresh_token` is true, revokes to refresh token an creates a new one.
+"""
+input RefreshTokenInput {
+  refreshToken: String!
+
+  """revokes the previous refresh token, and will generate new one."""
+  revokeRefreshToken: Boolean! = false
+}
+
+"""
+
+Refresh token can be used to obtain a new token instead of log in again
+when the token expires.
+
+*This is only used if `JWT_LONG_RUNNING_REFRESH_TOKEN` is set to True.*
+
+"""
+type RefreshTokenType {
+  created: DateTime!
+  expiresAt: DateTime!
+  isExpired: Boolean!
+  revoked: DateTime
+
+  """randomly generated token that is attached to a FK user."""
+  token: String!
+}
+
+input RemoveEntityLogInput {
+  entityId: GlobalID!
+  logId: GlobalID!
+}
+
+type RevokeRefreshTokenType {
+  errors: ExpectedError
+  refreshToken: RefreshTokenType
+  success: Boolean!
+}
+
+input RevokeTokenInput {
+  refreshToken: String!
+}
+
+type Script implements Node {
+  id: GlobalID!
+  languages(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): LanguageConnection!
+  name: String!
+}
+
+"""A connection to a list of items."""
+type ScriptConnection {
+  """Contains the nodes in this connection"""
+  edges: [ScriptEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type ScriptEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Script!
+}
+
+input ScriptInput {
+  languages: NodeListInput
+  name: String!
+}
+
+input ScriptInputPartial {
+  id: GlobalID!
+  languages: NodeListInput
+  name: String
+}
+
+type Skill implements Node {
+  custom: Boolean!
+  description: String!
+  id: GlobalID!
+  name: String!
+  relatedAbility: String!
+}
+
+"""A connection to a list of items."""
+type SkillConnection {
+  """Contains the nodes in this connection"""
+  edges: [SkillEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type SkillEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Skill!
+}
+
+input SkillInput {
+  custom: Boolean
+  description: String
+  name: String!
+  relatedAbility: String!
+}
+
+input SkillInputPartial {
+  custom: Boolean
+  description: String
+  id: GlobalID!
+  name: String
+  relatedAbility: String
+}
+
+"""
+
+the data that was used to create the token.
+
+"""
+type TokenPayloadType {
+  """when the token will be expired"""
+  exp: DateTime!
+
+  """when the token was created"""
+  origIat: DateTime!
+  username: String!
+}
+
+"""
+
+encapsulates the token with the payload that was used to create the token.
+
+"""
+type TokenType {
+  payload: TokenPayloadType!
+
+  """The encoded payload, namely a token."""
+  token: String!
+}
+
+type Trait implements Node {
+  description: String
+  id: GlobalID!
+  name: String!
+}
+
+"""A connection to a list of items."""
+type TraitConnection {
+  """Contains the nodes in this connection"""
+  edges: [TraitEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type TraitEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Trait!
+}
+
+input TraitInput {
+  description: String!
+  name: String!
+}
+
+input TraitInputPartial {
+  description: String
+  id: GlobalID!
+  name: String
+}
+
+union UpdateAbilityScoreIncreasePayload = AbilityScoreIncrease | OperationInfo
+
+union UpdateArtifactPayload = Artifact | OperationInfo
+
+union UpdateAssociationPayload = Association | OperationInfo
+
+union UpdateCharacterPayload = Character | OperationInfo
+
+union UpdateExportPayload = Export | OperationInfo
+
+union UpdateFeaturePayload = Feature | OperationInfo
+
+union UpdateGamelogPayload = GameLog | OperationInfo
+
+union UpdateItemPayload = Item | OperationInfo
+
+union UpdateLanguagePayload = Language | OperationInfo
+
+union UpdatePlacePayload = OperationInfo | Place
+
+union UpdateProficiencyPayload = OperationInfo | Proficiency
+
+union UpdateRacePayload = OperationInfo | Race
+
+union UpdateScriptPayload = OperationInfo | Script
+
+union UpdateSkillPayload = OperationInfo | Skill
+
+union UpdateTraitPayload = OperationInfo | Trait
+
+type User implements Node {
+  dateJoined: DateTime!
+  email: String!
+  firstName: String!
+  id: GlobalID!
+
+  """
+  Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
+  """
+  isActive: Boolean!
+  isDM: Boolean!
+
+  """Designates whether the user can log into this admin site."""
+  isStaff: Boolean!
+  lastActivity: DateTime!
+  lastLogin: DateTime
+  lastName: String!
+
+  """Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."""
+  username: String!
+}
+
+"""A connection to a list of items."""
+type UserConnection {
+  """Contains the nodes in this connection"""
+  edges: [UserEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type UserEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: User!
+}
+
+"""A helper model that handles user account stuff."""
+type UserStatusType {
+  archived: Boolean!
+  verified: Boolean!
+}
+
+"""
+User(id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined, isDM, last_activity)
+"""
+type UserType {
+  archived: Boolean!
+  dateJoined: DateTime!
+  email: String!
+  firstName: String
+  id: ID!
+
+  """
+  Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
+  """
+  isActive: Boolean!
+
+  """Designates whether the user can log into this admin site."""
+  isStaff: Boolean!
+
+  """
+  Designates that this user has all permissions without explicitly assigning them.
+  """
+  isSuperuser: Boolean!
+  lastLogin: DateTime
+  lastName: String
+  logentrySet: [DjangoModelType!]!
+  status: UserStatusType
+
+  """Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."""
+  username: String!
+  verified: Boolean!
+}
+
+input VerifyTokenInput {
+  token: String!
+}
+
+type VerifyTokenType implements OutputInterface {
+  errors: ExpectedError
+  success: Boolean!
+  token: TokenType
+  user: UserType
+}
+
+type WeaponTraits implements Node {
+  attackBonus: Int!
+  id: GlobalID!
+}
+
+input WeaponTraitsInput {
+  attackBonus: Int
+  delete: Boolean = false
+}
