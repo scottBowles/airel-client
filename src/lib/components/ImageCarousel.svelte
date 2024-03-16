@@ -1,25 +1,31 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import cloudinary from '$lib/cloudinary';
+	import { DEFAULT_IMAGE_SRC } from '$lib/constants';
 	import { defaultImage } from '@cloudinary/url-gen/actions/delivery';
 	import { thumbnail } from '@cloudinary/url-gen/actions/resize';
 	import { Splide, SplideSlide, SplideTrack } from '@splidejs/svelte-splide';
 	import '@splidejs/svelte-splide/css';
 
-	export let imageIds: string[];
-	export let alt: string;
+	let { imageIds: initImageIds, alt } = $props<{ imageIds: string[]; alt: string }>();
 
-	let defaultImageSrc = 'dnd:placeholder.jpg';
+	let imageIds = $derived(
+		initImageIds.length > 0 ? [...new Set(initImageIds)] : [DEFAULT_IMAGE_SRC]
+	);
 
 	function getImageSrc(imageId: string): string {
 		const image = cloudinary
 			.image(imageId)
 			.resize(thumbnail().width(320))
-			.delivery(defaultImage(defaultImageSrc));
+			.delivery(defaultImage(DEFAULT_IMAGE_SRC));
 		const src = image.toURL();
 		return src;
 	}
 
-	$: imageIds = imageIds.length > 0 ? [...new Set(imageIds)] : [defaultImageSrc];
+	function stopPropagation(event: Event) {
+		event.stopPropagation();
+	}
 </script>
 
 <Splide
@@ -30,8 +36,10 @@
 	<div
 		class="splide__arrows"
 		class:hidden={imageIds.length < 2}
-		on:click|stopPropagation
-		on:keypress|stopPropagation
+		onclick={stopPropagation}
+		onkeypress={stopPropagation}
+		role="button"
+		tabindex="0"
 	/>
 	<SplideTrack>
 		{#each imageIds as imageId (imageId)}
