@@ -1,0 +1,271 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+  id               Int           @id @default(autoincrement())
+  username         String        @unique
+  email            String        @unique
+  password         String
+  first_name       String?
+  last_name        String?
+  is_active        Boolean       @default(true)
+  is_staff         Boolean       @default(false)
+  is_superuser     Boolean       @default(false)
+  date_joined      DateTime      @default(now())
+  isDM             Boolean       @default(false)
+  last_activity    DateTime      @default(now())
+  gameLogLocks     GameLog[]
+  associationLocks Association[]
+}
+
+model Alias {
+  id              Int           @id @default(autoincrement())
+  name            String
+  isPrimary       Boolean       @default(false)
+  baseAssociation Association[]
+}
+
+model GameLog {
+  id                Int               @id @default(autoincrement())
+  url               String            @unique
+  title             String?
+  googleId          String?           @unique
+  googleCreatedTime DateTime?
+  gameDate          DateTime?
+  brief             String?
+  synopsis          String?
+  summary           String?
+  placesSetIn       Place[]
+  aiLogSuggestions  AiLogSuggestion[]
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  lockUserId        Int?
+  lockUser          User?             @relation(fields: [lockUserId], references: [id])
+  lockTime          DateTime?
+  associations      Association[]
+}
+
+model AiLogSuggestion {
+  id           Int      @id @default(autoincrement())
+  logId        Int
+  log          GameLog  @relation(fields: [logId], references: [id])
+  title        String?
+  brief        String?
+  synopsis     String?
+  associations String[]
+  characters   String[]
+  items        String[]
+  places       String[]
+  races        String[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Association {
+  id                    Int                @id @default(autoincrement())
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+  name                  String
+  description           String?
+  imageIds              String[]           @default([])
+  thumbnailId           String?
+  logs                  GameLog[]
+  aliases               Alias[]
+  lockUserId            Int?
+  lockUser              User?              @relation(fields: [lockUserId], references: [id])
+  lockTime              DateTime?
+  places                PlaceAssociation[]
+  characters            Character[]        @relation("CharacterAssociation")
+  relatedAssociations   Association[]      @relation("RelatedAssociation")
+  associationsRelatedTo Association[]      @relation("RelatedAssociation")
+  relatedArtifacts      Artifact[]         @relation("RelatedArtifactAssociation")
+  relatedCharacters     Character[]        @relation("RelatedAssociationCharacter")
+  relatedItems          Item[]             @relation("RelatedAssociationItem")
+  relatedPlaces         Place[]            @relation("RelatedAssociationPlace")
+  relatedRaces          Race[]             @relation("RelatedAssociationRace")
+}
+
+model Character {
+  id                  Int           @id @default(autoincrement())
+  name                String
+  raceId              Int?
+  race                Race?         @relation(fields: [raceId], references: [id])
+  description         String?
+  featuresAndTraits   Feature[]     @relation("CharacterFeature")
+  proficiencies       Proficiency[]
+  associations        Association[] @relation("CharacterAssociation")
+  relatedArtifacts    Artifact[]    @relation("RelatedArtifactCharacter")
+  relatedAssociations Association[] @relation("RelatedAssociationCharacter")
+  relatedCharacters   Character[]   @relation("RelatedCharacter")
+  charactersRelatedTo Character[]   @relation("RelatedCharacter")
+  relatedItems        Item[]        @relation("RelatedCharacterItem")
+  relatedPlaces       Place[]       @relation("RelatedCharacterPlace")
+  relatedRaces        Race[]        @relation("RelatedCharacterRace")
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+}
+
+model Feature {
+  id          Int         @id @default(autoincrement())
+  name        String      @unique
+  description String
+  characters  Character[] @relation("CharacterFeature")
+}
+
+model Proficiency {
+  id              Int         @id @default(autoincrement())
+  name            String
+  proficiencyType String
+  description     String?
+  characters      Character[]
+}
+
+model Item {
+  id                  Int              @id @default(autoincrement())
+  relatedArtifacts    Artifact[]       @relation("RelatedArtifactItem")
+  relatedAssociations Association[]    @relation("RelatedAssociationItem")
+  relatedCharacters   Character[]      @relation("RelatedCharacterItem")
+  relatedItems        Item[]           @relation("RelatedItem")
+  itemsRelatedTo      Item[]           @relation("RelatedItem")
+  relatedPlaces       Place[]          @relation("RelatedItemPlace")
+  relatedRaces        Race[]           @relation("RelatedItemRace")
+  artifacts           Artifact[]       @relation("ArtifactItem")
+  armor               ArmorTraits?
+  equipment           EquipmentTraits?
+  weapon              WeaponTraits?
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+}
+
+model Artifact {
+  id                  Int           @id @default(autoincrement())
+  items               Item[]        @relation("ArtifactItem")
+  notes               String?
+  relatedArtifacts    Artifact[]    @relation("RelatedArtifact")
+  artifactsRelatedTo  Artifact[]    @relation("RelatedArtifact")
+  relatedAssociations Association[] @relation("RelatedArtifactAssociation")
+  relatedCharacters   Character[]   @relation("RelatedArtifactCharacter")
+  relatedItems        Item[]        @relation("RelatedArtifactItem")
+  relatedPlaces       Place[]       @relation("RelatedArtifactPlace")
+  relatedRaces        Race[]        @relation("RelatedArtifactRace")
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+}
+
+model ArmorTraits {
+  id        Int      @id @default(autoincrement())
+  acBonus   Int      @default(0)
+  itemId    Int      @unique
+  item      Item     @relation(fields: [itemId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model WeaponTraits {
+  id          Int      @id @default(autoincrement())
+  attackBonus Int      @default(0)
+  itemId      Int      @unique
+  item        Item     @relation(fields: [itemId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model EquipmentTraits {
+  id               Int      @id @default(autoincrement())
+  briefDescription String?
+  itemId           Int      @unique
+  item             Item     @relation(fields: [itemId], references: [id])
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Export {
+  id        Int           @id @default(autoincrement())
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  places    PlaceExport[]
+}
+
+model PlaceExport {
+  id           Int      @id @default(autoincrement())
+  placeId      Int
+  place        Place    @relation(fields: [placeId], references: [id])
+  exportId     Int
+  export       Export   @relation(fields: [exportId], references: [id])
+  significance Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model PlaceRace {
+  id        Int      @id @default(autoincrement())
+  raceId    Int
+  race      Race     @relation(fields: [raceId], references: [id])
+  placeId   Int
+  place     Place    @relation(fields: [placeId], references: [id])
+  percent   Float
+  notes     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PlaceAssociation {
+  id            Int         @id @default(autoincrement())
+  placeId       Int
+  place         Place       @relation(fields: [placeId], references: [id])
+  associationId Int
+  association   Association @relation(fields: [associationId], references: [id])
+  notes         String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model Place {
+  id                  Int                @id @default(autoincrement())
+  placeType           String?
+  parentId            Int?
+  parent              Place?             @relation("ParentChild", fields: [parentId], references: [id])
+  population          Int                @default(0)
+  exports             PlaceExport[]
+  commonRaces         PlaceRace[]
+  associations        PlaceAssociation[]
+  relatedArtifacts    Artifact[]         @relation("RelatedArtifactPlace")
+  relatedAssociations Association[]      @relation("RelatedAssociationPlace")
+  relatedCharacters   Character[]        @relation("RelatedCharacterPlace")
+  relatedItems        Item[]             @relation("RelatedItemPlace")
+  relatedPlaces       Place[]            @relation("RelatedPlace")
+  placesRelatedTo     Place[]            @relation("RelatedPlace")
+  relatedRaces        Race[]             @relation("RelatedPlaceRace")
+  children            Place[]            @relation("ParentChild")
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  logsSetIn           GameLog[]
+}
+
+model Race {
+  id                  Int           @id @default(autoincrement())
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+  characters          Character[]
+  placesCommonIn      PlaceRace[]
+  relatedArtifacts    Artifact[]    @relation("RelatedArtifactRace")
+  relatedAssociations Association[] @relation("RelatedAssociationRace")
+  relatedCharacters   Character[]   @relation("RelatedCharacterRace")
+  relatedItems        Item[]        @relation("RelatedItemRace")
+  relatedPlaces       Place[]       @relation("RelatedPlaceRace")
+  relatedRaces        Race[]        @relation("RelatedRace")
+  racesRelatedTo      Race[]        @relation("RelatedRace")
+}
