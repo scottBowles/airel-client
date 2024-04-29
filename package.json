@@ -33,7 +33,7 @@
         "daisyui": "^2.52.0",
         "eslint": "^8.56.0",
         "eslint-config-prettier": "^8.10.0",
-        "eslint-plugin-svelte": "^2.35.1",
+        "eslint-plugin-svelte": "^2.38.0",
         "graphql": "^16.8.1",
         "graphql-relay": "^0.10.0",
         "houdini": "^1.2.36",
