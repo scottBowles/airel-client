@@ -11,7 +11,6 @@
 	import { getContext } from 'svelte';
 
 	let theme = getContext<ThemeState>('theme');
-	$inspect({ theme });
 	const showAlgoliaSearch = getContext<ShowAlgoliaSearch>('showAlgoliaSearch');
 
 	// let { data } = $props();
