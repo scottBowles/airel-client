@@ -40,7 +40,7 @@
 		onkeypress={stopPropagation}
 		role="button"
 		tabindex="0"
-	/>
+	></div>
 	<SplideTrack>
 		{#each imageIds as imageId (imageId)}
 			{@const src = getImageSrc(imageId)}

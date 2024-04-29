@@ -123,7 +123,7 @@
 	}
 </script>
 
-<div id="autocomplete" use:algoliaInit />
+<div id="autocomplete" use:algoliaInit></div>
 
 <style>
 	:global(.aa-Panel) {
