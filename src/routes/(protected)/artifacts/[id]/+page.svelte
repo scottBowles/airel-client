@@ -7,7 +7,7 @@
 	import ArtifactDetail from './ArtifactDetail.svelte';
 	import ArtifactEdit from './ArtifactEdit.svelte';
 
-	let { data } = $props<{ data: PageData }>();
+	let { data }: { data: PageData } = $props();
 
 	let { Artifact } = $derived(data);
 	let artifact = $derived($Artifact.data?.artifact);

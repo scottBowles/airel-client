@@ -11,11 +11,11 @@
 			const id = fromGlobalId(entity.id).id;
 			return `/${entityName}/${id}`;
 		}
-	} = $props<{
+	}: {
 		name: string;
 		entities: { id: string; name: string }[];
 		getUrl?: (entity: { id: string; name: string }) => string;
-	}>();
+	} = $props();
 </script>
 
 <div class="mb-3">

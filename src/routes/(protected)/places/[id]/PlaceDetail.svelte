@@ -8,7 +8,7 @@
 	import Breadcrumbs from '../Breadcrumbs.svelte';
 	import { getChildrenName } from '../utils';
 
-	let { place } = $props<{ place: PlaceDetailFields }>();
+	let { place }: { place: PlaceDetailFields } = $props();
 
 	let data = $derived(
 		fragment(

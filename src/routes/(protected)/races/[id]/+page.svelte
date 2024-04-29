@@ -7,7 +7,7 @@
 	import RaceDetail from './RaceDetail.svelte';
 	import RaceEdit from './RaceEdit.svelte';
 
-	let { data } = $props<{ data: PageData }>();
+	let { data }: { data: PageData } = $props();
 
 	let { Race } = $derived(data);
 	let race = $derived($Race.data?.race);

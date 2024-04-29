@@ -4,7 +4,7 @@
 	import { BasicProperty, LayoutBase } from '$lib/components/DetailPage';
 	import { capitalize } from '$lib/utils';
 
-	let { entityName } = $props<{ entityName: string }>();
+	let { entityName }: { entityName: string } = $props();
 </script>
 
 <LayoutBase>

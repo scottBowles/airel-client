@@ -8,7 +8,7 @@
 	import { Splide, SplideSlide, SplideTrack } from '@splidejs/svelte-splide';
 	import '@splidejs/svelte-splide/css';
 
-	let { imageIds: initImageIds, alt } = $props<{ imageIds: string[]; alt: string }>();
+	let { imageIds: initImageIds, alt }: { imageIds: string[]; alt: string } = $props();
 
 	let imageIds = $derived(
 		initImageIds.length > 0 ? [...new Set(initImageIds)] : [DEFAULT_IMAGE_SRC]

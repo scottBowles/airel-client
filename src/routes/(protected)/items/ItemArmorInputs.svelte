@@ -1,7 +1,7 @@
 <svelte:options runes={true} />
 
 <script lang="ts">
-	let { armor = undefined } = $props<{ armor: { acBonus: number } | null }>();
+	let { armor = undefined }: { armor: { acBonus: number } | null } = $props();
 
 	const AC_BONUS_ID = '+armor.acBonus';
 </script>

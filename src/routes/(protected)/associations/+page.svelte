@@ -10,7 +10,7 @@
 	import { fromGlobalId } from '$lib/utils';
 	import { page } from '$app/stores';
 
-	let { data } = $props<{ data: PageData }>();
+	let { data }: { data: PageData } = $props();
 
 	let { me } = $derived($page.data);
 	let { Associations } = $derived(data);

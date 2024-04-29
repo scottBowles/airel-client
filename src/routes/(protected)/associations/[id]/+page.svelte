@@ -7,7 +7,7 @@
 	import AssociationDetail from './AssociationDetail.svelte';
 	import AssociationEdit from './AssociationEdit.svelte';
 
-	let { data } = $props<{ data: PageData }>();
+	let { data }: { data: PageData } = $props();
 
 	let { Association } = $derived(data);
 	let association = $derived($Association.data?.association);

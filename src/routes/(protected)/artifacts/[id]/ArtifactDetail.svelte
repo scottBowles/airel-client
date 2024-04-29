@@ -6,7 +6,7 @@
 	import ItemListDisplay from '$lib/components/ItemListDisplay.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 
-	let { artifact } = $props<{ artifact: ArtifactDetailFields }>();
+	let { artifact }: { artifact: ArtifactDetailFields } = $props();
 
 	let data = $derived(
 		fragment(

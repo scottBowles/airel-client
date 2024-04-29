@@ -4,7 +4,17 @@
 	import { getThumbnailUrl } from '$lib/cloudinary';
 	import { DEFAULT_IMAGE_SRC } from '$lib/constants';
 
-	let { thumbnailId = DEFAULT_IMAGE_SRC, width = 75, height = 75, radius = 0 } = $props();
+	let {
+		thumbnailId = DEFAULT_IMAGE_SRC,
+		width = 75,
+		height = 75,
+		radius = 0
+	}: {
+		thumbnailId?: string;
+		width?: number;
+		height?: number;
+		radius?: number;
+	} = $props();
 
 	let src = $derived(
 		getThumbnailUrl(thumbnailId ?? DEFAULT_IMAGE_SRC, {

@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	import { BasicProperty, LayoutBase } from '$lib/components/DetailPage';
-	let { errors } = $props<{ errors: { message: string }[] }>();
+	let { errors }: { errors: { message: string }[] } = $props();
 </script>
 
 <LayoutBase>

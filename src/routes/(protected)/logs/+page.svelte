@@ -10,7 +10,7 @@
 	import InfiniteLoading, { type InfiniteEvent } from 'svelte-infinite-loading';
 	import Sticky from '$lib/components/Sticky.svelte';
 
-	let { data } = $props<{ data: PageData }>();
+	let { data }: { data: PageData } = $props();
 
 	let { me } = $derived($page.data);
 	let { GameLogs } = $derived(data);
@@ -18,15 +18,18 @@
 		$GameLogs?.data?.gameLogs?.edges?.map(({ node }) => node).sort(logByGameDate) || []
 	);
 	let logsGroupedWithPlanet = $derived(
-		logs.reduce((acc, log, i, arr) => {
-			const location = planetSetIn(log);
-			const lastLocation = planetSetIn(arr[i - 1]);
-			if (i === 0 || location !== lastLocation) {
-				acc.push({ location, logs: [] });
-			}
-			acc[acc.length - 1].logs.push(log);
-			return acc;
-		}, [] as { location: string | undefined; logs: (typeof logs)[number][] }[])
+		logs.reduce(
+			(acc, log, i, arr) => {
+				const location = planetSetIn(log);
+				const lastLocation = planetSetIn(arr[i - 1]);
+				if (i === 0 || location !== lastLocation) {
+					acc.push({ location, logs: [] });
+				}
+				acc[acc.length - 1].logs.push(log);
+				return acc;
+			},
+			[] as { location: string | undefined; logs: (typeof logs)[number][] }[]
+		)
 	);
 
 	function planetSetIn(log: (typeof logs)[number] | undefined) {
@@ -113,7 +116,7 @@
 																	month: 'short',
 																	day: 'numeric'
 																}
-														  )
+															)
 														: '(date unknown)'}
 												</h6>
 											</div>

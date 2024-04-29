@@ -4,7 +4,7 @@
 	import { fragment, graphql, type EntityListFields } from '$houdini';
 	import Thumbnail from '$lib/components/Thumbnail.svelte';
 
-	let { href, entity } = $props<{ href: string; entity: EntityListFields }>();
+	let { href, entity }: { href: string; entity: EntityListFields } = $props();
 
 	let data = $derived(
 		fragment(

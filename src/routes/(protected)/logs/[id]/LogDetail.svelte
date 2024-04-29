@@ -11,7 +11,7 @@
 
 	const lockForEditMutation = new LockStore();
 
-	let { log } = $props<{ log: LogDetailFields }>();
+	let { log }: { log: LogDetailFields } = $props();
 
 	let { me } = $derived($page.data);
 	let data = $derived(

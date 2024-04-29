@@ -4,7 +4,7 @@
 	import { fragment, graphql, type RaceDetailFields } from '$houdini';
 	import { LayoutDisplay } from '$lib/components/DetailPage';
 
-	let { race } = $props<{ race: RaceDetailFields }>();
+	let { race }: { race: RaceDetailFields } = $props();
 
 	let data = $derived(
 		fragment(

@@ -7,7 +7,7 @@
 	import ItemEquipmentBlock from '../ItemEquipmentBlock.svelte';
 	import ItemWeaponBlock from '../ItemWeaponBlock.svelte';
 
-	let { item } = $props<{ item: ItemDetailFields }>();
+	let { item }: { item: ItemDetailFields } = $props();
 
 	let data = $derived(
 		fragment(

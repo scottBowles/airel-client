@@ -6,7 +6,7 @@
 	import ItemTypeIcons from './ItemTypeIcons.svelte';
 	import { fragment, graphql, type ItemListFields } from '$houdini';
 
-	let { item } = $props<{ item: ItemListFields }>();
+	let { item }: { item: ItemListFields } = $props();
 
 	let data = $derived(
 		fragment(

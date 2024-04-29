@@ -4,7 +4,7 @@
 	import { fragment, graphql, type PlaceBreadcrumbFields } from '$houdini';
 	import { fromGlobalId } from '$lib/utils';
 
-	let { place } = $props<{ place: PlaceBreadcrumbFields }>();
+	let { place }: { place: PlaceBreadcrumbFields } = $props();
 
 	let data = $derived(
 		fragment(

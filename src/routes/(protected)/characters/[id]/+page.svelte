@@ -7,7 +7,7 @@
 	import CharacterDetail from './CharacterDetail.svelte';
 	import CharacterEdit from './CharacterEdit.svelte';
 
-	let { data } = $props<{ data: PageData }>();
+	let { data }: { data: PageData } = $props();
 
 	let { Character } = $derived(data);
 	let character = $derived($Character.data?.character);

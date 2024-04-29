@@ -7,7 +7,7 @@
 	import ItemDetail from './ItemDetail.svelte';
 	import ItemEdit from './ItemEdit.svelte';
 
-	let { data } = $props<{ data: PageData }>();
+	let { data }: { data: PageData } = $props();
 
 	let { Item } = $derived(data);
 	let item = $derived($Item.data?.item);

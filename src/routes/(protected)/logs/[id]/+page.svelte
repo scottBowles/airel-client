@@ -7,7 +7,7 @@
 	import LogDetail from './LogDetail.svelte';
 	import LogEdit from './LogEdit.svelte';
 
-	let { data } = $props<{ data: PageData }>();
+	let { data }: { data: PageData } = $props();
 	let { GameLog } = $derived(data);
 	let log = $derived($GameLog.data?.gameLog);
 

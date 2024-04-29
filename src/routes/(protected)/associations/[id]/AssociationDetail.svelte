@@ -6,7 +6,7 @@
 	import { LayoutDisplay } from '$lib/components/DetailPage';
 	import Spacer from '$lib/components/Spacer.svelte';
 
-	let { association } = $props<{ association: AssociationDetailFields }>();
+	let { association }: { association: AssociationDetailFields } = $props();
 
 	let data = $derived(
 		fragment(

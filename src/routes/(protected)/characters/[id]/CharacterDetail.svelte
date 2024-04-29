@@ -6,7 +6,7 @@
 	import { LayoutDisplay } from '$lib/components/DetailPage';
 	import Spacer from '$lib/components/Spacer.svelte';
 
-	let { character } = $props<{ character: CharacterDetailFields }>();
+	let { character }: { character: CharacterDetailFields } = $props();
 
 	let data = $derived(
 		fragment(

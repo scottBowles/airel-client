@@ -4,7 +4,7 @@
 	import { fragment, graphql, type ItemWeaponBlock } from '$houdini';
 	import Spacer from '$lib/components/Spacer.svelte';
 
-	let { item } = $props<{ item: ItemWeaponBlock }>();
+	let { item }: { item: ItemWeaponBlock } = $props();
 
 	let data = $derived(
 		fragment(

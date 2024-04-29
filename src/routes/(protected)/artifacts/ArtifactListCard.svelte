@@ -6,7 +6,7 @@
 	import ItemTypeIcons from '$lib/components/ItemTypeIcons.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 
-	let { artifact } = $props<{ artifact: ArtifactListCardFields }>();
+	let { artifact }: { artifact: ArtifactListCardFields } = $props();
 
 	let data = $derived(
 		fragment(

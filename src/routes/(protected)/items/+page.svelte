@@ -9,7 +9,7 @@
 	import ItemListDisplay from '$lib/components/ItemListDisplay.svelte';
 	import { alphabeticallyBy } from '$lib/utils';
 
-	let { data } = $props<{ data: PageData }>();
+	let { data }: { data: PageData } = $props();
 	let { Items, me } = $derived(data);
 	let items = $derived(
 		$Items?.data?.items?.edges?.map((edge) => edge.node).sort(alphabeticallyBy('name')) || []
