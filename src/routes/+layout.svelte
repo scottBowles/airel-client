@@ -5,13 +5,14 @@
 	import { themeChange } from 'theme-change';
 
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
-	import { initShowAlgoliaSearchStore, initThemeStore } from '$lib/stores';
+	import { initShowAlgoliaSearchStore } from '$lib/stores';
 	import '../app.css';
 	import { browser } from '$app/environment';
+	import { ThemeState } from '$lib/stores';
 
 	// Initialize stores
 	const userPrefersLight = browser && window.matchMedia('(prefers-color-scheme: light)').matches;
-	const theme = initThemeStore(userPrefersLight ? 'light' : 'dark');
+	const theme = new ThemeState(userPrefersLight ? 'light' : 'dark');
 	const showAlgoliaSearch = initShowAlgoliaSearchStore();
 
 	// Add stores to context

@@ -1,18 +1,21 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { navigating } from '$app/stores';
 	import Algolia from '$lib/components/Algolia.svelte';
 	import { themes } from '$lib/constants';
-	import type { Theme } from '$lib/stores';
+	import { ThemeState } from '$lib/stores';
 	import { capitalize } from '$lib/utils';
 	import { getContext } from 'svelte';
 	import SearchButton from '../SearchButton.svelte';
 	import NavLinks from './NavLinks.svelte';
 	import Title from './Title.svelte';
 
-	$: theme = getContext<Theme>('theme');
+	let theme = getContext<ThemeState>('theme');
 
-	let innerWidth: number;
-	let inputToggle: HTMLInputElement;
+	let inputToggle = $state<HTMLInputElement | null>(null);
+	let innerWidth = $state(0);
+	let drawerShouldClose = $derived(innerWidth >= 1024);
 
 	function closeDrawer() {
 		if (inputToggle) {
@@ -20,9 +23,10 @@
 		}
 	}
 
-	$: drawerShouldClose = innerWidth >= 1024;
-	$: if (drawerShouldClose) closeDrawer();
-	$: if ($navigating) closeDrawer();
+	$effect(() => {
+		if (drawerShouldClose) closeDrawer();
+		if ($navigating) closeDrawer();
+	});
 </script>
 
 <svelte:window bind:innerWidth />
@@ -59,12 +63,12 @@
 
 			<select
 				data-choose-theme
-				bind:value={$theme}
+				bind:value={theme.value}
 				class="select select-sm select-bordered hidden xl:block"
 			>
 				<option value="">Select a theme</option>
-				{#each themes as theme}
-					<option value={theme}>{capitalize(theme)}</option>
+				{#each themes as themeOption}
+					<option value={themeOption}>{capitalize(themeOption)}</option>
 				{/each}
 			</select>
 
@@ -79,7 +83,7 @@
 		<slot />
 	</div>
 	<div class="drawer-side">
-		<label for="mobile-drawer" class="drawer-overlay" />
+		<label for="mobile-drawer" class="drawer-overlay"></label>
 		<div class="menu p-4 overflow-y-auto w-80 bg-base-100 gap-1">
 			<!-- Sidebar content here -->
 			<div class="text-4xl text-center font-bold mt-4 mb-8">Airel</div>

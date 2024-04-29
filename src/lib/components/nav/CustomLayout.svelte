@@ -3,13 +3,12 @@
 	import { page } from '$app/stores';
 	import { algoliaCloseOnNavigation, algoliaEventListeners } from '$lib/actions';
 	import { themes } from '$lib/constants';
-	import type { Theme } from '$lib/stores';
-	import type { ShowAlgoliaSearch } from '$lib/stores';
+	import { type ShowAlgoliaSearch, ThemeState } from '$lib/stores';
 	import { capitalize, post } from '$lib/utils';
 	import { getContext } from 'svelte';
 
 	const showAlgoliaSearch = getContext<ShowAlgoliaSearch>('showAlgoliaSearch');
-	const theme = getContext<Theme>('theme');
+	let theme = getContext<ThemeState>('theme');
 
 	const links = [
 		{
@@ -65,7 +64,7 @@
 <div class="w-screen h-screen flex bg-black">
 	<div class="h-screen w-40 pl-4 py-4">
 		<div class="h-full w-full bg-yellow-200 rounded-l-[84px] flex flex-col">
-			<div class="h-[84px] w-full" />
+			<div class="h-[84px] w-full"></div>
 			<ul class="w-full grow bg-black flex flex-col justify-center gap-1">
 				<div class="grow bg-yellow-200 flex items-center justify-end px-4">
 					<h1 class="text-black flex items-center justify-end">AIREL</h1>
@@ -86,6 +85,8 @@
 							on:click={logout}
 							on:keypress={logout}
 							class="text-black flex items-center justify-end"
+							role="button"
+							tabindex="0"
 						>
 							LOGOUT
 						</span>
@@ -99,18 +100,18 @@
 					{/if}
 				</button>
 			</ul>
-			<div class="h-[84px] w-full" />
+			<div class="h-[84px] w-full"></div>
 		</div>
 	</div>
 	<div class="h-screen w-max flex-1 pr-4 py-4 flex flex-col">
 		<div class="bg-yellow-200 w-full rounded-r-full h-14 flex overflow-hidden">
-			<div class="bg-yellow-200 grow-[4] min-w-[68px] h-full" />
-			<div class="bg-black w-1 h-full" />
-			<div class="bg-yellow-200 grow-[12] min-w-4 h-full" />
+			<div class="bg-yellow-200 grow-[4] min-w-[68px] h-full"></div>
+			<div class="bg-black w-1 h-full"></div>
+			<div class="bg-yellow-200 grow-[12] min-w-4 h-full"></div>
 			<div class="bg-black text-4xl px-2 flex items-center text-orange-400">
 				AIREL &bull; BETWEEN TWO SUNS
 			</div>
-			<div class="bg-yellow-200 grow-[2] min-w-[48px] h-full" />
+			<div class="bg-yellow-200 grow-[2] min-w-[48px] h-full"></div>
 		</div>
 		<div class="flex-1 bg-yellow-200 overflow-hidden">
 			<div class="bg-black h-full w-full rounded-l-[36px] overflow-y-scroll p-8">
@@ -118,11 +119,13 @@
 			</div>
 		</div>
 		<div class="bg-yellow-200 w-full rounded-r-full h-14 flex overflow-hidden">
-			<div class="bg-yellow-200 grow-[2] min-w-[54px] h-full" />
+			<div class="bg-yellow-200 grow-[2] min-w-[54px] h-full"></div>
 			<div
 				class="pure-yellow border-x-4 border-x-black text-xl px-2 flex items-center text-black"
 				on:click={showAlgoliaSearch.open}
 				on:keypress={showAlgoliaSearch.open}
+				role="button"
+				tabindex="0"
 			>
 				SEARCH CTRL + K
 			</div>
@@ -130,19 +133,19 @@
 				<select
 					data-choose-theme
 					class="select select-sm select-ghost select-bordered hidden lg:block"
-					bind:value={$theme}
+					bind:value={theme.value}
 				>
 					<option value="">Select a theme</option>
-					{#each themes as theme}
-						<option value={theme}>{capitalize(theme)}</option>
+					{#each themes as themeOption}
+						<option value={themeOption}>{capitalize(themeOption)}</option>
 					{/each}
 				</select>
 			</div>
-			<div class="bg-yellow-200 grow-[6] min-w-4 h-full" />
+			<div class="bg-yellow-200 grow-[6] min-w-4 h-full"></div>
 			<div class="bg-blue-300 text-3xl px-2 flex items-center text-black border-x-4 border-x-black">
 				ASB &bullet; DESCONNEGUT
 			</div>
-			<div class="bg-yellow-200 grow-[2] min-w-[48px] h-full" />
+			<div class="bg-yellow-200 grow-[2] min-w-[48px] h-full"></div>
 		</div>
 	</div>
 </div>
