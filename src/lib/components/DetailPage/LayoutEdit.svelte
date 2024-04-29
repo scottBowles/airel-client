@@ -211,7 +211,7 @@
 			name="description"
 			value={description}
 			class="textarea textarea-bordered"
-		/>
+		></textarea>
 	</div>
 
 	<!-- PROPERTIES -->

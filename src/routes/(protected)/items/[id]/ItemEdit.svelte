@@ -47,7 +47,7 @@
 <form method="POST" on:submit|preventDefault={handleSubmit}>
 	<LayoutEdit entity={$data}>
 		<svelte:fragment slot="properties">
-			<div class="spacer" />
+			<div class="spacer"></div>
 			<div class="stat-block-container">
 				<!-- ARMOR STAT BLOCK -->
 				<div class="stat-block">

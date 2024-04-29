@@ -8,11 +8,11 @@
 </script>
 
 <h3 class="text-xl font-bold">{name}</h3>
-<div class="spacer-sm" />
+<div class="spacer-sm"></div>
 <slot>
 	<p>{value || ''}</p>
 </slot>
-<div class="spacer" />
+<div class="spacer"></div>
 
 <style>
 	.spacer {

@@ -14,7 +14,7 @@
 	let size = $derived(sizes.find(([size, name]) => size)?.[1] || 'md');
 </script>
 
-<div class={size} />
+<div class={size}></div>
 
 <style>
 	.xs {

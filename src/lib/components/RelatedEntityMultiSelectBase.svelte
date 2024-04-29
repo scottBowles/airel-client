@@ -32,7 +32,7 @@
 					? {
 							value: option.node.id,
 							label: option.node.name
-					  }
+						}
 					: null;
 			})
 			.filter(Boolean);

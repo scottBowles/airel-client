@@ -70,7 +70,7 @@
 <div class="editor" bind:this={node} on:text-change={handleTextChange}>
 	{@html init}
 </div>
-<textarea name="markdownNotes" bind:value={html} hidden />
+<textarea name="markdownNotes" bind:value={html} hidden></textarea>
 
 <style>
 	@import 'https://cdn.quilljs.com/1.3.6/quill.snow.css';

@@ -111,7 +111,8 @@
 		<label for="description-input" class="label">
 			<span class="label-text">Description</span>
 		</label>
-		<textarea name="description" id="description-input" class="textarea textarea-bordered w-full" />
+		<textarea name="description" id="description-input" class="textarea textarea-bordered w-full"
+		></textarea>
 	</div>
 
 	<!-- PROPERTIES -->

@@ -45,7 +45,7 @@
 					id="ai-suggestion-json"
 					name="aiSuggestionJson"
 					class="textarea textarea-bordered w-full"
-				/>
+				></textarea>
 			</div>
 
 			<div class="modal-action">
