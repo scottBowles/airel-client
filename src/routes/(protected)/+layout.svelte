@@ -26,10 +26,8 @@
 <main>
 	<!-- <AllDrawers><slot /></AllDrawers> -->
 	{#if theme.value === 'trek'}
-		{theme.value}
 		<CustomLayout><slot /></CustomLayout>
 	{:else}
-		{theme.value}
 		<NavBar><slot /></NavBar>
 	{/if}
 
