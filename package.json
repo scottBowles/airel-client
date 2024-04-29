@@ -10,7 +10,7 @@
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
         "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
         "lint": "prettier --plugin-search-dir . --check . && eslint .",
-        "format": "prettier --plugin-search-dir . --write ."
+        "format": "prettier --write ."
     },
     "devDependencies": {
         "@algolia/autocomplete-js": "^1.15.0",
@@ -41,8 +41,8 @@
         "jwt-decode": "^3.1.2",
         "parse-nested-form-data": "^1.0.0",
         "postcss": "^8.4.33",
-        "prettier": "^2.8.8",
-        "prettier-plugin-svelte": "^2.10.1",
+        "prettier": "^3.2.5",
+        "prettier-plugin-svelte": "^3.2.3",
         "quill": "^1.3.7",
         "ramda": "^0.29.1",
         "svelte": "5.0.0-next.115",
