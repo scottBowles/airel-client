@@ -284,7 +284,7 @@
 						class="textarea textarea-bordered w-full"
 						value={brief}
 						required
-					/>
+					></textarea>
 				</div>
 				<div class="form-control">
 					<label for="synopsis" class="label">
@@ -297,7 +297,7 @@
 						rows="6"
 						value={synopsis}
 						required
-					/>
+					></textarea>
 				</div>
 				<div class="max-w-xs">
 					<RelatedPlaceMultiSelect
