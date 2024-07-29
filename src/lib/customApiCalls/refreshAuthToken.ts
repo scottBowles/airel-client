@@ -2,6 +2,7 @@ import api from './api';
 import type { JwtPayload } from '$lib/types';
 
 const refreshAuthToken = async (refresh_token: string) => {
+	console.log('start refreshAuthToken with refresh_token: ', refresh_token);
 	const refreshResponse = await api({
 		payload: {
 			query: `
@@ -38,6 +39,8 @@ const refreshAuthToken = async (refresh_token: string) => {
 			};
 		};
 	};
+
+	console.log('refreshAuthToken response: ', json);
 
 	return json.data.refreshToken;
 };
