@@ -1,3 +1,5 @@
+import { PUBLIC_GRAPHQL_URL } from '$env/static/public';
+
 type Input = {
 	payload:
 		| string
@@ -15,7 +17,7 @@ type Input = {
  * exceptions
  */
 async function api({ payload, token, opts }: Input): Promise<Response> {
-	return fetch(import.meta.env.PUBLIC_GRAPHQL_URL, {
+	return fetch(PUBLIC_GRAPHQL_URL, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
