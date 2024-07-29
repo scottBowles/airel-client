@@ -3,6 +3,7 @@ import type { JwtPayload } from '$lib/types';
 
 const refreshAuthToken = async (refresh_token: string) => {
 	console.log('start refreshAuthToken with refresh_token: ', refresh_token);
+	console.log('api url: ', import.meta.env.PUBLIC_GRAPHQL_URL);
 	const refreshResponse = await api({
 		payload: {
 			query: `

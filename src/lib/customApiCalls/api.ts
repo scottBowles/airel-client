@@ -1,5 +1,3 @@
-import settings from '$lib/settings';
-
 type Input = {
 	payload:
 		| string
@@ -17,7 +15,7 @@ type Input = {
  * exceptions
  */
 async function api({ payload, token, opts }: Input): Promise<Response> {
-	return fetch(settings.API_PATH, {
+	return fetch(import.meta.env.PUBLIC_GRAPHQL_URL, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
