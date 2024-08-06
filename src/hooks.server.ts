@@ -8,6 +8,7 @@ import refreshAuthToken from '$lib/customApiCalls/refreshAuthToken';
 import { PUBLIC_GRAPHQL_URL } from '$env/static/public';
 
 const populateTokensToLocals = (async ({ event, resolve }) => {
+	console.log(1);
 	const authToken = event.cookies.get('token');
 	const refreshToken = event.cookies.get('refresh_token');
 
@@ -18,6 +19,7 @@ const populateTokensToLocals = (async ({ event, resolve }) => {
 }) satisfies Handle;
 
 const populateUserToLocals = (async ({ event, resolve }) => {
+	console.log(2);
 	console.log('PUBLIC_GRAPHQL_URL', PUBLIC_GRAPHQL_URL);
 	event.locals.user = undefined;
 	event.locals.token = event.cookies.get('token');
@@ -52,6 +54,7 @@ const populateUserToLocals = (async ({ event, resolve }) => {
 }) satisfies Handle;
 
 const setCookies = (async ({ event, resolve }) => {
+	console.log(3);
 	const authToken = event.locals.token;
 	const refreshToken = event.locals.refresh_token;
 	if (authToken && refreshToken) {
@@ -74,6 +77,7 @@ const setCookies = (async ({ event, resolve }) => {
 }) satisfies Handle;
 
 const setHoudiniSession = (async ({ event, resolve }) => {
+	console.log(4);
 	const { token, refresh_token } = event.locals;
 	setSession(event, { token, refresh_token });
 	return await resolve(event);
