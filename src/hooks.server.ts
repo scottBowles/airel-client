@@ -5,6 +5,7 @@ import { PUBLIC_PAGES } from '$lib/constants';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 import refreshAuthToken from '$lib/customApiCalls/refreshAuthToken';
+import { PUBLIC_GRAPHQL_URL } from '$env/static/public';
 
 const populateTokensToLocals = (async ({ event, resolve }) => {
 	const authToken = event.cookies.get('token');
@@ -17,6 +18,7 @@ const populateTokensToLocals = (async ({ event, resolve }) => {
 }) satisfies Handle;
 
 const populateUserToLocals = (async ({ event, resolve }) => {
+	console.log('PUBLIC_GRAPHQL_URL', PUBLIC_GRAPHQL_URL);
 	event.locals.user = undefined;
 	event.locals.token = event.cookies.get('token');
 	event.locals.refresh_token = event.cookies.get('refresh_token');
@@ -33,7 +35,9 @@ const populateUserToLocals = (async ({ event, resolve }) => {
 		const shouldRefresh = exp < now;
 
 		if (shouldRefresh) {
+			console.log('refreshing token');
 			const tokensRes = await refreshAuthToken(event.locals.refresh_token);
+			console.log('tokensRes', tokensRes);
 			if (tokensRes.success) {
 				event.locals.token = tokensRes.token.token;
 				event.locals.refresh_token = tokensRes.refreshToken.token;
