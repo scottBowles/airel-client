@@ -20,7 +20,6 @@ const populateTokensToLocals = (async ({ event, resolve }) => {
 
 const populateUserToLocals = (async ({ event, resolve }) => {
 	console.log(2);
-	console.log(2.1);
 	console.log('PUBLIC_GRAPHQL_URL', PUBLIC_GRAPHQL_URL);
 	event.locals.user = undefined;
 	event.locals.token = event.cookies.get('token');
@@ -81,6 +80,7 @@ const setHoudiniSession = (async ({ event, resolve }) => {
 	console.log(4);
 	const { token, refresh_token } = event.locals;
 	setSession(event, { token, refresh_token });
+	console.log(4);
 	return await resolve(event);
 }) satisfies Handle;
 
