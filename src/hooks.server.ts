@@ -24,17 +24,23 @@ const populateUserToLocals = (async ({ event, resolve }) => {
 	event.locals.user = undefined;
 	event.locals.token = event.cookies.get('token');
 	event.locals.refresh_token = event.cookies.get('refresh_token');
+	console.log('token cookie', event.locals.token);
+	console.log('refresh_token cookie', event.locals.refresh_token);
 
 	if (event.locals.token && event.locals.refresh_token) {
 		const decodedJson = jwt_decode(event.locals.token) as { payload: string };
+		console.log('decodedJson', decodedJson);
 		const decoded = JSON.parse(decodedJson.payload) as JwtPayload;
+		console.log('decoded', decoded);
 		event.locals.user = decoded.username;
+		console.log('event.locals.user', event.locals.user);
 
 		const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
 		const buffer = 15 * 1000;
 		const now = new Date().valueOf();
 		const exp = new Date(decoded.exp).valueOf() - timezoneOffset - buffer;
 		const shouldRefresh = exp < now;
+		console.log('shouldRefresh', shouldRefresh);
 
 		if (shouldRefresh) {
 			console.log('refreshing token');
