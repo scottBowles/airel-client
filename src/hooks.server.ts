@@ -80,7 +80,12 @@ const setHoudiniSession = (async ({ event, resolve }) => {
 	console.log(4);
 	const { token, refresh_token } = event.locals;
 	setSession(event, { token, refresh_token });
-	console.log(4);
+	console.log(5);
+	return await resolve(event);
+}) satisfies Handle;
+
+const doNothing = (async ({ event, resolve }) => {
+	console.log(6);
 	return await resolve(event);
 }) satisfies Handle;
 
@@ -100,7 +105,8 @@ export const handle = sequence(
 	populateTokensToLocals,
 	populateUserToLocals,
 	setCookies,
-	setHoudiniSession
+	setHoudiniSession,
+	doNothing
 	// gatekeep
 );
 
