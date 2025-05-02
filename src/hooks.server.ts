@@ -1,6 +1,6 @@
 import { setSession } from '$houdini';
 import type { JwtPayload } from '$lib/types';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { PUBLIC_PAGES } from '$lib/constants';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
@@ -28,7 +28,7 @@ const populateUserToLocals = (async ({ event, resolve }) => {
 	console.log('refresh_token cookie', event.locals.refresh_token);
 
 	if (event.locals.token && event.locals.refresh_token) {
-		const decodedJson = jwt_decode(event.locals.token) as { payload: string };
+		const decodedJson = jwtDecode(event.locals.token) as { payload: string };
 		console.log('decodedJson', decodedJson);
 		const decoded = JSON.parse(decodedJson.payload) as JwtPayload;
 		console.log('decoded', decoded);
