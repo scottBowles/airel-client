@@ -1,4 +1,4 @@
-import settings from '$lib/settings';
+import { PUBLIC_GRAPHQL_URL } from '$env/static/public';
 
 type Input = {
 	payload:
@@ -17,7 +17,7 @@ type Input = {
  * exceptions
  */
 async function api({ payload, token, opts }: Input): Promise<Response> {
-	return fetch(settings.API_PATH, {
+	return fetch(PUBLIC_GRAPHQL_URL, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

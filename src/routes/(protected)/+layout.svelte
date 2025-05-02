@@ -13,9 +13,12 @@
 	let theme = getContext<ThemeState>('theme');
 	const showAlgoliaSearch = getContext<ShowAlgoliaSearch>('showAlgoliaSearch');
 
-	// let { data } = $props();
+	// import type { LayoutData } from './$houdini';
 
-	// let me = $derived(data.me);
+	// export let data: LayoutData;
+
+	// $: ({ me } = data);
+	// $: console.log(me);
 </script>
 
 {#if $navigating}

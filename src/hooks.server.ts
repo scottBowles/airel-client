@@ -5,8 +5,10 @@ import { PUBLIC_PAGES } from '$lib/constants';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 import refreshAuthToken from '$lib/customApiCalls/refreshAuthToken';
+import { PUBLIC_GRAPHQL_URL } from '$env/static/public';
 
 const populateTokensToLocals = (async ({ event, resolve }) => {
+	console.log(1);
 	const authToken = event.cookies.get('token');
 	const refreshToken = event.cookies.get('refresh_token');
 
@@ -17,23 +19,33 @@ const populateTokensToLocals = (async ({ event, resolve }) => {
 }) satisfies Handle;
 
 const populateUserToLocals = (async ({ event, resolve }) => {
+	console.log(2);
+	console.log('PUBLIC_GRAPHQL_URL', PUBLIC_GRAPHQL_URL);
 	event.locals.user = undefined;
 	event.locals.token = event.cookies.get('token');
 	event.locals.refresh_token = event.cookies.get('refresh_token');
+	console.log('token cookie', event.locals.token);
+	console.log('refresh_token cookie', event.locals.refresh_token);
 
 	if (event.locals.token && event.locals.refresh_token) {
 		const decodedJson = jwt_decode(event.locals.token) as { payload: string };
+		console.log('decodedJson', decodedJson);
 		const decoded = JSON.parse(decodedJson.payload) as JwtPayload;
+		console.log('decoded', decoded);
 		event.locals.user = decoded.username;
+		console.log('event.locals.user', event.locals.user);
 
 		const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
 		const buffer = 15 * 1000;
 		const now = new Date().valueOf();
 		const exp = new Date(decoded.exp).valueOf() - timezoneOffset - buffer;
 		const shouldRefresh = exp < now;
+		console.log('shouldRefresh', shouldRefresh);
 
 		if (shouldRefresh) {
+			console.log('refreshing token');
 			const tokensRes = await refreshAuthToken(event.locals.refresh_token);
+			console.log('tokensRes', tokensRes);
 			if (tokensRes.success) {
 				event.locals.token = tokensRes.token.token;
 				event.locals.refresh_token = tokensRes.refreshToken.token;
@@ -48,6 +60,7 @@ const populateUserToLocals = (async ({ event, resolve }) => {
 }) satisfies Handle;
 
 const setCookies = (async ({ event, resolve }) => {
+	console.log(3);
 	const authToken = event.locals.token;
 	const refreshToken = event.locals.refresh_token;
 	if (authToken && refreshToken) {
@@ -70,8 +83,15 @@ const setCookies = (async ({ event, resolve }) => {
 }) satisfies Handle;
 
 const setHoudiniSession = (async ({ event, resolve }) => {
+	console.log(4);
 	const { token, refresh_token } = event.locals;
 	setSession(event, { token, refresh_token });
+	console.log(5);
+	return await resolve(event);
+}) satisfies Handle;
+
+const doNothing = (async ({ event, resolve }) => {
+	console.log(6);
 	return await resolve(event);
 }) satisfies Handle;
 
@@ -91,7 +111,8 @@ export const handle = sequence(
 	populateTokensToLocals,
 	populateUserToLocals,
 	setCookies,
-	setHoudiniSession
+	setHoudiniSession,
+	doNothing
 	// gatekeep
 );
 
