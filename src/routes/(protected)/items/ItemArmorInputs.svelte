@@ -10,11 +10,5 @@
 	<label for={AC_BONUS_ID} class="label">
 		<span class="label-text">AC Bonus</span>
 	</label>
-	<input
-		type="number"
-		id={AC_BONUS_ID}
-		name={AC_BONUS_ID}
-		value={armor?.acBonus}
-		class="input input-bordered"
-	/>
+	<input type="number" id={AC_BONUS_ID} name={AC_BONUS_ID} value={armor?.acBonus} class="input" />
 </div>

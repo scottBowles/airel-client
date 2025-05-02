@@ -24,7 +24,7 @@
 	{#if fetching}
 		Loading {capitalize(entityDisplayName)}...
 	{:else}
-		<select bind:value={selected} class="select select-bordered" {id}>
+		<select bind:value={selected} class="select" {id}>
 			<option disabled selected>Pick one</option>
 			{#each options as { value, label }}
 				<option {value}>{label}</option>

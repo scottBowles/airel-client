@@ -14,6 +14,6 @@
 		id={BRIEF_DESCRIPTION_ID}
 		name={BRIEF_DESCRIPTION_ID}
 		value={equipment?.briefDescription ?? ''}
-		class="textarea textarea-bordered"
+		class="textarea"
 	/>
 </div>

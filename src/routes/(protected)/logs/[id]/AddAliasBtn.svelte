@@ -79,17 +79,18 @@
 
 <label for={ALIAS_MODAL_ID} class="link hover:accent modal-button">
 	<div class="icon"><FaUsers /></div>
-	{#if verbose} Add Any Alias{/if}
+	{#if verbose}
+		Add Any Alias{/if}
 </label>
 
 <input type="checkbox" id={ALIAS_MODAL_ID} class="modal-toggle" bind:checked={isOpen} />
 <label for={ALIAS_MODAL_ID} class="modal modal-bottom sm:modal-middle cursor-pointer">
 	<label class="modal-box relative" for="">
 		<form on:submit|preventDefault={handleAddAlias}>
-			<h3 class="font-bold text-lg">Add as Alias</h3>
+			<h3 class="text-lg font-bold">Add as Alias</h3>
 
 			<div class="form-control w-full max-w-xs">
-				<label class="label" for={'entity-select'}>
+				<label class="label" for="entity-select">
 					<span class="label-text">Select Entity</span>
 				</label>
 				<MultiSelect
@@ -105,7 +106,7 @@
 
 			<div class="form-control">
 				<label for="alias" class="label"><span class="label-text">Alias</span></label>
-				<input name="alias" id="alias" class="input input-bordered" value={entityName} required />
+				<input name="alias" id="alias" class="input" value={entityName} required />
 			</div>
 
 			<div class="modal-action">

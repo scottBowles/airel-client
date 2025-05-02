@@ -35,16 +35,13 @@
 <label for={MODAL_ID} class="modal modal-bottom sm:modal-middle cursor-pointer">
 	<label class="modal-box relative" for="">
 		<form on:submit|preventDefault={handleAddSuggestionJson}>
-			<h3 class="font-bold text-lg">Add a Generated Suggestion from JSON</h3>
+			<h3 class="text-lg font-bold">Add a Generated Suggestion from JSON</h3>
 
 			<div class="form-control w-full max-w-xs">
 				<label for="ai-suggestion-json" class="label">
 					<span class="label-text">JSON</span>
 				</label>
-				<textarea
-					id="ai-suggestion-json"
-					name="aiSuggestionJson"
-					class="textarea textarea-bordered w-full"
+				<textarea id="ai-suggestion-json" name="aiSuggestionJson" class="textarea w-full"
 				></textarea>
 			</div>
 

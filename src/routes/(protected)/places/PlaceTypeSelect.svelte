@@ -12,7 +12,7 @@
 	</label>
 	<select
 		bind:value={selectedPlaceType}
-		class="select select-bordered"
+		class="select"
 		id={`place-${id}-type-select`}
 		name="placeType"
 	>

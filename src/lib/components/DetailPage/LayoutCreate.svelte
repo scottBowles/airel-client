@@ -63,14 +63,7 @@
 		<label for="name-input" class="label">
 			<span class="label-text">Name</span>
 		</label>
-		<input
-			type="text"
-			id="name-input"
-			name="name"
-			bind:value={name}
-			class="input input-bordered"
-			required
-		/>
+		<input type="text" id="name-input" name="name" bind:value={name} class="input" required />
 	</div>
 
 	<!-- EDIT / SAVE + LOCKED BY {USER} -->
@@ -78,13 +71,13 @@
 	>
 
 	<!-- MAIN IMAGE -->
-	<div slot="mainImage" class="w-full max-w-xs mx-auto">
+	<div slot="mainImage" class="mx-auto w-full max-w-xs">
 		{#if $page.data.me?.isStaff}
 			<CloudinaryUpload {onImageUpload}>
-				<ImageCarousel {imageIds} alt={'uploaded images'} />
+				<ImageCarousel {imageIds} alt="uploaded images" />
 			</CloudinaryUpload>
 		{:else}
-			<ImageCarousel {imageIds} alt={'uploaded images'} />
+			<ImageCarousel {imageIds} alt="uploaded images" />
 		{/if}
 
 		<Spacer />
@@ -111,8 +104,7 @@
 		<label for="description-input" class="label">
 			<span class="label-text">Description</span>
 		</label>
-		<textarea name="description" id="description-input" class="textarea textarea-bordered w-full"
-		></textarea>
+		<textarea name="description" id="description-input" class="textarea w-full"></textarea>
 	</div>
 
 	<!-- PROPERTIES -->

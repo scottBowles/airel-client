@@ -29,14 +29,16 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		border: 2px solid hsla(var(--palette-background-bolder));
+		border: 2px solid oklch(var(--palette-background-bolder));
+		/* border: 2px solid hsla(var(--palette-background-bolder)); */
 		border-radius: 0.5rem;
 		padding: 1rem;
 		gap: 0.5rem;
 		cursor: pointer;
 	}
 	.add-block:hover {
-		background-color: hsla(var(--palette-background-bolder), 0.1);
+		background-color: oklch(var(--palette-background-bolder), 0.1);
+		/* background-color: hsla(var(--palette-background-bolder), 0.1); */
 	}
 	.add-icon-container {
 		--dimension: 1.25rem;

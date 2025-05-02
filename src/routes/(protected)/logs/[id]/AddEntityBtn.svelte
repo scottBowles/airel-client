@@ -126,20 +126,21 @@
 
 <label for={ADD_MODAL_ID} class="link hover:accent modal-button">
 	<div class="icon"><FaUserPlus /></div>
-	{#if verbose} Add Any Entity{/if}
+	{#if verbose}
+		Add Any Entity{/if}
 </label>
 
 <input type="checkbox" id={ADD_MODAL_ID} class="modal-toggle" bind:checked={isOpen} />
 <label for={ADD_MODAL_ID} class="modal modal-bottom sm:modal-middle cursor-pointer">
 	<label class="modal-box relative" for="">
 		<form on:submit|preventDefault={handleAddEntity}>
-			<h3 class="font-bold text-lg">Add Entity</h3>
+			<h3 class="text-lg font-bold">Add Entity</h3>
 
 			<div class="form-control w-full max-w-xs">
-				<label class="label" for={'entity-type'}>
+				<label class="label" for="entity-type">
 					<span class="label-text">Select Entity Type</span>
 				</label>
-				<select class="select select-bordered" id={'entity-type'} name="entityType">
+				<select class="select" id="entity-type" name="entityType">
 					{#each ENTITY_TYPES as opt}
 						<option value={opt} selected={suggestedEntityType === opt}>{capitalize(opt)}</option>
 					{/each}
@@ -148,7 +149,7 @@
 
 			<div class="form-control">
 				<label for="name" class="label"><span class="label-text">Name</span></label>
-				<input name="name" id="name" class="input input-bordered" value={entityName} required />
+				<input name="name" id="name" class="input" value={entityName} required />
 			</div>
 
 			<div class="modal-action">

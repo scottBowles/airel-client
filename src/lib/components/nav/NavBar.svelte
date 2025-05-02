@@ -35,14 +35,14 @@
 	<input id="mobile-drawer" type="checkbox" class="drawer-toggle" bind:this={inputToggle} />
 	<div class="drawer-content flex flex-col">
 		<!-- Navbar -->
-		<div class="w-full navbar bg-base-300 justify-between gap-2">
+		<div class="navbar bg-base-300 w-full justify-between gap-2">
 			<div class="xl:hidden">
 				<label for="mobile-drawer" class="btn btn-square btn-ghost">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
-						class="inline-block w-6 h-6 stroke-current"
+						class="inline-block h-6 w-6 stroke-current"
 						><path
 							stroke-linecap="round"
 							stroke-linejoin="round"
@@ -53,7 +53,7 @@
 				</label>
 			</div>
 
-			<div class="px-2 mx-2"><Title /></div>
+			<div class="mx-2 px-2"><Title /></div>
 
 			{#if innerWidth > 681}
 				<SearchButton />
@@ -61,11 +61,7 @@
 				<Algolia />
 			{/if}
 
-			<select
-				data-choose-theme
-				bind:value={theme.value}
-				class="select select-sm select-bordered hidden xl:block"
-			>
+			<select data-choose-theme bind:value={theme.value} class="select select-sm hidden xl:block">
 				<option value="">Select a theme</option>
 				{#each themes as themeOption}
 					<option value={themeOption}>{capitalize(themeOption)}</option>
@@ -84,9 +80,9 @@
 	</div>
 	<div class="drawer-side">
 		<label for="mobile-drawer" class="drawer-overlay"></label>
-		<div class="menu p-4 overflow-y-auto w-80 bg-base-100 gap-1">
+		<div class="menu bg-base-100 w-80 gap-1 overflow-y-auto p-4">
 			<!-- Sidebar content here -->
-			<div class="text-4xl text-center font-bold mt-4 mb-8">Airel</div>
+			<div class="mt-4 mb-8 text-center text-4xl font-bold">Airel</div>
 			<ul>
 				<NavLinks btnSize="lg" />
 			</ul>

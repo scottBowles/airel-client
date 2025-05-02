@@ -15,6 +15,6 @@
 		id={ATTACK_BONUS_ID}
 		name={ATTACK_BONUS_ID}
 		value={weapon?.attackBonus}
-		class="input input-bordered"
+		class="input"
 	/>
 </div>

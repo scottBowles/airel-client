@@ -146,14 +146,7 @@
 		<label for="name-input" class="label">
 			<span class="label-text">Name</span>
 		</label>
-		<input
-			type="text"
-			id="name-input"
-			name="name"
-			value={name}
-			class="input input-bordered w-full max-w-xs"
-			required
-		/>
+		<input type="text" id="name-input" name="name" value={name} class="input" required />
 	</div>
 
 	<!-- EDIT / SAVE + LOCKED BY {USER} -->
@@ -168,11 +161,13 @@
 		<input type="checkbox" id={modalId} class="modal-toggle" />
 		<label for={modalId} class="modal modal-bottom sm:modal-middle cursor-pointer">
 			<label class="modal-box relative" for="">
-				<h3 class="font-bold text-lg">Discard changes</h3>
+				<h3 class="text-lg font-bold">Discard changes</h3>
 				<p class="py-4">Are you sure you want to discard any unsaved changes?</p>
 				<div class="modal-action">
-					<label for={modalId} class="btn" on:click={unlock} on:keypress={unlock}>Yes</label>
-					<label for={modalId} class="btn">No</label>
+					<label for={modalId} class="btn btn-neutral" on:click={unlock} on:keypress={unlock}
+						>Yes</label
+					>
+					<label for={modalId} class="btn btn-neutral">No</label>
 				</div>
 			</label>
 		</label>
@@ -183,7 +178,7 @@
 	</svelte:fragment>
 
 	<!-- MAIN IMAGE -->
-	<div slot="mainImage" class="w-full mx-auto">
+	<div slot="mainImage" class="mx-auto w-full">
 		{#if $page.data.me?.isStaff}
 			<CloudinaryUpload {onImageUpload}>
 				<ImageCarousel {imageIds} alt={name ?? ''} />
@@ -206,11 +201,7 @@
 		<label for="description-input" class="label">
 			<span class="label-text">Description</span>
 		</label>
-		<textarea
-			id="description-input"
-			name="description"
-			value={description}
-			class="textarea textarea-bordered"
+		<textarea id="description-input" name="description" value={description} class="textarea"
 		></textarea>
 	</div>
 

@@ -61,30 +61,30 @@
 	use:algoliaCloseOnNavigation={showAlgoliaSearch}
 />
 
-<div class="w-screen h-screen flex bg-black">
-	<div class="h-screen w-40 pl-4 py-4">
-		<div class="h-full w-full bg-yellow-200 rounded-l-[84px] flex flex-col">
+<div class="flex h-screen w-screen bg-black">
+	<div class="h-screen w-40 py-4 pl-4">
+		<div class="flex h-full w-full flex-col rounded-l-[84px] bg-yellow-200">
 			<div class="h-[84px] w-full"></div>
-			<ul class="w-full grow bg-black flex flex-col justify-center gap-1">
-				<div class="grow bg-yellow-200 flex items-center justify-end px-4">
-					<h1 class="text-black flex items-center justify-end">AIREL</h1>
+			<ul class="flex w-full grow flex-col justify-center gap-1 bg-black">
+				<div class="flex grow items-center justify-end bg-yellow-200 px-4">
+					<h1 class="flex items-center justify-end text-black">AIREL</h1>
 				</div>
 				{#each links as link}
 					<a
 						href={link.href}
 						class={`grow ${
 							activeLink === link ? 'bg-yellow-300' : 'bg-yellow-200'
-						} hover:bg-yellow-300 flex items-center justify-end px-4`}
+						} flex items-center justify-end px-4 hover:bg-yellow-300`}
 					>
 						<li class=" text-black">{link.label.toUpperCase()}</li>
 					</a>
 				{/each}
-				<button class="grow bg-yellow-200 hover:bg-yellow-300 flex items-center justify-end px-4">
+				<button class="flex grow items-center justify-end bg-yellow-200 px-4 hover:bg-yellow-300">
 					{#if $page.data.me}
 						<span
 							on:click={logout}
 							on:keypress={logout}
-							class="text-black flex items-center justify-end"
+							class="flex items-center justify-end text-black"
 							role="button"
 							tabindex="0"
 						>
@@ -93,7 +93,7 @@
 					{:else}
 						<a
 							href={`/login?redirect=${$page.url.pathname}`}
-							class="text-black flex items-center justify-end"
+							class="flex items-center justify-end text-black"
 						>
 							LOGIN
 						</a>
@@ -103,25 +103,25 @@
 			<div class="h-[84px] w-full"></div>
 		</div>
 	</div>
-	<div class="h-screen w-max flex-1 pr-4 py-4 flex flex-col">
-		<div class="bg-yellow-200 w-full rounded-r-full h-14 flex overflow-hidden">
-			<div class="bg-yellow-200 grow-[4] min-w-[68px] h-full"></div>
-			<div class="bg-black w-1 h-full"></div>
-			<div class="bg-yellow-200 grow-[12] min-w-4 h-full"></div>
-			<div class="bg-black text-4xl px-2 flex items-center text-orange-400">
+	<div class="flex h-screen w-max flex-1 flex-col py-4 pr-4">
+		<div class="flex h-14 w-full overflow-hidden rounded-r-full bg-yellow-200">
+			<div class="h-full min-w-[68px] grow-[4] bg-yellow-200"></div>
+			<div class="h-full w-1 bg-black"></div>
+			<div class="h-full min-w-4 grow-[12] bg-yellow-200"></div>
+			<div class="flex items-center bg-black px-2 text-4xl text-orange-400">
 				AIREL &bull; BETWEEN TWO SUNS
 			</div>
-			<div class="bg-yellow-200 grow-[2] min-w-[48px] h-full"></div>
+			<div class="h-full min-w-[48px] grow-[2] bg-yellow-200"></div>
 		</div>
-		<div class="flex-1 bg-yellow-200 overflow-hidden">
-			<div class="bg-black h-full w-full rounded-l-[36px] overflow-y-scroll p-8">
+		<div class="flex-1 overflow-hidden bg-yellow-200">
+			<div class="h-full w-full overflow-y-scroll rounded-l-[36px] bg-black p-8">
 				<slot />
 			</div>
 		</div>
-		<div class="bg-yellow-200 w-full rounded-r-full h-14 flex overflow-hidden">
-			<div class="bg-yellow-200 grow-[2] min-w-[54px] h-full"></div>
+		<div class="flex h-14 w-full overflow-hidden rounded-r-full bg-yellow-200">
+			<div class="h-full min-w-[54px] grow-[2] bg-yellow-200"></div>
 			<div
-				class="pure-yellow border-x-4 border-x-black text-xl px-2 flex items-center text-black"
+				class="pure-yellow flex items-center border-x-4 border-x-black px-2 text-xl text-black"
 				on:click={showAlgoliaSearch.open}
 				on:keypress={showAlgoliaSearch.open}
 				role="button"
@@ -129,23 +129,19 @@
 			>
 				SEARCH CTRL + K
 			</div>
-			<div class="pure-yellow border-r-4 border-r-black text-xl px-2 flex items-center text-black">
-				<select
-					data-choose-theme
-					class="select select-sm select-ghost select-bordered hidden lg:block"
-					bind:value={theme.value}
-				>
+			<div class="pure-yellow flex items-center border-r-4 border-r-black px-2 text-xl text-black">
+				<select data-choose-theme class="select select-sm hidden lg:block" bind:value={theme.value}>
 					<option value="">Select a theme</option>
 					{#each themes as themeOption}
 						<option value={themeOption}>{capitalize(themeOption)}</option>
 					{/each}
 				</select>
 			</div>
-			<div class="bg-yellow-200 grow-[6] min-w-4 h-full"></div>
-			<div class="bg-blue-300 text-3xl px-2 flex items-center text-black border-x-4 border-x-black">
+			<div class="h-full min-w-4 grow-[6] bg-yellow-200"></div>
+			<div class="flex items-center border-x-4 border-x-black bg-blue-300 px-2 text-3xl text-black">
 				ASB &bullet; DESCONNEGUT
 			</div>
-			<div class="bg-yellow-200 grow-[2] min-w-[48px] h-full"></div>
+			<div class="h-full min-w-[48px] grow-[2] bg-yellow-200"></div>
 		</div>
 	</div>
 </div>

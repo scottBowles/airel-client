@@ -61,8 +61,8 @@
 	}
 </script>
 
-<div class="container max-w-5xl mx-auto p-4">
-	<div class="flex justify-between items-center flex-wrap mb-8">
+<div class="container mx-auto max-w-5xl p-4">
+	<div class="mb-8 flex flex-wrap items-center justify-between">
 		<h1 class="text-4xl font-bold">Game Logs</h1>
 
 		{#if me?.isStaff}
@@ -73,8 +73,8 @@
 	<ul>
 		{#each logsGroupedWithPlanet as logGrouping}
 			<Sticky tag="li">
-				<div slot="sticky" let:isStuck class="bg-base-100 h-16 flex items-center">
-					<h2 class="font-bold text-2xl" class:text-3xl={isStuck}>
+				<div slot="sticky" let:isStuck class="bg-base-100 flex h-16 items-center">
+					<h2 class="text-2xl font-bold" class:text-3xl={isStuck}>
 						{logGrouping.location}
 					</h2>
 				</div>
@@ -86,12 +86,12 @@
 							<!-- <p>{planetSetIn(log)}</p> -->
 							<li class="mb-8">
 								<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-								<article tabindex="0" class={`collapse group`}>
+								<article tabindex="0" class="group collapse">
 									<div
-										class="card w-full bg-base-200 group-focus:bg-base-300 text-base-content shadow-xl"
+										class="card bg-base-200 group-focus:bg-base-300 text-base-content w-full shadow-xl"
 									>
 										<div class="card-body collapse-title">
-											<div class="md:flex justify-between gap-4">
+											<div class="justify-between gap-4 md:flex">
 												<h2 class="card-title mb-2">
 													<span>
 														<a href={detailUrl} class="hover:text-accent">{log.title}</a>
@@ -101,7 +101,7 @@
 															rel="noopener noreferrer"
 															class="ml-2"
 														>
-															<span class="icon inline-block hover:text-accent"
+															<span class="icon hover:text-accent inline-block"
 																><FaExternalLinkAlt /></span
 															>
 														</a>

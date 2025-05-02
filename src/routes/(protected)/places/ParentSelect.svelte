@@ -24,12 +24,7 @@
 				)}
 			</span>
 		</label>
-		<select
-			bind:value={selectedParent}
-			class="select select-bordered"
-			id="place-parent-select"
-			name="parent.id"
-		>
+		<select bind:value={selectedParent} class="select" id="place-parent-select" name="parent.id">
 			<option disabled selected>Pick one</option>
 			{#each placesForParentSelect as { label, value }}
 				<option {value}>{label}</option>

@@ -178,7 +178,7 @@
 	$: handleSubmit = entitySelected.length === 0 ? handleAddEntity : handleAddAlias;
 </script>
 
-<label for={MODAL_ID} class="link no-underline hover:accent modal-button">
+<label for={MODAL_ID} class="link hover:accent modal-button no-underline">
 	<div class="tooltip" data-tip="Add a new entity for this log or alias an existing.">
 		<div class="icon"><FaUserPlus /></div>
 		{#if verbose}<span class="underline"> Add or Alias any Entity</span>{/if}
@@ -189,10 +189,10 @@
 <label for={MODAL_ID} class="modal modal-bottom sm:modal-middle cursor-pointer">
 	<label class="modal-box relative" for="">
 		<form on:submit|preventDefault={handleSubmit}>
-			<h3 class="font-bold text-lg">Add Entity</h3>
+			<h3 class="text-lg font-bold">Add Entity</h3>
 
 			<div class="form-control w-full max-w-xs">
-				<label class="label" for={'entity-select'}>
+				<label class="label" for="entity-select">
 					<span class="label-text"
 						>Check if Entity Exists? (Optional)
 						<div
@@ -217,7 +217,7 @@
 			{#if entitySelected.length > 0}
 				<div class="form-control">
 					<label for="alias" class="label"><span class="label-text">Alias</span></label>
-					<input name="alias" id="alias" class="input input-bordered" value={entityName} required />
+					<input name="alias" id="alias" class="input" value={entityName} required />
 				</div>
 
 				<div class="modal-action">
@@ -225,10 +225,10 @@
 				</div>
 			{:else}
 				<div class="form-control w-full max-w-xs">
-					<label class="label" for={'entity-type'}>
+					<label class="label" for="entity-type">
 						<span class="label-text">Select Entity Type</span>
 					</label>
-					<select class="select select-bordered" id={'entity-type'} name="entityType">
+					<select class="select" id="entity-type" name="entityType">
 						{#each ENTITY_TYPES as opt}
 							<option value={opt} selected={suggestedEntityType === opt}>{capitalize(opt)}</option>
 						{/each}
@@ -237,7 +237,7 @@
 
 				<div class="form-control">
 					<label for="name" class="label"><span class="label-text">Name</span></label>
-					<input name="name" id="name" class="input input-bordered" value={entityName} required />
+					<input name="name" id="name" class="input" value={entityName} required />
 				</div>
 
 				<div class="modal-action">

@@ -212,10 +212,10 @@
 
 <form method="POST" on:submit|preventDefault={handleSubmit}>
 	<div class="container mx-auto mt-8 mb-32 px-8">
-		<div class="flex justify-between items-center flex-wrap gap-4 mb-8">
+		<div class="mb-8 flex flex-wrap items-center justify-between gap-4">
 			<h1 class="text-3xl font-bold">Edit Log</h1>
 
-			<div class="flex items-center gap-8 min-w-fit">
+			<div class="flex min-w-fit items-center gap-8">
 				<span>Locked by {lockUser?.username ?? 'Unknown'}</span>
 
 				<div class="tooltip" data-tip="Discard changes">
@@ -226,11 +226,13 @@
 				<input type="checkbox" id={modalId} class="modal-toggle" />
 				<label for={modalId} class="modal modal-bottom sm:modal-middle cursor-pointer">
 					<label class="modal-box relative" for="">
-						<h3 class="font-bold text-lg">Discard changes</h3>
+						<h3 class="text-lg font-bold">Discard changes</h3>
 						<p class="py-4">Are you sure you want to discard any unsaved changes?</p>
 						<div class="modal-action">
-							<label for={modalId} class="btn" on:click={unlock} on:keypress={unlock}>Yes</label>
-							<label for={modalId} class="btn">No</label>
+							<label for={modalId} class="btn btn-neutral" on:click={unlock} on:keypress={unlock}
+								>Yes</label
+							>
+							<label for={modalId} class="btn btn-neutral">No</label>
 						</div>
 					</label>
 				</label>
@@ -244,22 +246,15 @@
 		</div>
 		<hr class="mb-8" />
 
-		<div class="flex flex-col sm:flex-row gap-16">
-			<div class="flex flex-col gap-2 flex-[2]">
-				<h2 class="text-xl font-bold my-4">Details</h2>
+		<div class="flex flex-col gap-16 sm:flex-row">
+			<div class="flex flex-[2] flex-col gap-2">
+				<h2 class="my-4 text-xl font-bold">Details</h2>
 
 				<div class="form-control">
 					<label for="title-input" class="label">
 						<span class="label-text">Title</span>
 					</label>
-					<input
-						type="text"
-						id="title-input"
-						name="title"
-						value={title}
-						class="input input-bordered w-full max-w-sm"
-						required
-					/>
+					<input type="text" id="title-input" name="title" value={title} class="input" required />
 				</div>
 				<div class="form-control">
 					<label for="game-date" class="label">
@@ -270,7 +265,7 @@
 						id="game-date"
 						name="gameDate"
 						value={gameDate?.toISOString().substring(0, 10) ?? ''}
-						class="input input-bordered w-full max-w-sm"
+						class="input"
 						required
 					/>
 				</div>
@@ -278,12 +273,7 @@
 					<label for="brief" class="label">
 						<span class="label-text">Brief</span>
 					</label>
-					<textarea
-						id="brief"
-						name="brief"
-						class="textarea textarea-bordered w-full"
-						value={brief}
-						required
+					<textarea id="brief" name="brief" class="textarea w-full" value={brief} required
 					></textarea>
 				</div>
 				<div class="form-control">
@@ -293,7 +283,7 @@
 					<textarea
 						id="synopsis"
 						name="synopsis"
-						class="textarea h-auto textarea-bordered w-full"
+						class="textarea h-auto w-full"
 						rows="6"
 						value={synopsis}
 						required
@@ -309,10 +299,10 @@
 				</div>
 			</div>
 
-			<div class="flex flex-col items-center flex-1">
-				<h2 class="text-xl font-bold my-4">Found in this Log</h2>
+			<div class="flex flex-1 flex-col items-center">
+				<h2 class="my-4 text-xl font-bold">Found in this Log</h2>
 
-				<div class="flex flex-col gap-2 w-full">
+				<div class="flex w-full flex-col gap-2">
 					<RelatedArtifactMultiSelect
 						id={`log-${id}-artifact-select`}
 						inputGroupName="artifacts"
@@ -359,7 +349,7 @@
 		)}
 	{:else if aiSuggestions}
 		<div class="container mx-auto mb-32 px-8">
-			<div class="text-lg font-bold pb-8">Ai Suggestions</div>
+			<div class="pb-8 text-lg font-bold">Ai Suggestions</div>
 			<div class="mb-6">
 				<div class="mb-4">
 					<div class="text-lg font-bold">Titles</div>
@@ -396,10 +386,10 @@
 				</div>
 			</div>
 
-			<div class="flex gap-8 mb-6">
+			<div class="mb-6 flex gap-8">
 				<div>
 					<AddEntityOrAliasBtn
-						entityName={''}
+						entityName=""
 						{updateFoundEntities}
 						{updateLogEntitiesInForm}
 						verbose
@@ -407,8 +397,8 @@
 				</div>
 			</div>
 
-			<h3 class="text-xl font-bold mb-4">Possible Entities</h3>
-			<div class="grid grid-cols-5 mb-6">
+			<h3 class="mb-4 text-xl font-bold">Possible Entities</h3>
+			<div class="mb-6 grid grid-cols-5">
 				<PossibleEntityList
 					suggestedEntityType={ENTITY_TYPE.ASSOCIATION}
 					entityNames={aiSuggestions.associations.filter((a) => !allFoundEntityNames.includes(a))}
@@ -441,8 +431,8 @@
 				/>
 			</div>
 
-			<h3 class="text-xl font-bold mb-4">Found Entities</h3>
-			<div class="grid grid-cols-6 mb-6">
+			<h3 class="mb-4 text-xl font-bold">Found Entities</h3>
+			<div class="mb-6 grid grid-cols-6">
 				<div>
 					<div class="text-lg font-bold">Artifacts</div>
 					{#each foundArtifacts.filter((a) => !$artifactIds.includes(a.id)) as foundArtifact (foundArtifact.id)}

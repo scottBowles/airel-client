@@ -54,7 +54,7 @@
 						name="log"
 						placeholder="Log url"
 						bind:value={logInput}
-						class="input input-bordered w-full max-w-xs flex-1"
+						class="input flex-1"
 						autofocus
 					/>
 					<div>

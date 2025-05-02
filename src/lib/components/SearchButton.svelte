@@ -15,7 +15,7 @@
 	<input
 		type="text"
 		placeholder="Search (Ctrl + K)"
-		class="input input-sm input-bordered"
+		class="input input-sm"
 		on:click={showAlgoliaSearch.open}
 	/>
 </div>

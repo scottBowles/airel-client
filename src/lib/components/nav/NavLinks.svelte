@@ -61,7 +61,7 @@
 	<li>
 		<a
 			href={link.href}
-			class="btn no-animation normal-case btn-{btnSize}"
+			class="btn btn-neutral no-animation normal-case btn-{btnSize}"
 			class:btn-primary={link === activeLink}
 			class:btn-ghost={link !== activeLink}
 		>
