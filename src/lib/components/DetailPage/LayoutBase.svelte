@@ -24,7 +24,7 @@
 
 	<div class:clearfix class="max-w-full">
 		<!-- FLOAT AREA -->
-		<div class="sm:float-right w-full sm:w-2/5 ml-2">
+		<div class="ml-2 w-full sm:float-right sm:w-2/5">
 			<!-- IMAGES -->
 			<slot name="mainImage" class="w-full" />
 

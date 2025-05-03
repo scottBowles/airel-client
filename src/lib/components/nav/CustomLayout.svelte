@@ -105,13 +105,13 @@
 	</div>
 	<div class="flex h-screen w-max flex-1 flex-col py-4 pr-4">
 		<div class="flex h-14 w-full overflow-hidden rounded-r-full bg-yellow-200">
-			<div class="h-full min-w-[68px] grow-[4] bg-yellow-200"></div>
+			<div class="h-full min-w-[68px] grow-4 bg-yellow-200"></div>
 			<div class="h-full w-1 bg-black"></div>
-			<div class="h-full min-w-4 grow-[12] bg-yellow-200"></div>
+			<div class="h-full min-w-4 grow-12 bg-yellow-200"></div>
 			<div class="flex items-center bg-black px-2 text-4xl text-orange-400">
 				AIREL &bull; BETWEEN TWO SUNS
 			</div>
-			<div class="h-full min-w-[48px] grow-[2] bg-yellow-200"></div>
+			<div class="h-full min-w-[48px] grow-2 bg-yellow-200"></div>
 		</div>
 		<div class="flex-1 overflow-hidden bg-yellow-200">
 			<div class="h-full w-full overflow-y-scroll rounded-l-[36px] bg-black p-8">
@@ -119,7 +119,7 @@
 			</div>
 		</div>
 		<div class="flex h-14 w-full overflow-hidden rounded-r-full bg-yellow-200">
-			<div class="h-full min-w-[54px] grow-[2] bg-yellow-200"></div>
+			<div class="h-full min-w-[54px] grow-2 bg-yellow-200"></div>
 			<div
 				class="pure-yellow flex items-center border-x-4 border-x-black px-2 text-xl text-black"
 				on:click={showAlgoliaSearch.open}
@@ -137,11 +137,11 @@
 					{/each}
 				</select>
 			</div>
-			<div class="h-full min-w-4 grow-[6] bg-yellow-200"></div>
+			<div class="h-full min-w-4 grow-6 bg-yellow-200"></div>
 			<div class="flex items-center border-x-4 border-x-black bg-blue-300 px-2 text-3xl text-black">
 				ASB &bullet; DESCONNEGUT
 			</div>
-			<div class="h-full min-w-[48px] grow-[2] bg-yellow-200"></div>
+			<div class="h-full min-w-[48px] grow-2 bg-yellow-200"></div>
 		</div>
 	</div>
 </div>

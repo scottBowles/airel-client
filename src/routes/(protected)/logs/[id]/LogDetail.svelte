@@ -146,7 +146,7 @@
 	<hr class="mb-8" />
 
 	<div class="flex flex-col sm:flex-row gap-16">
-		<div class="flex flex-col gap-2 flex-[2]">
+		<div class="flex flex-col gap-2 flex-2">
 			<h2 class="text-xl font-bold my-4">Details</h2>
 
 			<h6 class="whitespace-nowrap">

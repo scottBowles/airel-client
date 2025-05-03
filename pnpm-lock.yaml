@@ -46,7 +46,7 @@ importers:
         specifier: ^0.5.15
         version: 0.5.16(tailwindcss@4.1.5)
       '@tailwindcss/vite':
-        specifier: ^4.0.0
+        specifier: ^4.1.5
         version: 4.1.5(vite@6.3.4(@types/node@22.15.3)(jiti@2.4.2)(lightningcss@1.29.2))
       '@total-typescript/ts-reset':
         specifier: ^0.6.1
@@ -127,7 +127,7 @@ importers:
         specifier: 11.0.0-rc.1
         version: 11.0.0-rc.1
       tailwindcss:
-        specifier: ^4.0.0
+        specifier: ^4.1.5
         version: 4.1.5
       theme-change:
         specifier: ^2.5.0

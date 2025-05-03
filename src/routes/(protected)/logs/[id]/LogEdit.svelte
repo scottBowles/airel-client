@@ -247,7 +247,7 @@
 		<hr class="mb-8" />
 
 		<div class="flex flex-col gap-16 sm:flex-row">
-			<div class="flex flex-[2] flex-col gap-2">
+			<div class="flex flex-2 flex-col gap-2">
 				<h2 class="my-4 text-xl font-bold">Details</h2>
 
 				<div class="form-control">
