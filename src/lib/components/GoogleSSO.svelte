@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
-	const login_uri = $page.url.origin + '/endpoints/google_auth?' + $page.url.searchParams;
+	const login_uri = page.url.origin + '/endpoints/google_auth?' + page.url.searchParams;
 
 	onMount(() => {
 		const script = document.createElement('script');
@@ -24,7 +24,7 @@
 	data-login_uri={login_uri}
 	data-auto_select="true"
 	data-itp_support="true"
-/>
+></div>
 
 <div
 	class="g_id_signin"
@@ -35,4 +35,4 @@
 	data-size="large"
 	data-logo_alignment="left"
 	style="z-index: 1000"
-/>
+></div>
