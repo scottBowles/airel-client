@@ -53,7 +53,7 @@
 
 	async function logout() {
 		await post('/endpoints/logout');
-		goto('/login');
+		window.location.reload();
 	}
 </script>
 
