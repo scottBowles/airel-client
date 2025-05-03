@@ -1,4 +1,5 @@
-<a href="/" class="flex gap-4 divide-x-2 divide-base-content">
-	<p class="text-3xl font-bold text-primary">Airel</p>
-	<p class="text-2xl font-bold pl-4 whitespace-nowrap hidden xl:block">Between Two Suns</p>
+<a href="/" class="flex gap-4">
+	<div class="text-primary text-3xl font-bold">Airel</div>
+	<div class="hidden h-8 border-l border-gray-300 xl:block"></div>
+	<div class="hidden text-2xl font-bold whitespace-nowrap xl:block">Between Two Suns</div>
 </a>
