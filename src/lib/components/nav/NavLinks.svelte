@@ -1,8 +1,7 @@
 <svelte:options runes={true} />
 
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { post } from '$lib/utils';
 
 	let { btnSize = '' } = $props();
@@ -48,7 +47,7 @@
 		href: '/404'
 	};
 
-	let currentHref = $derived('/' + $page.url.pathname.split('/')[1]);
+	let currentHref = $derived('/' + page.url.pathname.split('/')[1]);
 	let activeLink = $derived(links.find((link) => link.href === currentHref) || defaultLink);
 
 	async function logout() {
@@ -57,7 +56,7 @@
 	}
 </script>
 
-{#each links as link}
+{#each links as link (link.label)}
 	<li>
 		<a
 			href={link.href}
@@ -70,13 +69,13 @@
 	</li>
 {/each}
 <li>
-	{#if $page.data.me}
+	{#if page.data.me}
 		<button class="btn btn-ghost no-animation normal-case btn-{btnSize}" onclick={logout}>
 			Logout
 		</button>
 	{:else}
 		<a
-			href={`/login?redirect=${$page.url.pathname}`}
+			href={`/login?redirect=${page.url.pathname}`}
 			class="btn btn-ghost no-animation normal-case btn-{btnSize}"
 		>
 			Login
