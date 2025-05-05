@@ -4,10 +4,14 @@
 	import FaExternalLinkAlt from 'svelte-icons/fa/FaExternalLinkAlt.svelte';
 	import { page } from '$app/stores';
 
-	export let log: any;
-	export let removeLog: (id: string) => void;
-	$: id = fromGlobalId(log.id).id;
-	$: href = `/logs/${id}`;
+	interface Props {
+		log: any;
+		removeLog: (id: string) => void;
+	}
+
+	let { log, removeLog }: Props = $props();
+	let id = $derived(fromGlobalId(log.id).id);
+	let href = $derived(`/logs/${id}`);
 
 	const modalId = `log-modal-${log.id}`;
 
@@ -45,8 +49,8 @@
 					<label
 						for={modalId}
 						class="btn btn-neutral"
-						on:click={handleRemoveLog}
-						on:keypress={handleRemoveLog}>Yes</label
+						onclick={handleRemoveLog}
+						onkeypress={handleRemoveLog}>Yes</label
 					>
 					<label for={modalId} class="btn btn-neutral">No</label>
 				</div>

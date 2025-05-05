@@ -13,6 +13,7 @@
 	const createMutation = new CreateItemStore();
 
 	const handleSubmit = async (event: Event) => {
+		event.preventDefault();
 		const formData = new FormData(event.target as HTMLFormElement);
 		const parsed = parseFormData(formData);
 		const name = parsed.name as string | undefined;
@@ -32,9 +33,9 @@
 	};
 </script>
 
-<form method="POST" on:submit|preventDefault={handleSubmit}>
+<form method="POST" onsubmit={handleSubmit}>
 	<LayoutCreate>
-		<svelte:fragment slot="properties">
+		{#snippet properties()}
 			<div class="spacer"></div>
 			<div class="stat-block-container">
 				<!-- ARMOR STAT BLOCK -->
@@ -58,7 +59,7 @@
 					</AddBlock>
 				</div>
 			</div>
-		</svelte:fragment>
+		{/snippet}
 	</LayoutCreate>
 </form>
 

@@ -10,7 +10,11 @@
 	const ALGOLIA_APP_ID = import.meta.env.VITE_ALGOLIA_APP_ID.toString();
 	const ALGOLIA_SEARCH_ONLY_KEY = import.meta.env.VITE_ALGOLIA_SEARCH_ONLY_KEY.toString();
 
-	export let placeholder = '';
+	interface Props {
+		placeholder?: string;
+	}
+
+	let { placeholder = '' }: Props = $props();
 
 	function algoliaInit(_node: HTMLElement) {
 		const searchClient = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_SEARCH_ONLY_KEY);

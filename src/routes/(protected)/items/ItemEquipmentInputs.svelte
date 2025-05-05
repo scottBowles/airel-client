@@ -1,7 +1,7 @@
 <svelte:options runes={true} />
 
 <script lang="ts">
-	let { equipment = undefined }: { equipment: { briefDescription: string } | null } = $props();
+	let { equipment = undefined }: { equipment?: { briefDescription: string } | null } = $props();
 
 	const BRIEF_DESCRIPTION_ID = 'equipment.briefDescription';
 </script>
@@ -15,5 +15,5 @@
 		name={BRIEF_DESCRIPTION_ID}
 		value={equipment?.briefDescription ?? ''}
 		class="textarea"
-	/>
+	></textarea>
 </div>

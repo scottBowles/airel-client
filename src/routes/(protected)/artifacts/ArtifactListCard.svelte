@@ -47,8 +47,8 @@
 </script>
 
 <ListDetailCard entity={$data} {href}>
-	<svelte:fragment slot="title">
+	{#snippet titleSnippet()}
 		<a {href}>{name}</a>
 		<ItemTypeIcons {isWeapon} {isArmor} {isEquipment} />
-	</svelte:fragment>
+	{/snippet}
 </ListDetailCard>

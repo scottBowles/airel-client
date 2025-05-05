@@ -3,8 +3,13 @@
 	import FaPlus from 'svelte-icons/fa/FaPlus.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 
-	export let property: string;
-	export let showInput = false;
+	interface Props {
+		property: string;
+		showInput?: boolean;
+		children?: import('svelte').Snippet;
+	}
+
+	let { property, showInput = $bindable(false), children }: Props = $props();
 
 	const handleAdd = () => (showInput = true);
 </script>
@@ -13,9 +18,9 @@
 	<h3 class="text-xl font-bold">{capitalize(property)}</h3>
 	<Spacer xs />
 
-	<slot />
+	{@render children?.()}
 {:else}
-	<div class="add-block" on:click={handleAdd} on:keypress={handleAdd}>
+	<div class="add-block" onclick={handleAdd} onkeypress={handleAdd}>
 		<div class="add-icon-container">
 			<FaPlus />
 		</div>

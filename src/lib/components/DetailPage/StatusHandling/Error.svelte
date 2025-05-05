@@ -7,11 +7,13 @@
 
 <LayoutBase>
 	<!-- NAME -->
-	<h1 slot="name" class="text-3xl font-bold">Something went wrong</h1>
+	{#snippet name()}
+		<h1 class="text-3xl font-bold">Something went wrong</h1>
+	{/snippet}
 
-	<svelte:fragment slot="properties">
-		{#each errors as error}
+	{#snippet properties()}
+		{#each errors as error, i (i + error.message)}
 			<BasicProperty name="Error" value={error.message} />
 		{/each}
-	</svelte:fragment>
+	{/snippet}
 </LayoutBase>

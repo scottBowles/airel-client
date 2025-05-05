@@ -36,10 +36,10 @@
 </script>
 
 <ListDetailCard entity={$data} {href}>
-	<svelte:fragment slot="title">
+	{#snippet titleSnippet()}
 		<a {href} class="name">{name}</a>
 		<ItemTypeIcons isWeapon={!!weapon} isArmor={!!armor} isEquipment={!!equipment} />
-	</svelte:fragment>
+	{/snippet}
 </ListDetailCard>
 
 <style>

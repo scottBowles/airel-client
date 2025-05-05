@@ -1,7 +1,7 @@
 <svelte:options runes={true} />
 
 <script lang="ts">
-	let { weapon = undefined }: { weapon: { attackBonus: number } | null } = $props();
+	let { weapon = undefined }: { weapon?: { attackBonus: number } | null } = $props();
 
 	const ATTACK_BONUS_ID = '+weapon.attackBonus';
 </script>

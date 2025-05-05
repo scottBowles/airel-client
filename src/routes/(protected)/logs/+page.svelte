@@ -6,13 +6,13 @@
 	import FaCaretDown from 'svelte-icons/fa/FaCaretDown.svelte';
 	import FaExternalLinkAlt from 'svelte-icons/fa/FaExternalLinkAlt.svelte';
 	import AddALog from './AddALog.svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import InfiniteLoading, { type InfiniteEvent } from 'svelte-infinite-loading';
 	import Sticky from '$lib/components/Sticky.svelte';
 
 	let { data }: { data: PageData } = $props();
 
-	let { me } = $derived($page.data);
+	let { me } = $derived(page.data);
 	let { GameLogs } = $derived(data);
 	let logs = $derived(
 		$GameLogs?.data?.gameLogs?.edges?.map(({ node }) => node).sort(logByGameDate) || []
@@ -71,78 +71,88 @@
 	</div>
 
 	<ul>
-		{#each logsGroupedWithPlanet as logGrouping}
+		{#each logsGroupedWithPlanet as logGrouping, i (i + (logGrouping.location || 'unknown'))}
 			<Sticky tag="li">
-				<div slot="sticky" let:isStuck class="bg-base-100 flex h-16 items-center">
-					<h2 class="text-2xl font-bold" class:text-3xl={isStuck}>
-						{logGrouping.location}
-					</h2>
-				</div>
-				<div slot="content">
-					{#each logGrouping.logs as log (log.id)}
-						{@const id = fromGlobalId(log.id).id}
-						{@const detailUrl = `/logs/${id}`}
-						<ul>
-							<!-- <p>{planetSetIn(log)}</p> -->
-							<li class="mb-8">
-								<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-								<article tabindex="0" class="group collapse">
-									<div
-										class="card bg-base-200 group-focus:bg-base-300 text-base-content w-full shadow-xl"
-									>
-										<div class="card-body collapse-title">
-											<div class="justify-between gap-4 md:flex">
-												<h2 class="card-title mb-2">
-													<span>
-														<a href={detailUrl} class="hover:text-accent">{log.title}</a>
-														<a
-															href={log.url}
-															target="_blank"
-															rel="noopener noreferrer"
-															class="ml-2"
-														>
-															<span class="icon hover:text-accent inline-block"
-																><FaExternalLinkAlt /></span
+				{#snippet stickySnippet({ isStuck })}
+					<div class="bg-base-100 flex h-16 items-center">
+						<h2 class="text-2xl font-bold" class:text-3xl={isStuck}>
+							{logGrouping.location}
+						</h2>
+					</div>
+				{/snippet}
+				{#snippet contentSnippet()}
+					<div>
+						{#each logGrouping.logs as log (log.id)}
+							{@const id = fromGlobalId(log.id).id}
+							{@const detailUrl = `/logs/${id}`}
+							<ul>
+								<!-- <p>{planetSetIn(log)}</p> -->
+								<li class="mb-8">
+									<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+									<article tabindex="0" class="group collapse">
+										<div
+											class="card bg-base-200 group-focus:bg-base-300 text-base-content w-full shadow-xl"
+										>
+											<div class="card-body collapse-title">
+												<div class="justify-between gap-4 md:flex">
+													<h2 class="card-title mb-2">
+														<span>
+															<a href={detailUrl} class="hover:text-accent">{log.title}</a>
+															<a
+																href={log.url}
+																target="_blank"
+																rel="noopener noreferrer"
+																class="ml-2"
 															>
-														</a>
-													</span>
-												</h2>
-												<h6 class="card-subtitle whitespace-nowrap">
-													{log.gameDate
-														? dateAdjustedForUtcOffset(new Date(log.gameDate)).toLocaleDateString(
-																'en-US',
-																{
-																	year: 'numeric',
-																	month: 'short',
-																	day: 'numeric'
-																}
-															)
-														: '(date unknown)'}
-												</h6>
+																<span class="icon hover:text-accent inline-block"
+																	><FaExternalLinkAlt /></span
+																>
+															</a>
+														</span>
+													</h2>
+													<h6 class="card-subtitle whitespace-nowrap">
+														{log.gameDate
+															? dateAdjustedForUtcOffset(new Date(log.gameDate)).toLocaleDateString(
+																	'en-US',
+																	{
+																		year: 'numeric',
+																		month: 'short',
+																		day: 'numeric'
+																	}
+																)
+															: '(date unknown)'}
+													</h6>
+												</div>
+												<p>{log.brief || '(brief tbd)'}</p>
 											</div>
-											<p>{log.brief || '(brief tbd)'}</p>
+											<div class="collapse-content">
+												{log.synopsis || '(synopsis tbd)'}
+											</div>
+											<div class="w-full text-center">
+												<span class="icon group-focus:hidden"><FaCaretDown /></span>
+											</div>
 										</div>
-										<div class="collapse-content">
-											{log.synopsis || '(synopsis tbd)'}
-										</div>
-										<div class="w-full text-center">
-											<span class="icon group-focus:hidden"><FaCaretDown /></span>
-										</div>
-									</div>
-								</article>
-							</li>
-						</ul>
-					{/each}
-				</div>
+									</article>
+								</li>
+							</ul>
+						{/each}
+					</div>
+				{/snippet}
 			</Sticky>
 		{/each}
 	</ul>
 
 	<div>
 		<InfiniteLoading on:infinite={infiniteHandler} distance={5000}>
-			<div slot="noMore"></div>
-			<div slot="noResults">{$GameLogs.fetching ? 'Loading...' : 'No results'}</div>
-			<div slot="error">Something went wrong loading logs</div>
+			{#snippet noMore()}
+				<div></div>
+			{/snippet}
+			{#snippet noResults()}
+				<div>{$GameLogs.fetching ? 'Loading...' : 'No results'}</div>
+			{/snippet}
+			{#snippet error()}
+				<div>Something went wrong loading logs</div>
+			{/snippet}
 		</InfiniteLoading>
 	</div>
 </div>

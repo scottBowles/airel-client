@@ -8,11 +8,11 @@
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import type { PageData } from './$houdini';
 	import { fromGlobalId } from '$lib/utils';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	let { data }: { data: PageData } = $props();
 
-	let { me } = $derived($page.data);
+	let { me } = $derived(page.data);
 	let { Races } = $derived(data);
 	let races = $derived(
 		$Races?.data?.races?.edges?.map(({ node }) => node).sort(alphabeticallyBy('name')) || []
@@ -21,7 +21,7 @@
 
 <BannerImage
 	overlay="Races"
-	imageId={'dnd/City_guard_and_magister-5e_uk2sr0'}
+	imageId="dnd/City_guard_and_magister-5e_uk2sr0"
 	alt="races banner"
 	gravity={compass('north_east')}
 />

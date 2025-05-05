@@ -1,11 +1,19 @@
 <!-- https://css-tricks.com/how-to-detect-when-a-sticky-element-gets-pinned/ -->
+<svelte:options runes={true} />
 
 <script lang="ts">
 	import sticky from '$lib/actions/sticky';
+	import type { Snippet } from 'svelte';
 
-	export let tag = 'div';
+	interface Props {
+		tag?: string;
+		contentSnippet?: Snippet;
+		stickySnippet?: Snippet<[{ isStuck: boolean }]>;
+	}
 
-	let isStuck = false;
+	let { tag = 'div', contentSnippet, stickySnippet }: Props = $props();
+
+	let isStuck = $state(false);
 
 	function handleStuck(e: CustomEvent<{ isStuck: boolean }>) {
 		isStuck = e.detail.isStuck;
@@ -14,9 +22,9 @@
 
 <svelte:element this={tag}>
 	<!-- the `-top-px` style is needed for this to work -->
-	<div use:sticky on:stuck={handleStuck} class="sticky z-10 -top-px">
-		<slot name="sticky" {isStuck} />
+	<div use:sticky onstuck={handleStuck} class="sticky -top-px z-10">
+		{@render stickySnippet?.({ isStuck })}
 	</div>
 
-	<slot name="content" />
+	{@render contentSnippet?.()}
 </svelte:element>

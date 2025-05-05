@@ -5,20 +5,24 @@
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import type { PageData } from './$houdini';
 	import ArtifactListCard from './ArtifactListCard.svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
 
-	$: ({ me } = $page.data);
-	$: ({ Artifacts } = data);
-	$: artifacts =
-		$Artifacts?.data?.artifacts?.edges?.map(({ node }) => node).sort(alphabeticallyBy('name')) ||
-		[];
+	let { data }: Props = $props();
+
+	let { me } = $derived(page.data);
+	let { Artifacts } = $derived(data);
+	let artifacts = $derived(
+		$Artifacts?.data?.artifacts?.edges?.map(({ node }) => node).sort(alphabeticallyBy('name')) || []
+	);
 </script>
 
 <BannerImage
 	overlay="Artifacts"
-	imageId={'dnd/City_guard_and_magister-5e_uk2sr0'}
+	imageId="dnd/City_guard_and_magister-5e_uk2sr0"
 	alt="artifacts banner"
 	gravity={compass('north_east')}
 />

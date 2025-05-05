@@ -3,8 +3,17 @@
 <script lang="ts">
 	import { fragment, graphql, type EntityListFields } from '$houdini';
 	import Thumbnail from '$lib/components/Thumbnail.svelte';
+	import type { Snippet } from 'svelte';
 
-	let { href, entity }: { href: string; entity: EntityListFields } = $props();
+	interface Props {
+		href: string;
+		entity: EntityListFields;
+		thumbnailSnippet?: Snippet;
+		titleSnippet?: Snippet;
+		descriptionSnippet?: Snippet;
+	}
+
+	let { href, entity, thumbnailSnippet, titleSnippet, descriptionSnippet }: Props = $props();
 
 	let data = $derived(
 		fragment(
@@ -24,19 +33,25 @@
 </script>
 
 <div class="_card">
-	<slot name="thumbnail">
+	{#if thumbnailSnippet}
+		{@render thumbnailSnippet()}
+	{:else}
 		<Thumbnail thumbnailId={thumbnailId || imageIds?.[0]} />
-	</slot>
+	{/if}
 	<div>
 		<p class="title">
-			<slot name="title">
+			{#if titleSnippet}
+				{@render titleSnippet()}
+			{:else}
 				<a {href}>{name}</a>
-			</slot>
+			{/if}
 		</p>
 		<p class="description">
-			<slot name="description">
+			{#if descriptionSnippet}
+				{@render descriptionSnippet()}
+			{:else}
 				{description ?? ''}
-			</slot>
+			{/if}
 		</p>
 	</div>
 </div>

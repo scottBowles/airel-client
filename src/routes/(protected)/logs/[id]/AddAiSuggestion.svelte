@@ -5,13 +5,18 @@
 
 	const addAiLogSuggestion = new AddAiLogSuggestionStore();
 
-	export let id: string;
+	interface Props {
+		id: string;
+	}
 
-	let isOpen: boolean;
+	let { id }: Props = $props();
+
+	let isOpen: boolean = $state(false);
 
 	const MODAL_ID = 'modal-add-ai-suggestion';
 
 	function handleAddSuggestionJson(event: Event) {
+		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const aiSuggestionJson = data.get('aiSuggestionJson')?.toString();
 		if (!aiSuggestionJson) return;
@@ -34,7 +39,7 @@
 <input type="checkbox" id={MODAL_ID} class="modal-toggle" bind:checked={isOpen} />
 <label for={MODAL_ID} class="modal modal-bottom sm:modal-middle cursor-pointer">
 	<label class="modal-box relative" for="">
-		<form on:submit|preventDefault={handleAddSuggestionJson}>
+		<form onsubmit={handleAddSuggestionJson}>
 			<h3 class="text-lg font-bold">Add a Generated Suggestion from JSON</h3>
 
 			<div class="form-control w-full max-w-xs">

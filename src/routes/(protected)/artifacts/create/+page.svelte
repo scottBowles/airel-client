@@ -11,6 +11,7 @@
 	const createMutation = new CreateArtifactStore();
 
 	const handleSubmit = async (event: Event) => {
+		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const parsed = parseFormData(data);
 		const name = parsed.name as string | undefined;
@@ -29,11 +30,11 @@
 	};
 </script>
 
-<form method="POST" on:submit|preventDefault={handleSubmit}>
+<form method="POST" onsubmit={handleSubmit}>
 	<LayoutCreate>
-		<svelte:fragment slot="properties">
+		{#snippet properties()}
 			<Spacer lg />
 			<RelatedItemMultiSelect />
-		</svelte:fragment>
+		{/snippet}
 	</LayoutCreate>
 </form>

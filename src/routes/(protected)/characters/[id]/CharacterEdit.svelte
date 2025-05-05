@@ -8,30 +8,38 @@
 
 	const updateCharacter = new UpdateCharacterStore();
 
-	export let character: CharacterEditFields;
+	interface Props {
+		character: CharacterEditFields;
+	}
 
-	$: data = fragment(
-		character,
-		graphql(`
-			fragment CharacterEditFields on Character {
-				id
-				associations {
-					edges {
-						node {
-							id
+	let { character }: Props = $props();
+
+	let data = $derived(
+		fragment(
+			character,
+			graphql(`
+				fragment CharacterEditFields on Character {
+					id
+					associations {
+						edges {
+							node {
+								id
+							}
 						}
 					}
+					race {
+						id
+					}
+					...EntityEditFields
 				}
-				race {
-					id
-				}
-				...EntityEditFields
-			}
-		`)
+			`)
+		)
 	);
 
-	$: ({ id, associations: associationConnection, race } = $data);
-	$: initialAssociationIds = associationConnection?.edges.map(({ node }) => node.id) || [];
+	let { id, associations: associationConnection, race } = $derived($data);
+	let initialAssociationIds = $derived(
+		associationConnection?.edges.map(({ node }) => node.id) || []
+	);
 
 	const handleSubmit = async (event: Event) => {
 		const data = new FormData(event.target as HTMLFormElement);
@@ -40,14 +48,14 @@
 	};
 </script>
 
-<form method="POST" on:submit|preventDefault={handleSubmit}>
+<form method="POST" onsubmit={handleSubmit}>
 	<LayoutEdit entity={$data}>
-		<svelte:fragment slot="properties">
+		{#snippet properties()}
 			<Spacer lg />
 			<RelatedRaceSelect initialRaceId={race?.id} />
 			<Spacer lg />
 			<RelatedAssociationMultiSelect ids={initialAssociationIds} />
 			<Spacer lg />
-		</svelte:fragment>
+		{/snippet}
 	</LayoutEdit>
 </form>

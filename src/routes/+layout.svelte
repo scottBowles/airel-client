@@ -1,6 +1,6 @@
-<script>
-	import { navigating } from '$app/stores';
-	import { onMount, setContext } from 'svelte';
+<script lang="ts">
+	import { navigating } from '$app/state';
+	import { onMount, setContext, type Snippet } from 'svelte';
 	import { SvelteToast } from '@zerodevx/svelte-toast';
 	import { themeChange } from 'theme-change';
 
@@ -9,6 +9,12 @@
 	import '../app.css';
 	import { browser } from '$app/environment';
 	import { ThemeState } from '$lib/stores';
+
+	interface Props {
+		children?: Snippet;
+	}
+
+	let { children }: Props = $props();
 
 	// Initialize stores
 	const userPrefersLight = browser && window.matchMedia('(prefers-color-scheme: light)').matches;
@@ -24,14 +30,14 @@
 	});
 </script>
 
-{#if $navigating}
+{#if navigating.to}
 	<PreloadingIndicator />
 {/if}
 
 <!-- TODO: put NavBar outside of main and handle min-height accordingly -->
 <main>
 	<SvelteToast options={{ pausable: true }} />
-	<slot />
+	{@render children?.()}
 </main>
 
 <style>

@@ -1,7 +1,12 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 
-	export let onImageUpload: (error: any, result: any) => Promise<void>;
+	interface Props {
+		onImageUpload: (error: any, result: any) => Promise<void>;
+		children?: import('svelte').Snippet;
+	}
+
+	let { onImageUpload, children }: Props = $props();
 
 	let uploadWidget: any;
 
@@ -33,12 +38,13 @@
 		src="https://upload-widget.cloudinary.com/global/all.js"
 		type="text/javascript"
 		async
-		on:load={loadWidget}
+		onload={loadWidget}
 	></script>
 </svelte:head>
 
-<span on:click={openWidget} on:keypress={openWidget}>
-	<slot>this is a slot for a component which will open the cloudinary upload widget on click</slot>
+<span onclick={openWidget} onkeypress={openWidget} role="button" tabindex="0">
+	{#if children}{@render children()}{:else}this is a slot for a component which will open the
+		cloudinary upload widget on click{/if}
 </span>
 
 <style>

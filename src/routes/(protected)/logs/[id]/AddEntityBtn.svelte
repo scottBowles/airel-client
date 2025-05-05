@@ -25,11 +25,21 @@
 	const createPlaceMutation = new CreatePlaceStore();
 	const createRaceMutation = new CreateRaceStore();
 
-	export let entityName: string;
-	export let suggestedEntityType: EntityType | undefined = undefined;
-	export let updateFoundEntities: (type: EntityType, newEntity: any) => void;
-	export let updateLogEntitiesInForm: (id: string) => void;
-	export let verbose = false;
+	interface Props {
+		entityName: string;
+		suggestedEntityType?: EntityType | undefined;
+		updateFoundEntities: (type: EntityType, newEntity: any) => void;
+		updateLogEntitiesInForm: (id: string) => void;
+		verbose?: boolean;
+	}
+
+	let {
+		entityName,
+		suggestedEntityType = undefined,
+		updateFoundEntities,
+		updateLogEntitiesInForm,
+		verbose = false
+	}: Props = $props();
 
 	const artifactNamesAndIdsQuery = new ArtifactNamesAndIdsStore();
 	const associationNamesAndIdsQuery = new AssociationNamesAndIdsStore();
@@ -38,7 +48,7 @@
 	const placeNamesIdsAndTypesQuery = new PlaceNamesIdsAndTypesStore();
 	const raceNamesAndIdsQuery = new RaceNamesAndIdsStore();
 
-	let isOpen: boolean;
+	let isOpen: boolean = $state(false);
 
 	const ADD_MODAL_ID = 'modal-add-entity' + suggestedEntityType + entityName;
 
@@ -85,6 +95,7 @@
 	};
 
 	async function handleAddEntity(event: Event) {
+		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const name = data.get('name')?.toString();
 		const entityType = data.get('entityType')?.toString();
@@ -133,7 +144,7 @@
 <input type="checkbox" id={ADD_MODAL_ID} class="modal-toggle" bind:checked={isOpen} />
 <label for={ADD_MODAL_ID} class="modal modal-bottom sm:modal-middle cursor-pointer">
 	<label class="modal-box relative" for="">
-		<form on:submit|preventDefault={handleAddEntity}>
+		<form onsubmit={handleAddEntity}>
 			<h3 class="text-lg font-bold">Add Entity</h3>
 
 			<div class="form-control w-full max-w-xs">
@@ -141,7 +152,7 @@
 					<span class="label-text">Select Entity Type</span>
 				</label>
 				<select class="select" id="entity-type" name="entityType">
-					{#each ENTITY_TYPES as opt}
+					{#each ENTITY_TYPES as opt (opt)}
 						<option value={opt} selected={suggestedEntityType === opt}>{capitalize(opt)}</option>
 					{/each}
 				</select>

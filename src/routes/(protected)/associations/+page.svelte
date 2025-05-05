@@ -8,11 +8,11 @@
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import type { PageData } from './$houdini';
 	import { fromGlobalId } from '$lib/utils';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	let { data }: { data: PageData } = $props();
 
-	let { me } = $derived($page.data);
+	let { me } = $derived(page.data);
 	let { Associations } = $derived(data);
 	let associations = $derived(
 		$Associations?.data?.associations?.edges
@@ -23,7 +23,7 @@
 
 <BannerImage
 	overlay="Associations"
-	imageId={'dnd/City_guard_and_magister-5e_uk2sr0'}
+	imageId="dnd/City_guard_and_magister-5e_uk2sr0"
 	alt="associations banner"
 	gravity={compass('north_east')}
 />

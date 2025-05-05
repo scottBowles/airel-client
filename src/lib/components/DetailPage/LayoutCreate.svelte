@@ -1,19 +1,20 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import { GetOrCreateGameLogStore } from '$houdini';
 	import CloudinaryUpload from '$lib/components/CloudinaryUpload.svelte';
 	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
 	import { somethingWentWrong } from '$lib/utils';
-	import LayoutBase from './LayoutBase.svelte';
-	import LogsDisplay from './LogsDisplay.svelte';
-	import Spacer from '../Spacer.svelte';
+	import type { Snippet } from 'svelte';
 	import QuillEditor from '../QuillEditor.svelte';
-	import { page } from '$app/stores';
 	import RelatedArtifactMultiSelect from '../RelatedArtifactMultiSelect.svelte';
 	import RelatedAssociationMultiSelect from '../RelatedAssociationMultiSelect.svelte';
 	import RelatedCharacterMultiSelect from '../RelatedCharacterMultiSelect.svelte';
 	import RelatedItemMultiSelect from '../RelatedItemMultiSelect.svelte';
 	import RelatedPlaceMultiSelect from '../RelatedPlaceMultiSelect.svelte';
 	import RelatedRaceMultiSelect from '../RelatedRaceMultiSelect.svelte';
+	import Spacer from '../Spacer.svelte';
+	import LayoutBase from './LayoutBase.svelte';
+	import LogsDisplay from './LogsDisplay.svelte';
 
 	type Log = {
 		readonly id: string;
@@ -26,12 +27,17 @@
 
 	const getOrCreateLogMutation = new GetOrCreateGameLogStore();
 
-	export let name = '';
+	interface Props {
+		name?: string;
+		properties?: Snippet;
+	}
 
-	let imageIds: string[] = [];
-	let logs: Log[] = [];
+	let { name = $bindable(''), properties: properties_render }: Props = $props();
 
-	$: logIds = logs.map((log) => log.id);
+	let imageIds: string[] = $state([]);
+	let logs: Log[] = $state([]);
+
+	let logIds = $derived(logs.map((log) => log.id));
 
 	const onImageUpload = async (error: any, result: any) => {
 		if (error) return somethingWentWrong(error.message);
@@ -59,94 +65,107 @@
 
 <LayoutBase clearfix>
 	<!-- NAME -->
-	<div slot="name" class="form-control">
-		<label for="name-input" class="label">
-			<span class="label-text">Name</span>
-		</label>
-		<input type="text" id="name-input" name="name" bind:value={name} class="input" required />
-	</div>
+	{#snippet name()}
+		<div class="form-control">
+			<label for="name-input" class="label">
+				<span class="label-text">Name</span>
+			</label>
+			<input type="text" id="name-input" name="name" bind:value={name} class="input" required />
+		</div>
+	{/snippet}
 
 	<!-- EDIT / SAVE + LOCKED BY {USER} -->
-	<button slot="lockedBy" type="submit" class="btn btn-ghost btn-sm btn-custom ml-auto">Save</button
-	>
+	{#snippet lockedBy()}
+		<button type="submit" class="btn btn-ghost btn-sm btn-custom ml-auto">Save</button>
+	{/snippet}
 
 	<!-- MAIN IMAGE -->
-	<div slot="mainImage" class="mx-auto w-full max-w-xs">
-		{#if $page.data.me?.isStaff}
-			<CloudinaryUpload {onImageUpload}>
+	{#snippet mainImage()}
+		<div class="mx-auto w-full max-w-xs">
+			{#if page.data.me?.isStaff}
+				<CloudinaryUpload {onImageUpload}>
+					<ImageCarousel {imageIds} alt="uploaded images" />
+				</CloudinaryUpload>
+			{:else}
 				<ImageCarousel {imageIds} alt="uploaded images" />
-			</CloudinaryUpload>
-		{:else}
-			<ImageCarousel {imageIds} alt="uploaded images" />
-		{/if}
+			{/if}
 
-		<Spacer />
+			<Spacer />
 
-		<!-- Hidden inputs -->
-		{#each imageIds as imageId, i}
-			<input type="hidden" name={`imageIds[${i}]`} value={imageId} />
-		{/each}
-	</div>
+			<!-- Hidden inputs -->
+			{#each imageIds as imageId, i (`${i}--${imageId}`)}
+				<input type="hidden" name={`imageIds[${i}]`} value={imageId} />
+			{/each}
+		</div>
+	{/snippet}
 
 	<!-- LOGS -->
-	<svelte:fragment slot="logs">
+	{#snippet logs()}
 		<LogsDisplay {logs} {onLogAdd} {onLogRemove} />
 		<Spacer />
 
 		<!-- Hidden inputs -->
-		{#each logIds as logId, i}
+		{#each logIds as logId, i (`${i}--${logId}`)}
 			<input type="hidden" name={`logs[${i}]`} value={logId} />
 		{/each}
-	</svelte:fragment>
+	{/snippet}
 
 	<!-- DESCRIPTION -->
-	<div slot="description" class="form-control">
-		<label for="description-input" class="label">
-			<span class="label-text">Description</span>
-		</label>
-		<textarea name="description" id="description-input" class="textarea w-full"></textarea>
-	</div>
+	{#snippet description()}
+		<div class="form-control">
+			<label for="description-input" class="label">
+				<span class="label-text">Description</span>
+			</label>
+			<textarea name="description" id="description-input" class="textarea w-full"></textarea>
+		</div>
+	{/snippet}
 
 	<!-- PROPERTIES -->
-	<slot name="properties" slot="properties" />
+	{#snippet properties()}
+		{@render properties_render?.()}
+	{/snippet}
 
 	<!-- RELATED -->
-	<div slot="related">
-		<h2 class="text-2xl font-bold">Related</h2>
-		<RelatedArtifactMultiSelect
-			id="related-artifacts"
-			inputGroupName="relatedArtifacts"
-			entityDisplayName="Artifacts"
-		/>
-		<RelatedAssociationMultiSelect
-			id="related-associations"
-			inputGroupName="relatedAssociations"
-			entityDisplayName="Associations"
-		/>
-		<RelatedCharacterMultiSelect
-			id="related-characters"
-			inputGroupName="relatedCharacters"
-			entityDisplayName="Characters"
-		/>
-		<RelatedItemMultiSelect
-			id="related-items"
-			inputGroupName="relatedItems"
-			entityDisplayName="Items"
-		/>
-		<RelatedPlaceMultiSelect
-			id="related-places"
-			inputGroupName="relatedPlaces"
-			entityDisplayName="Places"
-		/>
-		<RelatedRaceMultiSelect
-			id="related-races"
-			inputGroupName="relatedRaces"
-			entityDisplayName="Races"
-		/>
-	</div>
+	{#snippet related()}
+		<div>
+			<h2 class="text-2xl font-bold">Related</h2>
+			<RelatedArtifactMultiSelect
+				id="related-artifacts"
+				inputGroupName="relatedArtifacts"
+				entityDisplayName="Artifacts"
+			/>
+			<RelatedAssociationMultiSelect
+				id="related-associations"
+				inputGroupName="relatedAssociations"
+				entityDisplayName="Associations"
+			/>
+			<RelatedCharacterMultiSelect
+				id="related-characters"
+				inputGroupName="relatedCharacters"
+				entityDisplayName="Characters"
+			/>
+			<RelatedItemMultiSelect
+				id="related-items"
+				inputGroupName="relatedItems"
+				entityDisplayName="Items"
+			/>
+			<RelatedPlaceMultiSelect
+				id="related-places"
+				inputGroupName="relatedPlaces"
+				entityDisplayName="Places"
+			/>
+			<RelatedRaceMultiSelect
+				id="related-races"
+				inputGroupName="relatedRaces"
+				entityDisplayName="Races"
+			/>
+		</div>
+	{/snippet}
 
 	<!-- MARKDOWN NOTES -->
-	<QuillEditor slot="markdownNotes" init="" />
+	{#snippet markdownNotes()}
+		<QuillEditor init="" />
+	{/snippet}
 </LayoutBase>
 
 <style>

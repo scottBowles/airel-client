@@ -7,13 +7,13 @@
 	import { prop } from 'ramda';
 	import { adjustForTimezone, fromGlobalId } from '$lib/utils';
 	import FoundInThisLogEntity from './FoundInThisLogEntity.svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	const lockForEditMutation = new LockStore();
 
 	let { log }: { log: LogDetailFields } = $props();
 
-	let { me } = $derived($page.data);
+	let { me } = $derived(page.data);
 	let data = $derived(
 		fragment(
 			log,
@@ -135,7 +135,7 @@
 					type="button"
 					class="btn btn-ghost btn-sm icon-btn"
 					disabled={!!lockUser}
-					on:click={onEditClick}
+					onclick={onEditClick}
 				>
 					<span class="icon"><FaEdit /></span>
 				</button>

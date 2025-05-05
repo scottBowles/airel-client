@@ -1,15 +1,17 @@
 <svelte:options runes={true} />
 
 <script lang="ts">
-	import { navigating } from '$app/stores';
+	import { navigating } from '$app/state';
 	import Algolia from '$lib/components/Algolia.svelte';
 	import { themes } from '$lib/constants';
 	import { ThemeState } from '$lib/stores';
 	import { capitalize } from '$lib/utils';
-	import { getContext } from 'svelte';
+	import { getContext, type Snippet } from 'svelte';
 	import SearchButton from '../SearchButton.svelte';
 	import NavLinks from './NavLinks.svelte';
 	import Title from './Title.svelte';
+
+	let { children }: { children?: Snippet } = $props();
 
 	let theme = getContext<ThemeState>('theme');
 
@@ -25,7 +27,7 @@
 
 	$effect(() => {
 		if (drawerShouldClose) closeDrawer();
-		if ($navigating) closeDrawer();
+		if (navigating.to) closeDrawer();
 	});
 </script>
 
@@ -63,7 +65,7 @@
 
 			<select data-choose-theme bind:value={theme.value} class="select select-sm hidden xl:block">
 				<option value="">Select a theme</option>
-				{#each themes as themeOption}
+				{#each themes as themeOption (themeOption)}
 					<option value={themeOption}>{capitalize(themeOption)}</option>
 				{/each}
 			</select>
@@ -76,7 +78,7 @@
 			</div>
 		</div>
 		<!-- Page content here -->
-		<slot />
+		{@render children?.()}
 	</div>
 	<div class="drawer-side">
 		<label for="mobile-drawer" class="drawer-overlay"></label>

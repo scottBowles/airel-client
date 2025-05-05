@@ -1,14 +1,20 @@
 <svelte:options runes={true} />
 
 <script lang="ts">
-	import { navigating } from '$app/stores';
+	import { navigating } from '$app/state';
 	import Algolia from '$lib/components/Algolia.svelte';
 	import CustomLayout from '$lib/components/nav/CustomLayout.svelte';
 	import NavBar from '$lib/components/nav/NavBar.svelte';
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
 	import { type ShowAlgoliaSearch, ThemeState } from '$lib/stores';
 	import { SvelteToast } from '@zerodevx/svelte-toast';
-	import { getContext } from 'svelte';
+	import { getContext, type Snippet } from 'svelte';
+
+	interface Props {
+		children?: Snippet;
+	}
+
+	let { children }: Props = $props();
 
 	let theme = getContext<ThemeState>('theme');
 	const showAlgoliaSearch = getContext<ShowAlgoliaSearch>('showAlgoliaSearch');
@@ -21,7 +27,7 @@
 	// $: console.log(me);
 </script>
 
-{#if $navigating}
+{#if navigating.to}
 	<PreloadingIndicator />
 {/if}
 
@@ -29,9 +35,9 @@
 <main>
 	<!-- <AllDrawers><slot /></AllDrawers> -->
 	{#if theme.value === 'trek'}
-		<CustomLayout><slot /></CustomLayout>
+		<CustomLayout>{@render children?.()}</CustomLayout>
 	{:else}
-		<NavBar><slot /></NavBar>
+		<NavBar>{@render children?.()}</NavBar>
 	{/if}
 
 	<SvelteToast options={{ pausable: true }} />

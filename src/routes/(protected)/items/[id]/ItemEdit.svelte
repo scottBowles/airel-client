@@ -9,31 +9,38 @@
 
 	const updateItem = new UpdateItemStore();
 
-	export let item: ItemEditFields;
+	interface Props {
+		item: ItemEditFields;
+	}
 
-	$: data = fragment(
-		item,
-		graphql(`
-			fragment ItemEditFields on Item {
-				id
-				armor {
-					acBonus
-				}
-				weapon {
-					attackBonus
-				}
-				equipment {
-					briefDescription
-				}
+	let { item }: Props = $props();
 
-				...EntityEditFields
-			}
-		`)
+	let data = $derived(
+		fragment(
+			item,
+			graphql(`
+				fragment ItemEditFields on Item {
+					id
+					armor {
+						acBonus
+					}
+					weapon {
+						attackBonus
+					}
+					equipment {
+						briefDescription
+					}
+
+					...EntityEditFields
+				}
+			`)
+		)
 	);
 
-	$: ({ id, armor, weapon, equipment } = $data);
+	let { id, armor, weapon, equipment } = $derived($data);
 
 	const handleSubmit = async (event: Event) => {
+		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const parsed = parseFormData(data);
 
@@ -44,9 +51,9 @@
 	};
 </script>
 
-<form method="POST" on:submit|preventDefault={handleSubmit}>
+<form method="POST" onsubmit={handleSubmit}>
 	<LayoutEdit entity={$data}>
-		<svelte:fragment slot="properties">
+		{#snippet properties()}
 			<div class="spacer"></div>
 			<div class="stat-block-container">
 				<!-- ARMOR STAT BLOCK -->
@@ -70,7 +77,7 @@
 					</AddBlock>
 				</div>
 			</div>
-		</svelte:fragment>
+		{/snippet}
 	</LayoutEdit>
 </form>
 

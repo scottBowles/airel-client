@@ -4,21 +4,28 @@
 
 	const updateRace = new UpdateRaceStore();
 
-	export let race: RaceEditFields;
+	interface Props {
+		race: RaceEditFields;
+	}
 
-	$: data = fragment(
-		race,
-		graphql(`
-			fragment RaceEditFields on Race {
-				id
-				...EntityEditFields
-			}
-		`)
+	let { race }: Props = $props();
+
+	let data = $derived(
+		fragment(
+			race,
+			graphql(`
+				fragment RaceEditFields on Race {
+					id
+					...EntityEditFields
+				}
+			`)
+		)
 	);
 
-	$: ({ id } = $data);
+	let { id } = $derived($data);
 
 	const handleSubmit = async (event: Event) => {
+		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const name = data.get('name')?.toString();
 		const description = data.get('description')?.toString();
@@ -28,6 +35,6 @@
 	};
 </script>
 
-<form method="POST" on:submit|preventDefault={handleSubmit}>
+<form method="POST" onsubmit={handleSubmit}>
 	<LayoutEdit entity={$data} />
 </form>

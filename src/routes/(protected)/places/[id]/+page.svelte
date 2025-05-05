@@ -5,12 +5,16 @@
 	import PlaceDetail from './PlaceDetail.svelte';
 	import PlaceEdit from './PlaceEdit.svelte';
 
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
 
-	$: ({ Place } = data);
-	$: place = $Place.data?.place;
+	let { data }: Props = $props();
 
-	$: lockedBySelfData = fragment(
+	let { Place } = $derived(data);
+	let place = $derived($Place.data?.place);
+
+	let lockedBySelfData = $derived(fragment(
 		place,
 		graphql(`
 			fragment PlaceLockedBySelf on Place {
@@ -18,7 +22,7 @@
 				lockedBySelf
 			}
 		`)
-	);
+	));
 </script>
 
 <StatusHandler entityName="place" queryResult={$Place}>
