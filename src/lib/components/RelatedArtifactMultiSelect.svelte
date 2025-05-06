@@ -1,18 +1,27 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { ArtifactNamesAndIdsStore } from '$houdini';
+	import { onMount } from 'svelte';
 	import RelatedEntityMultiSelectBase from './RelatedEntityMultiSelectBase.svelte';
 
 	const artifactNamesAndIdsQuery = new ArtifactNamesAndIdsStore();
-	$: browser && artifactNamesAndIdsQuery.fetch();
+	onMount(() => artifactNamesAndIdsQuery.fetch());
 
-	export let ids: string[] = [];
-	export let id = `artifact-select`;
-	export let inputGroupName = 'artifacts';
-	export let entityDisplayName = inputGroupName;
+	interface Props {
+		ids?: string[];
+		id?: string;
+		inputGroupName?: string;
+		entityDisplayName?: string;
+	}
 
-	$: optionNamesAndIdNodes = $artifactNamesAndIdsQuery.data?.artifacts.edges;
-	$: ({ fetching } = $artifactNamesAndIdsQuery);
+	let {
+		ids = $bindable([]),
+		id = `artifact-select`,
+		inputGroupName = 'artifacts',
+		entityDisplayName = inputGroupName
+	}: Props = $props();
+
+	let optionNamesAndIdNodes = $derived($artifactNamesAndIdsQuery.data?.artifacts.edges);
+	let { fetching } = $derived($artifactNamesAndIdsQuery);
 </script>
 
 <RelatedEntityMultiSelectBase

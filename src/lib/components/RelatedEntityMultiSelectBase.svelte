@@ -1,33 +1,51 @@
 <script lang="ts">
-	import { uniq } from 'ramda';
-	import type { Option } from 'svelte-multiselect';
 	import MultiSelect from '$lib/components/MultiSelect.svelte';
 	import { capitalize } from '$lib/utils';
+	import { uniq } from 'ramda';
 
-	export let id: string;
-	export let inputGroupName: string;
-	export let entityDisplayName: string = inputGroupName;
-	export let ids: string[];
-	export let optionNamesAndIdNodes: Option[] = [];
-	export let fetching: boolean;
+	interface Props {
+		id: string;
+		inputGroupName: string;
+		entityDisplayName?: string;
+		ids: string[];
+		optionNamesAndIdNodes?:
+			| {
+					readonly node: {
+						readonly id: string;
+						readonly name: string;
+					};
+			  }[]
+			| undefined;
+		fetching: boolean;
+	}
 
-	let selected: Option[] = [];
+	let {
+		id,
+		inputGroupName,
+		entityDisplayName = inputGroupName,
+		ids = $bindable(),
+		optionNamesAndIdNodes = [],
+		fetching
+	}: Props = $props();
 
-	$: options =
+	let options = $derived(
 		optionNamesAndIdNodes?.map((edge) => ({
 			value: edge.node.id,
 			label: edge.node.name
-		})) || [];
+		})) || []
+	);
 
-	function updateIdsOnSelect(selected: Option[]) {
+	let selected: typeof options | undefined = $state([]);
+
+	function updateIdsOnSelect(selected: typeof options = []) {
 		ids = selected.map((option) => option.value);
 	}
 
-	function updateSelectedOnIds(ids: string[], options?: Option[]) {
-		if (!options) return;
+	function updateSelectedOnIds(ids: string[], opts: typeof optionNamesAndIdNodes) {
+		if (!opts) return;
 		selected = uniq(ids)
 			.map((id) => {
-				const option = options.find((option) => option.node.id === id);
+				const option = opts.find((option) => option.node.id === id);
 				return option
 					? {
 							value: option.node.id,
@@ -38,8 +56,12 @@
 			.filter(Boolean);
 	}
 
-	$: updateIdsOnSelect(selected);
-	$: updateSelectedOnIds(ids, optionNamesAndIdNodes);
+	$effect(() => {
+		updateIdsOnSelect(selected);
+	});
+	$effect(() => {
+		updateSelectedOnIds(ids, optionNamesAndIdNodes);
+	});
 </script>
 
 <div class="form-control">
@@ -51,7 +73,7 @@
 	{:else}
 		<MultiSelect {id} {options} bind:selected />
 	{/if}
-	{#each ids as id, i}
+	{#each ids as id, i (id)}
 		<input type="hidden" name={`${inputGroupName}.set[${i}].id`} value={id} />
 	{/each}
 </div>
