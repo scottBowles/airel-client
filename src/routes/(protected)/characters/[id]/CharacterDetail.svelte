@@ -60,7 +60,7 @@
 				<h2 class="text-xl font-bold">Associations</h2>
 				<Spacer xs />
 				<div>
-					{#each associations as association, i}
+					{#each associations as association, i (association.id)}
 						{@const globalId = fromGlobalId(association.id).id}
 						<a class="link link-accent link-hover" href={`/associations/${globalId}`}
 							>{association.name}</a

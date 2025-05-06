@@ -1,7 +1,4 @@
 <script lang="ts">
-	import MultiSelect, { type Option } from 'svelte-multiselect';
-	import FaUserPlus from 'svelte-icons/fa/FaUserPlus.svelte';
-	import { ENTITY_TYPE, ENTITY_TYPES, type EntityType } from '$lib/constants';
 	import {
 		ArtifactNamesAndIdsStore,
 		AssociationNamesAndIdsStore,
@@ -17,49 +14,39 @@
 		PlaceNamesIdsAndTypesStore,
 		RaceNamesAndIdsStore
 	} from '$houdini';
-	import { browser } from '$app/environment';
+	import { ENTITY_TYPE, ENTITY_TYPES, type EntityType } from '$lib/constants';
 	import { capitalize, fromGlobalId, somethingWentWrong } from '$lib/utils';
 	import { pick } from 'ramda';
+	import { onMount } from 'svelte';
 	import FaInfoCircle from 'svelte-icons/fa/FaInfoCircle.svelte';
+	import FaUserPlus from 'svelte-icons/fa/FaUserPlus.svelte';
+	import MultiSelect, { type Option } from 'svelte-multiselect';
 
 	const entityAddAliasMutation = new EntityAddAliasStore();
 
-	$: {
-		if (browser) {
-			artifactNamesAndIdsQuery.fetch();
-			associationNamesAndIdsQuery.fetch();
-			characterNamesAndIdsQuery.fetch();
-			itemNamesAndIdsQuery.fetch();
-			placeNamesIdsAndTypesQuery.fetch();
-			raceNamesAndIdsQuery.fetch();
-		}
+	interface Props {
+		entityName: string;
+		suggestedEntityType?: EntityType | undefined;
+		updateFoundEntities: (type: EntityType, newEntity: any) => void;
+		updateLogEntitiesInForm: (id: string) => void;
+		verbose?: boolean;
 	}
 
-	$: allEntityOptions = [
-		$artifactNamesAndIdsQuery.data?.artifacts.edges.map((edge) => edge.node),
-		$associationNamesAndIdsQuery.data?.associations.edges.map((edge) => edge.node),
-		$characterNamesAndIdsQuery.data?.characters.edges.map((edge) => edge.node),
-		$itemNamesAndIdsQuery.data?.items.edges.map((edge) => edge.node),
-		$placeNamesIdsAndTypesQuery.data?.places.edges.map((edge) => edge.node),
-		$raceNamesAndIdsQuery.data?.races.edges.map((edge) => edge.node)
-	]
-		.filter(Boolean)
-		.flat()
-		.map((node) => ({ label: `${node.name} (${node.__typename})`, value: node.id }));
+	let {
+		entityName,
+		suggestedEntityType = undefined,
+		updateFoundEntities,
+		updateLogEntitiesInForm,
+		verbose = false
+	}: Props = $props();
 
-	export let entityName: string;
-	export let suggestedEntityType: EntityType | undefined = undefined;
-	export let updateFoundEntities: (type: EntityType, newEntity: any) => void;
-	export let updateLogEntitiesInForm: (id: string) => void;
-	export let verbose = false;
-
-	let entitySelected: Option[] = [];
-	$: console.log({ entitySelected });
-	let isOpen: boolean;
+	let entitySelected: Option[] = $state([]);
+	let isOpen: boolean = $state(false);
 
 	const MODAL_ID = 'modal-add-or-alias-entity' + suggestedEntityType + entityName;
 
 	async function handleAddAlias(event: Event) {
+		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const id = data.get('entity')?.toString();
 		const alias = data.get('alias')?.toString();
@@ -137,6 +124,7 @@
 	};
 
 	async function handleAddEntity(event: Event) {
+		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const name = data.get('name')?.toString();
 		const entityType = data.get('entityType')?.toString();
@@ -175,7 +163,29 @@
 		isOpen = false;
 	}
 
-	$: handleSubmit = entitySelected.length === 0 ? handleAddEntity : handleAddAlias;
+	onMount(() => {
+		artifactNamesAndIdsQuery.fetch();
+		associationNamesAndIdsQuery.fetch();
+		characterNamesAndIdsQuery.fetch();
+		itemNamesAndIdsQuery.fetch();
+		placeNamesIdsAndTypesQuery.fetch();
+		raceNamesAndIdsQuery.fetch();
+	});
+	let allEntityOptions = $derived(
+		[
+			$artifactNamesAndIdsQuery.data?.artifacts.edges.map((edge) => edge.node),
+			$associationNamesAndIdsQuery.data?.associations.edges.map((edge) => edge.node),
+			$characterNamesAndIdsQuery.data?.characters.edges.map((edge) => edge.node),
+			$itemNamesAndIdsQuery.data?.items.edges.map((edge) => edge.node),
+			$placeNamesIdsAndTypesQuery.data?.places.edges.map((edge) => edge.node),
+			$raceNamesAndIdsQuery.data?.races.edges.map((edge) => edge.node)
+		]
+			.filter(Boolean)
+			.flat()
+			.map((node) => ({ label: `${node.name} (${node.__typename})`, value: node.id }))
+	);
+	$inspect({ entitySelected });
+	let handleSubmit = $derived(entitySelected.length === 0 ? handleAddEntity : handleAddAlias);
 </script>
 
 <label for={MODAL_ID} class="link hover:accent modal-button no-underline">
@@ -188,7 +198,7 @@
 <input type="checkbox" id={MODAL_ID} class="modal-toggle" bind:checked={isOpen} />
 <label for={MODAL_ID} class="modal modal-bottom sm:modal-middle cursor-pointer">
 	<label class="modal-box relative" for="">
-		<form on:submit|preventDefault={handleSubmit}>
+		<form onsubmit={handleSubmit}>
 			<h3 class="text-lg font-bold">Add Entity</h3>
 
 			<div class="form-control w-full max-w-xs">
@@ -229,7 +239,7 @@
 						<span class="label-text">Select Entity Type</span>
 					</label>
 					<select class="select" id="entity-type" name="entityType">
-						{#each ENTITY_TYPES as opt}
+						{#each ENTITY_TYPES as opt (opt)}
 							<option value={opt} selected={suggestedEntityType === opt}>{capitalize(opt)}</option>
 						{/each}
 					</select>

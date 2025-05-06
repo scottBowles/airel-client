@@ -50,7 +50,7 @@
 			<div class="items-container">
 				<h2 class="text-xl font-bold">{getChildrenName(placeTypeDisplay)}</h2>
 				<Spacer xs />
-				{#each children as child, i}
+				{#each children as child, i (child.id)}
 					<a class="link link-accent link-hover" href={`/places/${idFromGlobalId(child.id)}`}>
 						{child.name}
 					</a>

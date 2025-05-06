@@ -1,43 +1,45 @@
 <script lang="ts">
-	import { fromGlobalId } from '$lib/utils';
-	import { parseFormData } from 'parse-nested-form-data';
-	import { error } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
 	import { CreatePlaceStore, PlacesForSearchStore, type PlaceType$options } from '$houdini';
 	import { LayoutCreate } from '$lib/components/DetailPage';
 	import Spacer from '$lib/components/Spacer.svelte';
-	import PlaceTypeSelect from '../PlaceTypeSelect.svelte';
-	import ParentSelect from '../ParentSelect.svelte';
+	import { capitalize, fromGlobalId } from '$lib/utils';
+	import { error } from '@sveltejs/kit';
+	import { parseFormData } from 'parse-nested-form-data';
+	import { onMount } from 'svelte';
 	import ChildrenMultiSelect from '../ChildrenMultiSelect.svelte';
-	import { browser } from '$app/environment';
+	import ParentSelect from '../ParentSelect.svelte';
+	import PlaceTypeSelect from '../PlaceTypeSelect.svelte';
 	import { filterForChildren, filterForParent, getSelectOptionFromEdge } from '../utils';
-	import { capitalize } from '$lib/utils';
 
 	const createMutation = new CreatePlaceStore();
 	const placesForSearchQuery = new PlacesForSearchStore();
-	$: browser && placesForSearchQuery.fetch();
+	onMount(() => placesForSearchQuery.fetch());
 
-	let name = '';
-	let selectedPlaceType: PlaceType$options | null = null;
-	$: selectedPlaceTypeDisplay = selectedPlaceType ? capitalize(selectedPlaceType) : '';
+	let name = $state('');
+	let selectedPlaceType: PlaceType$options | null = $state(null);
+	let selectedPlaceTypeDisplay = $derived(selectedPlaceType ? capitalize(selectedPlaceType) : '');
 
-	$: placesForChildrenSelect =
+	let placesForChildrenSelect = $derived(
 		$placesForSearchQuery.data && selectedPlaceType
 			? $placesForSearchQuery.data.places.edges
 					.filter(filterForChildren(selectedPlaceType))
 					.map(getSelectOptionFromEdge)
-			: [];
+			: []
+	);
 
-	$: placesForParentSelect =
+	let placesForParentSelect = $derived(
 		$placesForSearchQuery.data && selectedPlaceType
 			? [
 					...$placesForSearchQuery.data.places.edges
 						.filter(filterForParent(selectedPlaceType))
 						.map(getSelectOptionFromEdge)
-			  ]
-			: [];
+				]
+			: []
+	);
 
 	const handleSubmit = async (event: Event) => {
+		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const parsed = parseFormData(data);
 		const name = parsed.name as string | undefined;
@@ -56,9 +58,9 @@
 	};
 </script>
 
-<form method="POST" on:submit|preventDefault={handleSubmit}>
+<form method="POST" onsubmit={handleSubmit}>
 	<LayoutCreate bind:name>
-		<svelte:fragment slot="properties">
+		{#snippet properties()}
 			<Spacer lg />
 
 			<PlaceTypeSelect bind:selectedPlaceType />
@@ -79,6 +81,6 @@
 				<ChildrenMultiSelect {placesForChildrenSelect} {selectedPlaceTypeDisplay} />
 				<Spacer lg />
 			{/if}
-		</svelte:fragment>
+		{/snippet}
 	</LayoutCreate>
 </form>

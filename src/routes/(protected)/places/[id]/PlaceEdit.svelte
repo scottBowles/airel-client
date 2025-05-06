@@ -1,86 +1,95 @@
 <script lang="ts">
-	import { parseFormData } from 'parse-nested-form-data';
-	import { browser } from '$app/environment';
 	import {
 		fragment,
 		graphql,
-		UpdatePlaceStore,
 		PlacesForSearchStore,
+		UpdatePlaceStore,
 		type PlaceEditFields
 	} from '$houdini';
 	import { LayoutEdit } from '$lib/components/DetailPage';
 	import Spacer from '$lib/components/Spacer.svelte';
 	import { capitalize } from '$lib/utils';
+	import { parseFormData } from 'parse-nested-form-data';
+	import { onMount } from 'svelte';
+	import Breadcrumbs from '../Breadcrumbs.svelte';
 	import ChildrenMultiSelect from '../ChildrenMultiSelect.svelte';
 	import ParentSelect from '../ParentSelect.svelte';
-	import Breadcrumbs from '../Breadcrumbs.svelte';
-	import { filterForChildren, filterForParent, getSelectOptionFromEdge } from '../utils';
 	import PlaceTypeSelect from '../PlaceTypeSelect.svelte';
+	import { filterForChildren, filterForParent, getSelectOptionFromEdge } from '../utils';
 
 	const updatePlace = new UpdatePlaceStore();
 	const placesForSearchQuery = new PlacesForSearchStore();
-	$: browser && placesForSearchQuery.fetch();
+	onMount(() => placesForSearchQuery.fetch());
 
-	export let place: PlaceEditFields;
+	interface Props {
+		place: PlaceEditFields;
+	}
 
-	$: data = fragment(
-		place,
-		graphql(`
-			fragment PlaceEditFields on Place {
-				id
-				name
-				placeType
-				children {
-					edges {
-						node {
-							id
-							name
+	let { place }: Props = $props();
+
+	let data = $derived(
+		fragment(
+			place,
+			graphql(`
+				fragment PlaceEditFields on Place {
+					id
+					name
+					placeType
+					children {
+						edges {
+							node {
+								id
+								name
+							}
 						}
 					}
+					parent {
+						id
+					}
+					...PlaceBreadcrumbFields
+					...EntityEditFields
 				}
-				parent {
-					id
-				}
-				...PlaceBreadcrumbFields
-				...EntityEditFields
-			}
-		`)
+			`)
+		)
 	);
 
-	$: ({ id, name, placeType, children: childrenConnection, parent } = $data);
+	let { id, name, placeType, children: childrenConnection, parent } = $derived($data);
 
-	$: selectedPlaceType = placeType;
-	$: selectedPlaceTypeDisplay = selectedPlaceType ? capitalize(selectedPlaceType) : '';
-	$: children = childrenConnection?.edges?.map((edge) => edge.node) || [];
-	$: childrenIds = children.map((child) => child.id);
+	let selectedPlaceType = $derived(placeType);
+	let selectedPlaceTypeDisplay = $derived(selectedPlaceType ? capitalize(selectedPlaceType) : '');
+	let children = $derived(childrenConnection?.edges?.map((edge) => edge.node) || []);
+	let childrenIds = $derived(children.map((child) => child.id));
 
-	$: placesForChildrenSelect =
+	let placesForChildrenSelect = $derived(
 		$placesForSearchQuery.data && selectedPlaceType
 			? $placesForSearchQuery.data.places.edges
 					.filter(filterForChildren(selectedPlaceType))
 					.map(getSelectOptionFromEdge)
-			: [];
+			: []
+	);
 
-	$: placesForParentSelect =
+	let placesForParentSelect = $derived(
 		$placesForSearchQuery.data && selectedPlaceType
 			? [
 					...$placesForSearchQuery.data.places.edges
 						.filter(filterForParent(selectedPlaceType))
 						.map(getSelectOptionFromEdge)
-			  ]
-			: [];
+				]
+			: []
+	);
 
 	const handleSubmit = async (event: SubmitEvent) => {
+		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const parsed = parseFormData(data);
 		updatePlace.mutate({ id, ...parsed });
 	};
 </script>
 
-<form method="POST" on:submit|preventDefault={handleSubmit}>
+<form method="POST" onsubmit={handleSubmit}>
 	<Breadcrumbs place={$data} />
 	<LayoutEdit entity={$data}>
-		<svelte:fragment slot="properties">
+		{#snippet properties()}
 			<Spacer lg />
 
 			<PlaceTypeSelect {id} bind:selectedPlaceType />
@@ -101,6 +110,6 @@
 				<ChildrenMultiSelect {placesForChildrenSelect} {childrenIds} {selectedPlaceTypeDisplay} />
 				<Spacer lg />
 			{/if}
-		</svelte:fragment>
+		{/snippet}
 	</LayoutEdit>
 </form>

@@ -39,7 +39,7 @@
 			<Spacer xs />
 			{#if characters?.length > 0}
 				<div>
-					{#each characters as character, i}
+					{#each characters as character, i (character.id)}
 						{@const globalId = fromGlobalId(character.id).id}
 						<a href={`/characters/${globalId}`} class="link link-accent link-hover"
 							>{character.name}</a

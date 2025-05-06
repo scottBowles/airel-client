@@ -1,19 +1,21 @@
 <script lang="ts">
-	import { toast } from '@zerodevx/svelte-toast';
-	import { GetOrCreateGameLogStore } from '$houdini';
 	import { goto } from '$app/navigation';
+	import { GetOrCreateGameLogStore } from '$houdini';
 	import { fromGlobalId } from '$lib/utils';
+	import { toast } from '@zerodevx/svelte-toast';
 
 	const ADD_LOG_MODAL_ID = 'add-log-modal';
 
 	const getOrCreateGameLogMutation = new GetOrCreateGameLogStore();
 
-	let newLogUrl = '';
-	let modalOpen = false;
+	let newLogUrl = $state('');
+	let modalOpen = $state(false);
 
-	$: if (!modalOpen) {
-		newLogUrl = '';
-	}
+	$effect(() => {
+		if (!modalOpen) {
+			newLogUrl = '';
+		}
+	});
 
 	const handleSubmit = async (event: Event) => {
 		const data = new FormData(event.target as HTMLFormElement);
@@ -41,7 +43,7 @@
 		<label for={ADD_LOG_MODAL_ID} class="btn btn-neutral btn-sm btn-circle absolute top-2 right-2"
 			>x</label
 		>
-		<form on:submit={handleSubmit}>
+		<form onsubmit={handleSubmit}>
 			<h3 class="text-lg font-bold">Add a Log</h3>
 			<div class="form-control">
 				<label for="url" class="py-4">Enter url of the log's google doc</label>

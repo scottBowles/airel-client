@@ -1,35 +1,35 @@
 <script lang="ts">
-	import { parseFormData } from 'parse-nested-form-data';
-	import { uniq } from 'ramda';
+	import { page } from '$app/state';
 	import {
+		AiLogSuggestionsStore,
+		ArtifactNamesAndIdsStore,
 		fragment,
 		graphql,
 		UnlockStore,
 		UpdateLogStore,
 		type LogEditFields,
-		ArtifactNamesAndIdsStore,
 		// GenerateAiLogSummaryStore,
-		type LogEditFields$data,
-		AiLogSuggestionsStore
+		type LogEditFields$data
 	} from '$houdini';
+	import RelatedArtifactMultiSelect from '$lib/components/RelatedArtifactMultiSelect.svelte';
+	import RelatedAssociationMultiSelect from '$lib/components/RelatedAssociationMultiSelect.svelte';
+	import RelatedCharacterMultiSelect from '$lib/components/RelatedCharacterMultiSelect.svelte';
+	import RelatedItemMultiSelect from '$lib/components/RelatedItemMultiSelect.svelte';
+	import RelatedPlaceMultiSelect from '$lib/components/RelatedPlaceMultiSelect.svelte';
+	import RelatedRaceMultiSelect from '$lib/components/RelatedRaceMultiSelect.svelte';
+	import { ENTITY_TYPE, type EntityType } from '$lib/constants';
+	import { fromGlobalId, somethingWentWrong } from '$lib/utils';
+	import uniqStrArrStore from '$lib/utils/clientOnly/strArrStore';
+	import { parseFormData } from 'parse-nested-form-data';
+	import { uniq } from 'ramda';
+	import { onMount } from 'svelte';
 	import FaRobot from 'svelte-icons/fa/FaRobot.svelte';
 	import FaSave from 'svelte-icons/fa/FaSave.svelte';
 	import FaUndoAlt from 'svelte-icons/fa/FaUndoAlt.svelte';
-	import RelatedPlaceMultiSelect from '$lib/components/RelatedPlaceMultiSelect.svelte';
-	import RelatedItemMultiSelect from '$lib/components/RelatedItemMultiSelect.svelte';
-	import RelatedRaceMultiSelect from '$lib/components/RelatedRaceMultiSelect.svelte';
-	import RelatedAssociationMultiSelect from '$lib/components/RelatedAssociationMultiSelect.svelte';
-	import RelatedCharacterMultiSelect from '$lib/components/RelatedCharacterMultiSelect.svelte';
-	import RelatedArtifactMultiSelect from '$lib/components/RelatedArtifactMultiSelect.svelte';
 	import { idFromEdge } from '../../places/utils';
-	import { fromGlobalId, somethingWentWrong } from '$lib/utils';
-	import { browser } from '$app/environment';
-	import uniqStrArrStore from '$lib/utils/clientOnly/strArrStore';
-	import PossibleEntityList from './PossibleEntityList.svelte';
-	import { ENTITY_TYPE, type EntityType } from '$lib/constants';
-	import { page } from '$app/stores';
 	import AddAiSuggestion from './AddAiSuggestion.svelte';
 	import AddEntityOrAliasBtn from './AddEntityOrAliasBtn.svelte';
+	import PossibleEntityList from './PossibleEntityList.svelte';
 
 	const aiLogSuggestions = new AiLogSuggestionsStore();
 	// const generateAiLogSummary = new GenerateAiLogSummaryStore();
@@ -37,98 +37,106 @@
 	const updateLog = new UpdateLogStore();
 	const artifactNamesAndIdsQuery = new ArtifactNamesAndIdsStore();
 
-	$: browser && artifactNamesAndIdsQuery.fetch();
-	$: pk = $page.params.id;
-	$: ({ me } = $page.data);
+	onMount(() => artifactNamesAndIdsQuery.fetch());
+	let pk = $derived(page.params.id);
+	let { me } = $derived(page.data);
 
-	export let log: LogEditFields;
+	interface Props {
+		log: LogEditFields;
+	}
 
-	$: data = fragment(
-		log,
-		graphql(`
-			fragment LogEditFields on GameLog {
-				id
-				title
-				gameDate
-				brief
-				synopsis
-				lockUser {
-					username
-				}
-				placesSetIn {
-					edges {
-						node {
-							id
+	let { log }: Props = $props();
+
+	let data = $derived(
+		fragment(
+			log,
+			graphql(`
+				fragment LogEditFields on GameLog {
+					id
+					title
+					gameDate
+					brief
+					synopsis
+					lockUser {
+						username
+					}
+					placesSetIn {
+						edges {
+							node {
+								id
+							}
+						}
+					}
+					artifacts {
+						edges {
+							node {
+								id
+							}
+						}
+					}
+					associations {
+						edges {
+							node {
+								id
+							}
+						}
+					}
+					characters {
+						edges {
+							node {
+								id
+							}
+						}
+					}
+					items {
+						edges {
+							node {
+								id
+							}
+						}
+					}
+					places {
+						edges {
+							node {
+								id
+							}
+						}
+					}
+					races {
+						edges {
+							node {
+								id
+							}
 						}
 					}
 				}
-				artifacts {
-					edges {
-						node {
-							id
-						}
-					}
-				}
-				associations {
-					edges {
-						node {
-							id
-						}
-					}
-				}
-				characters {
-					edges {
-						node {
-							id
-						}
-					}
-				}
-				items {
-					edges {
-						node {
-							id
-						}
-					}
-				}
-				places {
-					edges {
-						node {
-							id
-						}
-					}
-				}
-				races {
-					edges {
-						node {
-							id
-						}
-					}
-				}
-			}
-		`)
+			`)
+		)
 	);
 
-	$: aiSuggestions = $aiLogSuggestions.data?.gameLog?.aiSuggestions;
+	let aiSuggestions = $derived($aiLogSuggestions.data?.gameLog?.aiSuggestions);
 	// $: aiLogSummary = $generateAiLogSummary.data?.aiLogSuggestions;
 	// $: aiLogSummaryErrors = $generateAiLogSummary.errors;
-	$: ({ foundArtifacts, foundAssociations, foundCharacters, foundItems, foundPlaces, foundRaces } =
-		aiSuggestions || {
-			foundArtifacts: [],
-			foundAssociations: [],
-			foundCharacters: [],
-			foundItems: [],
-			foundPlaces: [],
-			foundRaces: []
-		});
-	$: allFoundEntityNames = [
+	let { foundArtifacts, foundAssociations, foundCharacters, foundItems, foundPlaces, foundRaces } =
+		$derived(
+			aiSuggestions || {
+				foundArtifacts: [],
+				foundAssociations: [],
+				foundCharacters: [],
+				foundItems: [],
+				foundPlaces: [],
+				foundRaces: []
+			}
+		);
+	let allFoundEntityNames = $derived([
 		...foundArtifacts.map((a) => a.name),
 		...foundAssociations.map((a) => a.name),
 		...foundCharacters.map((a) => a.name),
 		...foundItems.map((a) => a.name),
 		...foundPlaces.map((a) => a.name),
 		...foundRaces.map((a) => a.name)
-	];
-	$: updateFoundEntities = (type: EntityType, newEntity: any) => {
+	]);
+	let updateFoundEntities = $derived((type: EntityType, newEntity: any) => {
 		switch (type) {
 			case 'Artifact':
 				foundArtifacts = uniq([...foundArtifacts, newEntity]);
@@ -151,11 +159,11 @@
 			default:
 				throw new Error(`Unknown entity type: ${type}`);
 		}
-	};
+	});
 
-	$: ({ id, title, gameDate, brief, synopsis, lockUser } = $data);
+	let { id, title, gameDate, brief, synopsis, lockUser } = $derived($data);
 
-	$: placesSetInIds = $data.placesSetIn.edges.map(idFromEdge);
+	let placesSetInIds = $derived($data.placesSetIn.edges.map(idFromEdge));
 
 	const artifactIds = uniqStrArrStore();
 	const associationIds = uniqStrArrStore();
@@ -186,11 +194,14 @@
 		store.add(id);
 	}
 
-	$: setStoresFromData($data);
+	$effect(() => {
+		setStoresFromData($data);
+	});
 
 	const unlock = () => unlockMutation.mutate({ id });
 
 	const handleSubmit = async (event: Event) => {
+		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const parsed = parseFormData(data);
 		const gameDate = parsed.gameDate ? new Date(parsed.gameDate as string) : null;
@@ -207,10 +218,10 @@
 		}
 	};
 
-	const modalId = `discard-changes-modal-${id}`;
+	let modalId = $derived(`discard-changes-modal-${id}`);
 </script>
 
-<form method="POST" on:submit|preventDefault={handleSubmit}>
+<form method="POST" onsubmit={handleSubmit}>
 	<div class="container mx-auto mt-8 mb-32 px-8">
 		<div class="mb-8 flex flex-wrap items-center justify-between gap-4">
 			<h1 class="text-3xl font-bold">Edit Log</h1>
@@ -229,7 +240,7 @@
 						<h3 class="text-lg font-bold">Discard changes</h3>
 						<p class="py-4">Are you sure you want to discard any unsaved changes?</p>
 						<div class="modal-action">
-							<label for={modalId} class="btn btn-neutral" on:click={unlock} on:keypress={unlock}
+							<label for={modalId} class="btn btn-neutral" onclick={unlock} onkeypress={unlock}
 								>Yes</label
 							>
 							<label for={modalId} class="btn btn-neutral">No</label>
@@ -353,33 +364,33 @@
 			<div class="mb-6">
 				<div class="mb-4">
 					<div class="text-lg font-bold">Titles</div>
-					{#each aiSuggestions.titles as suggestedTitle}
+					{#each aiSuggestions.titles as suggestedTitle, i (i + suggestedTitle)}
 						<div>{suggestedTitle}</div>
 						<button
 							type="button"
-							on:click={() => (title = suggestedTitle ?? null)}
+							onclick={() => (title = suggestedTitle ?? null)}
 							class="link text-accent no-underline hover:underline">Use</button
 						>
 					{/each}
 				</div>
 				<div class="mb-4">
 					<div class="text-lg font-bold">Briefs</div>
-					{#each aiSuggestions.briefs as suggestedBrief}
+					{#each aiSuggestions.briefs as suggestedBrief, i (i + suggestedBrief)}
 						<div>{suggestedBrief}</div>
 						<button
 							type="button"
-							on:click={() => (brief = suggestedBrief ?? null)}
+							onclick={() => (brief = suggestedBrief ?? null)}
 							class="link text-accent no-underline hover:underline">Use</button
 						>
 					{/each}
 				</div>
 				<div class="mb-4">
 					<div class="text-lg font-bold">Synopses</div>
-					{#each aiSuggestions.synopses as suggestedSynopsis}
+					{#each aiSuggestions.synopses as suggestedSynopsis, i (i + suggestedSynopsis)}
 						<div>{suggestedSynopsis}</div>
 						<button
 							type="button"
-							on:click={() => (synopsis = suggestedSynopsis ?? null)}
+							onclick={() => (synopsis = suggestedSynopsis ?? null)}
 							class="link text-accent no-underline hover:underline">Use</button
 						>
 					{/each}
@@ -440,7 +451,7 @@
 							<button
 								type="button"
 								class="link text-accent no-underline hover:underline"
-								on:click={() => artifactIds.add(foundArtifact.id)}>&plus;</button
+								onclick={() => artifactIds.add(foundArtifact.id)}>&plus;</button
 							>
 							{foundArtifact.name}
 						</div>
@@ -453,7 +464,7 @@
 							<button
 								type="button"
 								class="link text-accent no-underline hover:underline"
-								on:click={() => associationIds.add(foundAssociation.id)}>&plus;</button
+								onclick={() => associationIds.add(foundAssociation.id)}>&plus;</button
 							>
 							{foundAssociation.name}
 						</div>
@@ -466,7 +477,7 @@
 							<button
 								type="button"
 								class="link text-accent no-underline hover:underline"
-								on:click={() => characterIds.add(foundCharacter.id)}>&plus;</button
+								onclick={() => characterIds.add(foundCharacter.id)}>&plus;</button
 							>
 							{foundCharacter.name}
 						</div>
@@ -479,7 +490,7 @@
 							<button
 								type="button"
 								class="link text-accent no-underline hover:underline"
-								on:click={() => itemIds.add(foundItem.id)}>&plus;</button
+								onclick={() => itemIds.add(foundItem.id)}>&plus;</button
 							>
 							{foundItem.name}
 						</div>
@@ -492,7 +503,7 @@
 							<button
 								type="button"
 								class="link text-accent no-underline hover:underline"
-								on:click={() => placeIds.add(foundPlace.id)}>&plus;</button
+								onclick={() => placeIds.add(foundPlace.id)}>&plus;</button
 							>
 							{foundPlace.name}
 						</div>
@@ -505,7 +516,7 @@
 							<button
 								type="button"
 								class="link text-accent no-underline hover:underline"
-								on:click={() => raceIds.add(foundRace.id)}>&plus;</button
+								onclick={() => raceIds.add(foundRace.id)}>&plus;</button
 							>
 							{foundRace.name}
 						</div>
@@ -518,7 +529,7 @@
 			<button
 				type="button"
 				class="btn btn-ghost btn-sm icon-btn"
-				on:click={() => aiLogSuggestions.fetch({ variables: { pk } })}
+				onclick={() => aiLogSuggestions.fetch({ variables: { pk } })}
 			>
 				<span class="icon"><FaRobot /></span>
 			</button>

@@ -1,7 +1,4 @@
 <script lang="ts">
-	import MultiSelect, { type Option } from 'svelte-multiselect';
-	import FaUsers from 'svelte-icons/fa/FaUsers.svelte';
-	import type { EntityType } from '$lib/constants';
 	import {
 		ArtifactNamesAndIdsStore,
 		AssociationNamesAndIdsStore,
@@ -11,8 +8,11 @@
 		PlaceNamesIdsAndTypesStore,
 		RaceNamesAndIdsStore
 	} from '$houdini';
-	import { browser } from '$app/environment';
+	import type { EntityType } from '$lib/constants';
 	import { fromGlobalId, somethingWentWrong } from '$lib/utils';
+	import { onMount } from 'svelte';
+	import FaUsers from 'svelte-icons/fa/FaUsers.svelte';
+	import MultiSelect, { type Option } from 'svelte-multiselect';
 
 	const entityAddAliasMutation = new EntityAddAliasStore();
 
@@ -22,40 +22,50 @@
 	const itemNamesAndIdsQuery = new ItemNamesAndIdsStore();
 	const placeNamesIdsAndTypesQuery = new PlaceNamesIdsAndTypesStore();
 	const raceNamesAndIdsQuery = new RaceNamesAndIdsStore();
-	$: {
-		if (browser) {
-			artifactNamesAndIdsQuery.fetch();
-			associationNamesAndIdsQuery.fetch();
-			characterNamesAndIdsQuery.fetch();
-			itemNamesAndIdsQuery.fetch();
-			placeNamesIdsAndTypesQuery.fetch();
-			raceNamesAndIdsQuery.fetch();
-		}
+	onMount(() => {
+		artifactNamesAndIdsQuery.fetch();
+		associationNamesAndIdsQuery.fetch();
+		characterNamesAndIdsQuery.fetch();
+		itemNamesAndIdsQuery.fetch();
+		placeNamesIdsAndTypesQuery.fetch();
+		raceNamesAndIdsQuery.fetch();
+	});
+
+	let allEntityOptions = $derived(
+		[
+			$artifactNamesAndIdsQuery.data?.artifacts.edges.map((edge) => edge.node),
+			$associationNamesAndIdsQuery.data?.associations.edges.map((edge) => edge.node),
+			$characterNamesAndIdsQuery.data?.characters.edges.map((edge) => edge.node),
+			$itemNamesAndIdsQuery.data?.items.edges.map((edge) => edge.node),
+			$placeNamesIdsAndTypesQuery.data?.places.edges.map((edge) => edge.node),
+			$raceNamesAndIdsQuery.data?.races.edges.map((edge) => edge.node)
+		]
+			.filter(Boolean)
+			.flat()
+			.map((node) => ({ label: node.name, value: node.id }))
+	);
+
+	interface Props {
+		entityName: string;
+		suggestedEntityType?: EntityType | undefined;
+		updateFoundEntities: (type: EntityType, newEntity: any) => void;
+		verbose?: boolean;
 	}
 
-	$: allEntityOptions = [
-		$artifactNamesAndIdsQuery.data?.artifacts.edges.map((edge) => edge.node),
-		$associationNamesAndIdsQuery.data?.associations.edges.map((edge) => edge.node),
-		$characterNamesAndIdsQuery.data?.characters.edges.map((edge) => edge.node),
-		$itemNamesAndIdsQuery.data?.items.edges.map((edge) => edge.node),
-		$placeNamesIdsAndTypesQuery.data?.places.edges.map((edge) => edge.node),
-		$raceNamesAndIdsQuery.data?.races.edges.map((edge) => edge.node)
-	]
-		.filter(Boolean)
-		.flat()
-		.map((node) => ({ label: node.name, value: node.id }));
+	let {
+		entityName,
+		suggestedEntityType = undefined,
+		updateFoundEntities,
+		verbose = false
+	}: Props = $props();
 
-	export let entityName: string;
-	export let suggestedEntityType: EntityType | undefined = undefined;
-	export let updateFoundEntities: (type: EntityType, newEntity: any) => void;
-	export let verbose = false;
-
-	let entitySelected: Option[];
-	let isOpen: boolean;
+	let entitySelected: Option[] | undefined = $state();
+	let isOpen: boolean = $state(false);
 
 	const ALIAS_MODAL_ID = 'modal-alias-entity' + suggestedEntityType + entityName;
 
 	async function handleAddAlias(event: Event) {
+		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const id = data.get('entity')?.toString();
 		const alias = data.get('alias')?.toString();
@@ -86,7 +96,7 @@
 <input type="checkbox" id={ALIAS_MODAL_ID} class="modal-toggle" bind:checked={isOpen} />
 <label for={ALIAS_MODAL_ID} class="modal modal-bottom sm:modal-middle cursor-pointer">
 	<label class="modal-box relative" for="">
-		<form on:submit|preventDefault={handleAddAlias}>
+		<form onsubmit={handleAddAlias}>
 			<h3 class="text-lg font-bold">Add as Alias</h3>
 
 			<div class="form-control w-full max-w-xs">
