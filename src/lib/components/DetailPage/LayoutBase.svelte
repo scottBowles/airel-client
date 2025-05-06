@@ -1,21 +1,45 @@
 <script lang="ts">
 	import Spacer from '../Spacer.svelte';
-	export let clearfix = false;
+	interface Props {
+		clearfix?: boolean;
+		children?: import('svelte').Snippet;
+		name?: import('svelte').Snippet;
+		lockedBy?: import('svelte').Snippet;
+		mainImage?: import('svelte').Snippet;
+		logs?: import('svelte').Snippet;
+		description?: import('svelte').Snippet;
+		properties?: import('svelte').Snippet;
+		related?: import('svelte').Snippet;
+		markdownNotes?: import('svelte').Snippet;
+	}
+
+	let {
+		clearfix = false,
+		children,
+		name,
+		lockedBy,
+		mainImage,
+		logs,
+		description,
+		properties,
+		related,
+		markdownNotes
+	}: Props = $props();
 </script>
 
 <div class="container mx-auto mt-2 mb-32 px-8">
-	<slot />
+	{@render children?.()}
 
 	<!-- TOP ROW -->
 	<div class="top-row">
 		<span class="name-container">
 			<!-- NAME -->
-			<slot name="name" />
+			{@render name?.()}
 		</span>
 
 		<!-- EDIT / SAVE + LOCKED BY {USER} -->
 		<span class="locked-edit-save-container">
-			<slot name="lockedBy" />
+			{@render lockedBy?.()}
 		</span>
 	</div>
 
@@ -26,29 +50,29 @@
 		<!-- FLOAT AREA -->
 		<div class="ml-2 w-full sm:float-right sm:w-2/5">
 			<!-- IMAGES -->
-			<slot name="mainImage" class="w-full" />
+			{@render mainImage?.()}
 
-			<slot name="logs" />
+			{@render logs?.()}
 			<Spacer />
 		</div>
 
 		<!-- DESCRIPTION -->
-		<slot name="description" />
+		{@render description?.()}
 		<Spacer />
 
 		<!-- PROPERTIES -->
-		<slot name="properties" />
+		{@render properties?.()}
 		<Spacer />
 
 		<!-- RELATED -->
-		<slot name="related" />
+		{@render related?.()}
 	</div>
 
 	<Spacer />
 	<Spacer lg />
 
 	<!-- MARKDOWN NOTES -->
-	<slot name="markdownNotes" />
+	{@render markdownNotes?.()}
 </div>
 
 <style>

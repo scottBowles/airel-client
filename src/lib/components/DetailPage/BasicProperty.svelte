@@ -4,7 +4,7 @@
 	import type { Snippet } from 'svelte';
 
 	interface Props {
-		children: Snippet;
+		children?: Snippet;
 		name: string;
 		value: string | number;
 	}
