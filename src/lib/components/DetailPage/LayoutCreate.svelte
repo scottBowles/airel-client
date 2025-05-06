@@ -65,7 +65,7 @@
 
 <LayoutBase clearfix>
 	<!-- NAME -->
-	{#snippet name()}
+	{#snippet nameSnippet()}
 		<div class="form-control">
 			<label for="name-input" class="label">
 				<span class="label-text">Name</span>
@@ -75,12 +75,12 @@
 	{/snippet}
 
 	<!-- EDIT / SAVE + LOCKED BY {USER} -->
-	{#snippet lockedBy()}
+	{#snippet lockedBySnippet()}
 		<button type="submit" class="btn btn-ghost btn-sm btn-custom ml-auto">Save</button>
 	{/snippet}
 
 	<!-- MAIN IMAGE -->
-	{#snippet mainImage()}
+	{#snippet mainImageSnippet()}
 		<div class="mx-auto w-full max-w-xs">
 			{#if page.data.me?.isStaff}
 				<CloudinaryUpload {onImageUpload}>
@@ -100,7 +100,7 @@
 	{/snippet}
 
 	<!-- LOGS -->
-	{#snippet logs()}
+	{#snippet logsSnippet()}
 		<LogsDisplay {logs} {onLogAdd} {onLogRemove} />
 		<Spacer />
 
@@ -111,7 +111,7 @@
 	{/snippet}
 
 	<!-- DESCRIPTION -->
-	{#snippet description()}
+	{#snippet descriptionSnippet()}
 		<div class="form-control">
 			<label for="description-input" class="label">
 				<span class="label-text">Description</span>
@@ -121,12 +121,12 @@
 	{/snippet}
 
 	<!-- PROPERTIES -->
-	{#snippet properties()}
+	{#snippet propertiesSnippet()}
 		{@render properties_render?.()}
 	{/snippet}
 
 	<!-- RELATED -->
-	{#snippet related()}
+	{#snippet relatedSnippet()}
 		<div>
 			<h2 class="text-2xl font-bold">Related</h2>
 			<RelatedArtifactMultiSelect
@@ -163,7 +163,7 @@
 	{/snippet}
 
 	<!-- MARKDOWN NOTES -->
-	{#snippet markdownNotes()}
+	{#snippet markdownNotesSnippet()}
 		<QuillEditor init="" />
 	{/snippet}
 </LayoutBase>

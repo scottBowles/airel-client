@@ -32,7 +32,7 @@
 </script>
 
 <LayoutDisplay entity={$data}>
-	<svelte:fragment slot="properties">
+	{#snippet propertiesSnippet()}
 		<Spacer lg />
 		<div class="items-container">
 			<h2 class="text-xl font-bold">Members</h2>
@@ -51,5 +51,5 @@
 			{/if}
 		</div>
 		<Spacer lg />
-	</svelte:fragment>
+	{/snippet}
 </LayoutDisplay>

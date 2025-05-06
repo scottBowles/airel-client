@@ -36,7 +36,7 @@
 </script>
 
 <LayoutDisplay entity={$data}>
-	<svelte:fragment slot="properties">
+	{#snippet propertiesSnippet()}
 		<div class="spacer"></div>
 		<div class="stat-block-container">
 			<!-- ARMOR STAT BLOCK -->
@@ -60,7 +60,7 @@
 				</div>
 			{/if}
 		</div>
-	</svelte:fragment>
+	{/snippet}
 </LayoutDisplay>
 
 <style>

@@ -7,11 +7,11 @@
 
 <LayoutBase>
 	<!-- NAME -->
-	{#snippet name()}
+	{#snippet nameSnippet()}
 		<h1 class="text-3xl font-bold">Something went wrong</h1>
 	{/snippet}
 
-	{#snippet properties()}
+	{#snippet propertiesSnippet()}
 		{#each errors as error, i (i + error.message)}
 			<BasicProperty name="Error" value={error.message} />
 		{/each}

@@ -38,7 +38,7 @@
 
 <Breadcrumbs place={$data} />
 <LayoutDisplay entity={$data}>
-	<svelte:fragment slot="properties">
+	{#snippet propertiesSnippet()}
 		<Spacer lg />
 		{#if placeTypeDisplay}
 			<div class="items-container">
@@ -59,5 +59,5 @@
 			</div>
 			<Spacer lg />
 		{/if}
-	</svelte:fragment>
+	{/snippet}
 </LayoutDisplay>

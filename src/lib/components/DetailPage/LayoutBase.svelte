@@ -1,29 +1,30 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
 	import Spacer from '../Spacer.svelte';
 	interface Props {
 		clearfix?: boolean;
-		children?: import('svelte').Snippet;
-		name?: import('svelte').Snippet;
-		lockedBy?: import('svelte').Snippet;
-		mainImage?: import('svelte').Snippet;
-		logs?: import('svelte').Snippet;
-		description?: import('svelte').Snippet;
-		properties?: import('svelte').Snippet;
-		related?: import('svelte').Snippet;
-		markdownNotes?: import('svelte').Snippet;
+		children?: Snippet;
+		nameSnippet?: Snippet;
+		lockedBySnippet?: Snippet;
+		mainImageSnippet?: Snippet;
+		logsSnippet?: Snippet;
+		descriptionSnippet?: Snippet;
+		propertiesSnippet?: Snippet;
+		relatedSnippet?: Snippet;
+		markdownNotesSnippet?: Snippet;
 	}
 
 	let {
 		clearfix = false,
 		children,
-		name,
-		lockedBy,
-		mainImage,
-		logs,
-		description,
-		properties,
-		related,
-		markdownNotes
+		nameSnippet,
+		lockedBySnippet,
+		mainImageSnippet,
+		logsSnippet,
+		descriptionSnippet,
+		propertiesSnippet,
+		relatedSnippet,
+		markdownNotesSnippet
 	}: Props = $props();
 </script>
 
@@ -34,12 +35,12 @@
 	<div class="top-row">
 		<span class="name-container">
 			<!-- NAME -->
-			{@render name?.()}
+			{@render nameSnippet?.()}
 		</span>
 
 		<!-- EDIT / SAVE + LOCKED BY {USER} -->
 		<span class="locked-edit-save-container">
-			{@render lockedBy?.()}
+			{@render lockedBySnippet?.()}
 		</span>
 	</div>
 
@@ -50,29 +51,29 @@
 		<!-- FLOAT AREA -->
 		<div class="ml-2 w-full sm:float-right sm:w-2/5">
 			<!-- IMAGES -->
-			{@render mainImage?.()}
+			{@render mainImageSnippet?.()}
 
-			{@render logs?.()}
+			{@render logsSnippet?.()}
 			<Spacer />
 		</div>
 
 		<!-- DESCRIPTION -->
-		{@render description?.()}
+		{@render descriptionSnippet?.()}
 		<Spacer />
 
 		<!-- PROPERTIES -->
-		{@render properties?.()}
+		{@render propertiesSnippet?.()}
 		<Spacer />
 
 		<!-- RELATED -->
-		{@render related?.()}
+		{@render relatedSnippet?.()}
 	</div>
 
 	<Spacer />
 	<Spacer lg />
 
 	<!-- MARKDOWN NOTES -->
-	{@render markdownNotes?.()}
+	{@render markdownNotesSnippet?.()}
 </div>
 
 <style>
