@@ -20,7 +20,7 @@
 	import { onMount } from 'svelte';
 	import FaInfoCircle from 'svelte-icons/fa/FaInfoCircle.svelte';
 	import FaUserPlus from 'svelte-icons/fa/FaUserPlus.svelte';
-	import MultiSelect, { type Option } from 'svelte-multiselect';
+	import MultiSelect from 'svelte-multiselect';
 
 	const entityAddAliasMutation = new EntityAddAliasStore();
 
@@ -40,7 +40,7 @@
 		verbose = false
 	}: Props = $props();
 
-	let entitySelected: Option[] = $state([]);
+	let entitySelected: typeof allEntityOptions | undefined = $state([]);
 	let isOpen: boolean = $state(false);
 
 	const MODAL_ID = 'modal-add-or-alias-entity' + suggestedEntityType + entityName;
@@ -224,7 +224,7 @@
 				<input type="hidden" name="entity" value={entitySelected?.[0]?.value} />
 			</div>
 
-			{#if entitySelected.length > 0}
+			{#if entitySelected && entitySelected.length > 0}
 				<div class="form-control">
 					<label for="alias" class="label"><span class="label-text">Alias</span></label>
 					<input name="alias" id="alias" class="input" value={entityName} required />

@@ -1,9 +1,14 @@
-<script lang="ts">
+<script lang="ts" generics="Opt extends Option">
+	import type { ComponentProps } from 'svelte';
 	import MultiSelect, { type Option } from 'svelte-multiselect';
 
-	export let id: string;
-	export let options: Option[] = [];
-	export let selected: Option[];
+	type Props = {
+		id: string;
+		options?: Opt[];
+		selected: Opt[] | undefined;
+	} & ComponentProps<MultiSelect<Opt>>;
+
+	let { id, options = [], selected = $bindable(), ...rest }: Props = $props();
 </script>
 
-<MultiSelect {id} {options} bind:selected outerDivClass="select select-bordered" {...$$restProps} />
+<MultiSelect {id} {options} bind:selected outerDivClass="select select-bordered" {...rest} />

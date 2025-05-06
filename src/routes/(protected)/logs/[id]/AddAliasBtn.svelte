@@ -12,7 +12,7 @@
 	import { fromGlobalId, somethingWentWrong } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import FaUsers from 'svelte-icons/fa/FaUsers.svelte';
-	import MultiSelect, { type Option } from 'svelte-multiselect';
+	import MultiSelect from 'svelte-multiselect';
 
 	const entityAddAliasMutation = new EntityAddAliasStore();
 
@@ -59,7 +59,7 @@
 		verbose = false
 	}: Props = $props();
 
-	let entitySelected: Option[] | undefined = $state();
+	let entitySelected: typeof allEntityOptions | undefined = $state();
 	let isOpen: boolean = $state(false);
 
 	const ALIAS_MODAL_ID = 'modal-alias-entity' + suggestedEntityType + entityName;
