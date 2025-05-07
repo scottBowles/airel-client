@@ -1,10 +1,17 @@
 <script lang="ts">
-	import { navigating } from '$app/stores';
+	import { navigating } from '$app/state';
+	import type { Snippet } from 'svelte';
 	import SearchButton from '../SearchButton.svelte';
 	import NavLinks from './NavLinks.svelte';
 	import Title from './Title.svelte';
 
-	let innerWidth: number;
+	interface Props {
+		children?: Snippet;
+	}
+
+	let { children }: Props = $props();
+
+	let innerWidth: number = $state(0);
 	let inputToggle: HTMLInputElement;
 
 	function closeDrawer() {
@@ -13,9 +20,13 @@
 		}
 	}
 
-	$: drawerShouldClose = innerWidth >= 1024;
-	$: if (drawerShouldClose) closeDrawer();
-	$: if ($navigating) closeDrawer();
+	let drawerShouldClose = $derived(innerWidth >= 1024);
+	$effect(() => {
+		if (drawerShouldClose) closeDrawer();
+	});
+	$effect(() => {
+		if (navigating) closeDrawer();
+	});
 </script>
 
 <svelte:window bind:innerWidth />
@@ -31,7 +42,7 @@
 	<div class="drawer-content flex flex-col items-center">
 		<!-- <div class="drawer-content flex flex-col items-center justify-center"> -->
 		<!-- Page content here -->
-		<slot />
+		{@render children?.()}
 		<label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">Open drawer</label>
 	</div>
 	<div class="drawer-side">
