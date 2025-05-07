@@ -1,7 +1,7 @@
 <script lang="ts">
-	import MultiSelect from '$lib/components/MultiSelect.svelte';
 	import { capitalize } from '$lib/utils';
 	import { uniq } from 'ramda';
+	import MultiSelect, { type Option } from 'svelte-multiselect';
 
 	interface Props {
 		id: string;
@@ -35,17 +35,10 @@
 		})) || []
 	);
 
-	let selected: typeof options | undefined = $state([]);
-
-	function updateIdsOnSelect(selected: typeof options = []) {
-		ids = selected.map((option) => option.value);
-	}
-
-	function updateSelectedOnIds(ids: string[], opts: typeof optionNamesAndIdNodes) {
-		if (!opts) return;
-		selected = uniq(ids)
+	let selected = $derived(
+		uniq(ids)
 			.map((id) => {
-				const option = opts.find((option) => option.node.id === id);
+				const option = optionNamesAndIdNodes.find((option) => option.node.id === id);
 				return option
 					? {
 							value: option.node.id,
@@ -53,15 +46,36 @@
 						}
 					: null;
 			})
-			.filter(Boolean);
-	}
+			.filter(Boolean)
+	);
 
-	$effect(() => {
-		updateIdsOnSelect(selected);
-	});
-	$effect(() => {
-		updateSelectedOnIds(ids, optionNamesAndIdNodes);
-	});
+	function onChange(
+		change: CustomEvent<{
+			option?: Option | undefined;
+			options?: Option[] | undefined;
+			type: 'add' | 'remove' | 'removeAll';
+		}>
+	) {
+		console.log('onChange', change);
+		const changeType = change.detail.type;
+		if (changeType === 'add') {
+			const newOption = change.detail.option;
+			if (!newOption) return;
+			if (typeof newOption !== 'object' || typeof newOption.value !== 'string')
+				throw new Error('Unexpected option type');
+			ids = [...ids, newOption.value];
+		} else if (changeType === 'remove') {
+			const removedOption = change.detail.option;
+			if (!removedOption) return;
+			if (typeof removedOption !== 'object' || typeof removedOption.value !== 'string')
+				throw new Error('Unexpected option type');
+			if (removedOption) {
+				ids = ids.filter((id) => id !== removedOption.value);
+			}
+		} else if (changeType === 'removeAll') {
+			ids = [];
+		}
+	}
 </script>
 
 <div class="form-control">
@@ -71,7 +85,13 @@
 	{#if fetching}
 		Loading {capitalize(entityDisplayName)}...
 	{:else}
-		<MultiSelect {id} {options} bind:selected />
+		<MultiSelect
+			{id}
+			{options}
+			{selected}
+			outerDivClass="select select-bordered"
+			on:change={onChange}
+		/>
 	{/if}
 	{#each ids as id, i (id)}
 		<input type="hidden" name={`${inputGroupName}.set[${i}].id`} value={id} />
