@@ -22,10 +22,10 @@ declare global {
 		}
 	}
 
-	interface SelectOption {
+	type SelectOption = {
 		value: string;
 		label: string;
-	}
+	};
 }
 
 export {};

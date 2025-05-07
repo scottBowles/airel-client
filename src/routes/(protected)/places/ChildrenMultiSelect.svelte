@@ -8,24 +8,29 @@
 			return number > 0 ? { ...option, label: `${option.label} (${number + 1})` } : option;
 		});
 	}
+	interface Props {
+		childrenIds?: string[];
+		selectedPlaceTypeDisplay: string;
+		placesForChildrenSelect: SelectOption[];
+	}
 
-	export let childrenIds: string[] = [];
-	export let selectedPlaceTypeDisplay: any;
-	export let placesForChildrenSelect: any;
+	let { childrenIds = [], selectedPlaceTypeDisplay, placesForChildrenSelect }: Props = $props();
 
-	let selectedChildren = dedupe(
-		placesForChildrenSelect.filter((option: any) => childrenIds.includes(option.value))
+	let selectedChildren = $state(
+		dedupe(placesForChildrenSelect.filter((option) => childrenIds.includes(option.value)))
 	);
 
-	$: selectedChildrenIds = selectedChildren.map((child) => child.value);
+	let selectedChildrenIds = $derived(selectedChildren.map((child) => child.value));
 
-	function filterChildrenOnOptionsChange(options: any) {
+	function filterChildrenOnOptionsChange(options: SelectOption[]) {
 		return selectedChildren.filter((child) =>
-			options.some((option: any) => option.value === child.value)
+			options.some((option) => option.value === child.value)
 		);
 	}
 
-	$: selectedChildren = filterChildrenOnOptionsChange(placesForChildrenSelect);
+	$effect(() => {
+		selectedChildren = filterChildrenOnOptionsChange(placesForChildrenSelect);
+	});
 </script>
 
 {#if selectedPlaceTypeDisplay && placesForChildrenSelect.length > 0}
@@ -41,7 +46,7 @@
 			bind:selected={selectedChildren}
 			options={placesForChildrenSelect}
 		/>
-		{#each selectedChildrenIds as id, i}
+		{#each selectedChildrenIds as id, i (id)}
 			<input type="hidden" name={`children.set[${i}].id`} value={id} />
 		{/each}
 	</div>
