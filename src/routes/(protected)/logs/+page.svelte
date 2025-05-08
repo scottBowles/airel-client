@@ -89,48 +89,47 @@
 								<!-- <p>{planetSetIn(log)}</p> -->
 								<li class="mb-8">
 									<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-									<article tabindex="0" class="group collapse">
-										<div
-											class="card bg-base-200 group-focus:bg-base-300 text-base-content w-full shadow-xl"
-										>
-											<div class="card-body collapse-title">
-												<div class="justify-between gap-4 md:flex">
-													<h2 class="card-title mb-2">
-														<span>
-															<a href={detailUrl} class="hover:text-accent">{log.title}</a>
-															<a
-																href={log.url}
-																target="_blank"
-																rel="noopener noreferrer"
-																class="ml-2"
+									<article
+										tabindex="0"
+										class="card bg-base-200 focus:bg-base-300 text-base-content group collapse w-full shadow-xl"
+									>
+										<div class="card-body collapse-title">
+											<div class="justify-between gap-4 md:flex">
+												<h2 class="card-title mb-2">
+													<span>
+														<a href={detailUrl} class="hover:text-accent">{log.title}</a>
+														<a
+															href={log.url}
+															target="_blank"
+															rel="noopener noreferrer"
+															class="ml-2"
+														>
+															<span class="icon hover:text-accent inline-block"
+																><FaExternalLinkAlt /></span
 															>
-																<span class="icon hover:text-accent inline-block"
-																	><FaExternalLinkAlt /></span
-																>
-															</a>
-														</span>
-													</h2>
-													<h6 class="card-subtitle whitespace-nowrap">
-														{log.gameDate
-															? dateAdjustedForUtcOffset(new Date(log.gameDate)).toLocaleDateString(
-																	'en-US',
-																	{
-																		year: 'numeric',
-																		month: 'short',
-																		day: 'numeric'
-																	}
-																)
-															: '(date unknown)'}
-													</h6>
-												</div>
-												<p>{log.brief || '(brief tbd)'}</p>
+														</a>
+													</span>
+												</h2>
+												<h6 class="card-subtitle whitespace-nowrap">
+													{log.gameDate
+														? dateAdjustedForUtcOffset(new Date(log.gameDate)).toLocaleDateString(
+																'en-US',
+																{
+																	year: 'numeric',
+																	month: 'short',
+																	day: 'numeric'
+																}
+															)
+														: '(date unknown)'}
+												</h6>
 											</div>
-											<div class="collapse-content">
-												{log.synopsis || '(synopsis tbd)'}
-											</div>
-											<div class="w-full text-center">
-												<span class="icon group-focus:hidden"><FaCaretDown /></span>
-											</div>
+											<p>{log.brief || '(brief tbd)'}</p>
+										</div>
+										<div class="card-body collapse-content hidden group-focus:block">
+											{log.synopsis || '(synopsis tbd)'}
+										</div>
+										<div class="w-full text-center group-focus:hidden">
+											<span class="icon"><FaCaretDown /></span>
 										</div>
 									</article>
 								</li>
@@ -142,7 +141,7 @@
 		{/each}
 	</ul>
 
-	<div>
+	<!-- <div>
 		<InfiniteLoading on:infinite={infiniteHandler} distance={5000}>
 			{#snippet noMore()}
 				<div></div>
@@ -154,7 +153,7 @@
 				<div>Something went wrong loading logs</div>
 			{/snippet}
 		</InfiniteLoading>
-	</div>
+	</div> -->
 </div>
 
 <style>
