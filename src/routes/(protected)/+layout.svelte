@@ -34,11 +34,11 @@
 <!-- TODO: put NavBar outside of main and handle min-height accordingly -->
 <main>
 	<!-- <AllDrawers><slot /></AllDrawers> -->
-	{#if theme.value === 'trek'}
+	<!-- {#if theme.value === 'trek'}
 		<CustomLayout>{@render children?.()}</CustomLayout>
-	{:else}
-		<NavBar>{@render children?.()}</NavBar>
-	{/if}
+	{:else} -->
+	<NavBar>{@render children?.()}</NavBar>
+	<!-- {/if} -->
 
 	<SvelteToast options={{ pausable: true }} />
 	{#if $showAlgoliaSearch}

@@ -25,9 +25,9 @@
 	setContext('theme', theme);
 	setContext('showAlgoliaSearch', showAlgoliaSearch);
 
-	onMount(() => {
-		themeChange(false);
-	});
+	// onMount(() => {
+	// 	themeChange(false);
+	// });
 </script>
 
 {#if navigating.to}

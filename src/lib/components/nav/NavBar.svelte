@@ -63,12 +63,12 @@
 				<Algolia />
 			{/if}
 
-			<select data-choose-theme bind:value={theme.value} class="select select-sm hidden xl:block">
+			<!-- <select data-choose-theme bind:value={theme.value} class="select select-sm hidden xl:block">
 				<option value="">Select a theme</option>
 				{#each themes as themeOption (themeOption)}
 					<option value={themeOption}>{capitalize(themeOption)}</option>
 				{/each}
-			</select>
+			</select> -->
 
 			<div class="hidden xl:block">
 				<ul class="flex gap-1">
