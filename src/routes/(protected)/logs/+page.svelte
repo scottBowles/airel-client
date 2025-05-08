@@ -141,7 +141,7 @@
 		{/each}
 	</ul>
 
-	<!-- <div>
+	<div>
 		<InfiniteLoading on:infinite={infiniteHandler} distance={5000}>
 			{#snippet noMore()}
 				<div></div>
@@ -153,7 +153,7 @@
 				<div>Something went wrong loading logs</div>
 			{/snippet}
 		</InfiniteLoading>
-	</div> -->
+	</div>
 </div>
 
 <style>
