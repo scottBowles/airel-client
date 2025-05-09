@@ -5,8 +5,9 @@ const config = {
 	watchSchema: {
 		url: 'env:PUBLIC_GRAPHQL_URL'
 	},
+	runtimeDir: '.houdini',
 	plugins: {
-		'houdini-svelte': {}
+		'houdini-svelte': { forceRunesMode: true }
 	},
 	scalars: {
 		DateTime: {
