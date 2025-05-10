@@ -99,10 +99,8 @@
 		<form onsubmit={handleAddAlias}>
 			<h3 class="text-lg font-bold">Add as Alias</h3>
 
-			<div class="form-control w-full max-w-xs">
-				<label class="label" for="entity-select">
-					<span class="label-text">Select Entity</span>
-				</label>
+			<fieldset class="fieldset w-full max-w-xs">
+				<label class="label" for="entity-select">Select Entity</label>
 				<MultiSelect
 					id="entity-select"
 					name="entity-select"
@@ -110,14 +108,15 @@
 					options={allEntityOptions}
 					loading={allEntityOptions.length === 0}
 					bind:selected={entitySelected}
+					outerDivClass="select"
 				/>
 				<input type="hidden" name="entity" value={entitySelected?.[0]?.value} />
-			</div>
+			</fieldset>
 
-			<div class="form-control">
-				<label for="alias" class="label"><span class="label-text">Alias</span></label>
+			<fieldset class="fieldset">
+				<label for="alias" class="label">Alias</label>
 				<input name="alias" id="alias" class="input" value={entityName} required />
-			</div>
+			</fieldset>
 
 			<div class="modal-action">
 				<button type="submit" class="btn btn-ghost btn-sm btn-custom ml-auto">Add Alias</button>

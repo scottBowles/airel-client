@@ -29,10 +29,8 @@
 	);
 </script>
 
-<div class="form-control w-full max-w-xs">
-	<label class="label" for={id}>
-		<span class="label-text">Select Related {capitalize(entityDisplayName)}</span>
-	</label>
+<fieldset class="fieldset">
+	<label class="label" for={id}>Select Related {capitalize(entityDisplayName)}</label>
 	{#if fetching}
 		Loading {capitalize(entityDisplayName)}...
 	{:else}
@@ -46,4 +44,4 @@
 	{#if selected}
 		<input type="hidden" name={`${inputName}.id`} value={selected} />
 	{/if}
-</div>
+</fieldset>

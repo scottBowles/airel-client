@@ -78,22 +78,17 @@
 	}
 </script>
 
-<div class="form-control">
-	<label class="label" for={id}>
-		<span class="label-text">Select {capitalize(entityDisplayName)}</span>
+<fieldset class="fieldset">
+	<label class="label" for="brief">
+		Select {capitalize(entityDisplayName)}
 	</label>
+
 	{#if fetching}
-		Loading {capitalize(entityDisplayName)}...
+		<div style="height: 40px;">Loading {capitalize(entityDisplayName)}...</div>
 	{:else}
-		<MultiSelect
-			{id}
-			{options}
-			{selected}
-			outerDivClass="select select-bordered"
-			on:change={onChange}
-		/>
+		<MultiSelect {id} {options} {selected} outerDivClass="select" on:change={onChange} />
 	{/if}
 	{#each ids as id, i (id)}
 		<input type="hidden" name={`${inputGroupName}.set[${i}].id`} value={id} />
 	{/each}
-</div>
+</fieldset>

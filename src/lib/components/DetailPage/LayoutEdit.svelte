@@ -25,6 +25,7 @@
 	import RelatedPlaceMultiSelect from '../RelatedPlaceMultiSelect.svelte';
 	import RelatedRaceMultiSelect from '../RelatedRaceMultiSelect.svelte';
 	import type { Snippet } from 'svelte';
+	import TextAreaAutoGrow from '../TextAreaAutoGrow.svelte';
 
 	const unlockMutation = new UnlockStore();
 	const addLogMutation = new AddEntityLogStore();
@@ -157,12 +158,10 @@
 <LayoutBase clearfix>
 	<!-- NAME -->
 	{#snippet nameSnippet()}
-		<div class="form-control">
-			<label for="name-input" class="label">
-				<span class="label-text">Name</span>
-			</label>
+		<fieldset class="fieldset">
+			<label class="label" for="name-input">Name</label>
 			<input type="text" id="name-input" name="name" value={name} class="input" required />
-		</div>
+		</fieldset>
 	{/snippet}
 
 	<!-- EDIT / SAVE + LOCKED BY {USER} -->
@@ -216,13 +215,15 @@
 
 	<!-- DESCRIPTION -->
 	{#snippet descriptionSnippet()}
-		<div class="form-control">
-			<label for="description-input" class="label">
-				<span class="label-text">Description</span>
-			</label>
-			<textarea id="description-input" name="description" value={description} class="textarea"
-			></textarea>
-		</div>
+		<fieldset class="fieldset">
+			<label class="label" for="description-input">Brief</label>
+			<TextAreaAutoGrow
+				id="description-input"
+				name="description"
+				bind:value={description}
+				class="textarea w-full"
+			/>
+		</fieldset>
 	{/snippet}
 
 	<!-- PROPERTIES -->

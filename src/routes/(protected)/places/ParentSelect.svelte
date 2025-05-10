@@ -22,19 +22,17 @@
 </script>
 
 {#if selectedPlaceTypeDisplay && placesForParentSelect.length > 0}
-	<div class="form-control w-full max-w-xs">
-		<label for="place-parent-select" class="label">
-			<span class="label-text">
-				{name || 'This'} is a {selectedPlaceTypeDisplay} of the {getParentName(
-					selectedPlaceTypeDisplay
-				)}
-			</span>
-		</label>
+	<fieldset class="fieldset w-full max-w-xs">
+		<label for="place-parent-select" class="label"
+			>{name || 'This'} is a {selectedPlaceTypeDisplay} of the {getParentName(
+				selectedPlaceTypeDisplay
+			)}</label
+		>
 		<select bind:value={selectedParent} class="select" id="place-parent-select" name="parent.id">
 			<option disabled selected>Pick one</option>
 			{#each placesForParentSelect as { label, value } (value)}
 				<option {value}>{label}</option>
 			{/each}
 		</select>
-	</div>
+	</fieldset>
 {/if}

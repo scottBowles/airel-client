@@ -10,10 +10,8 @@
 	let { id = 'create', selectedPlaceType = $bindable() }: Props = $props();
 </script>
 
-<div class="form-control w-full max-w-xs">
-	<label class="label" for={`place-${id}-type-select`}>
-		<span class="label-text">Select Place Type</span>
-	</label>
+<fieldset class="fieldset w-full max-w-xs">
+	<label class="label" for={`place-${id}-type-select`}>Select Place Type</label>
 	<select
 		bind:value={selectedPlaceType}
 		class="select"
@@ -25,4 +23,4 @@
 			<option value={id}>{text}</option>
 		{/each}
 	</select>
-</div>
+</fieldset>

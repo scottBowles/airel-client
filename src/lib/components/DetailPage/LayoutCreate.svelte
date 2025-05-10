@@ -15,6 +15,7 @@
 	import Spacer from '../Spacer.svelte';
 	import LayoutBase from './LayoutBase.svelte';
 	import LogsDisplay from './LogsDisplay.svelte';
+	import TextAreaAutoGrow from '../TextAreaAutoGrow.svelte';
 
 	type Log = {
 		readonly id: string;
@@ -66,12 +67,10 @@
 <LayoutBase clearfix>
 	<!-- NAME -->
 	{#snippet nameSnippet()}
-		<div class="form-control">
-			<label for="name-input" class="label">
-				<span class="label-text">Name</span>
-			</label>
+		<fieldset class="fieldset">
+			<label for="name-input" class="label">Name</label>
 			<input type="text" id="name-input" name="name" bind:value={name} class="input" required />
-		</div>
+		</fieldset>
 	{/snippet}
 
 	<!-- EDIT / SAVE + LOCKED BY {USER} -->
@@ -112,12 +111,10 @@
 
 	<!-- DESCRIPTION -->
 	{#snippet descriptionSnippet()}
-		<div class="form-control">
-			<label for="description-input" class="label">
-				<span class="label-text">Description</span>
-			</label>
-			<textarea name="description" id="description-input" class="textarea w-full"></textarea>
-		</div>
+		<fieldset class="fieldset">
+			<label for="description-input" class="label"> Description </label>
+			<TextAreaAutoGrow name="description" id="description-input" class="textarea w-full" />
+		</fieldset>
 	{/snippet}
 
 	<!-- PROPERTIES -->

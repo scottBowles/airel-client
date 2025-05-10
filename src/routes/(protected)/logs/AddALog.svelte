@@ -44,11 +44,11 @@
 			>x</label
 		>
 		<form onsubmit={handleSubmit}>
-			<h3 class="text-lg font-bold">Add a Log</h3>
-			<div class="form-control">
-				<label for="url" class="py-4">Enter url of the log's google doc</label>
+			<h3 class="mb-3 text-lg font-bold">Add a Log</h3>
+			<fieldset class="fieldset">
+				<label for="url" class="label">Enter url of the log's google doc</label>
 				<input bind:value={newLogUrl} id="url" name="url" class="input" />
-			</div>
+			</fieldset>
 
 			<div class="modal-action">
 				<label for={ADD_LOG_MODAL_ID}><button class="btn btn-neutral">Add Log</button></label>

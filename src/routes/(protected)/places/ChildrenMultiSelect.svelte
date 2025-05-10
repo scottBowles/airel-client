@@ -35,19 +35,18 @@
 
 {#if selectedPlaceTypeDisplay && placesForChildrenSelect.length > 0}
 	<!-- No need to have a loading display here b/c we're checking whether places for children select exist before we show anything anyways -->
-	<div class="form-control w-full max-w-xs">
-		<label for="place-children-select" class="label">
-			<span class="label-text">
-				Child {getChildrenName(selectedPlaceTypeDisplay)}
-			</span>
-		</label>
+	<fieldset class="fieldset w-full max-w-xs">
+		<label for="place-children-select" class="label"
+			>Child {getChildrenName(selectedPlaceTypeDisplay)}</label
+		>
 		<MultiSelect
 			id="place-children-select"
 			bind:selected={selectedChildren}
 			options={placesForChildrenSelect}
+			outerDivClass="select"
 		/>
 		{#each selectedChildrenIds as id, i (id)}
 			<input type="hidden" name={`children.set[${i}].id`} value={id} />
 		{/each}
-	</div>
+	</fieldset>
 {/if}

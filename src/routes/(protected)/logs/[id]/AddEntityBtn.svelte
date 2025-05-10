@@ -147,21 +147,19 @@
 		<form onsubmit={handleAddEntity}>
 			<h3 class="text-lg font-bold">Add Entity</h3>
 
-			<div class="form-control w-full max-w-xs">
-				<label class="label" for="entity-type">
-					<span class="label-text">Select Entity Type</span>
-				</label>
+			<fieldset class="fieldset w-full max-w-xs">
+				<label class="label" for="entity-type">Select Entity Type</label>
 				<select class="select" id="entity-type" name="entityType">
 					{#each ENTITY_TYPES as opt (opt)}
 						<option value={opt} selected={suggestedEntityType === opt}>{capitalize(opt)}</option>
 					{/each}
 				</select>
-			</div>
+			</fieldset>
 
-			<div class="form-control">
-				<label for="name" class="label"><span class="label-text">Name</span></label>
+			<fieldset class="fieldset">
+				<label for="name" class="label">Name</label>
 				<input name="name" id="name" class="input" value={entityName} required />
-			</div>
+			</fieldset>
 
 			<div class="modal-action">
 				<button type="submit" class="btn btn-ghost btn-sm btn-custom ml-auto">Add Entity</button>

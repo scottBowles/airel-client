@@ -201,18 +201,16 @@
 		<form onsubmit={handleSubmit}>
 			<h3 class="text-lg font-bold">Add Entity</h3>
 
-			<div class="form-control w-full max-w-xs">
-				<label class="label" for="entity-select">
-					<span class="label-text"
-						>Check if Entity Exists? (Optional)
-						<div
-							class="tooltip tooltip-bottom"
-							data-tip="If you're not sure whether this entity exists, it's always good to check first. If it does, you'll have the option to add an alias. Otherwise, feel free to skip this and just add below."
-						>
-							<span class="icon"><FaInfoCircle /></span>
-						</div></span
+			<fieldset class="fieldset w-full max-w-xs">
+				<label class="label" for="entity-select"
+					>Check if Entity Exists? (Optional)
+					<div
+						class="tooltip tooltip-bottom"
+						data-tip="If you're not sure whether this entity exists, it's always good to check first. If it does, you'll have the option to add an alias. Otherwise, feel free to skip this and just add below."
 					>
-				</label>
+						<span class="icon"><FaInfoCircle /></span>
+					</div></label
+				>
 				<MultiSelect
 					id="entity-select"
 					name="entity-select"
@@ -220,35 +218,34 @@
 					options={allEntityOptions}
 					loading={allEntityOptions.length === 0}
 					bind:selected={entitySelected}
+					outerDivClass="select"
 				/>
 				<input type="hidden" name="entity" value={entitySelected?.[0]?.value} />
-			</div>
+			</fieldset>
 
 			{#if entitySelected && entitySelected.length > 0}
-				<div class="form-control">
-					<label for="alias" class="label"><span class="label-text">Alias</span></label>
+				<fieldset class="fieldset">
+					<label for="alias" class="label">Alias</label>
 					<input name="alias" id="alias" class="input" value={entityName} required />
-				</div>
+				</fieldset>
 
 				<div class="modal-action">
 					<button type="submit" class="btn btn-ghost btn-sm btn-custom ml-auto">Add Alias</button>
 				</div>
 			{:else}
-				<div class="form-control w-full max-w-xs">
-					<label class="label" for="entity-type">
-						<span class="label-text">Select Entity Type</span>
-					</label>
+				<fieldset class="fieldset w-full max-w-xs">
+					<label class="label" for="entity-type">Select Entity Type</label>
 					<select class="select" id="entity-type" name="entityType">
 						{#each ENTITY_TYPES as opt (opt)}
 							<option value={opt} selected={suggestedEntityType === opt}>{capitalize(opt)}</option>
 						{/each}
 					</select>
-				</div>
+				</fieldset>
 
-				<div class="form-control">
-					<label for="name" class="label"><span class="label-text">Name</span></label>
+				<fieldset class="fieldset">
+					<label for="name" class="label">Name</label>
 					<input name="name" id="name" class="input" value={entityName} required />
-				</div>
+				</fieldset>
 
 				<div class="modal-action">
 					<button type="submit" class="btn btn-ghost btn-sm btn-custom ml-auto">Add Entity</button>

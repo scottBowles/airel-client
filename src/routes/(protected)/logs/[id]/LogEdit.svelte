@@ -30,6 +30,7 @@
 	import AddAiSuggestion from './AddAiSuggestion.svelte';
 	import AddEntityOrAliasBtn from './AddEntityOrAliasBtn.svelte';
 	import PossibleEntityList from './PossibleEntityList.svelte';
+	import TextAreaAutoGrow from '$lib/components/TextAreaAutoGrow.svelte';
 
 	const aiLogSuggestions = new AiLogSuggestionsStore();
 	// const generateAiLogSummary = new GenerateAiLogSummaryStore();
@@ -261,45 +262,46 @@
 			<div class="flex flex-2 flex-col gap-2">
 				<h2 class="my-4 text-xl font-bold">Details</h2>
 
-				<div class="form-control">
-					<label for="title-input" class="label">
-						<span class="label-text">Title</span>
-					</label>
-					<input type="text" id="title-input" name="title" value={title} class="input" required />
-				</div>
-				<div class="form-control">
-					<label for="game-date" class="label">
-						<span class="label-text">Game Date</span>
-					</label>
+				<fieldset class="fieldset">
+					<label class="label" for="title-input">Title</label>
+					<input type="text" id="title-input" name="title" value={title} required class="input" />
+				</fieldset>
+
+				<fieldset class="fieldset">
+					<label class="label" for="game-date">Game Date</label>
 					<input
-						type="date"
+						type="text"
 						id="game-date"
 						name="gameDate"
 						value={gameDate?.toISOString().substring(0, 10) ?? ''}
+						required
 						class="input"
+					/>
+				</fieldset>
+
+				<fieldset class="fieldset">
+					<label class="label" for="brief">Brief</label>
+					<TextAreaAutoGrow
+						id="brief"
+						name="brief"
+						class="textarea w-full"
+						bind:value={brief}
 						required
 					/>
-				</div>
-				<div class="form-control">
-					<label for="brief" class="label">
-						<span class="label-text">Brief</span>
-					</label>
-					<textarea id="brief" name="brief" class="textarea w-full" value={brief} required
-					></textarea>
-				</div>
-				<div class="form-control">
-					<label for="synopsis" class="label">
-						<span class="label-text">Synopsis</span>
-					</label>
-					<textarea
+				</fieldset>
+
+				<fieldset class="fieldset">
+					<label class="label" for="brief">Synopsis</label>
+					<TextAreaAutoGrow
 						id="synopsis"
 						name="synopsis"
 						class="textarea h-auto w-full"
-						rows="6"
-						value={synopsis}
+						rows={6}
+						bind:value={synopsis}
 						required
-					></textarea>
-				</div>
+					/>
+				</fieldset>
+
 				<div class="max-w-xs">
 					<RelatedPlaceMultiSelect
 						id={`log-${id}-place-select`}
@@ -729,5 +731,37 @@
 
 	.tooltip {
 		text-transform: none;
+	}
+
+	.textarea-grow-wrap {
+		/* easy way to plop the elements on top of each other and have them both sized based on the tallest one's height */
+		display: grid;
+	}
+	.textarea-grow-wrap::after {
+		/* Note the weird space! Needed to preventy jumpy behavior */
+		content: attr(data-replicated-value) ' ';
+
+		/* This is how textarea text behaves */
+		white-space: pre-wrap;
+
+		/* Hidden from view, clicks, and screen readers */
+		visibility: hidden;
+	}
+	.textarea-grow-wrap > textarea {
+		/* You could leave this, but after a user resizes, then it ruins the auto sizing */
+		resize: none;
+
+		/* Firefox shows scrollbar on growth, you can hide like this. */
+		overflow: hidden;
+	}
+	.textarea-grow-wrap > textarea,
+	.textarea-grow-wrap::after {
+		/* Identical styling required!! */
+		border: 1px solid black;
+		padding: 0.5rem;
+		font: inherit;
+
+		/* Place on top of each other */
+		grid-area: 1 / 1 / 2 / 2;
 	}
 </style>
