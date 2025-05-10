@@ -6,9 +6,7 @@ const config = {
 		url: 'env:PUBLIC_GRAPHQL_URL'
 	},
 	runtimeDir: '.houdini',
-	plugins: {
-		'houdini-svelte': { forceRunesMode: true }
-	},
+	plugins: { 'houdini-svelte': { forceRunesMode: true } },
 	scalars: {
 		DateTime: {
 			type: 'Date',
