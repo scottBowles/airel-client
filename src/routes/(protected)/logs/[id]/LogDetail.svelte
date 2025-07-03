@@ -1,13 +1,13 @@
 <svelte:options runes={true} />
 
 <script lang="ts">
-	import { fragment, graphql, LockStore, type LogDetailFields } from '$houdini';
-	import FaExternalLinkAlt from 'svelte-icons/fa/FaExternalLinkAlt.svelte';
-	import FaEdit from 'svelte-icons/fa/FaEdit.svelte';
-	import { prop } from 'ramda';
-	import { adjustForTimezone, fromGlobalId } from '$lib/utils';
-	import FoundInThisLogEntity from './FoundInThisLogEntity.svelte';
 	import { page } from '$app/state';
+	import { fragment, graphql, LockStore, type LogDetailFields } from '$houdini';
+	import { adjustForTimezone } from '$lib/utils';
+	import { prop } from 'ramda';
+	import FaEdit from 'svelte-icons/fa/FaEdit.svelte';
+	import FaExternalLinkAlt from 'svelte-icons/fa/FaExternalLinkAlt.svelte';
+	import FoundInThisLogEntity from './FoundInThisLogEntity.svelte';
 
 	const lockForEditMutation = new LockStore();
 
@@ -116,12 +116,12 @@
 </script>
 
 <article class="container mx-auto mt-8 mb-32 px-8">
-	<div class="flex justify-between gap-4 mb-2">
+	<div class="mb-2 flex justify-between gap-4">
 		<h2 class="card-title">
 			<span>
 				{title}
 				<a href={url} target="_blank" rel="noopener noreferrer" class="ml-2 flex-1">
-					<span class="icon inline-block hover:text-accent"><FaExternalLinkAlt /></span>
+					<span class="icon hover:text-accent inline-block"><FaExternalLinkAlt /></span>
 				</a>
 			</span>
 		</h2>
@@ -145,9 +145,9 @@
 
 	<hr class="mb-8" />
 
-	<div class="flex flex-col sm:flex-row gap-16">
-		<div class="flex flex-col gap-2 flex-2">
-			<h2 class="text-xl font-bold my-4">Details</h2>
+	<div class="flex flex-col gap-16 sm:flex-row">
+		<div class="flex flex-2 flex-col gap-2">
+			<h2 class="my-4 text-xl font-bold">Details</h2>
 
 			<h6 class="whitespace-nowrap">
 				{dateDisplay || exampleDate}
@@ -155,12 +155,13 @@
 			<p class="mt-8 italic">{brief || ''}</p>
 
 			<div class="mt-8">
-				<h3 class="font-bold mb-2">Set in</h3>
+				<h3 class="mb-2 font-bold">Set in</h3>
 				<div class="flex flex-wrap gap-2">
 					{#each placesSetIn as place (place.id)}
 						<a
-							href={`/places/${fromGlobalId(place.id).id}`}
-							class="badge hover:underline hover:text-accent p-3">{place.name}</a
+							href={`/places/${place.id}`}
+							class="badge badge-accent badge-outline hover:text-accent p-3 hover:underline"
+							>{place.name}</a
 						>
 					{/each}
 				</div>
@@ -170,10 +171,10 @@
 			</div>
 		</div>
 
-		<div class="flex flex-col items-center flex-1">
-			<h2 class="text-xl font-bold my-4">Found in this Log</h2>
+		<div class="flex flex-1 flex-col items-center">
+			<h2 class="my-4 text-xl font-bold">Found in this Log</h2>
 
-			<div class="flex flex-col gap-2 w-full">
+			<div class="flex w-full flex-col gap-2">
 				<FoundInThisLogEntity entities={artifacts} name="artifacts" />
 				<FoundInThisLogEntity entities={associations} name="associations" />
 				<FoundInThisLogEntity entities={characters} name="characters" />

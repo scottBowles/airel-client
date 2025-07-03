@@ -42,6 +42,7 @@
 	);
 
 	const handleSubmit = async (event: Event) => {
+		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const parsed = parseFormData(data);
 		updateCharacter.mutate({ id, ...parsed });

@@ -18,6 +18,7 @@
 	});
 
 	const handleSubmit = async (event: Event) => {
+		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const url = data.get('url') as string;
 		if (!url) return;

@@ -23,12 +23,12 @@
 	<div class="flex flex-wrap gap-x-1 gap-y-1">
 		{#if entities.length > 0}
 			{#each entities as entity (entity.id)}
-				<a href={getUrl(entity)} class="badge hover:underline hover:text-accent p-3"
+				<a href={getUrl(entity)} class="badge badge-neutral hover:text-accent p-3 hover:underline"
 					>{entity.name}</a
 				>
 			{/each}
 		{:else}
-			<span class="text-slate-500 font-extralight"> No {name.toLowerCase()} selected </span>
+			<span class="font-extralight text-slate-500"> No {name.toLowerCase()} selected </span>
 		{/if}
 	</div>
 </div>
