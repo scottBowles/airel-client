@@ -9,7 +9,7 @@
 
 	let { data }: { data: PageData } = $props();
 	let { GameLog } = $derived(data);
-	let log = $derived($GameLog.data?.gameLog);
+	let log = $derived($GameLog.data?.node);
 
 	let lockedBySelfData = $derived(
 		fragment(

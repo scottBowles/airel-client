@@ -10,7 +10,7 @@
 	let { data }: { data: PageData } = $props();
 
 	let { Association } = $derived(data);
-	let association = $derived($Association.data?.association);
+	let association = $derived($Association.data?.node);
 
 	let lockedBySelfData = $derived(
 		fragment(

@@ -12,17 +12,19 @@
 	let { data }: Props = $props();
 
 	let { Place } = $derived(data);
-	let place = $derived($Place.data?.place);
+	let place = $derived($Place.data?.node);
 
-	let lockedBySelfData = $derived(fragment(
-		place,
-		graphql(`
-			fragment PlaceLockedBySelf on Place {
-				id
-				lockedBySelf
-			}
-		`)
-	));
+	let lockedBySelfData = $derived(
+		fragment(
+			place,
+			graphql(`
+				fragment PlaceLockedBySelf on Place {
+					id
+					lockedBySelf
+				}
+			`)
+		)
+	);
 </script>
 
 <StatusHandler entityName="place" queryResult={$Place}>

@@ -10,7 +10,7 @@
 	let { data }: { data: PageData } = $props();
 
 	let { Item } = $derived(data);
-	let item = $derived($Item.data?.item);
+	let item = $derived($Item.data?.node);
 
 	let lockedBySelfData = $derived(
 		fragment(
