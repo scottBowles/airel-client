@@ -3,7 +3,8 @@
 /** @type {import('houdini').ConfigFile} */
 const config = {
 	watchSchema: {
-		url: 'env:PUBLIC_GRAPHQL_URL'
+		url: 'env:PUBLIC_GRAPHQL_URL',
+		interval: 0
 	},
 	runtimeDir: '.houdini',
 	plugins: { 'houdini-svelte': { forceRunesMode: true } },
