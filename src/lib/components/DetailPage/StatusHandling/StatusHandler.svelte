@@ -1,14 +1,20 @@
 <script lang="ts">
 	import type { QueryResult } from '$houdini';
+	import type { Snippet } from 'svelte';
 	import Error from './Error.svelte';
 	import Loading from './Loading.svelte';
 	import NotFound from './NotFound.svelte';
 	import SomethingWentWrong from './SomethingWentWrong.svelte';
 
-	export let entityName: string;
-	export let queryResult: QueryResult<unknown, unknown>;
+	interface Props {
+		entityName: string;
+		queryResult: QueryResult<unknown, unknown>;
+		children?: Snippet;
+	}
 
-	$: ({ data, errors, fetching } = queryResult);
+	let { entityName, queryResult, children }: Props = $props();
+
+	let { data, errors, fetching } = $derived(queryResult);
 </script>
 
 {#if fetching}
@@ -20,5 +26,5 @@
 {:else if data === null}
 	<NotFound {entityName} />
 {:else}
-	<slot />
+	{@render children?.()}
 {/if}

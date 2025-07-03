@@ -1,6 +1,6 @@
 import { toast } from '@zerodevx/svelte-toast';
 
-export { fromGlobalId, idFromGlobalId } from './fromGlobalId';
+export { fromGlobalId } from './fromGlobalId';
 
 export const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 

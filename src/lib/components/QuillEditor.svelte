@@ -1,14 +1,24 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import type { QuillOptions } from 'quill';
 	import { onDestroy, onMount } from 'svelte';
 
-	export let options = { placeholder: 'Anything goes here...' };
-	export let init = '<p>Initial content</p>';
+	interface Props {
+		options?: QuillOptions;
+		init?: string;
+	}
 
-	let node: HTMLElement;
-	let html = init;
+	let {
+		options = { placeholder: 'Anything goes here...' },
+		init = '<p>Initial content</p>'
+	}: Props = $props();
+
+	let node: HTMLElement | undefined = $state();
+	let html = $state(init);
 
 	onMount(async () => {
+		if (!node) return;
+
 		const { default: Quill } = await import('quill');
 
 		let quill = new Quill(node, {
@@ -23,8 +33,8 @@
 			...options
 		});
 
-		quill.clipboard.addMatcher(Node.ELEMENT_NODE, function (node: any, delta: any) {
-			delta.forEach((e: any) => {
+		quill.clipboard.addMatcher(Node.ELEMENT_NODE, function (_node, delta) {
+			delta.forEach((e) => {
 				if (e.attributes) {
 					e.attributes.color = '';
 					e.attributes.background = '';
@@ -36,22 +46,11 @@
 		const container = node.getElementsByClassName('ql-editor')[0];
 
 		quill.on('text-change', function (/*delta, oldDelta, source*/) {
-			node.dispatchEvent(
-				new CustomEvent('text-change', {
-					detail: {
-						html: container.innerHTML,
-						text: quill.getText(),
-						contents: quill.getContents()
-					}
-				})
-			);
+			html = container.innerHTML;
 		});
 	});
 
 	onDestroy(() => {
-		if (node) {
-			node.removeEventListener('text-change', handleTextChange);
-		}
 		if (browser && document) {
 			const els = document.querySelectorAll("div[class^='ql-']");
 			for (const el of els) {
@@ -61,16 +60,12 @@
 			}
 		}
 	});
-
-	function handleTextChange(e: any) {
-		html = e.detail.html;
-	}
 </script>
 
-<div class="editor" bind:this={node} on:text-change={handleTextChange}>
+<div class="editor" bind:this={node}>
 	{@html init}
 </div>
-<textarea name="markdownNotes" bind:value={html} hidden />
+<textarea name="markdownNotes" bind:value={html} hidden></textarea>
 
 <style>
 	@import 'https://cdn.quilljs.com/1.3.6/quill.snow.css';

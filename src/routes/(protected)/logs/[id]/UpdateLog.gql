@@ -1,16 +1,16 @@
 mutation UpdateLog(
-	$id: GlobalID!
+	$id: ID!
 	$title: String
 	$gameDate: DateTime
 	$brief: String
 	$synopsis: String
-	$placesSetIn: NodePartialListInput
-	$artifacts: NodePartialListInput
-	$associations: NodePartialListInput
-	$characters: NodePartialListInput
-	$items: NodePartialListInput
-	$places: NodePartialListInput
-	$races: NodePartialListInput
+	$placesSetIn: ManyToManyInput
+	$artifacts: ManyToManyInput
+	$associations: ManyToManyInput
+	$characters: ManyToManyInput
+	$items: ManyToManyInput
+	$places: ManyToManyInput
+	$races: ManyToManyInput
 ) {
 	updateGamelog(
 		input: {

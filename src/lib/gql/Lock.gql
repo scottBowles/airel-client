@@ -1,4 +1,4 @@
-mutation Lock($id: GlobalID!) {
+mutation Lock($id: ID!) {
 	lock(input: { id: $id }) {
 		id
 		lockedBySelf

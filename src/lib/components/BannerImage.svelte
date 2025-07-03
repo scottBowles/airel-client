@@ -14,23 +14,36 @@
 	import { TextStyle } from '@cloudinary/url-gen/qualifiers/textStyle';
 	import { Position } from '@cloudinary/url-gen/qualifiers';
 
-	export let imageId = 'dnd/City_guard_and_magister-5e_uk2sr0';
-	export let width = 2400;
-	export let height = 300;
-	export let overlay = '';
-	export let alt = '';
-	export let gravity: ReturnType<typeof compass> | undefined = undefined;
+	interface Props {
+		imageId?: string;
+		width?: number;
+		height?: number;
+		overlay?: string;
+		alt?: string;
+		gravity?: ReturnType<typeof compass> | undefined;
+	}
 
-	let src: string;
-	let loaded: boolean;
-	let imgElement: HTMLImageElement;
+	let {
+		imageId = 'dnd/City_guard_and_magister-5e_uk2sr0',
+		width = 2400,
+		height = 300,
+		overlay = '',
+		alt = '',
+		gravity = undefined
+	}: Props = $props();
 
-	$: heightToWeightRatio = height / width;
+	let src: string = $state('');
+	let loaded: boolean = $state(false);
+	let imgElement: HTMLImageElement | undefined = $state();
+
+	let heightToWeightRatio = $derived(height / width);
 
 	onMount(() => {
-		imgElement.onload = () => {
-			loaded = true;
-		};
+		if (imgElement) {
+			imgElement.onload = () => {
+				loaded = true;
+			};
+		}
 	});
 
 	const image = cloudinary.image(imageId);

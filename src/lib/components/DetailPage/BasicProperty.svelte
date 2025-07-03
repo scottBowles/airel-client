@@ -1,14 +1,32 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
-	export let name = 'No property name provided';
-	export let value: string | number = `No value provided for property ${name}`;
+	import type { Snippet } from 'svelte';
+
+	interface Props {
+		children?: Snippet;
+		name: string;
+		value: string | number;
+	}
+
+	let {
+		children,
+		name = 'No property name provided',
+		value = `No value provided for property ${name}`
+	}: Props = $props();
 </script>
 
 <h3 class="text-xl font-bold">{name}</h3>
-<div class="spacer-sm" />
-<slot>
+
+<div class="spacer-sm"></div>
+
+{#if children}
+	{@render children()}
+{:else}
 	<p>{value || ''}</p>
-</slot>
-<div class="spacer" />
+{/if}
+
+<div class="spacer"></div>
 
 <style>
 	.spacer {

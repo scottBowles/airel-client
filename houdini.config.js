@@ -3,11 +3,11 @@
 /** @type {import('houdini').ConfigFile} */
 const config = {
 	watchSchema: {
-		url: 'env:PUBLIC_GRAPHQL_URL'
+		url: 'env:PUBLIC_GRAPHQL_URL',
+		interval: 0
 	},
-	plugins: {
-		'houdini-svelte': {}
-	},
+	runtimeDir: '.houdini',
+	plugins: { 'houdini-svelte': { forceRunesMode: true } },
 	scalars: {
 		DateTime: {
 			type: 'Date',
@@ -16,15 +16,6 @@ const config = {
 			},
 			marshal(date) {
 				return date;
-			}
-		},
-		GlobalID: {
-			type: 'string',
-			unmarshal(value) {
-				return value;
-			},
-			marshal(value) {
-				return value;
 			}
 		}
 	}

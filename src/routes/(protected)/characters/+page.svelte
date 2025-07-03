@@ -1,25 +1,27 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
+	import { page } from '$app/state';
 	import AddLink from '$lib/components/AddLink.svelte';
 	import BannerImage from '$lib/components/BannerImage.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import { alphabeticallyBy } from '$lib/utils';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import type { PageData } from './$houdini';
-	import { fromGlobalId } from '$lib/utils';
-	import { page } from '$app/stores';
 
-	export let data: PageData;
+	let { data }: { data: PageData } = $props();
 
-	$: ({ me } = $page.data);
-	$: ({ Characters } = data);
-	$: characters =
+	let { me } = $derived(page.data);
+	let { Characters } = $derived(data);
+	let characters = $derived(
 		$Characters?.data?.characters?.edges?.map(({ node }) => node).sort(alphabeticallyBy('name')) ||
-		[];
+			[]
+	);
 </script>
 
 <BannerImage
 	overlay="Characters"
-	imageId={'dnd/City_guard_and_magister-5e_uk2sr0'}
+	imageId="dnd/City_guard_and_magister-5e_uk2sr0"
 	alt="characters banner"
 	gravity={compass('north_east')}
 />
@@ -30,9 +32,7 @@
 	{/if}
 
 	{#each characters as character (character.id)}
-		{@const { id } = character}
-		{@const globalId = fromGlobalId(id).id}
-		{@const href = `characters/${globalId}`}
+		{@const href = `characters/${character.id}`}
 		<ListDetailCard entity={character} {href} />
 	{/each}
 </div>

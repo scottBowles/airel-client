@@ -1,4 +1,4 @@
-mutation ItemLock($id: GlobalID!) {
+mutation ItemLock($id: ID!) {
 	itemLock(input: { id: $id }) {
 		... on Item {
 			id

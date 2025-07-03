@@ -1,4 +1,4 @@
-mutation RemoveEntityLog($entityId: GlobalID!, $logId: GlobalID!) {
+mutation RemoveEntityLog($entityId: ID!, $logId: ID!) {
 	removeEntityLog(input: { entityId: $entityId, logId: $logId }) {
 		... on Artifact {
 			id

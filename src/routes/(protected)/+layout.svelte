@@ -1,14 +1,22 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
-	import { navigating } from '$app/stores';
+	import { navigating } from '$app/state';
 	import Algolia from '$lib/components/Algolia.svelte';
 	import CustomLayout from '$lib/components/nav/CustomLayout.svelte';
 	import NavBar from '$lib/components/nav/NavBar.svelte';
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
-	import type { ShowAlgoliaSearch, Theme } from '$lib/stores';
+	import { type ShowAlgoliaSearch, ThemeState } from '$lib/stores';
 	import { SvelteToast } from '@zerodevx/svelte-toast';
-	import { getContext } from 'svelte';
+	import { getContext, type Snippet } from 'svelte';
 
-	const theme = getContext<Theme>('theme');
+	interface Props {
+		children?: Snippet;
+	}
+
+	let { children }: Props = $props();
+
+	let theme = getContext<ThemeState>('theme');
 	const showAlgoliaSearch = getContext<ShowAlgoliaSearch>('showAlgoliaSearch');
 
 	// import type { LayoutData } from './$houdini';
@@ -19,21 +27,20 @@
 	// $: console.log(me);
 </script>
 
-{#if $navigating}
+{#if navigating.to}
 	<PreloadingIndicator />
 {/if}
 
 <!-- TODO: put NavBar outside of main and handle min-height accordingly -->
 <main>
 	<!-- <AllDrawers><slot /></AllDrawers> -->
-	{#if $theme === 'trek'}
-		<CustomLayout><slot /></CustomLayout>
-	{:else}
-		<NavBar><slot /></NavBar>
-	{/if}
+	<!-- {#if theme.value === 'trek'}
+		<CustomLayout>{@render children?.()}</CustomLayout>
+	{:else} -->
+	<NavBar>{@render children?.()}</NavBar>
+	<!-- {/if} -->
 
 	<SvelteToast options={{ pausable: true }} />
-
 	{#if $showAlgoliaSearch}
 		<div class="search-modal">
 			<Algolia placeholder="Search" />

@@ -1,3 +1,5 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { fragment, graphql } from '$houdini';
 	import { Loading, StatusHandler } from '$lib/components/DetailPage';
@@ -5,19 +7,21 @@
 	import RaceDetail from './RaceDetail.svelte';
 	import RaceEdit from './RaceEdit.svelte';
 
-	export let data: PageData;
+	let { data }: { data: PageData } = $props();
 
-	$: ({ Race } = data);
-	$: race = $Race.data?.race;
+	let { Race } = $derived(data);
+	let race = $derived($Race.data?.race);
 
-	$: lockedBySelfData = fragment(
-		race,
-		graphql(`
-			fragment RaceLockedBySelf on Race {
-				id
-				lockedBySelf
-			}
-		`)
+	let lockedBySelfData = $derived(
+		fragment(
+			race,
+			graphql(`
+				fragment RaceLockedBySelf on Race {
+					id
+					lockedBySelf
+				}
+			`)
+		)
 	);
 </script>
 

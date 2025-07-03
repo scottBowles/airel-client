@@ -1,7 +1,9 @@
 query Character($id: ID!) {
-	character(pk: $id) {
-		...CharacterLockedBySelf
-		...CharacterDetailFields
-		...CharacterEditFields
+	node(id: $id) {
+		... on Character {
+			...CharacterLockedBySelf
+			...CharacterDetailFields
+			...CharacterEditFields
+		}
 	}
 }

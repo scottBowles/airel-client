@@ -1,4 +1,4 @@
-query GenerateAiLogSummary($id: GlobalID!) {
+query GenerateAiLogSummary($id: ID!) {
 	aiLogSuggestions(id: $id) {
 		title
 		brief

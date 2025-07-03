@@ -1,3 +1,5 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { fragment, graphql, type ItemDetailFields } from '$houdini';
 	import { LayoutDisplay } from '$lib/components/DetailPage';
@@ -5,35 +7,37 @@
 	import ItemEquipmentBlock from '../ItemEquipmentBlock.svelte';
 	import ItemWeaponBlock from '../ItemWeaponBlock.svelte';
 
-	export let item: ItemDetailFields;
+	let { item }: { item: ItemDetailFields } = $props();
 
-	$: data = fragment(
-		item,
-		graphql(`
-			fragment ItemDetailFields on Item {
-				armor {
-					acBonus
+	let data = $derived(
+		fragment(
+			item,
+			graphql(`
+				fragment ItemDetailFields on Item {
+					armor {
+						acBonus
+					}
+					weapon {
+						attackBonus
+					}
+					equipment {
+						briefDescription
+					}
+					...ItemWeaponBlock
+					...ItemArmorBlock
+					...ItemEquipmentBlock
+					...EntityDetailFields
 				}
-				weapon {
-					attackBonus
-				}
-				equipment {
-					briefDescription
-				}
-				...ItemWeaponBlock
-				...ItemArmorBlock
-				...ItemEquipmentBlock
-				...EntityDetailFields
-			}
-		`)
+			`)
+		)
 	);
 
-	$: ({ armor, weapon, equipment } = $data);
+	let { armor, weapon, equipment } = $derived($data);
 </script>
 
 <LayoutDisplay entity={$data}>
-	<svelte:fragment slot="properties">
-		<div class="spacer" />
+	{#snippet propertiesSnippet()}
+		<div class="spacer"></div>
 		<div class="stat-block-container">
 			<!-- ARMOR STAT BLOCK -->
 			{#if armor}
@@ -56,7 +60,7 @@
 				</div>
 			{/if}
 		</div>
-	</svelte:fragment>
+	{/snippet}
 </LayoutDisplay>
 
 <style>

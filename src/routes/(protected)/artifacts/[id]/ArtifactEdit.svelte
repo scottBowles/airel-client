@@ -7,40 +7,47 @@
 
 	const updateArtifact = new UpdateArtifactStore();
 
-	export let artifact: ArtifactEditFields;
+	interface Props {
+		artifact: ArtifactEditFields;
+	}
 
-	$: data = fragment(
-		artifact,
-		graphql(`
-			fragment ArtifactEditFields on Artifact {
-				id
-				items {
-					edges {
-						node {
-							id
+	let { artifact }: Props = $props();
+
+	let data = $derived(
+		fragment(
+			artifact,
+			graphql(`
+				fragment ArtifactEditFields on Artifact {
+					id
+					items {
+						edges {
+							node {
+								id
+							}
 						}
 					}
+					...EntityEditFields
 				}
-				...EntityEditFields
-			}
-		`)
+			`)
+		)
 	);
 
-	$: ({ id, items } = $data);
-	$: initialItemIds = items.edges.map((edge) => edge.node.id);
+	let { id, items } = $derived($data);
+	let initialItemIds = $derived(items.edges.map((edge) => edge.node.id));
 
 	const handleSubmit = async (event: Event) => {
+		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const parsed = parseFormData(data);
 		updateArtifact.mutate({ id, ...parsed });
 	};
 </script>
 
-<form method="POST" on:submit|preventDefault={handleSubmit}>
+<form method="POST" onsubmit={handleSubmit}>
 	<LayoutEdit entity={$data}>
-		<svelte:fragment slot="properties">
+		{#snippet properties()}
 			<Spacer lg />
 			<RelatedItemMultiSelect id={`artifact-${id}-item-select`} ids={initialItemIds} />
-		</svelte:fragment>
+		{/snippet}
 	</LayoutEdit>
 </form>

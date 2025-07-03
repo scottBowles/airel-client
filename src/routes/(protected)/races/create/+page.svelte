@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { fromGlobalId } from '$lib/utils';
-	import { parseFormData } from 'parse-nested-form-data';
-	import { error } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
 	import { CreateRaceStore } from '$houdini';
 	import { LayoutCreate } from '$lib/components/DetailPage';
+	import { error } from '@sveltejs/kit';
+	import { parseFormData } from 'parse-nested-form-data';
 
 	const createMutation = new CreateRaceStore();
 
 	const handleSubmit = async (event: Event) => {
+		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const parsed = parseFormData(data);
 		const name = parsed.name as string | undefined;
@@ -18,8 +18,7 @@
 		const res = await createMutation.mutate({ ...parsed, name });
 
 		if (res.data?.createRace.__typename === 'Race') {
-			const { id: globalId } = res.data.createRace;
-			const { id } = fromGlobalId(globalId);
+			const { id } = res.data.createRace;
 			goto(`/races/${id}`);
 		} else {
 			console.log('No data returned from createMutation.mutate! res.data: ', res.data);
@@ -27,6 +26,6 @@
 	};
 </script>
 
-<form method="POST" on:submit|preventDefault={handleSubmit}>
+<form method="POST" onsubmit={handleSubmit}>
 	<LayoutCreate />
 </form>

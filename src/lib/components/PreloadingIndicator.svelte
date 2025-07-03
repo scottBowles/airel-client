@@ -1,8 +1,10 @@
+<svelte:options runes={true} />
+
 <script>
 	import { onMount } from 'svelte';
 
-	let p = 0;
-	let visible = false;
+	let p = $state(0);
+	let visible = $state(false);
 
 	onMount(() => {
 		visible = true;
@@ -17,12 +19,12 @@
 
 {#if visible}
 	<div class="progress-container">
-		<div class="progress" style="width: {p * 100}%" />
+		<div class="progress" style="width: {p * 100}%"></div>
 	</div>
 {/if}
 
 {#if p >= 0.4}
-	<div class="fade" />
+	<div class="fade"></div>
 {/if}
 
 <style>
@@ -54,7 +56,11 @@
 		animation: fade 0.4s;
 	}
 
-	:global(html).dark .fade {
+	:global(html.dark) {
+		background-color: rgba(0, 0, 0, 0.3);
+	}
+
+	:global(html.fade) {
 		background-color: rgba(0, 0, 0, 0.3);
 	}
 

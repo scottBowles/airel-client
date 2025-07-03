@@ -1,18 +1,18 @@
 <script lang="ts">
-	import { fromGlobalId } from '$lib/utils';
-	import { parseFormData } from 'parse-nested-form-data';
-	import { error } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
 	import { CreateItemStore } from '$houdini';
 	import { LayoutCreate } from '$lib/components/DetailPage';
+	import { error } from '@sveltejs/kit';
+	import { parseFormData } from 'parse-nested-form-data';
 	import AddBlock from '../AddBlock.svelte';
 	import ItemArmorInputs from '../ItemArmorInputs.svelte';
-	import ItemWeaponInputs from '../ItemWeaponInputs.svelte';
 	import ItemEquipmentInputs from '../ItemEquipmentInputs.svelte';
+	import ItemWeaponInputs from '../ItemWeaponInputs.svelte';
 
 	const createMutation = new CreateItemStore();
 
 	const handleSubmit = async (event: Event) => {
+		event.preventDefault();
 		const formData = new FormData(event.target as HTMLFormElement);
 		const parsed = parseFormData(formData);
 		const name = parsed.name as string | undefined;
@@ -23,8 +23,7 @@
 
 		// Redirect to the new item's detail page
 		if (res.data?.createItem.__typename === 'Item') {
-			const { id: globalId } = res.data.createItem;
-			const { id } = fromGlobalId(globalId);
+			const { id } = res.data.createItem;
 			goto(`/items/${id}`);
 		} else {
 			console.log('No data returned from createMutation.mutate! res.data: ', res.data);
@@ -32,10 +31,10 @@
 	};
 </script>
 
-<form method="POST" on:submit|preventDefault={handleSubmit}>
+<form method="POST" onsubmit={handleSubmit}>
 	<LayoutCreate>
-		<svelte:fragment slot="properties">
-			<div class="spacer" />
+		{#snippet properties()}
+			<div class="spacer"></div>
 			<div class="stat-block-container">
 				<!-- ARMOR STAT BLOCK -->
 				<div class="stat-block">
@@ -58,7 +57,7 @@
 					</AddBlock>
 				</div>
 			</div>
-		</svelte:fragment>
+		{/snippet}
 	</LayoutCreate>
 </form>
 

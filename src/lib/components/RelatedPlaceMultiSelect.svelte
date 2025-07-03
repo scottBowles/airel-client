@@ -1,29 +1,40 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { PlaceNamesIdsAndTypesStore } from '$houdini';
 	import { alphabeticallyBy, placeByPrecendence } from '$lib/utils';
-	import RelatedEntityMultiSelectBase from './RelatedEntityMultiSelectBase.svelte';
 	import { prop } from 'ramda';
+	import { onMount } from 'svelte';
+	import RelatedEntityMultiSelectBase from './RelatedEntityMultiSelectBase.svelte';
 
 	const placeNamesIdsAndTypesQuery = new PlaceNamesIdsAndTypesStore();
-	$: browser && placeNamesIdsAndTypesQuery.fetch();
+	onMount(() => placeNamesIdsAndTypesQuery.fetch());
 
-	export let ids: string[] = [];
-	export let id = `place-select`;
-	export let inputGroupName = 'places';
-	export let entityDisplayName = inputGroupName;
+	interface Props {
+		ids?: string[];
+		id?: string;
+		inputGroupName?: string;
+		entityDisplayName?: string;
+	}
 
-	$: optionNamesAndIdNodes = $placeNamesIdsAndTypesQuery.data?.places.edges
-		.map(prop('node'))
-		.sort(alphabeticallyBy('name'))
-		.sort(placeByPrecendence)
-		.map(({ id, name, placeType }) => ({
-			node: {
-				id,
-				name: `${name} (${placeType})`
-			}
-		}));
-	$: ({ fetching } = $placeNamesIdsAndTypesQuery);
+	let {
+		ids = $bindable([]),
+		id = `place-select`,
+		inputGroupName = 'places',
+		entityDisplayName = inputGroupName
+	}: Props = $props();
+
+	let optionNamesAndIdNodes = $derived(
+		$placeNamesIdsAndTypesQuery.data?.places.edges
+			.map(prop('node'))
+			.sort(alphabeticallyBy('name'))
+			.sort(placeByPrecendence)
+			.map(({ id, name, placeType }) => ({
+				node: {
+					id,
+					name: `${name} (${placeType})`
+				}
+			}))
+	);
+	let { fetching } = $derived($placeNamesIdsAndTypesQuery);
 </script>
 
 <RelatedEntityMultiSelectBase

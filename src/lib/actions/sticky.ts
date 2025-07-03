@@ -4,8 +4,8 @@ import type { Action } from 'svelte/action';
 
 type Sticky = Action<
 	HTMLDivElement,
-	never,
-	{ 'on:stuck': (e: CustomEvent<{ isStuck: boolean }>) => void }
+	undefined,
+	{ onstuck: (e: CustomEvent<{ isStuck: boolean }>) => void }
 >;
 
 const sticky: Sticky = (node: HTMLElement) => {

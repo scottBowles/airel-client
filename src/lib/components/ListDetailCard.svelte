@@ -1,39 +1,57 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { fragment, graphql, type EntityListFields } from '$houdini';
 	import Thumbnail from '$lib/components/Thumbnail.svelte';
+	import type { Snippet } from 'svelte';
 
-	export let href: string;
-	export let entity: EntityListFields;
+	interface Props {
+		href: string;
+		entity: EntityListFields;
+		thumbnailSnippet?: Snippet;
+		titleSnippet?: Snippet;
+		descriptionSnippet?: Snippet;
+	}
 
-	$: data = fragment(
-		entity,
-		graphql(`
-			fragment EntityListFields on Entity {
-				name
-				description
-				thumbnailId
-				imageIds
-			}
-		`)
+	let { href, entity, thumbnailSnippet, titleSnippet, descriptionSnippet }: Props = $props();
+
+	let data = $derived(
+		fragment(
+			entity,
+			graphql(`
+				fragment EntityListFields on Entity {
+					name
+					description
+					thumbnailId
+					imageIds
+				}
+			`)
+		)
 	);
 
-	$: ({ name, description, thumbnailId, imageIds } = $data);
+	let { name, description, thumbnailId, imageIds } = $derived($data);
 </script>
 
 <div class="_card">
-	<slot name="thumbnail">
+	{#if thumbnailSnippet}
+		{@render thumbnailSnippet()}
+	{:else}
 		<Thumbnail thumbnailId={thumbnailId || imageIds?.[0]} />
-	</slot>
+	{/if}
 	<div>
 		<p class="title">
-			<slot name="title">
+			{#if titleSnippet}
+				{@render titleSnippet()}
+			{:else}
 				<a {href}>{name}</a>
-			</slot>
+			{/if}
 		</p>
 		<p class="description">
-			<slot name="description">
+			{#if descriptionSnippet}
+				{@render descriptionSnippet()}
+			{:else}
 				{description ?? ''}
-			</slot>
+			{/if}
 		</p>
 	</div>
 </div>

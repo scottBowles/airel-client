@@ -25,11 +25,21 @@
 	const createPlaceMutation = new CreatePlaceStore();
 	const createRaceMutation = new CreateRaceStore();
 
-	export let entityName: string;
-	export let suggestedEntityType: EntityType | undefined = undefined;
-	export let updateFoundEntities: (type: EntityType, newEntity: any) => void;
-	export let updateLogEntitiesInForm: (id: string) => void;
-	export let verbose = false;
+	interface Props {
+		entityName: string;
+		suggestedEntityType?: EntityType | undefined;
+		updateFoundEntities: (type: EntityType, newEntity: any) => void;
+		updateLogEntitiesInForm: (id: string) => void;
+		verbose?: boolean;
+	}
+
+	let {
+		entityName,
+		suggestedEntityType = undefined,
+		updateFoundEntities,
+		updateLogEntitiesInForm,
+		verbose = false
+	}: Props = $props();
 
 	const artifactNamesAndIdsQuery = new ArtifactNamesAndIdsStore();
 	const associationNamesAndIdsQuery = new AssociationNamesAndIdsStore();
@@ -38,7 +48,7 @@
 	const placeNamesIdsAndTypesQuery = new PlaceNamesIdsAndTypesStore();
 	const raceNamesAndIdsQuery = new RaceNamesAndIdsStore();
 
-	let isOpen: boolean;
+	let isOpen: boolean = $state(false);
 
 	const ADD_MODAL_ID = 'modal-add-entity' + suggestedEntityType + entityName;
 
@@ -85,6 +95,7 @@
 	};
 
 	async function handleAddEntity(event: Event) {
+		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const name = data.get('name')?.toString();
 		const entityType = data.get('entityType')?.toString();
@@ -126,30 +137,29 @@
 
 <label for={ADD_MODAL_ID} class="link hover:accent modal-button">
 	<div class="icon"><FaUserPlus /></div>
-	{#if verbose} Add Any Entity{/if}
+	{#if verbose}
+		Add Any Entity{/if}
 </label>
 
 <input type="checkbox" id={ADD_MODAL_ID} class="modal-toggle" bind:checked={isOpen} />
 <label for={ADD_MODAL_ID} class="modal modal-bottom sm:modal-middle cursor-pointer">
 	<label class="modal-box relative" for="">
-		<form on:submit|preventDefault={handleAddEntity}>
-			<h3 class="font-bold text-lg">Add Entity</h3>
+		<form onsubmit={handleAddEntity}>
+			<h3 class="text-lg font-bold">Add Entity</h3>
 
-			<div class="form-control w-full max-w-xs">
-				<label class="label" for={'entity-type'}>
-					<span class="label-text">Select Entity Type</span>
-				</label>
-				<select class="select select-bordered" id={'entity-type'} name="entityType">
-					{#each ENTITY_TYPES as opt}
+			<fieldset class="fieldset w-full max-w-xs">
+				<label class="label" for="entity-type">Select Entity Type</label>
+				<select class="select" id="entity-type" name="entityType">
+					{#each ENTITY_TYPES as opt (opt)}
 						<option value={opt} selected={suggestedEntityType === opt}>{capitalize(opt)}</option>
 					{/each}
 				</select>
-			</div>
+			</fieldset>
 
-			<div class="form-control">
-				<label for="name" class="label"><span class="label-text">Name</span></label>
-				<input name="name" id="name" class="input input-bordered" value={entityName} required />
-			</div>
+			<fieldset class="fieldset">
+				<label for="name" class="label">Name</label>
+				<input name="name" id="name" class="input" value={entityName} required />
+			</fieldset>
 
 			<div class="modal-action">
 				<button type="submit" class="btn btn-ghost btn-sm btn-custom ml-auto">Add Entity</button>

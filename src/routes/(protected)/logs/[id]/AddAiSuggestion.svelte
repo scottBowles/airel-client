@@ -5,13 +5,21 @@
 
 	const addAiLogSuggestion = new AddAiLogSuggestionStore();
 
-	export let id: string;
+	interface Props {
+		id: string;
+	}
 
-	let isOpen: boolean;
+	let { id }: Props = $props();
+
+	let isOpen: boolean = $state(false);
+	let value: string = $state('');
 
 	const MODAL_ID = 'modal-add-ai-suggestion';
 
-	function handleAddSuggestionJson(event: Event) {
+	function handleAddSuggestionJson(
+		event: SubmitEvent & { currentTarget: EventTarget & HTMLFormElement }
+	) {
+		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const aiSuggestionJson = data.get('aiSuggestionJson')?.toString();
 		if (!aiSuggestionJson) return;
@@ -21,6 +29,7 @@
 		} catch (err) {
 			somethingWentWrong(`Couldn't parse JSON: ${JSON.stringify(err)}}`);
 		}
+		value = '';
 		isOpen = false;
 	}
 </script>
@@ -34,19 +43,14 @@
 <input type="checkbox" id={MODAL_ID} class="modal-toggle" bind:checked={isOpen} />
 <label for={MODAL_ID} class="modal modal-bottom sm:modal-middle cursor-pointer">
 	<label class="modal-box relative" for="">
-		<form on:submit|preventDefault={handleAddSuggestionJson}>
-			<h3 class="font-bold text-lg">Add a Generated Suggestion from JSON</h3>
+		<form onsubmit={handleAddSuggestionJson}>
+			<h3 class="text-lg font-bold">Add a Generated Suggestion from JSON</h3>
 
-			<div class="form-control w-full max-w-xs">
-				<label for="ai-suggestion-json" class="label">
-					<span class="label-text">JSON</span>
-				</label>
-				<textarea
-					id="ai-suggestion-json"
-					name="aiSuggestionJson"
-					class="textarea textarea-bordered w-full"
-				/>
-			</div>
+			<fieldset class="fieldset w-full max-w-xs">
+				<label for="ai-suggestion-json" class="label">JSON</label>
+				<textarea id="ai-suggestion-json" name="aiSuggestionJson" class="textarea w-full" bind:value
+				></textarea>
+			</fieldset>
 
 			<div class="modal-action">
 				<button type="submit" class="btn btn-ghost btn-sm btn-custom ml-auto">

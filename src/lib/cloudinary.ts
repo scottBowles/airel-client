@@ -4,6 +4,7 @@ import { thumbnail } from '@cloudinary/url-gen/actions/resize';
 import { byRadius } from '@cloudinary/url-gen/actions/roundCorners';
 import { FocusOn } from '@cloudinary/url-gen/qualifiers/focusOn';
 import { focusOn } from '@cloudinary/url-gen/qualifiers/gravity';
+import { DEFAULT_IMAGE_SRC } from './constants';
 
 /**
  * Store holding the cloudinary instance to be used throughout the app
@@ -17,7 +18,7 @@ const cloudinary = new Cloudinary({
 
 export function getThumbnailUrl(
 	imageId: string,
-	{ width = 75, height = 75, radius = 0, defaultSrc = 'dnd:placeholder.jpg' } = {}
+	{ width = 75, height = 75, radius = 0, defaultSrc = DEFAULT_IMAGE_SRC } = {}
 ) {
 	return cloudinary
 		.image(imageId)

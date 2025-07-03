@@ -1,35 +1,36 @@
 <script lang="ts">
-	import { parseFormData } from 'parse-nested-form-data';
-	import { uniq } from 'ramda';
+	import { page } from '$app/state';
 	import {
+		AiLogSuggestionsStore,
+		ArtifactNamesAndIdsStore,
 		fragment,
 		graphql,
 		UnlockStore,
 		UpdateLogStore,
 		type LogEditFields,
-		ArtifactNamesAndIdsStore,
 		// GenerateAiLogSummaryStore,
-		type LogEditFields$data,
-		AiLogSuggestionsStore
+		type LogEditFields$data
 	} from '$houdini';
+	import RelatedArtifactMultiSelect from '$lib/components/RelatedArtifactMultiSelect.svelte';
+	import RelatedAssociationMultiSelect from '$lib/components/RelatedAssociationMultiSelect.svelte';
+	import RelatedCharacterMultiSelect from '$lib/components/RelatedCharacterMultiSelect.svelte';
+	import RelatedItemMultiSelect from '$lib/components/RelatedItemMultiSelect.svelte';
+	import RelatedPlaceMultiSelect from '$lib/components/RelatedPlaceMultiSelect.svelte';
+	import RelatedRaceMultiSelect from '$lib/components/RelatedRaceMultiSelect.svelte';
+	import { ENTITY_TYPE, type EntityType } from '$lib/constants';
+	import { fromGlobalId, somethingWentWrong } from '$lib/utils';
+	import uniqStrArrStore from '$lib/utils/clientOnly/strArrStore';
+	import { parseFormData } from 'parse-nested-form-data';
+	import { uniq } from 'ramda';
+	import { onMount } from 'svelte';
 	import FaRobot from 'svelte-icons/fa/FaRobot.svelte';
 	import FaSave from 'svelte-icons/fa/FaSave.svelte';
 	import FaUndoAlt from 'svelte-icons/fa/FaUndoAlt.svelte';
-	import RelatedPlaceMultiSelect from '$lib/components/RelatedPlaceMultiSelect.svelte';
-	import RelatedItemMultiSelect from '$lib/components/RelatedItemMultiSelect.svelte';
-	import RelatedRaceMultiSelect from '$lib/components/RelatedRaceMultiSelect.svelte';
-	import RelatedAssociationMultiSelect from '$lib/components/RelatedAssociationMultiSelect.svelte';
-	import RelatedCharacterMultiSelect from '$lib/components/RelatedCharacterMultiSelect.svelte';
-	import RelatedArtifactMultiSelect from '$lib/components/RelatedArtifactMultiSelect.svelte';
 	import { idFromEdge } from '../../places/utils';
-	import { fromGlobalId, somethingWentWrong } from '$lib/utils';
-	import { browser } from '$app/environment';
-	import uniqStrArrStore from '$lib/utils/clientOnly/strArrStore';
-	import PossibleEntityList from './PossibleEntityList.svelte';
-	import { ENTITY_TYPE, type EntityType } from '$lib/constants';
-	import { page } from '$app/stores';
 	import AddAiSuggestion from './AddAiSuggestion.svelte';
 	import AddEntityOrAliasBtn from './AddEntityOrAliasBtn.svelte';
+	import PossibleEntityList from './PossibleEntityList.svelte';
+	import TextAreaAutoGrow from '$lib/components/TextAreaAutoGrow.svelte';
 
 	const aiLogSuggestions = new AiLogSuggestionsStore();
 	// const generateAiLogSummary = new GenerateAiLogSummaryStore();
@@ -37,98 +38,110 @@
 	const updateLog = new UpdateLogStore();
 	const artifactNamesAndIdsQuery = new ArtifactNamesAndIdsStore();
 
-	$: browser && artifactNamesAndIdsQuery.fetch();
-	$: pk = $page.params.id;
-	$: ({ me } = $page.data);
+	onMount(() => artifactNamesAndIdsQuery.fetch());
+	let pk = $derived(page.params.id);
+	let { me } = $derived(page.data);
 
-	export let log: LogEditFields;
+	interface Props {
+		log: LogEditFields;
+	}
 
-	$: data = fragment(
-		log,
-		graphql(`
-			fragment LogEditFields on GameLog {
-				id
-				title
-				gameDate
-				brief
-				synopsis
-				lockUser {
-					username
-				}
-				placesSetIn {
-					edges {
-						node {
-							id
+	let { log }: Props = $props();
+
+	let data = $derived(
+		fragment(
+			log,
+			graphql(`
+				fragment LogEditFields on GameLog {
+					id
+					title
+					gameDate
+					brief
+					synopsis
+					lockUser {
+						username
+					}
+					placesSetIn {
+						edges {
+							node {
+								id
+							}
+						}
+					}
+					artifacts {
+						edges {
+							node {
+								id
+							}
+						}
+					}
+					associations {
+						edges {
+							node {
+								id
+							}
+						}
+					}
+					characters {
+						edges {
+							node {
+								id
+							}
+						}
+					}
+					items {
+						edges {
+							node {
+								id
+							}
+						}
+					}
+					places {
+						edges {
+							node {
+								id
+							}
+						}
+					}
+					races {
+						edges {
+							node {
+								id
+							}
 						}
 					}
 				}
-				artifacts {
-					edges {
-						node {
-							id
-						}
-					}
-				}
-				associations {
-					edges {
-						node {
-							id
-						}
-					}
-				}
-				characters {
-					edges {
-						node {
-							id
-						}
-					}
-				}
-				items {
-					edges {
-						node {
-							id
-						}
-					}
-				}
-				places {
-					edges {
-						node {
-							id
-						}
-					}
-				}
-				races {
-					edges {
-						node {
-							id
-						}
-					}
-				}
-			}
-		`)
+			`)
+		)
 	);
 
-	$: aiSuggestions = $aiLogSuggestions.data?.gameLog?.aiSuggestions;
+	let aiSuggestions = $derived(
+		$aiLogSuggestions.data?.node.__typename === 'GameLog'
+			? $aiLogSuggestions.data.node.aiSuggestions
+			: null
+	);
 	// $: aiLogSummary = $generateAiLogSummary.data?.aiLogSuggestions;
 	// $: aiLogSummaryErrors = $generateAiLogSummary.errors;
-	$: ({ foundArtifacts, foundAssociations, foundCharacters, foundItems, foundPlaces, foundRaces } =
-		aiSuggestions || {
-			foundArtifacts: [],
-			foundAssociations: [],
-			foundCharacters: [],
-			foundItems: [],
-			foundPlaces: [],
-			foundRaces: []
-		});
-	$: allFoundEntityNames = [
+	let { foundArtifacts, foundAssociations, foundCharacters, foundItems, foundPlaces, foundRaces } =
+		$derived(
+			aiSuggestions || {
+				foundArtifacts: [],
+				foundAssociations: [],
+				foundCharacters: [],
+				foundItems: [],
+				foundPlaces: [],
+				foundRaces: []
+			}
+		);
+	let allFoundEntityNames = $derived([
 		...foundArtifacts.map((a) => a.name),
 		...foundAssociations.map((a) => a.name),
 		...foundCharacters.map((a) => a.name),
 		...foundItems.map((a) => a.name),
 		...foundPlaces.map((a) => a.name),
 		...foundRaces.map((a) => a.name)
-	];
-	$: updateFoundEntities = (type: EntityType, newEntity: any) => {
+	]);
+	let updateFoundEntities = $derived((type: EntityType, newEntity: any) => {
 		switch (type) {
 			case 'Artifact':
 				foundArtifacts = uniq([...foundArtifacts, newEntity]);
@@ -151,11 +164,11 @@
 			default:
 				throw new Error(`Unknown entity type: ${type}`);
 		}
-	};
+	});
 
-	$: ({ id, title, gameDate, brief, synopsis, lockUser } = $data);
+	let { id, title, gameDate, brief, synopsis, lockUser } = $derived($data);
 
-	$: placesSetInIds = $data.placesSetIn.edges.map(idFromEdge);
+	let placesSetInIds = $derived($data.placesSetIn.edges.map(idFromEdge));
 
 	const artifactIds = uniqStrArrStore();
 	const associationIds = uniqStrArrStore();
@@ -186,11 +199,14 @@
 		store.add(id);
 	}
 
-	$: setStoresFromData($data);
+	$effect(() => {
+		setStoresFromData($data);
+	});
 
 	const unlock = () => unlockMutation.mutate({ id });
 
 	const handleSubmit = async (event: Event) => {
+		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const parsed = parseFormData(data);
 		const gameDate = parsed.gameDate ? new Date(parsed.gameDate as string) : null;
@@ -207,15 +223,15 @@
 		}
 	};
 
-	const modalId = `discard-changes-modal-${id}`;
+	let modalId = $derived(`discard-changes-modal-${id}`);
 </script>
 
-<form method="POST" on:submit|preventDefault={handleSubmit}>
+<form method="POST" onsubmit={handleSubmit}>
 	<div class="container mx-auto mt-8 mb-32 px-8">
-		<div class="flex justify-between items-center flex-wrap gap-4 mb-8">
+		<div class="mb-8 flex flex-wrap items-center justify-between gap-4">
 			<h1 class="text-3xl font-bold">Edit Log</h1>
 
-			<div class="flex items-center gap-8 min-w-fit">
+			<div class="flex min-w-fit items-center gap-8">
 				<span>Locked by {lockUser?.username ?? 'Unknown'}</span>
 
 				<div class="tooltip" data-tip="Discard changes">
@@ -226,11 +242,13 @@
 				<input type="checkbox" id={modalId} class="modal-toggle" />
 				<label for={modalId} class="modal modal-bottom sm:modal-middle cursor-pointer">
 					<label class="modal-box relative" for="">
-						<h3 class="font-bold text-lg">Discard changes</h3>
+						<h3 class="text-lg font-bold">Discard changes</h3>
 						<p class="py-4">Are you sure you want to discard any unsaved changes?</p>
 						<div class="modal-action">
-							<label for={modalId} class="btn" on:click={unlock} on:keypress={unlock}>Yes</label>
-							<label for={modalId} class="btn">No</label>
+							<label for={modalId} class="btn btn-neutral" onclick={unlock} onkeypress={unlock}
+								>Yes</label
+							>
+							<label for={modalId} class="btn btn-neutral">No</label>
 						</div>
 					</label>
 				</label>
@@ -244,61 +262,50 @@
 		</div>
 		<hr class="mb-8" />
 
-		<div class="flex flex-col sm:flex-row gap-16">
-			<div class="flex flex-col gap-2 flex-[2]">
-				<h2 class="text-xl font-bold my-4">Details</h2>
+		<div class="flex flex-col gap-16 sm:flex-row">
+			<div class="flex flex-2 flex-col gap-2">
+				<h2 class="my-4 text-xl font-bold">Details</h2>
 
-				<div class="form-control">
-					<label for="title-input" class="label">
-						<span class="label-text">Title</span>
-					</label>
+				<fieldset class="fieldset">
+					<label class="label" for="title-input">Title</label>
+					<input type="text" id="title-input" name="title" value={title} required class="input" />
+				</fieldset>
+
+				<fieldset class="fieldset">
+					<label class="label" for="game-date">Game Date</label>
 					<input
 						type="text"
-						id="title-input"
-						name="title"
-						value={title}
-						class="input input-bordered w-full max-w-sm"
-						required
-					/>
-				</div>
-				<div class="form-control">
-					<label for="game-date" class="label">
-						<span class="label-text">Game Date</span>
-					</label>
-					<input
-						type="date"
 						id="game-date"
 						name="gameDate"
 						value={gameDate?.toISOString().substring(0, 10) ?? ''}
-						class="input input-bordered w-full max-w-sm"
 						required
+						class="input"
 					/>
-				</div>
-				<div class="form-control">
-					<label for="brief" class="label">
-						<span class="label-text">Brief</span>
-					</label>
-					<textarea
+				</fieldset>
+
+				<fieldset class="fieldset">
+					<label class="label" for="brief">Brief</label>
+					<TextAreaAutoGrow
 						id="brief"
 						name="brief"
-						class="textarea textarea-bordered w-full"
-						value={brief}
+						class="textarea w-full"
+						bind:value={brief}
 						required
 					/>
-				</div>
-				<div class="form-control">
-					<label for="synopsis" class="label">
-						<span class="label-text">Synopsis</span>
-					</label>
-					<textarea
+				</fieldset>
+
+				<fieldset class="fieldset">
+					<label class="label" for="brief">Synopsis</label>
+					<TextAreaAutoGrow
 						id="synopsis"
 						name="synopsis"
-						class="textarea h-auto textarea-bordered w-full"
-						rows="6"
-						value={synopsis}
+						class="textarea h-auto w-full"
+						rows={6}
+						bind:value={synopsis}
 						required
 					/>
-				</div>
+				</fieldset>
+
 				<div class="max-w-xs">
 					<RelatedPlaceMultiSelect
 						id={`log-${id}-place-select`}
@@ -309,10 +316,10 @@
 				</div>
 			</div>
 
-			<div class="flex flex-col items-center flex-1">
-				<h2 class="text-xl font-bold my-4">Found in this Log</h2>
+			<div class="flex flex-1 flex-col items-center">
+				<h2 class="my-4 text-xl font-bold">Found in this Log</h2>
 
-				<div class="flex flex-col gap-2 w-full">
+				<div class="flex w-full flex-col gap-2">
 					<RelatedArtifactMultiSelect
 						id={`log-${id}-artifact-select`}
 						inputGroupName="artifacts"
@@ -359,47 +366,47 @@
 		)}
 	{:else if aiSuggestions}
 		<div class="container mx-auto mb-32 px-8">
-			<div class="text-lg font-bold pb-8">Ai Suggestions</div>
+			<div class="pb-8 text-lg font-bold">Ai Suggestions</div>
 			<div class="mb-6">
 				<div class="mb-4">
 					<div class="text-lg font-bold">Titles</div>
-					{#each aiSuggestions.titles as suggestedTitle}
+					{#each aiSuggestions.titles as suggestedTitle, i (i + suggestedTitle)}
 						<div>{suggestedTitle}</div>
 						<button
 							type="button"
-							on:click={() => (title = suggestedTitle ?? null)}
+							onclick={() => (title = suggestedTitle ?? null)}
 							class="link text-accent no-underline hover:underline">Use</button
 						>
 					{/each}
 				</div>
 				<div class="mb-4">
 					<div class="text-lg font-bold">Briefs</div>
-					{#each aiSuggestions.briefs as suggestedBrief}
+					{#each aiSuggestions.briefs as suggestedBrief, i (i + suggestedBrief)}
 						<div>{suggestedBrief}</div>
 						<button
 							type="button"
-							on:click={() => (brief = suggestedBrief ?? null)}
+							onclick={() => (brief = suggestedBrief ?? null)}
 							class="link text-accent no-underline hover:underline">Use</button
 						>
 					{/each}
 				</div>
 				<div class="mb-4">
 					<div class="text-lg font-bold">Synopses</div>
-					{#each aiSuggestions.synopses as suggestedSynopsis}
+					{#each aiSuggestions.synopses as suggestedSynopsis, i (i + suggestedSynopsis)}
 						<div>{suggestedSynopsis}</div>
 						<button
 							type="button"
-							on:click={() => (synopsis = suggestedSynopsis ?? null)}
+							onclick={() => (synopsis = suggestedSynopsis ?? null)}
 							class="link text-accent no-underline hover:underline">Use</button
 						>
 					{/each}
 				</div>
 			</div>
 
-			<div class="flex gap-8 mb-6">
+			<div class="mb-6 flex gap-8">
 				<div>
 					<AddEntityOrAliasBtn
-						entityName={''}
+						entityName=""
 						{updateFoundEntities}
 						{updateLogEntitiesInForm}
 						verbose
@@ -407,8 +414,8 @@
 				</div>
 			</div>
 
-			<h3 class="text-xl font-bold mb-4">Possible Entities</h3>
-			<div class="grid grid-cols-5 mb-6">
+			<h3 class="mb-4 text-xl font-bold">Possible Entities</h3>
+			<div class="mb-6 grid grid-cols-5">
 				<PossibleEntityList
 					suggestedEntityType={ENTITY_TYPE.ASSOCIATION}
 					entityNames={aiSuggestions.associations.filter((a) => !allFoundEntityNames.includes(a))}
@@ -441,8 +448,8 @@
 				/>
 			</div>
 
-			<h3 class="text-xl font-bold mb-4">Found Entities</h3>
-			<div class="grid grid-cols-6 mb-6">
+			<h3 class="mb-4 text-xl font-bold">Found Entities</h3>
+			<div class="mb-6 grid grid-cols-6">
 				<div>
 					<div class="text-lg font-bold">Artifacts</div>
 					{#each foundArtifacts.filter((a) => !$artifactIds.includes(a.id)) as foundArtifact (foundArtifact.id)}
@@ -450,7 +457,7 @@
 							<button
 								type="button"
 								class="link text-accent no-underline hover:underline"
-								on:click={() => artifactIds.add(foundArtifact.id)}>&plus;</button
+								onclick={() => artifactIds.add(foundArtifact.id)}>&plus;</button
 							>
 							{foundArtifact.name}
 						</div>
@@ -463,7 +470,7 @@
 							<button
 								type="button"
 								class="link text-accent no-underline hover:underline"
-								on:click={() => associationIds.add(foundAssociation.id)}>&plus;</button
+								onclick={() => associationIds.add(foundAssociation.id)}>&plus;</button
 							>
 							{foundAssociation.name}
 						</div>
@@ -476,7 +483,7 @@
 							<button
 								type="button"
 								class="link text-accent no-underline hover:underline"
-								on:click={() => characterIds.add(foundCharacter.id)}>&plus;</button
+								onclick={() => characterIds.add(foundCharacter.id)}>&plus;</button
 							>
 							{foundCharacter.name}
 						</div>
@@ -489,7 +496,7 @@
 							<button
 								type="button"
 								class="link text-accent no-underline hover:underline"
-								on:click={() => itemIds.add(foundItem.id)}>&plus;</button
+								onclick={() => itemIds.add(foundItem.id)}>&plus;</button
 							>
 							{foundItem.name}
 						</div>
@@ -502,7 +509,7 @@
 							<button
 								type="button"
 								class="link text-accent no-underline hover:underline"
-								on:click={() => placeIds.add(foundPlace.id)}>&plus;</button
+								onclick={() => placeIds.add(foundPlace.id)}>&plus;</button
 							>
 							{foundPlace.name}
 						</div>
@@ -515,7 +522,7 @@
 							<button
 								type="button"
 								class="link text-accent no-underline hover:underline"
-								on:click={() => raceIds.add(foundRace.id)}>&plus;</button
+								onclick={() => raceIds.add(foundRace.id)}>&plus;</button
 							>
 							{foundRace.name}
 						</div>
@@ -528,7 +535,7 @@
 			<button
 				type="button"
 				class="btn btn-ghost btn-sm icon-btn"
-				on:click={() => aiLogSuggestions.fetch({ variables: { pk } })}
+				onclick={() => aiLogSuggestions.fetch({ variables: { id: pk } })}
 			>
 				<span class="icon"><FaRobot /></span>
 			</button>
@@ -728,5 +735,37 @@
 
 	.tooltip {
 		text-transform: none;
+	}
+
+	.textarea-grow-wrap {
+		/* easy way to plop the elements on top of each other and have them both sized based on the tallest one's height */
+		display: grid;
+	}
+	.textarea-grow-wrap::after {
+		/* Note the weird space! Needed to preventy jumpy behavior */
+		content: attr(data-replicated-value) ' ';
+
+		/* This is how textarea text behaves */
+		white-space: pre-wrap;
+
+		/* Hidden from view, clicks, and screen readers */
+		visibility: hidden;
+	}
+	.textarea-grow-wrap > textarea {
+		/* You could leave this, but after a user resizes, then it ruins the auto sizing */
+		resize: none;
+
+		/* Firefox shows scrollbar on growth, you can hide like this. */
+		overflow: hidden;
+	}
+	.textarea-grow-wrap > textarea,
+	.textarea-grow-wrap::after {
+		/* Identical styling required!! */
+		border: 1px solid black;
+		padding: 0.5rem;
+		font: inherit;
+
+		/* Place on top of each other */
+		grid-area: 1 / 1 / 2 / 2;
 	}
 </style>

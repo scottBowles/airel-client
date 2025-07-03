@@ -3,16 +3,16 @@ mutation CreateItem(
 	$description: String
 	$markdownNotes: String
 	$imageIds: [String!]
-	$logs: [GlobalID!]
+	$logs: [ID!]
 	$armor: ArmorTraitsInput
 	$weapon: WeaponTraitsInput
 	$equipment: EquipmentTraitsInput
-	$relatedArtifacts: NodePartialListInput
-	$relatedAssociations: NodePartialListInput
-	$relatedCharacters: NodePartialListInput
-	$relatedItems: NodePartialListInput
-	$relatedPlaces: NodePartialListInput
-	$relatedRaces: NodePartialListInput
+	$relatedArtifacts: ManyToManyInput
+	$relatedAssociations: ManyToManyInput
+	$relatedCharacters: ManyToManyInput
+	$relatedItems: ManyToManyInput
+	$relatedPlaces: ManyToManyInput
+	$relatedRaces: ManyToManyInput
 ) {
 	createItem(
 		input: {

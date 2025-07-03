@@ -1,6 +1,9 @@
+"""AbilityScoreIncrease(id, ability_score, increase)"""
 type AbilityScoreIncrease implements Node {
   abilityScore: String!
-  id: GlobalID!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
   increase: Int!
 }
 
@@ -11,8 +14,6 @@ type AbilityScoreIncreaseConnection {
 
   """Pagination data for this connection"""
   pageInfo: PageInfo!
-
-  """Total quantity of existing nodes"""
   totalCount: Int
 }
 
@@ -25,23 +26,24 @@ type AbilityScoreIncreaseEdge {
   node: AbilityScoreIncrease!
 }
 
+"""AbilityScoreIncrease(id, ability_score, increase)"""
 input AbilityScoreIncreaseInput {
   abilityScore: String!
   increase: Int!
 }
 
+"""AbilityScoreIncrease(id, ability_score, increase)"""
 input AbilityScoreIncreaseInputPartial {
   abilityScore: String
-  id: GlobalID!
+  id: ID!
   increase: Int
 }
 
-"""Input data for `addAiLogSuggestion` mutation"""
 input AddAiLogSuggestionInput {
   associations: [String!]!
   brief: String!
   characters: [String!]!
-  id: GlobalID!
+  id: ID!
   items: [String!]!
   places: [String!]!
   races: [String!]!
@@ -52,13 +54,15 @@ input AddAiLogSuggestionInput {
 union AddAiLogSuggestionPayload = GameLog | OperationInfo
 
 input AddEntityLogInput {
-  entityId: GlobalID!
-  logId: GlobalID
+  entityId: ID!
+  logId: ID
   logUrl: String
 }
 
+"""Alias(id, name, is_primary)"""
 type Alias implements Node {
-  id: GlobalID!
+  """The Globally Unique ID of this object"""
+  id: ID!
   isPrimary: Boolean!
   name: String!
 }
@@ -70,8 +74,6 @@ type AliasConnection {
 
   """Pagination data for this connection"""
   pageInfo: PageInfo!
-
-  """Total quantity of existing nodes"""
   totalCount: Int
 }
 
@@ -84,16 +86,23 @@ type AliasEdge {
   node: Alias!
 }
 
+"""ArmorTraits(id, item, ac_bonus)"""
 type ArmorTraits implements Node {
   acBonus: Int!
-  id: GlobalID!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
 }
 
+"""ArmorTraits(id, item, ac_bonus)"""
 input ArmorTraitsInput {
   acBonus: Int
   delete: Boolean = false
 }
 
+"""
+Artifact(id, created, updated, name, description, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time, notes)
+"""
 type Artifact implements Entity & Lockable & Node {
   aliases(
     """Returns the items in the list that come after the specified cursor."""
@@ -110,7 +119,9 @@ type Artifact implements Entity & Lockable & Node {
   ): AliasConnection!
   created: DateTime!
   description: String
-  id: GlobalID!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
   imageIds: [String!]!
   items(
     """Returns the items in the list that come after the specified cursor."""
@@ -127,12 +138,6 @@ type Artifact implements Entity & Lockable & Node {
   ): ItemConnection!
   lockTime: DateTime
   lockUser: User
-
-  """
-  Add this as a resolver on any type that has a lock_user field like this:
-  
-  locked_by_self: bool = gql.field(resolver=locked_by_self)
-  """
   lockedBySelf: Boolean!
   logs(
     """Returns the items in the list that come after the specified cursor."""
@@ -232,9 +237,8 @@ type Artifact implements Entity & Lockable & Node {
   updated: DateTime!
 }
 
-"""Input data for `artifactAddImage` mutation"""
 input ArtifactAddImageInput {
-  id: GlobalID!
+  id: ID!
   imageId: String!
 }
 
@@ -247,8 +251,6 @@ type ArtifactConnection {
 
   """Pagination data for this connection"""
   pageInfo: PageInfo!
-
-  """Total quantity of existing nodes"""
   totalCount: Int
 }
 
@@ -261,54 +263,61 @@ type ArtifactEdge {
   node: Artifact!
 }
 
+"""
+Artifact(id, created, updated, name, description, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time, notes)
+"""
 input ArtifactInput {
   description: String
   imageIds: [String!]
-  items: NodePartialListInput
-  logs: [GlobalID!]
+  items: ManyToManyInput
+  logs: [ID!]
   markdownNotes: String
   name: String!
   notes: String
-  relatedArtifacts: NodePartialListInput
-  relatedAssociations: NodePartialListInput
-  relatedCharacters: NodePartialListInput
-  relatedItems: NodePartialListInput
-  relatedPlaces: NodePartialListInput
-  relatedRaces: NodePartialListInput
+  relatedArtifacts: ManyToManyInput
+  relatedAssociations: ManyToManyInput
+  relatedCharacters: ManyToManyInput
+  relatedItems: ManyToManyInput
+  relatedPlaces: ManyToManyInput
+  relatedRaces: ManyToManyInput
   thumbnailId: String
 }
 
+"""
+Artifact(id, created, updated, name, description, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time, notes)
+"""
 input ArtifactInputPartial {
   description: String
-  id: GlobalID!
+  id: ID!
   imageIds: [String!]
-  items: NodePartialListInput
+  items: ManyToManyInput
   markdownNotes: String
   name: String
   notes: String
-  relatedArtifacts: NodePartialListInput
-  relatedAssociations: NodePartialListInput
-  relatedCharacters: NodePartialListInput
-  relatedItems: NodePartialListInput
-  relatedPlaces: NodePartialListInput
-  relatedRaces: NodePartialListInput
+  relatedArtifacts: ManyToManyInput
+  relatedAssociations: ManyToManyInput
+  relatedCharacters: ManyToManyInput
+  relatedItems: ManyToManyInput
+  relatedPlaces: ManyToManyInput
+  relatedRaces: ManyToManyInput
   thumbnailId: String
 }
 
-"""Input data for `artifactLock` mutation"""
 input ArtifactLockInput {
-  id: GlobalID!
+  id: ID!
 }
 
 union ArtifactLockPayload = Artifact | OperationInfo
 
-"""Input data for `artifactReleaseLock` mutation"""
 input ArtifactReleaseLockInput {
-  id: GlobalID!
+  id: ID!
 }
 
 union ArtifactReleaseLockPayload = Artifact | OperationInfo
 
+"""
+Association(id, created, updated, name, description, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time)
+"""
 type Association implements Entity & Lockable & Node {
   aliases(
     """Returns the items in the list that come after the specified cursor."""
@@ -338,16 +347,12 @@ type Association implements Entity & Lockable & Node {
   ): CharacterConnection!
   created: DateTime!
   description: String
-  id: GlobalID!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
   imageIds: [String!]!
   lockTime: DateTime
   lockUser: User
-
-  """
-  Add this as a resolver on any type that has a lock_user field like this:
-  
-  locked_by_self: bool = gql.field(resolver=locked_by_self)
-  """
   lockedBySelf: Boolean!
   logs(
     """Returns the items in the list that come after the specified cursor."""
@@ -446,9 +451,8 @@ type Association implements Entity & Lockable & Node {
   updated: DateTime!
 }
 
-"""Input data for `associationAddImage` mutation"""
 input AssociationAddImageInput {
-  id: GlobalID!
+  id: ID!
   imageId: String!
 }
 
@@ -461,8 +465,6 @@ type AssociationConnection {
 
   """Pagination data for this connection"""
   pageInfo: PageInfo!
-
-  """Total quantity of existing nodes"""
   totalCount: Int
 }
 
@@ -475,52 +477,59 @@ type AssociationEdge {
   node: Association!
 }
 
+"""
+Association(id, created, updated, name, description, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time)
+"""
 input AssociationInput {
-  characters: NodePartialListInput
+  characters: ManyToManyInput
   description: String
   imageIds: [String!]
-  logs: [GlobalID!]
+  logs: [ID!]
   markdownNotes: String
   name: String!
-  relatedArtifacts: NodePartialListInput
-  relatedAssociations: NodePartialListInput
-  relatedCharacters: NodePartialListInput
-  relatedItems: NodePartialListInput
-  relatedPlaces: NodePartialListInput
-  relatedRaces: NodePartialListInput
+  relatedArtifacts: ManyToManyInput
+  relatedAssociations: ManyToManyInput
+  relatedCharacters: ManyToManyInput
+  relatedItems: ManyToManyInput
+  relatedPlaces: ManyToManyInput
+  relatedRaces: ManyToManyInput
   thumbnailId: String
 }
 
+"""
+Association(id, created, updated, name, description, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time)
+"""
 input AssociationInputPartial {
-  characters: NodePartialListInput
+  characters: ManyToManyInput
   description: String
-  id: GlobalID!
+  id: ID!
   imageIds: [String!]
   markdownNotes: String
   name: String
-  relatedArtifacts: NodePartialListInput
-  relatedAssociations: NodePartialListInput
-  relatedCharacters: NodePartialListInput
-  relatedItems: NodePartialListInput
-  relatedPlaces: NodePartialListInput
-  relatedRaces: NodePartialListInput
+  relatedArtifacts: ManyToManyInput
+  relatedAssociations: ManyToManyInput
+  relatedCharacters: ManyToManyInput
+  relatedItems: ManyToManyInput
+  relatedPlaces: ManyToManyInput
+  relatedRaces: ManyToManyInput
   thumbnailId: String
 }
 
-"""Input data for `associationLock` mutation"""
 input AssociationLockInput {
-  id: GlobalID!
+  id: ID!
 }
 
 union AssociationLockPayload = Association | OperationInfo
 
-"""Input data for `associationReleaseLock` mutation"""
 input AssociationReleaseLockInput {
-  id: GlobalID!
+  id: ID!
 }
 
 union AssociationReleaseLockPayload = Association | OperationInfo
 
+"""
+Character(id, created, updated, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time, name, race, description, size)
+"""
 type Character implements Entity & Lockable & Node {
   aliases(
     """Returns the items in the list that come after the specified cursor."""
@@ -563,16 +572,12 @@ type Character implements Entity & Lockable & Node {
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
   ): FeatureConnection!
-  id: GlobalID!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
   imageIds: [String!]!
   lockTime: DateTime
   lockUser: User
-
-  """
-  Add this as a resolver on any type that has a lock_user field like this:
-  
-  locked_by_self: bool = gql.field(resolver=locked_by_self)
-  """
   lockedBySelf: Boolean!
   logs(
     """Returns the items in the list that come after the specified cursor."""
@@ -686,9 +691,8 @@ type Character implements Entity & Lockable & Node {
   updated: DateTime!
 }
 
-"""Input data for `characterAddImage` mutation"""
 input CharacterAddImageInput {
-  id: GlobalID!
+  id: ID!
   imageId: String!
 }
 
@@ -701,8 +705,6 @@ type CharacterConnection {
 
   """Pagination data for this connection"""
   pageInfo: PageInfo!
-
-  """Total quantity of existing nodes"""
   totalCount: Int
 }
 
@@ -715,56 +717,60 @@ type CharacterEdge {
   node: Character!
 }
 
+"""
+Character(id, created, updated, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time, name, race, description, size)
+"""
 input CharacterInput {
-  associations: NodePartialListInput
+  associations: ManyToManyInput
   description: String
-  featuresAndTraits: NodePartialListInput
+  featuresAndTraits: ManyToManyInput
   imageIds: [String!]
-  logs: [GlobalID!]
+  logs: [ID!]
   markdownNotes: String
   name: String!
-  proficiencies: NodePartialListInput
-  race: NodeInput
-  relatedArtifacts: NodePartialListInput
-  relatedAssociations: NodePartialListInput
-  relatedCharacters: NodePartialListInput
-  relatedItems: NodePartialListInput
-  relatedPlaces: NodePartialListInput
-  relatedRaces: NodePartialListInput
+  proficiencies: ManyToManyInput
+  race: OneToManyInput
+  relatedArtifacts: ManyToManyInput
+  relatedAssociations: ManyToManyInput
+  relatedCharacters: ManyToManyInput
+  relatedItems: ManyToManyInput
+  relatedPlaces: ManyToManyInput
+  relatedRaces: ManyToManyInput
   size: String
   thumbnailId: String
 }
 
+"""
+Character(id, created, updated, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time, name, race, description, size)
+"""
 input CharacterInputPartial {
-  associations: NodePartialListInput
+  associations: ManyToManyInput
   description: String
-  featuresAndTraits: NodePartialListInput
-  id: GlobalID!
+  featuresAndTraits: ManyToManyInput
+  id: ID!
   imageIds: [String!]
   markdownNotes: String
   name: String
-  proficiencies: NodePartialListInput
-  race: NodeInput
-  relatedArtifacts: NodePartialListInput
-  relatedAssociations: NodePartialListInput
-  relatedCharacters: NodePartialListInput
-  relatedItems: NodePartialListInput
-  relatedPlaces: NodePartialListInput
-  relatedRaces: NodePartialListInput
+  proficiencies: ManyToManyInput
+  race: OneToManyInput
+  relatedArtifacts: ManyToManyInput
+  relatedAssociations: ManyToManyInput
+  relatedCharacters: ManyToManyInput
+  relatedItems: ManyToManyInput
+  relatedPlaces: ManyToManyInput
+  relatedRaces: ManyToManyInput
   size: String
   thumbnailId: String
 }
 
-"""Input data for `characterLock` mutation"""
 input CharacterLockInput {
-  id: GlobalID!
+  id: ID!
 }
 
 union CharacterLockPayload = Character | OperationInfo
 
-"""Input data for `characterReleaseLock` mutation"""
 input CharacterReleaseLockInput {
-  id: GlobalID!
+  id: ID!
 }
 
 union CharacterReleaseLockPayload = Character | OperationInfo
@@ -867,16 +873,10 @@ interface Entity implements Lockable {
   ): AliasConnection!
   created: DateTime!
   description: String
-  id: GlobalID!
+  id: ID!
   imageIds: [String!]!
   lockTime: DateTime
   lockUser: User
-
-  """
-  Add this as a resolver on any type that has a lock_user field like this:
-  
-  locked_by_self: bool = gql.field(resolver=locked_by_self)
-  """
   lockedBySelf: Boolean!
   logs(
     """Returns the items in the list that come after the specified cursor."""
@@ -977,19 +977,23 @@ interface Entity implements Lockable {
 
 input EntityAddAliasInput {
   alias: String!
-  id: GlobalID!
+  id: ID!
 }
 
 input EntityAddImageInput {
-  id: GlobalID!
+  id: ID!
   imageId: String!
 }
 
+"""EquipmentTraits(id, item, brief_description)"""
 type EquipmentTraits implements Node {
   briefDescription: String!
-  id: GlobalID!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
 }
 
+"""EquipmentTraits(id, item, brief_description)"""
 input EquipmentTraitsInput {
   briefDescription: String
   delete: Boolean = false
@@ -1024,6 +1028,9 @@ input EquipmentTraitsInput {
 """
 scalar ExpectedError
 
+"""
+Export(id, created, updated, name, description, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time)
+"""
 type Export implements Entity & Lockable & Node {
   aliases(
     """Returns the items in the list that come after the specified cursor."""
@@ -1040,16 +1047,12 @@ type Export implements Entity & Lockable & Node {
   ): AliasConnection!
   created: DateTime!
   description: String
-  id: GlobalID!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
   imageIds: [String!]!
   lockTime: DateTime
   lockUser: User
-
-  """
-  Add this as a resolver on any type that has a lock_user field like this:
-  
-  locked_by_self: bool = gql.field(resolver=locked_by_self)
-  """
   lockedBySelf: Boolean!
   logs(
     """Returns the items in the list that come after the specified cursor."""
@@ -1155,8 +1158,6 @@ type ExportConnection {
 
   """Pagination data for this connection"""
   pageInfo: PageInfo!
-
-  """Total quantity of existing nodes"""
   totalCount: Int
 }
 
@@ -1169,24 +1170,31 @@ type ExportEdge {
   node: Export!
 }
 
+"""
+Export(id, created, updated, name, description, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time)
+"""
 input ExportInput {
   description: String
   imageIds: [String!]
-  logs: [GlobalID!]
+  logs: [ID!]
   markdownNotes: String
   name: String!
   thumbnailId: String
 }
 
+"""
+Export(id, created, updated, name, description, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time)
+"""
 input ExportInputPartial {
   description: String
-  id: GlobalID!
+  id: ID!
   imageIds: [String!]
   markdownNotes: String
   name: String
   thumbnailId: String
 }
 
+"""Feature(id, name, description)"""
 type Feature implements Node {
   characters(
     """Returns the items in the list that come after the specified cursor."""
@@ -1202,7 +1210,9 @@ type Feature implements Node {
     last: Int = null
   ): CharacterConnection!
   description: String!
-  id: GlobalID!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
   name: String!
 }
 
@@ -1213,8 +1223,6 @@ type FeatureConnection {
 
   """Pagination data for this connection"""
   pageInfo: PageInfo!
-
-  """Total quantity of existing nodes"""
   totalCount: Int
 }
 
@@ -1227,19 +1235,24 @@ type FeatureEdge {
   node: Feature!
 }
 
+"""Feature(id, name, description)"""
 input FeatureInput {
-  characters: NodePartialListInput
+  characters: ManyToManyInput
   description: String!
   name: String!
 }
 
+"""Feature(id, name, description)"""
 input FeatureInputPartial {
-  characters: NodePartialListInput
+  characters: ManyToManyInput
   description: String
-  id: GlobalID!
+  id: ID!
   name: String
 }
 
+"""
+GameLog(id, lock_user, lock_time, url, title, google_id, google_created_time, game_date, brief, synopsis, summary, audio_session_notes, last_game_log, generated_log_text)
+"""
 type GameLog implements Lockable & Node {
   aiSuggestions: CombinedGameLogAiSummary
   artifacts(
@@ -1284,7 +1297,9 @@ type GameLog implements Lockable & Node {
   ): CharacterConnection!
   gameDate: DateTime
   googleId: String
-  id: GlobalID!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
   items(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -1300,12 +1315,6 @@ type GameLog implements Lockable & Node {
   ): ItemConnection!
   lockTime: DateTime
   lockUser: User
-
-  """
-  Add this as a resolver on any type that has a lock_user field like this:
-  
-  locked_by_self: bool = gql.field(resolver=locked_by_self)
-  """
   lockedBySelf: Boolean!
   places(
     """Returns the items in the list that come after the specified cursor."""
@@ -1377,8 +1386,6 @@ type GameLogConnection {
 
   """Pagination data for this connection"""
   pageInfo: PageInfo!
-
-  """Total quantity of existing nodes"""
   totalCount: Int
 }
 
@@ -1391,17 +1398,20 @@ type GameLogEdge {
   node: GameLog!
 }
 
+"""
+GameLog(id, lock_user, lock_time, url, title, google_id, google_created_time, game_date, brief, synopsis, summary, audio_session_notes, last_game_log, generated_log_text)
+"""
 input GameLogInputPartial {
-  artifacts: NodePartialListInput
-  associations: NodePartialListInput
+  artifacts: ManyToManyInput
+  associations: ManyToManyInput
   brief: String
-  characters: NodePartialListInput
+  characters: ManyToManyInput
   gameDate: DateTime
-  id: GlobalID!
-  items: NodePartialListInput
-  places: NodePartialListInput
-  placesSetIn: NodePartialListInput
-  races: NodePartialListInput
+  id: ID!
+  items: ManyToManyInput
+  places: ManyToManyInput
+  placesSetIn: ManyToManyInput
+  races: ManyToManyInput
   summary: String
   synopsis: String
   title: String
@@ -1411,20 +1421,21 @@ input GameLogOrder {
   gameDate: Ordering
 }
 
-"""Input data for `gamelogLock` mutation"""
 input GamelogLockInput {
-  id: GlobalID!
+  id: ID!
 }
 
 union GamelogLockPayload = GameLog | OperationInfo
 
-"""Input data for `gamelogReleaseLock` mutation"""
 input GamelogReleaseLockInput {
-  id: GlobalID!
+  id: ID!
 }
 
 union GamelogReleaseLockPayload = GameLog | OperationInfo
 
+"""
+GameLog(id, lock_user, lock_time, url, title, google_id, google_created_time, game_date, brief, synopsis, summary, audio_session_notes, last_game_log, generated_log_text)
+"""
 input GetOrCreateGameLogInput {
   lock: Boolean! = false
   url: String!
@@ -1433,10 +1444,8 @@ input GetOrCreateGameLogInput {
 union GetOrCreateGameLogPayload = GameLog | OperationInfo
 
 """
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+Item(id, created, updated, name, description, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time)
 """
-scalar GlobalID
-
 type Item implements Entity & Lockable & Node {
   aliases(
     """Returns the items in the list that come after the specified cursor."""
@@ -1468,16 +1477,12 @@ type Item implements Entity & Lockable & Node {
   created: DateTime!
   description: String
   equipment: EquipmentTraits
-  id: GlobalID!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
   imageIds: [String!]!
   lockTime: DateTime
   lockUser: User
-
-  """
-  Add this as a resolver on any type that has a lock_user field like this:
-  
-  locked_by_self: bool = gql.field(resolver=locked_by_self)
-  """
   lockedBySelf: Boolean!
   logs(
     """Returns the items in the list that come after the specified cursor."""
@@ -1577,9 +1582,8 @@ type Item implements Entity & Lockable & Node {
   weapon: WeaponTraits
 }
 
-"""Input data for `itemAddImage` mutation"""
 input ItemAddImageInput {
-  id: GlobalID!
+  id: ID!
   imageId: String!
 }
 
@@ -1592,8 +1596,6 @@ type ItemConnection {
 
   """Pagination data for this connection"""
   pageInfo: PageInfo!
-
-  """Total quantity of existing nodes"""
   totalCount: Int
 }
 
@@ -1606,61 +1608,68 @@ type ItemEdge {
   node: Item!
 }
 
+"""
+Item(id, created, updated, name, description, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time)
+"""
 input ItemInput {
   armor: ArmorTraitsInput
-  artifacts: NodePartialListInput
+  artifacts: ManyToManyInput
   description: String
   equipment: EquipmentTraitsInput
   imageIds: [String!]
-  logs: [GlobalID!]
+  logs: [ID!]
   markdownNotes: String
   name: String!
-  relatedArtifacts: NodePartialListInput
-  relatedAssociations: NodePartialListInput
-  relatedCharacters: NodePartialListInput
-  relatedItems: NodePartialListInput
-  relatedPlaces: NodePartialListInput
-  relatedRaces: NodePartialListInput
+  relatedArtifacts: ManyToManyInput
+  relatedAssociations: ManyToManyInput
+  relatedCharacters: ManyToManyInput
+  relatedItems: ManyToManyInput
+  relatedPlaces: ManyToManyInput
+  relatedRaces: ManyToManyInput
   thumbnailId: String
   weapon: WeaponTraitsInput
 }
 
+"""
+Item(id, created, updated, name, description, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time)
+"""
 input ItemInputPartial {
   armor: ArmorTraitsInput
-  artifacts: NodePartialListInput
+  artifacts: ManyToManyInput
   description: String
   equipment: EquipmentTraitsInput
-  id: GlobalID!
+  id: ID!
   imageIds: [String!]
   markdownNotes: String
   name: String
-  relatedArtifacts: NodePartialListInput
-  relatedAssociations: NodePartialListInput
-  relatedCharacters: NodePartialListInput
-  relatedItems: NodePartialListInput
-  relatedPlaces: NodePartialListInput
-  relatedRaces: NodePartialListInput
+  relatedArtifacts: ManyToManyInput
+  relatedAssociations: ManyToManyInput
+  relatedCharacters: ManyToManyInput
+  relatedItems: ManyToManyInput
+  relatedPlaces: ManyToManyInput
+  relatedRaces: ManyToManyInput
   thumbnailId: String
   weapon: WeaponTraitsInput
 }
 
-"""Input data for `itemLock` mutation"""
 input ItemLockInput {
-  id: GlobalID!
+  id: ID!
 }
 
 union ItemLockPayload = Item | OperationInfo
 
-"""Input data for `itemReleaseLock` mutation"""
 input ItemReleaseLockInput {
-  id: GlobalID!
+  id: ID!
 }
 
 union ItemReleaseLockPayload = Item | OperationInfo
 
+"""Language(id, name, description, script)"""
 type Language implements Node {
   description: String!
-  id: GlobalID!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
   name: String!
   script: Script!
 }
@@ -1672,8 +1681,6 @@ type LanguageConnection {
 
   """Pagination data for this connection"""
   pageInfo: PageInfo!
-
-  """Total quantity of existing nodes"""
   totalCount: Int
 }
 
@@ -1686,30 +1693,38 @@ type LanguageEdge {
   node: Language!
 }
 
+"""Language(id, name, description, script)"""
 input LanguageInput {
   description: String
   name: String!
-  script: NodeInput
+  script: OneToManyInput
 }
 
+"""Language(id, name, description, script)"""
 input LanguageInputPartial {
   description: String
-  id: GlobalID!
+  id: ID!
   name: String
-  script: NodeInput
+  script: OneToManyInput
 }
 
 interface Lockable {
-  id: GlobalID!
+  id: ID!
   lockTime: DateTime
   lockUser: User
-
-  """
-  Add this as a resolver on any type that has a lock_user field like this:
-  
-  locked_by_self: bool = gql.field(resolver=locked_by_self)
-  """
   lockedBySelf: Boolean!
+}
+
+input ManyToManyInput {
+  add: [ID!]
+  remove: [ID!]
+  set: [ID!]
+}
+
+input ManyToOneInput {
+  add: [ID!]
+  remove: [ID!]
+  set: [ID!]
 }
 
 type Mutation {
@@ -1760,8 +1775,6 @@ type Mutation {
   createCharacter(input: CharacterInput!): CreateCharacterPayload!
   createExport(input: ExportInput!): CreateExportPayload!
   createFeature(input: FeatureInput!): CreateFeaturePayload!
-
-  """Create an item with traits if present."""
   createItem(input: ItemInput!): CreateItemPayload!
   createLanguage(input: LanguageInput!): CreateLanguagePayload!
   createPlace(input: PlaceInput!): CreatePlacePayload!
@@ -1770,66 +1783,21 @@ type Mutation {
   createScript(input: ScriptInput!): CreateScriptPayload!
   createSkill(input: SkillInput!): CreateSkillPayload!
   createTrait(input: TraitInput!): CreateTraitPayload!
-  deleteAbilityScoreIncrease(
-    """Input of an object that implements the `Node` interface."""
-    input: NodeInput!
-  ): DeleteAbilityScoreIncreasePayload!
-  deleteArtifact(
-    """Input of an object that implements the `Node` interface."""
-    input: NodeInput!
-  ): DeleteArtifactPayload!
-  deleteAssociation(
-    """Input of an object that implements the `Node` interface."""
-    input: NodeInput!
-  ): DeleteAssociationPayload!
-  deleteCharacter(
-    """Input of an object that implements the `Node` interface."""
-    input: NodeInput!
-  ): DeleteCharacterPayload!
-  deleteExport(
-    """Input of an object that implements the `Node` interface."""
-    input: NodeInput!
-  ): DeleteExportPayload!
-  deleteFeature(
-    """Input of an object that implements the `Node` interface."""
-    input: NodeInput!
-  ): DeleteFeaturePayload!
-  deleteGameLog(
-    """Input of an object that implements the `Node` interface."""
-    input: NodeInput!
-  ): DeleteGameLogPayload!
-  deleteItem(
-    """Input of an object that implements the `Node` interface."""
-    input: NodeInput!
-  ): DeleteItemPayload!
-  deleteLanguage(
-    """Input of an object that implements the `Node` interface."""
-    input: NodeInput!
-  ): DeleteLanguagePayload!
-  deletePlace(
-    """Input of an object that implements the `Node` interface."""
-    input: NodeInput!
-  ): DeletePlacePayload!
-  deleteProficiency(
-    """Input of an object that implements the `Node` interface."""
-    input: NodeInput!
-  ): DeleteProficiencyPayload!
-  deleteRace(
-    """Input of an object that implements the `Node` interface."""
-    input: NodeInput!
-  ): DeleteRacePayload!
-  deleteScript(
-    """Input of an object that implements the `Node` interface."""
-    input: NodeInput!
-  ): DeleteScriptPayload!
-  deleteSkill(
-    """Input of an object that implements the `Node` interface."""
-    input: NodeInput!
-  ): DeleteSkillPayload!
-  deleteTrait(
-    """Input of an object that implements the `Node` interface."""
-    input: NodeInput!
-  ): DeleteTraitPayload!
+  deleteAbilityScoreIncrease(input: NodeInput!): DeleteAbilityScoreIncreasePayload!
+  deleteArtifact(input: NodeInput!): DeleteArtifactPayload!
+  deleteAssociation(input: NodeInput!): DeleteAssociationPayload!
+  deleteCharacter(input: NodeInput!): DeleteCharacterPayload!
+  deleteExport(input: NodeInput!): DeleteExportPayload!
+  deleteFeature(input: NodeInput!): DeleteFeaturePayload!
+  deleteGameLog(input: NodeInput!): DeleteGameLogPayload!
+  deleteItem(input: NodeInput!): DeleteItemPayload!
+  deleteLanguage(input: NodeInput!): DeleteLanguagePayload!
+  deletePlace(input: NodeInput!): DeletePlacePayload!
+  deleteProficiency(input: NodeInput!): DeleteProficiencyPayload!
+  deleteRace(input: NodeInput!): DeleteRacePayload!
+  deleteScript(input: NodeInput!): DeleteScriptPayload!
+  deleteSkill(input: NodeInput!): DeleteSkillPayload!
+  deleteTrait(input: NodeInput!): DeleteTraitPayload!
   entityAddAlias(input: EntityAddAliasInput!): Node!
   entityAddImage(input: EntityAddImageInput!): Node!
   gamelogLock(
@@ -1886,8 +1854,9 @@ type Mutation {
       *Use this only if `JWT_LONG_RUNNING_REFRESH_TOKEN` is True*
   
       using the refresh-token you already got during authorization, and
-      obtain a brand-new token (and possibly a new refresh token if you revoked the previous).
-      This is an alternative to log in when your token expired.
+      obtain a brand-new token (and possibly a new refresh token if you
+      revoked the previous). This is an alternative to log in when your
+      token expired.
       
   """
   refreshToken(input: RefreshTokenInput!): ObtainJSONWebTokenType!
@@ -1929,31 +1898,12 @@ type Mutation {
 """An object with a Globally Unique ID"""
 interface Node {
   """The Globally Unique ID of this object"""
-  id: GlobalID!
+  id: ID!
 }
 
 """Input of an object that implements the `Node` interface."""
 input NodeInput {
-  id: GlobalID!
-}
-
-"""Input of an object that implements the `Node` interface."""
-input NodeInputPartial {
-  id: GlobalID
-}
-
-"""Add/remove/set the selected nodes."""
-input NodeListInput {
-  add: [NodeInput!]
-  remove: [NodeInput!]
-  set: [NodeInput!]
-}
-
-"""Add/remove/set the selected nodes."""
-input NodePartialListInput {
-  add: [NodeInputPartial!]
-  remove: [NodeInputPartial!]
-  set: [NodeInputPartial!]
+  id: ID!
 }
 
 """
@@ -1970,14 +1920,19 @@ type ObtainJSONWebTokenType implements OutputInterface {
   user: UserType
 }
 
-"""Multiple messages returned by an operation."""
+input OneToManyInput {
+  set: ID
+}
+
 type OperationInfo {
   """List of messages returned by the operation."""
   messages: [OperationMessage!]!
 }
 
-"""An error that happened while executing an operation."""
 type OperationMessage {
+  """The error code, or `null` if no error code was set."""
+  code: String
+
   """
   The field that caused the error, or `null` if it isn't associated with any particular field.
   """
@@ -1990,7 +1945,6 @@ type OperationMessage {
   message: String!
 }
 
-"""The kind of the returned message."""
 enum OperationMessageKind {
   ERROR
   INFO
@@ -2001,7 +1955,11 @@ enum OperationMessageKind {
 
 enum Ordering {
   ASC
+  ASC_NULLS_FIRST
+  ASC_NULLS_LAST
   DESC
+  DESC_NULLS_FIRST
+  DESC_NULLS_LAST
 }
 
 interface OutputInterface {
@@ -2024,6 +1982,9 @@ type PageInfo {
   startCursor: String
 }
 
+"""
+Place(id, created, updated, name, description, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time, place_type, parent, population)
+"""
 type Place implements Entity & Lockable & Node {
   aliases(
     """Returns the items in the list that come after the specified cursor."""
@@ -2056,16 +2017,12 @@ type Place implements Entity & Lockable & Node {
   created: DateTime!
   description: String
   exports: [DjangoModelType!]!
-  id: GlobalID!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
   imageIds: [String!]!
   lockTime: DateTime
   lockUser: User
-
-  """
-  Add this as a resolver on any type that has a lock_user field like this:
-  
-  locked_by_self: bool = gql.field(resolver=locked_by_self)
-  """
   lockedBySelf: Boolean!
   logs(
     """Returns the items in the list that come after the specified cursor."""
@@ -2167,9 +2124,8 @@ type Place implements Entity & Lockable & Node {
   updated: DateTime!
 }
 
-"""Input data for `placeAddImage` mutation"""
 input PlaceAddImageInput {
-  id: GlobalID!
+  id: ID!
   imageId: String!
 }
 
@@ -2182,8 +2138,6 @@ type PlaceConnection {
 
   """Pagination data for this connection"""
   pageInfo: PageInfo!
-
-  """Total quantity of existing nodes"""
   totalCount: Int
 }
 
@@ -2196,52 +2150,56 @@ type PlaceEdge {
   node: Place!
 }
 
+"""
+Place(id, created, updated, name, description, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time, place_type, parent, population)
+"""
 input PlaceInput {
-  children: NodeListInput
+  children: ManyToOneInput
   description: String
   imageIds: [String!]
-  logs: [GlobalID!]
+  logs: [ID!]
   markdownNotes: String
   name: String!
-  parent: NodeInput
+  parent: OneToManyInput
   placeType: PlaceType
-  relatedArtifacts: NodePartialListInput
-  relatedAssociations: NodePartialListInput
-  relatedCharacters: NodePartialListInput
-  relatedItems: NodePartialListInput
-  relatedPlaces: NodePartialListInput
-  relatedRaces: NodePartialListInput
+  relatedArtifacts: ManyToManyInput
+  relatedAssociations: ManyToManyInput
+  relatedCharacters: ManyToManyInput
+  relatedItems: ManyToManyInput
+  relatedPlaces: ManyToManyInput
+  relatedRaces: ManyToManyInput
   thumbnailId: String
 }
 
+"""
+Place(id, created, updated, name, description, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time, place_type, parent, population)
+"""
 input PlaceInputPartial {
-  children: NodeListInput
+  children: ManyToOneInput
   description: String
-  id: GlobalID!
+  id: ID!
   imageIds: [String!]
   markdownNotes: String
   name: String
-  parent: NodeInput
+  parent: OneToManyInput
   placeType: PlaceType
-  relatedArtifacts: NodePartialListInput
-  relatedAssociations: NodePartialListInput
-  relatedCharacters: NodePartialListInput
-  relatedItems: NodePartialListInput
-  relatedPlaces: NodePartialListInput
-  relatedRaces: NodePartialListInput
+  relatedArtifacts: ManyToManyInput
+  relatedAssociations: ManyToManyInput
+  relatedCharacters: ManyToManyInput
+  relatedItems: ManyToManyInput
+  relatedPlaces: ManyToManyInput
+  relatedRaces: ManyToManyInput
   thumbnailId: String
 }
 
-"""Input data for `placeLock` mutation"""
 input PlaceLockInput {
-  id: GlobalID!
+  id: ID!
 }
 
 union PlaceLockPayload = OperationInfo | Place
 
-"""Input data for `placeReleaseLock` mutation"""
 input PlaceReleaseLockInput {
-  id: GlobalID!
+  id: ID!
 }
 
 union PlaceReleaseLockPayload = OperationInfo | Place
@@ -2256,6 +2214,7 @@ enum PlaceType {
   TOWN
 }
 
+"""Proficiency(id, name, proficiency_type, description)"""
 type Proficiency implements Node {
   characters(
     """Returns the items in the list that come after the specified cursor."""
@@ -2271,7 +2230,9 @@ type Proficiency implements Node {
     last: Int = null
   ): CharacterConnection!
   description: String!
-  id: GlobalID!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
   name: String!
   proficiencyType: String!
 }
@@ -2283,8 +2244,6 @@ type ProficiencyConnection {
 
   """Pagination data for this connection"""
   pageInfo: PageInfo!
-
-  """Total quantity of existing nodes"""
   totalCount: Int
 }
 
@@ -2297,17 +2256,19 @@ type ProficiencyEdge {
   node: Proficiency!
 }
 
+"""Proficiency(id, name, proficiency_type, description)"""
 input ProficiencyInput {
-  characters: NodePartialListInput
+  characters: ManyToManyInput
   description: String
   name: String!
   proficiencyType: String
 }
 
+"""Proficiency(id, name, proficiency_type, description)"""
 input ProficiencyInputPartial {
-  characters: NodePartialListInput
+  characters: ManyToManyInput
   description: String
-  id: GlobalID!
+  id: ID!
   name: String
   proficiencyType: String
 }
@@ -2495,7 +2456,6 @@ type Query {
     last: Int = null
     nameStartswith: String!
   ): TraitConnection!
-  abilityScoreIncrease(pk: ID!): AbilityScoreIncrease
   abilityScoreIncreases(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -2509,8 +2469,7 @@ type Query {
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
   ): AbilityScoreIncreaseConnection!
-  aiLogSuggestions(id: GlobalID!): GameLogAiSummary!
-  artifact(pk: ID!): Artifact
+  aiLogSuggestions(id: ID!): GameLogAiSummary!
   artifacts(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -2524,7 +2483,6 @@ type Query {
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
   ): ArtifactConnection!
-  association(pk: ID!): Association
   associations(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -2552,7 +2510,6 @@ type Query {
     last: Int = null
     nameStartswith: String!
   ): AssociationConnection!
-  character(pk: ID!): Character
   characters(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -2566,8 +2523,7 @@ type Query {
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
   ): CharacterConnection!
-  consolidatedAiLogSuggestions(id: GlobalID!): CombinedGameLogAiSummary!
-  export(pk: ID!): Export
+  consolidatedAiLogSuggestions(id: ID!): CombinedGameLogAiSummary!
   exports(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -2581,7 +2537,6 @@ type Query {
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
   ): ExportConnection!
-  feature(pk: ID!): Feature
   features(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -2595,7 +2550,6 @@ type Query {
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
   ): FeatureConnection!
-  gameLog(pk: ID!): GameLog
   gameLogs(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -2610,7 +2564,6 @@ type Query {
     last: Int = null
     order: GameLogOrder
   ): GameLogConnection!
-  item(pk: ID!): Item
   items(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -2624,7 +2577,6 @@ type Query {
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
   ): ItemConnection!
-  language(pk: ID!): Language
   languages(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -2639,8 +2591,10 @@ type Query {
     last: Int = null
   ): LanguageConnection!
   me: UserType!
-  node(id: GlobalID!): Node
-  place(pk: ID!): Place
+  node(
+    """The ID of the object."""
+    id: ID!
+  ): Node!
   places(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -2667,11 +2621,9 @@ type Query {
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
   ): ProficiencyConnection!
-  proficiency(pk: ID!): Proficiency
 
   """Returns the current user if he is not anonymous."""
   publicUser: UserType
-  race(pk: ID!): Race
   races(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -2685,7 +2637,6 @@ type Query {
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
   ): RaceConnection!
-  script(pk: ID!): Script
   scripts(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -2699,7 +2650,6 @@ type Query {
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
   ): ScriptConnection!
-  skill(pk: ID!): Skill
   skills(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -2713,7 +2663,6 @@ type Query {
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
   ): SkillConnection!
-  trait(pk: ID!): Trait
   traits(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -2727,7 +2676,6 @@ type Query {
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
   ): TraitConnection!
-  user(pk: ID!): User
   users(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -2743,6 +2691,9 @@ type Query {
   ): UserConnection!
 }
 
+"""
+Race(id, created, updated, name, description, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time, age_of_adulthood, life_expectancy, alignment, size, speed, base_race)
+"""
 type Race implements Entity & Lockable & Node {
   aliases(
     """Returns the items in the list that come after the specified cursor."""
@@ -2772,16 +2723,12 @@ type Race implements Entity & Lockable & Node {
   ): CharacterConnection!
   created: DateTime!
   description: String
-  id: GlobalID!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
   imageIds: [String!]!
   lockTime: DateTime
   lockUser: User
-
-  """
-  Add this as a resolver on any type that has a lock_user field like this:
-  
-  locked_by_self: bool = gql.field(resolver=locked_by_self)
-  """
   lockedBySelf: Boolean!
   logs(
     """Returns the items in the list that come after the specified cursor."""
@@ -2880,9 +2827,8 @@ type Race implements Entity & Lockable & Node {
   updated: DateTime!
 }
 
-"""Input data for `raceAddImage` mutation"""
 input RaceAddImageInput {
-  id: GlobalID!
+  id: ID!
   imageId: String!
 }
 
@@ -2895,8 +2841,6 @@ type RaceConnection {
 
   """Pagination data for this connection"""
   pageInfo: PageInfo!
-
-  """Total quantity of existing nodes"""
   totalCount: Int
 }
 
@@ -2909,48 +2853,52 @@ type RaceEdge {
   node: Race!
 }
 
+"""
+Race(id, created, updated, name, description, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time, age_of_adulthood, life_expectancy, alignment, size, speed, base_race)
+"""
 input RaceInput {
-  characters: NodeListInput
+  characters: ManyToOneInput
   description: String
   imageIds: [String!]
-  logs: [GlobalID!]
+  logs: [ID!]
   markdownNotes: String
   name: String!
-  relatedArtifacts: NodePartialListInput
-  relatedAssociations: NodePartialListInput
-  relatedCharacters: NodePartialListInput
-  relatedItems: NodePartialListInput
-  relatedPlaces: NodePartialListInput
-  relatedRaces: NodePartialListInput
+  relatedArtifacts: ManyToManyInput
+  relatedAssociations: ManyToManyInput
+  relatedCharacters: ManyToManyInput
+  relatedItems: ManyToManyInput
+  relatedPlaces: ManyToManyInput
+  relatedRaces: ManyToManyInput
   thumbnailId: String
 }
 
+"""
+Race(id, created, updated, name, description, slug, image_ids, thumbnail_id, markdown_notes, lock_user, lock_time, age_of_adulthood, life_expectancy, alignment, size, speed, base_race)
+"""
 input RaceInputPartial {
-  characters: NodeListInput
+  characters: ManyToOneInput
   description: String
-  id: GlobalID!
+  id: ID!
   imageIds: [String!]
   markdownNotes: String
   name: String
-  relatedArtifacts: NodePartialListInput
-  relatedAssociations: NodePartialListInput
-  relatedCharacters: NodePartialListInput
-  relatedItems: NodePartialListInput
-  relatedPlaces: NodePartialListInput
-  relatedRaces: NodePartialListInput
+  relatedArtifacts: ManyToManyInput
+  relatedAssociations: ManyToManyInput
+  relatedCharacters: ManyToManyInput
+  relatedItems: ManyToManyInput
+  relatedPlaces: ManyToManyInput
+  relatedRaces: ManyToManyInput
   thumbnailId: String
 }
 
-"""Input data for `raceLock` mutation"""
 input RaceLockInput {
-  id: GlobalID!
+  id: ID!
 }
 
 union RaceLockPayload = OperationInfo | Race
 
-"""Input data for `raceReleaseLock` mutation"""
 input RaceReleaseLockInput {
-  id: GlobalID!
+  id: ID!
 }
 
 union RaceReleaseLockPayload = OperationInfo | Race
@@ -2984,8 +2932,8 @@ type RefreshTokenType {
 }
 
 input RemoveEntityLogInput {
-  entityId: GlobalID!
-  logId: GlobalID!
+  entityId: ID!
+  logId: ID!
 }
 
 type RevokeRefreshTokenType {
@@ -2998,8 +2946,10 @@ input RevokeTokenInput {
   refreshToken: String!
 }
 
+"""Script(id, name)"""
 type Script implements Node {
-  id: GlobalID!
+  """The Globally Unique ID of this object"""
+  id: ID!
   languages(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -3023,8 +2973,6 @@ type ScriptConnection {
 
   """Pagination data for this connection"""
   pageInfo: PageInfo!
-
-  """Total quantity of existing nodes"""
   totalCount: Int
 }
 
@@ -3037,21 +2985,26 @@ type ScriptEdge {
   node: Script!
 }
 
+"""Script(id, name)"""
 input ScriptInput {
-  languages: NodeListInput
+  languages: ManyToOneInput
   name: String!
 }
 
+"""Script(id, name)"""
 input ScriptInputPartial {
-  id: GlobalID!
-  languages: NodeListInput
+  id: ID!
+  languages: ManyToOneInput
   name: String
 }
 
+"""Skill(id, name, description, related_ability, custom)"""
 type Skill implements Node {
   custom: Boolean!
   description: String!
-  id: GlobalID!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
   name: String!
   relatedAbility: String!
 }
@@ -3063,8 +3016,6 @@ type SkillConnection {
 
   """Pagination data for this connection"""
   pageInfo: PageInfo!
-
-  """Total quantity of existing nodes"""
   totalCount: Int
 }
 
@@ -3077,6 +3028,7 @@ type SkillEdge {
   node: Skill!
 }
 
+"""Skill(id, name, description, related_ability, custom)"""
 input SkillInput {
   custom: Boolean
   description: String
@@ -3084,10 +3036,11 @@ input SkillInput {
   relatedAbility: String!
 }
 
+"""Skill(id, name, description, related_ability, custom)"""
 input SkillInputPartial {
   custom: Boolean
   description: String
-  id: GlobalID!
+  id: ID!
   name: String
   relatedAbility: String
 }
@@ -3118,9 +3071,12 @@ type TokenType {
   token: String!
 }
 
+"""Trait(id, name, description)"""
 type Trait implements Node {
   description: String
-  id: GlobalID!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
   name: String!
 }
 
@@ -3131,8 +3087,6 @@ type TraitConnection {
 
   """Pagination data for this connection"""
   pageInfo: PageInfo!
-
-  """Total quantity of existing nodes"""
   totalCount: Int
 }
 
@@ -3145,14 +3099,16 @@ type TraitEdge {
   node: Trait!
 }
 
+"""Trait(id, name, description)"""
 input TraitInput {
-  description: String!
+  description: String
   name: String!
 }
 
+"""Trait(id, name, description)"""
 input TraitInputPartial {
   description: String
-  id: GlobalID!
+  id: ID!
   name: String
 }
 
@@ -3186,11 +3142,16 @@ union UpdateSkillPayload = OperationInfo | Skill
 
 union UpdateTraitPayload = OperationInfo | Trait
 
+"""
+User(id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined, isDM, last_activity)
+"""
 type User implements Node {
   dateJoined: DateTime!
   email: String!
   firstName: String!
-  id: GlobalID!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
 
   """
   Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
@@ -3215,8 +3176,6 @@ type UserConnection {
 
   """Pagination data for this connection"""
   pageInfo: PageInfo!
-
-  """Total quantity of existing nodes"""
   totalCount: Int
 }
 
@@ -3260,7 +3219,7 @@ type UserType {
   lastLogin: DateTime
   lastName: String
   logentrySet: [DjangoModelType!]!
-  status: UserStatusType
+  status: UserStatusType!
 
   """Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."""
   username: String!
@@ -3278,11 +3237,15 @@ type VerifyTokenType implements OutputInterface {
   user: UserType
 }
 
+"""WeaponTraits(id, item, attack_bonus)"""
 type WeaponTraits implements Node {
   attackBonus: Int!
-  id: GlobalID!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
 }
 
+"""WeaponTraits(id, item, attack_bonus)"""
 input WeaponTraitsInput {
   attackBonus: Int
   delete: Boolean = false

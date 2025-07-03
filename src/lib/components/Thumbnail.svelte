@@ -1,23 +1,29 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { getThumbnailUrl } from '$lib/cloudinary';
+	import { DEFAULT_IMAGE_SRC } from '$lib/constants';
 
-	const DEFAULT_ID = 'dnd:placeholder.jpg';
+	let {
+		thumbnailId = DEFAULT_IMAGE_SRC,
+		width = 75,
+		height = 75,
+		radius = 0
+	}: {
+		thumbnailId?: string;
+		width?: number;
+		height?: number;
+		radius?: number;
+	} = $props();
 
-	export let thumbnailId: string | null | undefined;
-	export let width = 75;
-	export let height = 75;
-	export let radius = 0;
-
-	let src: string;
-	// Must use `:` rather than `/` as separator for defaultImageSrc
-	let defaultSrc = 'dnd:placeholder.jpg';
-
-	src = getThumbnailUrl(thumbnailId ?? DEFAULT_ID, {
-		width,
-		height,
-		radius,
-		defaultSrc
-	});
+	let src = $derived(
+		getThumbnailUrl(thumbnailId ?? DEFAULT_IMAGE_SRC, {
+			width,
+			height,
+			radius,
+			defaultSrc: DEFAULT_IMAGE_SRC
+		})
+	);
 </script>
 
 {#if src}

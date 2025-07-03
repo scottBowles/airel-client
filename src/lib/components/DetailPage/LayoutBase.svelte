@@ -1,21 +1,46 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
 	import Spacer from '../Spacer.svelte';
-	export let clearfix = false;
+	interface Props {
+		clearfix?: boolean;
+		children?: Snippet;
+		nameSnippet?: Snippet;
+		lockedBySnippet?: Snippet;
+		mainImageSnippet?: Snippet;
+		logsSnippet?: Snippet;
+		descriptionSnippet?: Snippet;
+		propertiesSnippet?: Snippet;
+		relatedSnippet?: Snippet;
+		markdownNotesSnippet?: Snippet;
+	}
+
+	let {
+		clearfix = false,
+		children,
+		nameSnippet,
+		lockedBySnippet,
+		mainImageSnippet,
+		logsSnippet,
+		descriptionSnippet,
+		propertiesSnippet,
+		relatedSnippet,
+		markdownNotesSnippet
+	}: Props = $props();
 </script>
 
 <div class="container mx-auto mt-2 mb-32 px-8">
-	<slot />
+	{@render children?.()}
 
 	<!-- TOP ROW -->
 	<div class="top-row">
 		<span class="name-container">
 			<!-- NAME -->
-			<slot name="name" />
+			{@render nameSnippet?.()}
 		</span>
 
 		<!-- EDIT / SAVE + LOCKED BY {USER} -->
 		<span class="locked-edit-save-container">
-			<slot name="lockedBy" />
+			{@render lockedBySnippet?.()}
 		</span>
 	</div>
 
@@ -24,31 +49,31 @@
 
 	<div class:clearfix class="max-w-full">
 		<!-- FLOAT AREA -->
-		<div class="sm:float-right w-full sm:w-2/5 ml-2">
+		<div class="ml-2 w-full sm:float-right sm:w-2/5">
 			<!-- IMAGES -->
-			<slot name="mainImage" class="w-full" />
+			{@render mainImageSnippet?.()}
 
-			<slot name="logs" />
+			{@render logsSnippet?.()}
 			<Spacer />
 		</div>
 
 		<!-- DESCRIPTION -->
-		<slot name="description" />
+		{@render descriptionSnippet?.()}
 		<Spacer />
 
 		<!-- PROPERTIES -->
-		<slot name="properties" />
+		{@render propertiesSnippet?.()}
 		<Spacer />
 
 		<!-- RELATED -->
-		<slot name="related" />
+		{@render relatedSnippet?.()}
 	</div>
 
 	<Spacer />
 	<Spacer lg />
 
 	<!-- MARKDOWN NOTES -->
-	<slot name="markdownNotes" />
+	{@render markdownNotesSnippet?.()}
 </div>
 
 <style>

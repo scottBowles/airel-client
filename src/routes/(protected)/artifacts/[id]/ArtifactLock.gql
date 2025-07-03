@@ -1,4 +1,4 @@
-mutation ArtifactLock($id: GlobalID!) {
+mutation ArtifactLock($id: ID!) {
 	artifactLock(input: { id: $id }) {
 		... on Artifact {
 			id

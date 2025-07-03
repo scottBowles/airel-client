@@ -1,3 +1,5 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { fragment, graphql } from '$houdini';
 	import { Loading, StatusHandler } from '$lib/components/DetailPage';
@@ -5,18 +7,20 @@
 	import LogDetail from './LogDetail.svelte';
 	import LogEdit from './LogEdit.svelte';
 
-	export let data: PageData;
-	$: ({ GameLog } = data);
-	$: log = $GameLog.data?.gameLog;
+	let { data }: { data: PageData } = $props();
+	let { GameLog } = $derived(data);
+	let log = $derived($GameLog.data?.gameLog);
 
-	$: lockedBySelfData = fragment(
-		log,
-		graphql(`
-			fragment LogLockedBySelf on GameLog {
-				id
-				lockedBySelf
-			}
-		`)
+	let lockedBySelfData = $derived(
+		fragment(
+			log,
+			graphql(`
+				fragment LogLockedBySelf on GameLog {
+					id
+					lockedBySelf
+				}
+			`)
+		)
 	);
 </script>
 

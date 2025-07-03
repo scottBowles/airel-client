@@ -1,7 +1,7 @@
 // All taken from from graphql-relay-js because sveltekit wasn't bringing fromGlobalId into
 // the client bundle for some reason.
 
-export type Base64String = string;
+type Base64String = string;
 
 interface ResolvedGlobalId {
 	type: string;
@@ -60,7 +60,7 @@ function utf8ArrayToString(input: Array<number>) {
 	return result;
 }
 
-export function unbase64(input: Base64String): string {
+function unbase64(input: Base64String): string {
 	const utf8Array = [];
 
 	for (let i = 0; i < input.length; i += 4) {
@@ -101,8 +101,4 @@ export function fromGlobalId(globalId: string): ResolvedGlobalId {
 		type: unbasedGlobalId.substring(0, delimiterPos),
 		id: unbasedGlobalId.substring(delimiterPos + 1)
 	};
-}
-
-export function idFromGlobalId(globalId: string): string {
-	return fromGlobalId(globalId).id;
 }

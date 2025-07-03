@@ -1,32 +1,42 @@
 <script lang="ts">
 	import { capitalize } from '$lib/utils';
 
-	export let id: string;
-	export let inputName: string;
-	export let entityDisplayName: string = inputName;
-	export let initialValue: string;
-	export let optionNamesAndIdNodes: { node: { id: string; name: string } }[] = [];
-	export let fetching: boolean;
+	interface Props {
+		id: string;
+		inputName: string;
+		entityDisplayName?: string;
+		initialValue: string;
+		optionNamesAndIdNodes?: { node: { id: string; name: string } }[];
+		fetching: boolean;
+	}
 
-	let selected: string = initialValue;
+	let {
+		id,
+		inputName,
+		entityDisplayName = inputName,
+		initialValue,
+		optionNamesAndIdNodes = [],
+		fetching
+	}: Props = $props();
 
-	$: options =
+	let selected: string = $state(initialValue);
+
+	let options = $derived(
 		optionNamesAndIdNodes?.map((edge) => ({
 			value: edge.node.id,
 			label: edge.node.name
-		})) || [];
+		})) || []
+	);
 </script>
 
-<div class="form-control w-full max-w-xs">
-	<label class="label" for={id}>
-		<span class="label-text">Select Related {capitalize(entityDisplayName)}</span>
-	</label>
+<fieldset class="fieldset">
+	<label class="label" for={id}>Select Related {capitalize(entityDisplayName)}</label>
 	{#if fetching}
 		Loading {capitalize(entityDisplayName)}...
 	{:else}
-		<select bind:value={selected} class="select select-bordered" {id}>
+		<select bind:value={selected} class="select" {id}>
 			<option disabled selected>Pick one</option>
-			{#each options as { value, label }}
+			{#each options as { value, label } (value)}
 				<option {value}>{label}</option>
 			{/each}
 		</select>
@@ -34,4 +44,4 @@
 	{#if selected}
 		<input type="hidden" name={`${inputName}.id`} value={selected} />
 	{/if}
-</div>
+</fieldset>

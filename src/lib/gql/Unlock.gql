@@ -1,4 +1,4 @@
-mutation Unlock($id: GlobalID!) {
+mutation Unlock($id: ID!) {
 	unlock(input: { id: $id }) {
 		id
 		... on Lockable {

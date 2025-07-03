@@ -1,9 +1,10 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { post } from '$lib/utils';
 
-	export let btnSize = '';
+	let { btnSize = '' } = $props();
 
 	const links = [
 		// {
@@ -46,36 +47,35 @@
 		href: '/404'
 	};
 
-	$: currentHref = '/' + $page.url.pathname.split('/')[1];
-	$: activeLink = links.find((link) => link.href === currentHref) || defaultLink;
+	let currentHref = $derived('/' + page.url.pathname.split('/')[1]);
+	let activeLink = $derived(links.find((link) => link.href === currentHref) || defaultLink);
 
 	async function logout() {
 		await post('/endpoints/logout');
-		goto('/login');
+		window.location.reload();
 	}
 </script>
 
-{#each links as link}
+{#each links as link (link.label)}
 	<li>
 		<a
 			href={link.href}
-			class="btn no-animation normal-case btn-{btnSize}"
+			class="btn no-animation btn-{btnSize}"
 			class:btn-primary={link === activeLink}
 			class:btn-ghost={link !== activeLink}
+			class:hover:btn-neutral={link !== activeLink}
 		>
 			{link.label}
 		</a>
 	</li>
 {/each}
 <li>
-	{#if $page.data.me}
-		<button class="btn btn-ghost no-animation normal-case btn-{btnSize}" on:click={logout}>
-			Logout
-		</button>
+	{#if page.data.me}
+		<button class="btn btn-ghost no-animation btn-{btnSize}" onclick={logout}> Logout </button>
 	{:else}
 		<a
-			href={`/login?redirect=${$page.url.pathname}`}
-			class="btn btn-ghost no-animation normal-case btn-{btnSize}"
+			href={`/login?redirect=${page.url.pathname}`}
+			class="btn btn-ghost no-animation btn-{btnSize}"
 		>
 			Login
 		</a>

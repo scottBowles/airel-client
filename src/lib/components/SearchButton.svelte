@@ -11,11 +11,11 @@
 	use:algoliaCloseOnNavigation={showAlgoliaSearch}
 />
 
-<div class="form-control">
+<fieldset class="fieldset">
 	<input
 		type="text"
 		placeholder="Search (Ctrl + K)"
-		class="input input-sm input-bordered"
-		on:click={showAlgoliaSearch.open}
+		class="input input-sm"
+		onclick={showAlgoliaSearch.open}
 	/>
-</div>
+</fieldset>

@@ -1,41 +1,43 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
-	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
-	import { fromGlobalId } from '$lib/utils';
-	import ItemTypeIcons from './ItemTypeIcons.svelte';
 	import { fragment, graphql, type ItemListFields } from '$houdini';
+	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
+	import ItemTypeIcons from './ItemTypeIcons.svelte';
 
-	export let item: ItemListFields;
+	let { item }: { item: ItemListFields } = $props();
 
-	$: data = fragment(
-		item,
-		graphql(`
-			fragment ItemListFields on Item {
-				id
-				name
-				armor {
-					acBonus
+	let data = $derived(
+		fragment(
+			item,
+			graphql(`
+				fragment ItemListFields on Item {
+					id
+					name
+					armor {
+						acBonus
+					}
+					weapon {
+						attackBonus
+					}
+					equipment {
+						briefDescription
+					}
+					...EntityListFields
 				}
-				weapon {
-					attackBonus
-				}
-				equipment {
-					briefDescription
-				}
-				...EntityListFields
-			}
-		`)
+			`)
+		)
 	);
 
-	$: ({ id, name, weapon, armor, equipment } = $data);
-	$: globalId = fromGlobalId(id).id;
-	$: href = `/items/${globalId}`;
+	let { id, name, weapon, armor, equipment } = $derived($data);
+	let href = $derived(`/items/${id}`);
 </script>
 
 <ListDetailCard entity={$data} {href}>
-	<svelte:fragment slot="title">
+	{#snippet titleSnippet()}
 		<a {href} class="name">{name}</a>
 		<ItemTypeIcons isWeapon={!!weapon} isArmor={!!armor} isEquipment={!!equipment} />
-	</svelte:fragment>
+	{/snippet}
 </ListDetailCard>
 
 <style>

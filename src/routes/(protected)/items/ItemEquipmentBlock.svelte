@@ -1,21 +1,25 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
 	import { fragment, graphql, type ItemEquipmentBlock } from '$houdini';
 	import Spacer from '$lib/components/Spacer.svelte';
 
-	export let item: ItemEquipmentBlock;
+	let { item }: { item: ItemEquipmentBlock } = $props();
 
-	$: data = fragment(
-		item,
-		graphql(`
-			fragment ItemEquipmentBlock on Item {
-				equipment {
-					briefDescription
+	let data = $derived(
+		fragment(
+			item,
+			graphql(`
+				fragment ItemEquipmentBlock on Item {
+					equipment {
+						briefDescription
+					}
 				}
-			}
-		`)
+			`)
+		)
 	);
 
-	$: ({ equipment } = $data);
+	let { equipment } = $derived($data);
 </script>
 
 <h3 class="text-xl font-bold">Equipment</h3>

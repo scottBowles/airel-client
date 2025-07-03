@@ -1,6 +1,6 @@
 import { HoudiniClient, type ClientPlugin } from '$houdini';
 import { PUBLIC_GRAPHQL_URL } from '$env/static/public';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import refreshAuthToken from '$lib/customApiCalls/refreshAuthToken';
 
 export const authRefreshPlugin: ClientPlugin = () => {
@@ -8,7 +8,7 @@ export const authRefreshPlugin: ClientPlugin = () => {
 		async network(ctx, { next }) {
 			const { token, refresh_token } = ctx.session ?? {};
 			if (ctx.session && token && refresh_token) {
-				const decodedJon = jwt_decode(token) as { payload: string };
+				const decodedJon = jwtDecode(token) as { payload: string };
 				const decoded = JSON.parse(decodedJon.payload) as {
 					exp: string;
 					origIat: string;

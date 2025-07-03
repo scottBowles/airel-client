@@ -3,12 +3,21 @@
 	import { entityPlural, type EntityType } from '$lib/constants';
 	import AddEntityOrAliasBtn from './AddEntityOrAliasBtn.svelte';
 
-	export let suggestedEntityType: EntityType;
-	export let entityNames: string[];
-	export let updateFoundEntities: (type: EntityType, newEntity: any) => void;
-	export let updateLogEntitiesInForm: (id: string) => void;
+	interface Props {
+		suggestedEntityType: EntityType;
+		entityNames: string[];
+		updateFoundEntities: (type: EntityType, newEntity: any) => void;
+		updateLogEntitiesInForm: (id: string) => void;
+	}
 
-	$: title = capitalize(entityPlural(suggestedEntityType));
+	let {
+		suggestedEntityType,
+		entityNames,
+		updateFoundEntities,
+		updateLogEntitiesInForm
+	}: Props = $props();
+
+	let title = $derived(capitalize(entityPlural(suggestedEntityType)));
 </script>
 
 <div>

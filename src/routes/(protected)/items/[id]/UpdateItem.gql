@@ -1,17 +1,17 @@
 mutation UpdateItem(
-	$id: GlobalID!
+	$id: ID!
 	$name: String
 	$description: String
 	$markdownNotes: String
 	$armor: ArmorTraitsInput
 	$weapon: WeaponTraitsInput
 	$equipment: EquipmentTraitsInput
-	$relatedArtifacts: NodePartialListInput
-	$relatedAssociations: NodePartialListInput
-	$relatedCharacters: NodePartialListInput
-	$relatedItems: NodePartialListInput
-	$relatedPlaces: NodePartialListInput
-	$relatedRaces: NodePartialListInput
+	$relatedArtifacts: ManyToManyInput
+	$relatedAssociations: ManyToManyInput
+	$relatedCharacters: ManyToManyInput
+	$relatedItems: ManyToManyInput
+	$relatedPlaces: ManyToManyInput
+	$relatedRaces: ManyToManyInput
 ) {
 	updateItem(
 		input: {

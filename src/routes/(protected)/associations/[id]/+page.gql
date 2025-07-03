@@ -1,7 +1,9 @@
 query Association($id: ID!) {
-	association(pk: $id) {
-		...AssociationLockedBySelf
-		...AssociationDetailFields
-		...AssociationEditFields
+	node(id: $id) {
+		... on Association {
+			...AssociationLockedBySelf
+			...AssociationDetailFields
+			...AssociationEditFields
+		}
 	}
 }

@@ -1,37 +1,39 @@
-query AiLogSuggestions($pk: ID!) {
-	gameLog(pk: $pk) {
-		aiSuggestions {
-			titles
-			briefs
-			synopses
-			associations
-			characters
-			items
-			places
-			races
-			foundArtifacts {
-				id
-				name
-			}
-			foundAssociations {
-				id
-				name
-			}
-			foundCharacters {
-				id
-				name
-			}
-			foundItems {
-				id
-				name
-			}
-			foundPlaces {
-				id
-				name
-			}
-			foundRaces {
-				id
-				name
+query AiLogSuggestions($id: ID!) {
+	node(id: $id) {
+		... on GameLog {
+			aiSuggestions {
+				titles
+				briefs
+				synopses
+				associations
+				characters
+				items
+				places
+				races
+				foundArtifacts {
+					id
+					name
+				}
+				foundAssociations {
+					id
+					name
+				}
+				foundCharacters {
+					id
+					name
+				}
+				foundItems {
+					id
+					name
+				}
+				foundPlaces {
+					id
+					name
+				}
+				foundRaces {
+					id
+					name
+				}
 			}
 		}
 	}

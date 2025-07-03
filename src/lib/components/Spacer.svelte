@@ -1,9 +1,7 @@
+<svelte:options runes={true} />
+
 <script lang="ts">
-	export let xs = false;
-	export let sm = false;
-	export let md = false;
-	export let lg = false;
-	export let xl = false;
+	let { xs = false, sm = false, md = false, lg = false, xl = false } = $props();
 
 	const sizes: [boolean, string][] = [
 		[xs, 'xs'],
@@ -13,10 +11,10 @@
 		[xl, 'xl']
 	];
 
-	$: size = sizes.find(([size, name]) => size)?.[1] || 'md';
+	let size = $derived(sizes.find(([size, name]) => size)?.[1] || 'md');
 </script>
 
-<div class={size} />
+<div class={size}></div>
 
 <style>
 	.xs {

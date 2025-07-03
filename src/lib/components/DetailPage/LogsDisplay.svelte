@@ -8,14 +8,18 @@
 	import LogDisplay from './LogDisplay.svelte';
 	import { page } from '$app/stores';
 
-	export let logs: any;
-	export let onLogAdd: (logUrl: string) => Promise<void>;
-	export let onLogRemove: (logId: string) => Promise<void> | void;
+	interface Props {
+		logs: any;
+		onLogAdd: (logUrl: string) => Promise<void>;
+		onLogRemove: (logId: string) => Promise<void> | void;
+	}
 
-	$: logNodes = logs?.edges?.map(({ node }: { node: any }) => node) ?? logs ?? [];
+	let { logs, onLogAdd, onLogRemove }: Props = $props();
 
-	let logInputOpen = false;
-	let logInput = '';
+	let logNodes = $derived(logs?.edges?.map(({ node }: { node: any }) => node) ?? logs ?? []);
+
+	let logInputOpen = $state(false);
+	let logInput = $state('');
 
 	async function openLogInput() {
 		logInputOpen = true;
@@ -47,27 +51,27 @@
 		{#if $page.data.me?.isStaff}
 			{#if logInputOpen}
 				<div class="flex items-center justify-between gap-2" use:callOnEsc={closeLogInput}>
-					<!-- svelte-ignore a11y-autofocus -->
+					<!-- svelte-ignore a11y_autofocus -->
 					<input
 						type="text"
 						id="log-input"
 						name="log"
 						placeholder="Log url"
 						bind:value={logInput}
-						class="input input-bordered w-full max-w-xs flex-1"
+						class="input flex-1"
 						autofocus
 					/>
 					<div>
-						<button class="btn btn-square btn-ghost btn-sm" on:click={addLog} type="button">
+						<button class="btn btn-square btn-ghost btn-sm" onclick={addLog} type="button">
 							<div class="icon"><FaCheck /></div>
 						</button>
-						<button class="btn btn-square btn-ghost btn-sm" on:click={closeLogInput} type="button">
+						<button class="btn btn-square btn-ghost btn-sm" onclick={closeLogInput} type="button">
 							<div class="icon"><FaTimes /></div>
 						</button>
 					</div>
 				</div>
 			{:else}
-				<div class="icon" on:click={openLogInput} on:keypress={openLogInput}>
+				<div class="icon" onclick={openLogInput} onkeypress={openLogInput}>
 					<FaPlus />
 				</div>
 			{/if}
