@@ -73,7 +73,7 @@
 			<div class="hidden xl:block">
 				<ul class="flex gap-1">
 					<!-- Navbar menu content here -->
-					<NavLinks btnSize="sm" />
+					<NavLinks btnSize="md" />
 				</ul>
 			</div>
 		</div>
