@@ -1,7 +1,6 @@
 <svelte:options runes={true} />
 
 <script lang="ts">
-	import { fromGlobalId } from '$lib/utils';
 	import { fragment, graphql, type CharacterDetailFields } from '$houdini';
 	import { LayoutDisplay } from '$lib/components/DetailPage';
 	import Spacer from '$lib/components/Spacer.svelte';
@@ -33,7 +32,6 @@
 
 	let { race, associations: associationConnection } = $derived($data);
 	let associations = $derived(associationConnection?.edges.map(({ node }) => node) || []);
-	let raceGlobalId = $derived(race && fromGlobalId(race.id).id);
 </script>
 
 <LayoutDisplay entity={$data}>
@@ -45,7 +43,7 @@
 			<Spacer xs />
 			{#if race}
 				<div>
-					<a class="link link-accent link-hover" href={`/races/${raceGlobalId}`}>
+					<a class="link link-accent link-hover" href={`/races/${race.id}`}>
 						{race.name}
 					</a>
 				</div>
@@ -61,8 +59,7 @@
 				<Spacer xs />
 				<div>
 					{#each associations as association, i (association.id)}
-						{@const globalId = fromGlobalId(association.id).id}
-						<a class="link link-accent link-hover" href={`/associations/${globalId}`}
+						<a class="link link-accent link-hover" href={`/associations/${association.id}`}
 							>{association.name}</a
 						>{i < associations.length - 1 ? ', ' : ''}
 					{/each}

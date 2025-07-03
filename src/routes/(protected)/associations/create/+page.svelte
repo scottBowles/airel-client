@@ -1,11 +1,10 @@
 <script lang="ts">
-	import { fromGlobalId } from '$lib/utils';
-	import { error } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
 	import { CreateAssociationStore } from '$houdini';
 	import { LayoutCreate } from '$lib/components/DetailPage';
-	import Spacer from '$lib/components/Spacer.svelte';
 	import RelatedCharacterMultiSelect from '$lib/components/RelatedCharacterMultiSelect.svelte';
+	import Spacer from '$lib/components/Spacer.svelte';
+	import { error } from '@sveltejs/kit';
 	import { parseFormData } from 'parse-nested-form-data';
 
 	const createMutation = new CreateAssociationStore();
@@ -21,8 +20,7 @@
 		const res = await createMutation.mutate({ ...parsed, name });
 
 		if (res.data?.createAssociation.__typename === 'Association') {
-			const { id: globalId } = res.data.createAssociation;
-			const { id } = fromGlobalId(globalId);
+			const { id } = res.data.createAssociation;
 			goto(`/associations/${id}`);
 		} else {
 			console.log('No data returned from createMutation.mutate! res.data: ', res.data);

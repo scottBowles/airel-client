@@ -1,14 +1,13 @@
 <svelte:options runes={true} />
 
 <script lang="ts">
+	import { page } from '$app/state';
 	import AddLink from '$lib/components/AddLink.svelte';
 	import BannerImage from '$lib/components/BannerImage.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
 	import { alphabeticallyBy } from '$lib/utils';
 	import { compass } from '@cloudinary/url-gen/qualifiers/gravity';
 	import type { PageData } from './$houdini';
-	import { fromGlobalId } from '$lib/utils';
-	import { page } from '$app/state';
 
 	let { data }: { data: PageData } = $props();
 
@@ -32,9 +31,7 @@
 	{/if}
 
 	{#each places as place (place.id)}
-		{@const { id } = place}
-		{@const globalId = fromGlobalId(id).id}
-		{@const href = `places/${globalId}`}
+		{@const href = `places/${place.id}`}
 		<ListDetailCard entity={place} {href} />
 	{/each}
 </div>

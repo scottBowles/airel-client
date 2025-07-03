@@ -2,7 +2,6 @@
 
 <script lang="ts">
 	import { fragment, graphql, type PlaceBreadcrumbFields } from '$houdini';
-	import { fromGlobalId } from '$lib/utils';
 
 	let { place }: { place: PlaceBreadcrumbFields } = $props();
 
@@ -47,23 +46,21 @@
 	function getBreadcrumbs(node?: BreadcrumbNode | null): BreadcrumbNode[] {
 		return node ? [...getBreadcrumbs(node.parent), node] : [];
 	}
-	let breadcrumbs = $derived(
-		getBreadcrumbs($data).map((b) => ({ ...b, globalId: fromGlobalId(b.id).id }))
-	);
+	let breadcrumbs = $derived(getBreadcrumbs($data));
 </script>
 
 {#if breadcrumbs.length > 0}
 	<div class="container mx-auto mt-2">
-		<div class="text-sm breadcrumbs">
+		<div class="breadcrumbs text-sm">
 			{#if breadcrumbs.length > 1}
 				<ul>
-					{#each breadcrumbs as { globalId, name }, i}
+					{#each breadcrumbs as breadcrumb, i (breadcrumb.id)}
 						<li>
 							{#if i === breadcrumbs.length - 1}
-								{name}
+								{breadcrumb.name}
 							{:else}
-								<a href={`/places/${globalId}`} class="text-accent">
-									{name}
+								<a href={`/places/${breadcrumb.id}`} class="text-accent">
+									{breadcrumb.name}
 								</a>
 							{/if}
 						</li>

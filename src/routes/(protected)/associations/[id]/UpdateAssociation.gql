@@ -1,15 +1,15 @@
 mutation UpdateAssociation(
-	$id: GlobalID!
+	$id: ID!
 	$name: String
 	$description: String
 	$markdownNotes: String
-	$characters: NodePartialListInput
-	$relatedArtifacts: NodePartialListInput
-	$relatedAssociations: NodePartialListInput
-	$relatedCharacters: NodePartialListInput
-	$relatedItems: NodePartialListInput
-	$relatedPlaces: NodePartialListInput
-	$relatedRaces: NodePartialListInput
+	$characters: ManyToManyInput
+	$relatedArtifacts: ManyToManyInput
+	$relatedAssociations: ManyToManyInput
+	$relatedCharacters: ManyToManyInput
+	$relatedItems: ManyToManyInput
+	$relatedPlaces: ManyToManyInput
+	$relatedRaces: ManyToManyInput
 ) {
 	updateAssociation(
 		input: {

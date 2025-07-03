@@ -1,4 +1,4 @@
-mutation CharacterLock($id: GlobalID!) {
+mutation CharacterLock($id: ID!) {
 	characterLock(input: { id: $id }) {
 		... on Character {
 			id

@@ -1,15 +1,14 @@
 <svelte:options runes={true} />
 
 <script lang="ts">
-	import { capitalize, fromGlobalId } from '$lib/utils';
+	import { capitalize } from '$lib/utils';
 
 	let {
 		name,
 		entities,
 		getUrl = (entity) => {
 			const entityName = name.toLowerCase();
-			const id = fromGlobalId(entity.id).id;
-			return `/${entityName}/${id}`;
+			return `/${entityName}/${entity.id}`;
 		}
 	}: {
 		name: string;

@@ -1,7 +1,9 @@
 query Race($id: ID!) {
-	race(pk: $id) {
-		...RaceLockedBySelf
-		...RaceDetailFields
-		...RaceEditFields
+	node(id: $id) {
+		... on Race {
+			...RaceLockedBySelf
+			...RaceDetailFields
+			...RaceEditFields
+		}
 	}
 }

@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { fromGlobalId } from '$lib/utils';
-	import { error } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
 	import { CreateCharacterStore } from '$houdini';
 	import { LayoutCreate } from '$lib/components/DetailPage';
-	import Spacer from '$lib/components/Spacer.svelte';
-	import RelatedRaceSelect from '$lib/components/RelatedRaceSelect.svelte';
 	import RelatedAssociationMultiSelect from '$lib/components/RelatedAssociationMultiSelect.svelte';
+	import RelatedRaceSelect from '$lib/components/RelatedRaceSelect.svelte';
+	import Spacer from '$lib/components/Spacer.svelte';
+	import { error } from '@sveltejs/kit';
 	import { parseFormData } from 'parse-nested-form-data';
 
 	const createMutation = new CreateCharacterStore();
@@ -22,8 +21,7 @@
 		const res = await createMutation.mutate({ ...parsed, name });
 
 		if (res.data?.createCharacter.__typename === 'Character') {
-			const { id: globalId } = res.data.createCharacter;
-			const { id } = fromGlobalId(globalId);
+			const { id } = res.data.createCharacter;
 			goto(`/characters/${id}`);
 		} else {
 			console.log('No data returned from createMutation.mutate! res.data: ', res.data);

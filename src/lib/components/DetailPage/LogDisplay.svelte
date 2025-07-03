@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { fromGlobalId } from '$lib/utils';
-	import FaTimes from 'svelte-icons/fa/FaTimes.svelte';
-	import FaExternalLinkAlt from 'svelte-icons/fa/FaExternalLinkAlt.svelte';
 	import { page } from '$app/stores';
+	import FaExternalLinkAlt from 'svelte-icons/fa/FaExternalLinkAlt.svelte';
+	import FaTimes from 'svelte-icons/fa/FaTimes.svelte';
 
 	interface Props {
 		log: any;
@@ -10,8 +9,7 @@
 	}
 
 	let { log, removeLog }: Props = $props();
-	let id = $derived(fromGlobalId(log.id).id);
-	let href = $derived(`/logs/${id}`);
+	let href = $derived(`/logs/${log.id}`);
 
 	const modalId = `log-modal-${log.id}`;
 

@@ -1,7 +1,6 @@
 <svelte:options runes={true} />
 
 <script lang="ts">
-	import { fromGlobalId } from '$lib/utils';
 	import { fragment, graphql, type AssociationDetailFields } from '$houdini';
 	import { LayoutDisplay } from '$lib/components/DetailPage';
 	import Spacer from '$lib/components/Spacer.svelte';
@@ -40,8 +39,7 @@
 			{#if characters?.length > 0}
 				<div>
 					{#each characters as character, i (character.id)}
-						{@const globalId = fromGlobalId(character.id).id}
-						<a href={`/characters/${globalId}`} class="link link-accent link-hover"
+						<a href={`/characters/${character.id}`} class="link link-accent link-hover"
 							>{character.name}</a
 						>{i < characters.length - 1 ? ', ' : ''}
 					{/each}

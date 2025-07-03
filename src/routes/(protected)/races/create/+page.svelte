@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { fromGlobalId } from '$lib/utils';
-	import { parseFormData } from 'parse-nested-form-data';
-	import { error } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
 	import { CreateRaceStore } from '$houdini';
 	import { LayoutCreate } from '$lib/components/DetailPage';
+	import { error } from '@sveltejs/kit';
+	import { parseFormData } from 'parse-nested-form-data';
 
 	const createMutation = new CreateRaceStore();
 
@@ -19,8 +18,7 @@
 		const res = await createMutation.mutate({ ...parsed, name });
 
 		if (res.data?.createRace.__typename === 'Race') {
-			const { id: globalId } = res.data.createRace;
-			const { id } = fromGlobalId(globalId);
+			const { id } = res.data.createRace;
 			goto(`/races/${id}`);
 		} else {
 			console.log('No data returned from createMutation.mutate! res.data: ', res.data);

@@ -4,7 +4,7 @@
 	import { fragment, graphql, type PlaceDetailFields } from '$houdini';
 	import { LayoutDisplay } from '$lib/components/DetailPage';
 	import Spacer from '$lib/components/Spacer.svelte';
-	import { capitalize, idFromGlobalId } from '$lib/utils';
+	import { capitalize } from '$lib/utils';
 	import Breadcrumbs from '../Breadcrumbs.svelte';
 	import { getChildrenName } from '../utils';
 
@@ -51,7 +51,7 @@
 				<h2 class="text-xl font-bold">{getChildrenName(placeTypeDisplay)}</h2>
 				<Spacer xs />
 				{#each children as child, i (child.id)}
-					<a class="link link-accent link-hover" href={`/places/${idFromGlobalId(child.id)}`}>
+					<a class="link link-accent link-hover" href={`/places/${child.id}`}>
 						{child.name}
 					</a>
 					{i < children.length - 1 ? ', ' : ''}

@@ -1,4 +1,4 @@
-mutation RaceLock($id: GlobalID!) {
+mutation RaceLock($id: ID!) {
 	raceLock(input: { id: $id }) {
 		... on Race {
 			id

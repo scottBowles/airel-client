@@ -1,4 +1,4 @@
-mutation PlaceLock($id: GlobalID!) {
+mutation PlaceLock($id: ID!) {
 	placeLock(input: { id: $id }) {
 		... on Place {
 			id

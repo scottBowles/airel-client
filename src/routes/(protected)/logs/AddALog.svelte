@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { GetOrCreateGameLogStore } from '$houdini';
-	import { fromGlobalId } from '$lib/utils';
 	import { toast } from '@zerodevx/svelte-toast';
 
 	const ADD_LOG_MODAL_ID = 'add-log-modal';
@@ -27,7 +26,7 @@
 		if (res.data?.getOrCreateGameLog.__typename === 'GameLog') {
 			toast.push('Log added successfully');
 			modalOpen = false;
-			const id = fromGlobalId(res.data.getOrCreateGameLog.id).id;
+			const { id } = res.data.getOrCreateGameLog;
 			return goto(`/logs/${id}`);
 		}
 		toast.push('Something went wrong');

@@ -1,10 +1,9 @@
 <svelte:options runes={true} />
 
 <script lang="ts">
-	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
-	import { fromGlobalId } from '$lib/utils';
-	import ItemTypeIcons from './ItemTypeIcons.svelte';
 	import { fragment, graphql, type ItemListFields } from '$houdini';
+	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
+	import ItemTypeIcons from './ItemTypeIcons.svelte';
 
 	let { item }: { item: ItemListFields } = $props();
 
@@ -31,8 +30,7 @@
 	);
 
 	let { id, name, weapon, armor, equipment } = $derived($data);
-	let globalId = $derived(fromGlobalId(id).id);
-	let href = $derived(`/items/${globalId}`);
+	let href = $derived(`/items/${id}`);
 </script>
 
 <ListDetailCard entity={$data} {href}>

@@ -1,4 +1,4 @@
-mutation AssociationLock($id: GlobalID!) {
+mutation AssociationLock($id: ID!) {
 	associationLock(input: { id: $id }) {
 		... on Association {
 			id

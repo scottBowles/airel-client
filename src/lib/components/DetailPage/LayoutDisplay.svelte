@@ -12,7 +12,7 @@
 	import CloudinaryUpload from '$lib/components/CloudinaryUpload.svelte';
 	import { BasicProperty } from '$lib/components/DetailPage';
 	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
-	import { idFromGlobalId, somethingWentWrong } from '$lib/utils';
+	import { somethingWentWrong } from '$lib/utils';
 	import { prop } from 'ramda';
 	import type { Snippet } from 'svelte';
 	import FaEdit from 'svelte-icons/fa/FaEdit.svelte';
@@ -113,7 +113,7 @@
 
 	const withUrl = (entity: string) => (node: { id: string; name: string }) => ({
 		...node,
-		url: `/${entity}/${idFromGlobalId(node.id)}`
+		url: `/${entity}/${node.id}`
 	});
 
 	let { id, name, description, imageIds = [], markdownNotes, logs, lockUser } = $derived($data);

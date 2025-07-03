@@ -3,7 +3,7 @@
 	import { CreatePlaceStore, PlacesForSearchStore, type PlaceType$options } from '$houdini';
 	import { LayoutCreate } from '$lib/components/DetailPage';
 	import Spacer from '$lib/components/Spacer.svelte';
-	import { capitalize, fromGlobalId } from '$lib/utils';
+	import { capitalize } from '$lib/utils';
 	import { error } from '@sveltejs/kit';
 	import { parseFormData } from 'parse-nested-form-data';
 	import { onMount } from 'svelte';
@@ -49,8 +49,7 @@
 		const res = await createMutation.mutate({ ...parsed, name });
 
 		if (res.data?.createPlace.__typename === 'Place') {
-			const { id: globalId } = res.data.createPlace;
-			const { id } = fromGlobalId(globalId);
+			const { id } = res.data.createPlace;
 			goto(`/places/${id}`);
 		} else {
 			console.log('No data returned from createMutation.mutate! res.data: ', res.data);

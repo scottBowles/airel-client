@@ -1,7 +1,9 @@
 query Artifact($id: ID!) {
-	artifact(pk: $id) {
-		...ArtifactLockedBySelf
-		...ArtifactDetailFields
-		...ArtifactEditFields
+	node(id: $id) {
+		... on Artifact {
+			...ArtifactLockedBySelf
+			...ArtifactDetailFields
+			...ArtifactEditFields
+		}
 	}
 }

@@ -1,4 +1,4 @@
-mutation EntityAddImage($id: GlobalID!, $imageId: String!) {
+mutation EntityAddImage($id: ID!, $imageId: String!) {
 	entityAddImage(input: { id: $id, imageId: $imageId }) {
 		... on Artifact {
 			id

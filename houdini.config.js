@@ -17,15 +17,6 @@ const config = {
 			marshal(date) {
 				return date;
 			}
-		},
-		GlobalID: {
-			type: 'string',
-			unmarshal(value) {
-				return value;
-			},
-			marshal(value) {
-				return value;
-			}
 		}
 	}
 };

@@ -1,16 +1,16 @@
 mutation UpdateCharacter(
-	$id: GlobalID!
+	$id: ID!
 	$name: String
 	$description: String
 	$markdownNotes: String
-	$race: NodeInput
-	$associations: NodePartialListInput
-	$relatedArtifacts: NodePartialListInput
-	$relatedAssociations: NodePartialListInput
-	$relatedCharacters: NodePartialListInput
-	$relatedItems: NodePartialListInput
-	$relatedPlaces: NodePartialListInput
-	$relatedRaces: NodePartialListInput
+	$race: OneToManyInput
+	$associations: ManyToManyInput
+	$relatedArtifacts: ManyToManyInput
+	$relatedAssociations: ManyToManyInput
+	$relatedCharacters: ManyToManyInput
+	$relatedItems: ManyToManyInput
+	$relatedPlaces: ManyToManyInput
+	$relatedRaces: ManyToManyInput
 ) {
 	updateCharacter(
 		input: {

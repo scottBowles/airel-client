@@ -1,14 +1,13 @@
 <script lang="ts">
-	import { fromGlobalId } from '$lib/utils';
-	import { parseFormData } from 'parse-nested-form-data';
-	import { error } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
 	import { CreateItemStore } from '$houdini';
 	import { LayoutCreate } from '$lib/components/DetailPage';
+	import { error } from '@sveltejs/kit';
+	import { parseFormData } from 'parse-nested-form-data';
 	import AddBlock from '../AddBlock.svelte';
 	import ItemArmorInputs from '../ItemArmorInputs.svelte';
-	import ItemWeaponInputs from '../ItemWeaponInputs.svelte';
 	import ItemEquipmentInputs from '../ItemEquipmentInputs.svelte';
+	import ItemWeaponInputs from '../ItemWeaponInputs.svelte';
 
 	const createMutation = new CreateItemStore();
 
@@ -24,8 +23,7 @@
 
 		// Redirect to the new item's detail page
 		if (res.data?.createItem.__typename === 'Item') {
-			const { id: globalId } = res.data.createItem;
-			const { id } = fromGlobalId(globalId);
+			const { id } = res.data.createItem;
 			goto(`/items/${id}`);
 		} else {
 			console.log('No data returned from createMutation.mutate! res.data: ', res.data);

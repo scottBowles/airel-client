@@ -115,7 +115,11 @@
 		)
 	);
 
-	let aiSuggestions = $derived($aiLogSuggestions.data?.gameLog?.aiSuggestions);
+	let aiSuggestions = $derived(
+		$aiLogSuggestions.data?.node.__typename === 'GameLog'
+			? $aiLogSuggestions.data.node.aiSuggestions
+			: null
+	);
 	// $: aiLogSummary = $generateAiLogSummary.data?.aiLogSuggestions;
 	// $: aiLogSummaryErrors = $generateAiLogSummary.errors;
 	let { foundArtifacts, foundAssociations, foundCharacters, foundItems, foundPlaces, foundRaces } =
@@ -531,7 +535,7 @@
 			<button
 				type="button"
 				class="btn btn-ghost btn-sm icon-btn"
-				onclick={() => aiLogSuggestions.fetch({ variables: { pk } })}
+				onclick={() => aiLogSuggestions.fetch({ variables: { id: pk } })}
 			>
 				<span class="icon"><FaRobot /></span>
 			</button>

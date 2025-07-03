@@ -1,7 +1,9 @@
 query Place($id: ID!) {
-	place(pk: $id) {
-		...PlaceLockedBySelf
-		...PlaceDetailFields
-		...PlaceEditFields
+	node(id: $id) {
+		... on Place {
+			...PlaceLockedBySelf
+			...PlaceDetailFields
+			...PlaceEditFields
+		}
 	}
 }

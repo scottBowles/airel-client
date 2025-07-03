@@ -1,4 +1,4 @@
-mutation EntityAddAlias($id: GlobalID!, $alias: String!) {
+mutation EntityAddAlias($id: ID!, $alias: String!) {
 	entityAddAlias(input: { id: $id, alias: $alias }) {
 		... on Artifact {
 			id

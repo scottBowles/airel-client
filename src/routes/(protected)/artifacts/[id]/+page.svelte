@@ -10,7 +10,7 @@
 	let { data }: { data: PageData } = $props();
 
 	let { Artifact } = $derived(data);
-	let artifact = $derived($Artifact.data?.artifact);
+	let artifact = $derived($Artifact.data?.node);
 
 	let lockedBySelfData = $derived(
 		fragment(

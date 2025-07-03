@@ -1,7 +1,6 @@
 <svelte:options runes={true} />
 
 <script lang="ts">
-	import { fromGlobalId } from '$lib/utils';
 	import { fragment, graphql, type ArtifactListCardFields } from '$houdini';
 	import ItemTypeIcons from '$lib/components/ItemTypeIcons.svelte';
 	import ListDetailCard from '$lib/components/ListDetailCard.svelte';
@@ -38,8 +37,7 @@
 
 	let { id, name, items } = $derived($data);
 
-	let globalId = $derived(fromGlobalId(id).id);
-	let href = $derived(`artifacts/${globalId}`);
+	let href = $derived(`artifacts/${id}`);
 	let itemNodes = $derived(items.edges?.map((edge) => edge.node) || []);
 	let isWeapon = $derived(itemNodes.some((item) => !!item.weapon));
 	let isArmor = $derived(itemNodes.some((item) => !!item.armor));

@@ -1,14 +1,14 @@
 <svelte:options runes={true} />
 
 <script lang="ts">
-	import { dateAdjustedForUtcOffset, fromGlobalId, logByGameDate } from '$lib/utils';
-	import type { PageData } from './$houdini';
+	import { page } from '$app/state';
+	import Sticky from '$lib/components/Sticky.svelte';
+	import { dateAdjustedForUtcOffset, logByGameDate } from '$lib/utils';
 	import FaCaretDown from 'svelte-icons/fa/FaCaretDown.svelte';
 	import FaExternalLinkAlt from 'svelte-icons/fa/FaExternalLinkAlt.svelte';
-	import AddALog from './AddALog.svelte';
-	import { page } from '$app/state';
 	import InfiniteLoading, { type InfiniteEvent } from 'svelte-infinite-loading';
-	import Sticky from '$lib/components/Sticky.svelte';
+	import type { PageData } from './$houdini';
+	import AddALog from './AddALog.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -83,8 +83,7 @@
 				{#snippet contentSnippet()}
 					<div>
 						{#each logGrouping.logs as log (log.id)}
-							{@const id = fromGlobalId(log.id).id}
-							{@const detailUrl = `/logs/${id}`}
+							{@const detailUrl = `/logs/${log.id}`}
 							<ul>
 								<!-- <p>{planetSetIn(log)}</p> -->
 								<li class="mb-8">
