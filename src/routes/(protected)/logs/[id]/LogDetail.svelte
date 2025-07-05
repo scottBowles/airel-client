@@ -5,8 +5,6 @@
 	import { fragment, graphql, LockStore, type LogDetailFields } from '$houdini';
 	import { adjustForTimezone } from '$lib/utils';
 	import { prop } from 'ramda';
-	import FaEdit from 'svelte-icons/fa/FaEdit.svelte';
-	import FaExternalLinkAlt from 'svelte-icons/fa/FaExternalLinkAlt.svelte';
 	import FoundInThisLogEntity from './FoundInThisLogEntity.svelte';
 
 	const lockForEditMutation = new LockStore();
@@ -120,9 +118,15 @@
 		<h2 class="card-title">
 			<span>
 				{title}
-				<a href={url} target="_blank" rel="noopener noreferrer" class="ml-2 flex-1">
-					<span class="icon hover:text-accent inline-block"><FaExternalLinkAlt /></span>
-				</a>
+				<a
+					href={url}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="ml-2 flex-1"
+					aria-label="External link to log"
+				>
+					<span class="icon icon-[fa-solid--external-link-alt] hover:text-accent"></span></a
+				>
 			</span>
 		</h2>
 
@@ -136,8 +140,9 @@
 					class="btn btn-ghost btn-sm icon-btn"
 					disabled={!!lockUser}
 					onclick={onEditClick}
+					aria-label="Edit"
 				>
-					<span class="icon"><FaEdit /></span>
+					<span class="icon icon-[fa-solid--edit]"></span>
 				</button>
 			</div>
 		{/if}

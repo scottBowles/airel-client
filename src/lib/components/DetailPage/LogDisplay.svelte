@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import FaExternalLinkAlt from 'svelte-icons/fa/FaExternalLinkAlt.svelte';
-	import FaTimes from 'svelte-icons/fa/FaTimes.svelte';
 
 	interface Props {
 		log: any;
@@ -24,17 +22,21 @@
 			{log.title || log.url}
 		</a>
 
-		<a href={log.url} target="_blank" rel="noopener noreferrer" class="ml-2">
-			<span class="ext-icon hover:text-accent">
-				<FaExternalLinkAlt />
-			</span>
+		<a
+			href={log.url}
+			target="_blank"
+			rel="noopener noreferrer"
+			class="ml-2"
+			aria-label="External link to log"
+		>
+			<span class="ext-icon hover:text-accent icon-[fa-solid--external-link-alt]"> </span>
 		</a>
 	</span>
 
 	{#if $page.data.me?.isStaff}
 		<!-- The button to open modal -->
 		<label for={modalId} class="btn btn-ghost btn-sm modal-button">
-			<div class="icon"><FaTimes /></div>
+			<span class="icon icon-[fa-solid--times]"></span>
 		</label>
 
 		<!-- Put this part before </body> tag -->

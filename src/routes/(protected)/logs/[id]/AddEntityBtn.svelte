@@ -1,5 +1,4 @@
 <script lang="ts">
-	import FaUserPlus from 'svelte-icons/fa/FaUserPlus.svelte';
 	import { pick } from 'ramda';
 	import { ENTITY_TYPE, ENTITY_TYPES, type EntityType } from '$lib/constants';
 	import { capitalize, fromGlobalId, somethingWentWrong } from '$lib/utils';
@@ -136,7 +135,7 @@
 </script>
 
 <label for={ADD_MODAL_ID} class="link hover:accent modal-button">
-	<div class="icon"><FaUserPlus /></div>
+	<div class="icon icon-[fa-solid--user-plus]"></div>
 	{#if verbose}
 		Add Any Entity{/if}
 </label>

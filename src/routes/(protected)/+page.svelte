@@ -1,8 +1,7 @@
 <script lang="ts">
-	import DiGithubBadge from 'svelte-icons/di/DiGithubBadge.svelte';
 </script>
 
-<div class="grid place-items-center py-8 px-4">
+<div class="grid place-items-center px-4 py-8">
 	<article class="prose">
 		<h1>Welcome</h1>
 
@@ -39,7 +38,7 @@
 			The best way to make a suggestion is to start a discussion or create an issue on <a
 				href="https://github.com/scottBowles/airel-client/discussions"
 				rel="external noopener noreferrer"
-				target="_blank">GitHub<span class="gh-icon"><DiGithubBadge /></span></a
+				target="_blank">GitHub<span class="gh-icon icon-[mdi--github] ml-0.5"></span></a
 			> (you'll have to make an account but that's simple enough). There anyone who wants can discuss
 			and track progress made. You can also see and help with some things I have in mind already (mostly
 			under the Issues tab at the moment). Feel free to comment on anything.
@@ -57,8 +56,8 @@
 <style>
 	.gh-icon {
 		display: inline-block;
-		height: 21px;
-		width: 21px;
-		vertical-align: text-bottom;
+		height: 18px;
+		width: 18px;
+		vertical-align: text-top;
 	}
 </style>

@@ -18,8 +18,6 @@
 	import { capitalize, fromGlobalId, somethingWentWrong } from '$lib/utils';
 	import { pick } from 'ramda';
 	import { onMount } from 'svelte';
-	import FaInfoCircle from 'svelte-icons/fa/FaInfoCircle.svelte';
-	import FaUserPlus from 'svelte-icons/fa/FaUserPlus.svelte';
 	import MultiSelect from 'svelte-multiselect';
 
 	const entityAddAliasMutation = new EntityAddAliasStore();
@@ -190,7 +188,7 @@
 
 <label for={MODAL_ID} class="link hover:accent modal-button no-underline">
 	<div class="tooltip" data-tip="Add a new entity for this log or alias an existing.">
-		<div class="icon"><FaUserPlus /></div>
+		<div class="icon icon-[fa-solid--user-plus]"></div>
 		{#if verbose}<span class="underline"> Add or Alias any Entity</span>{/if}
 	</div>
 </label>
@@ -208,7 +206,7 @@
 						class="tooltip tooltip-bottom"
 						data-tip="If you're not sure whether this entity exists, it's always good to check first. If it does, you'll have the option to add an alias. Otherwise, feel free to skip this and just add below."
 					>
-						<span class="icon"><FaInfoCircle /></span>
+						<span class="icon icon-[fa-solid--info-circle]"></span>
 					</div></label
 				>
 				<MultiSelect

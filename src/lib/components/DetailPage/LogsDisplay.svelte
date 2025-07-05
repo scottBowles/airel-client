@@ -1,8 +1,5 @@
 <script lang="ts">
 	import { tick } from 'svelte';
-	import FaCheck from 'svelte-icons/fa/FaCheck.svelte';
-	import FaPlus from 'svelte-icons/fa/FaPlus.svelte';
-	import FaTimes from 'svelte-icons/fa/FaTimes.svelte';
 	import { callOnEsc } from '$lib/actions';
 	import Spacer from '../Spacer.svelte';
 	import LogDisplay from './LogDisplay.svelte';
@@ -62,18 +59,34 @@
 						autofocus
 					/>
 					<div>
-						<button class="btn btn-square btn-ghost btn-sm" onclick={addLog} type="button">
-							<div class="icon"><FaCheck /></div>
+						<button
+							class="btn btn-square btn-ghost btn-sm"
+							onclick={addLog}
+							type="button"
+							aria-label="Add Log"
+						>
+							<span class="icon icon-[fa-solid--check]"></span>
 						</button>
-						<button class="btn btn-square btn-ghost btn-sm" onclick={closeLogInput} type="button">
-							<div class="icon"><FaTimes /></div>
+						<button
+							class="btn btn-square btn-ghost btn-sm"
+							onclick={closeLogInput}
+							type="button"
+							aria-label="Close Log Input"
+						>
+							<span class="icon icon-[fa-solid--times]"></span>
 						</button>
 					</div>
 				</div>
 			{:else}
-				<div class="icon" onclick={openLogInput} onkeypress={openLogInput}>
-					<FaPlus />
-				</div>
+				<span
+					class="icon icon-[fa-solid--plus] cursor-pointer"
+					onclick={openLogInput}
+					onkeypress={openLogInput}
+					tabindex="0"
+					role="button"
+					aria-label="Add Log"
+					title="Add Log"
+				></span>
 			{/if}
 		{/if}
 	</div>

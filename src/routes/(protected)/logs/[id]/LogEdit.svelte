@@ -23,9 +23,6 @@
 	import { parseFormData } from 'parse-nested-form-data';
 	import { uniq } from 'ramda';
 	import { onMount } from 'svelte';
-	import FaRobot from 'svelte-icons/fa/FaRobot.svelte';
-	import FaSave from 'svelte-icons/fa/FaSave.svelte';
-	import FaUndoAlt from 'svelte-icons/fa/FaUndoAlt.svelte';
 	import { idFromEdge } from '../../places/utils';
 	import AddAiSuggestion from './AddAiSuggestion.svelte';
 	import AddEntityOrAliasBtn from './AddEntityOrAliasBtn.svelte';
@@ -236,7 +233,7 @@
 
 				<div class="tooltip" data-tip="Discard changes">
 					<label for={modalId} class="btn btn-ghost btn-sm icon-btn modal-button">
-						<span class="icon"><FaUndoAlt /></span>
+						<span class="icon icon-[fa-solid--undo-alt]"></span>
 					</label>
 				</div>
 				<input type="checkbox" id={modalId} class="modal-toggle" />
@@ -254,8 +251,8 @@
 				</label>
 
 				<div class="tooltip" data-tip="Save">
-					<button type="submit" class="btn btn-ghost btn-sm icon-btn"
-						><span class="icon"><FaSave /></span></button
+					<button type="submit" class="btn btn-ghost btn-sm icon-btn" aria-label="Save" title="Save"
+						><span class="icon icon-[fa-solid--save]"></span></button
 					>
 				</div>
 			</div>
@@ -536,8 +533,10 @@
 				type="button"
 				class="btn btn-ghost btn-sm icon-btn"
 				onclick={() => aiLogSuggestions.fetch({ variables: { id: pk } })}
+				aria-label="Load Ai Suggestions"
+				title="Load Ai Suggestions"
 			>
-				<span class="icon"><FaRobot /></span>
+				<span class="icon icon-[fa-solid--robot]"></span>
 			</button>
 		</div>
 	{/if}
@@ -549,7 +548,7 @@
 		class="btn btn-ghost btn-sm icon-btn"
 	>
 		<div class="tooltip" data-tip="Generate AI Log Summary">
-			<span class="icon"><FaRobot /></span>
+			<span class="icon icon-[fa-solid--robot]"></span>
 		</div>
 	</button>
 </div>
@@ -735,37 +734,5 @@
 
 	.tooltip {
 		text-transform: none;
-	}
-
-	.textarea-grow-wrap {
-		/* easy way to plop the elements on top of each other and have them both sized based on the tallest one's height */
-		display: grid;
-	}
-	.textarea-grow-wrap::after {
-		/* Note the weird space! Needed to preventy jumpy behavior */
-		content: attr(data-replicated-value) ' ';
-
-		/* This is how textarea text behaves */
-		white-space: pre-wrap;
-
-		/* Hidden from view, clicks, and screen readers */
-		visibility: hidden;
-	}
-	.textarea-grow-wrap > textarea {
-		/* You could leave this, but after a user resizes, then it ruins the auto sizing */
-		resize: none;
-
-		/* Firefox shows scrollbar on growth, you can hide like this. */
-		overflow: hidden;
-	}
-	.textarea-grow-wrap > textarea,
-	.textarea-grow-wrap::after {
-		/* Identical styling required!! */
-		border: 1px solid black;
-		padding: 0.5rem;
-		font: inherit;
-
-		/* Place on top of each other */
-		grid-area: 1 / 1 / 2 / 2;
 	}
 </style>

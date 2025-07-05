@@ -1,6 +1,4 @@
 <script lang="ts">
-	import FaUndoAlt from 'svelte-icons/fa/FaUndoAlt.svelte';
-	import FaSave from 'svelte-icons/fa/FaSave.svelte';
 	import CloudinaryUpload from '$lib/components/CloudinaryUpload.svelte';
 	import ImageCarousel from '$lib/components/ImageCarousel.svelte';
 	import QuillEditor from '../QuillEditor.svelte';
@@ -169,7 +167,7 @@
 		<span>Locked by {lockUser?.username ?? 'Unknown'}</span>
 		<label for={modalId} class="btn btn-ghost btn-sm icon-btn modal-button"
 			><div class="tooltip" data-tip="Discard changes">
-				<span class="icon"><FaUndoAlt /></span>
+				<span class="icon icon-[fa-solid--undo-alt]"></span>
 			</div></label
 		>
 
@@ -187,8 +185,10 @@
 			</label>
 		</label>
 
-		<button type="submit" class="btn btn-ghost btn-sm icon-btn"
-			><div class="tooltip" data-tip="Save"><span class="icon"><FaSave /></span></div></button
+		<button type="submit" class="btn btn-ghost btn-sm icon-btn" aria-label="Save" title="Save"
+			><div class="tooltip" data-tip="Save">
+				<span class="icon icon-[fa-solid--save]"></span>
+			</div></button
 		>
 	{/snippet}
 

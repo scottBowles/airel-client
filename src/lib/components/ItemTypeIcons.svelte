@@ -1,27 +1,17 @@
 <svelte:options runes={true} />
 
 <script lang="ts">
-	import GiBroadsword from 'svelte-icons/gi/GiBroadsword.svelte';
-	import GiCheckedShield from 'svelte-icons/gi/GiCheckedShield.svelte';
-	import GiRoundBottomFlask from 'svelte-icons/gi/GiRoundBottomFlask.svelte';
-
 	let { isWeapon = false, isArmor = false, isEquipment = false } = $props();
 </script>
 
 {#if isWeapon}
-	<span class="icon">
-		<GiBroadsword />
-	</span>
+	<span class="icon icon-[game-icons--broadsword]"> </span>
 {/if}
 {#if isArmor}
-	<span class="icon">
-		<GiCheckedShield />
-	</span>
+	<span class="icon icon-[game-icons--checked-shield]"> </span>
 {/if}
 {#if isEquipment}
-	<span class="icon">
-		<GiRoundBottomFlask />
-	</span>
+	<span class="icon icon-[game-icons--round-bottom-flask]"> </span>
 {/if}
 
 <style>

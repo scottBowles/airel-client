@@ -4,8 +4,6 @@
 	import { page } from '$app/state';
 	import Sticky from '$lib/components/Sticky.svelte';
 	import { dateAdjustedForUtcOffset, logByGameDate } from '$lib/utils';
-	import FaCaretDown from 'svelte-icons/fa/FaCaretDown.svelte';
-	import FaExternalLinkAlt from 'svelte-icons/fa/FaExternalLinkAlt.svelte';
 	import InfiniteLoading, { type InfiniteEvent } from 'svelte-infinite-loading';
 	import type { PageData } from './$houdini';
 	import AddALog from './AddALog.svelte';
@@ -102,10 +100,11 @@
 															target="_blank"
 															rel="noopener noreferrer"
 															class="ml-2"
+															aria-label="External link to log"
 														>
-															<span class="icon hover:text-accent inline-block"
-																><FaExternalLinkAlt /></span
-															>
+															<span
+																class="icon hover:text-accent icon-[fa-solid--external-link-alt] inline-block"
+															></span>
 														</a>
 													</span>
 												</h2>
@@ -128,7 +127,7 @@
 											{log.synopsis || '(synopsis tbd)'}
 										</div>
 										<div class="w-full text-center group-focus:hidden">
-											<span class="icon"><FaCaretDown /></span>
+											<span class="icon icon-[fa-solid--caret-down]"></span>
 										</div>
 									</article>
 								</li>
@@ -160,10 +159,5 @@
 		display: inline-block;
 		height: 16px;
 		width: 16px;
-	}
-	.inputContainer {
-		display: flex;
-		align-items: baseline;
-		margin-bottom: 1rem;
 	}
 </style>

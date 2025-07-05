@@ -11,7 +11,6 @@
 	import type { EntityType } from '$lib/constants';
 	import { fromGlobalId, somethingWentWrong } from '$lib/utils';
 	import { onMount } from 'svelte';
-	import FaUsers from 'svelte-icons/fa/FaUsers.svelte';
 	import MultiSelect from 'svelte-multiselect';
 
 	const entityAddAliasMutation = new EntityAddAliasStore();
@@ -88,7 +87,7 @@
 </script>
 
 <label for={ALIAS_MODAL_ID} class="link hover:accent modal-button">
-	<div class="icon"><FaUsers /></div>
+	<div class="icon icon-[fa-solid--users]"></div>
 	{#if verbose}
 		Add Any Alias{/if}
 </label>

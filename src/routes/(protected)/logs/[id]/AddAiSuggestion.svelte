@@ -1,5 +1,4 @@
 <script lang="ts">
-	import MdPlaylistAdd from 'svelte-icons/md/MdPlaylistAdd.svelte';
 	import { somethingWentWrong } from '$lib/utils';
 	import { AddAiLogSuggestionStore, type AddAiLogSuggestion$input } from '$houdini';
 
@@ -35,8 +34,8 @@
 </script>
 
 <div class="tooltip mx-auto" data-tip="Add Ai Suggestion from Json">
-	<label for={MODAL_ID} class="btn btn-ghost btn-sm icon-btn hover:accent modal-button">
-		<div class="icon"><MdPlaylistAdd /></div>
+	<label for={MODAL_ID} class="btn btn-ghost btn-sm icon-btn modal-button">
+		<div class="icon icon-[material-symbols--playlist-add]"></div>
 	</label>
 </div>
 
@@ -66,5 +65,9 @@
 		display: inline-block;
 		height: 16px;
 		width: 16px;
+	}
+
+	.icon-btn:hover {
+		color: #908149;
 	}
 </style>

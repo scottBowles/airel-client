@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { capitalize } from '$lib/utils';
-	import FaPlus from 'svelte-icons/fa/FaPlus.svelte';
 	import Spacer from '$lib/components/Spacer.svelte';
 
 	interface Props {
@@ -20,10 +19,16 @@
 
 	{@render children?.()}
 {:else}
-	<div class="add-block" onclick={handleAdd} onkeypress={handleAdd}>
-		<div class="add-icon-container">
-			<FaPlus />
-		</div>
+	<div
+		class="add-block"
+		onclick={handleAdd}
+		onkeypress={handleAdd}
+		tabindex="0"
+		role="button"
+		aria-label="Add Log"
+		title="Add Log"
+	>
+		<span class="add-icon-container icon-[fa-solid--plus]"></span>
 		<div class="add-block-text">Add {capitalize(property)} Stats</div>
 	</div>
 {/if}

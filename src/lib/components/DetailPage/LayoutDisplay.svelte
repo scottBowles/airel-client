@@ -15,7 +15,6 @@
 	import { somethingWentWrong } from '$lib/utils';
 	import { prop } from 'ramda';
 	import type { Snippet } from 'svelte';
-	import FaEdit from 'svelte-icons/fa/FaEdit.svelte';
 	import Spacer from '../Spacer.svelte';
 	import LayoutBase from './LayoutBase.svelte';
 	import LogsDisplay from './LogsDisplay.svelte';
@@ -184,14 +183,19 @@
 			{#if lockUser}
 				Locked by {lockUser.username}
 				<div class="tooltip ml-auto" data-tip="Edit">
-					<button type="button" class="btn btn-ghost btn-sm icon-btn" disabled>
-						<span class="icon"><FaEdit /></span>
+					<button type="button" class="btn btn-ghost btn-sm icon-btn" disabled aria-label="Edit">
+						<span class="icon icon-[fa-solid--edit]"></span>
 					</button>
 				</div>
 			{:else}
 				<div class="tooltip ml-auto" data-tip="Edit">
-					<button type="button" class="btn btn-ghost btn-sm icon-btn" onclick={onEditClick}>
-						<span class="icon"><FaEdit /></span>
+					<button
+						type="button"
+						class="btn btn-ghost btn-sm icon-btn"
+						onclick={onEditClick}
+						aria-label="Edit"
+					>
+						<span class="icon icon-[fa-solid--edit]"></span>
 					</button>
 				</div>
 			{/if}
