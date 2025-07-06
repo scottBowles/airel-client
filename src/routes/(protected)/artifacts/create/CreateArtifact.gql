@@ -4,13 +4,13 @@ mutation CreateArtifact(
 	$markdownNotes: String
 	$imageIds: [String!]
 	$logs: [ID!]
-	$items: ManyToManyInput
-	$relatedArtifacts: ManyToManyInput
-	$relatedAssociations: ManyToManyInput
-	$relatedCharacters: ManyToManyInput
-	$relatedItems: ManyToManyInput
-	$relatedPlaces: ManyToManyInput
-	$relatedRaces: ManyToManyInput
+	$items: NodeInputListInput
+	$relatedArtifacts: NodeInputListInput
+	$relatedAssociations: NodeInputListInput
+	$relatedCharacters: NodeInputListInput
+	$relatedItems: NodeInputListInput
+	$relatedPlaces: NodeInputListInput
+	$relatedRaces: NodeInputListInput
 ) {
 	createArtifact(
 		input: {

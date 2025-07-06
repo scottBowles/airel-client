@@ -4,13 +4,13 @@ mutation CreateAssociation(
 	$markdownNotes: String
 	$imageIds: [String!]
 	$logs: [ID!]
-	$characters: ManyToManyInput
-	$relatedArtifacts: ManyToManyInput
-	$relatedAssociations: ManyToManyInput
-	$relatedCharacters: ManyToManyInput
-	$relatedItems: ManyToManyInput
-	$relatedPlaces: ManyToManyInput
-	$relatedRaces: ManyToManyInput
+	$characters: NodeInputListInput
+	$relatedArtifacts: NodeInputListInput
+	$relatedAssociations: NodeInputListInput
+	$relatedCharacters: NodeInputListInput
+	$relatedItems: NodeInputListInput
+	$relatedPlaces: NodeInputListInput
+	$relatedRaces: NodeInputListInput
 ) {
 	createAssociation(
 		input: {

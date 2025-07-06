@@ -3,12 +3,12 @@ mutation UpdateRace(
 	$name: String
 	$description: String
 	$markdownNotes: String
-	$relatedArtifacts: ManyToManyInput
-	$relatedAssociations: ManyToManyInput
-	$relatedCharacters: ManyToManyInput
-	$relatedItems: ManyToManyInput
-	$relatedPlaces: ManyToManyInput
-	$relatedRaces: ManyToManyInput
+	$relatedArtifacts: NodeInputListInput
+	$relatedAssociations: NodeInputListInput
+	$relatedCharacters: NodeInputListInput
+	$relatedItems: NodeInputListInput
+	$relatedPlaces: NodeInputListInput
+	$relatedRaces: NodeInputListInput
 ) {
 	updateRace(
 		input: {

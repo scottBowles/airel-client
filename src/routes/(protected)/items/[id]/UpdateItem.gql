@@ -6,12 +6,12 @@ mutation UpdateItem(
 	$armor: ArmorTraitsInput
 	$weapon: WeaponTraitsInput
 	$equipment: EquipmentTraitsInput
-	$relatedArtifacts: ManyToManyInput
-	$relatedAssociations: ManyToManyInput
-	$relatedCharacters: ManyToManyInput
-	$relatedItems: ManyToManyInput
-	$relatedPlaces: ManyToManyInput
-	$relatedRaces: ManyToManyInput
+	$relatedArtifacts: NodeInputListInput
+	$relatedAssociations: NodeInputListInput
+	$relatedCharacters: NodeInputListInput
+	$relatedItems: NodeInputListInput
+	$relatedPlaces: NodeInputListInput
+	$relatedRaces: NodeInputListInput
 ) {
 	updateItem(
 		input: {

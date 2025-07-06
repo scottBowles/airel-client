@@ -4,13 +4,13 @@ mutation UpdateLog(
 	$gameDate: DateTime
 	$brief: String
 	$synopsis: String
-	$placesSetIn: ManyToManyInput
-	$artifacts: ManyToManyInput
-	$associations: ManyToManyInput
-	$characters: ManyToManyInput
-	$items: ManyToManyInput
-	$places: ManyToManyInput
-	$races: ManyToManyInput
+	$placesSetIn: NodeInputListInput
+	$artifacts: NodeInputListInput
+	$associations: NodeInputListInput
+	$characters: NodeInputListInput
+	$items: NodeInputListInput
+	$places: NodeInputListInput
+	$races: NodeInputListInput
 ) {
 	updateGamelog(
 		input: {

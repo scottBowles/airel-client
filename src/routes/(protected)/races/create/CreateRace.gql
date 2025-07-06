@@ -4,12 +4,12 @@ mutation CreateRace(
 	$markdownNotes: String
 	$imageIds: [String!]
 	$logs: [ID!]
-	$relatedArtifacts: ManyToManyInput
-	$relatedAssociations: ManyToManyInput
-	$relatedCharacters: ManyToManyInput
-	$relatedItems: ManyToManyInput
-	$relatedPlaces: ManyToManyInput
-	$relatedRaces: ManyToManyInput
+	$relatedArtifacts: NodeInputListInput
+	$relatedAssociations: NodeInputListInput
+	$relatedCharacters: NodeInputListInput
+	$relatedItems: NodeInputListInput
+	$relatedPlaces: NodeInputListInput
+	$relatedRaces: NodeInputListInput
 ) {
 	createRace(
 		input: {

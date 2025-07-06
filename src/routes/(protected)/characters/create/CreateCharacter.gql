@@ -4,14 +4,14 @@ mutation CreateCharacter(
 	$markdownNotes: String
 	$imageIds: [String!]
 	$logs: [ID!]
-	$race: OneToManyInput
-	$associations: ManyToManyInput
-	$relatedArtifacts: ManyToManyInput
-	$relatedAssociations: ManyToManyInput
-	$relatedCharacters: ManyToManyInput
-	$relatedItems: ManyToManyInput
-	$relatedPlaces: ManyToManyInput
-	$relatedRaces: ManyToManyInput
+	$race: NodeInput
+	$associations: NodeInputListInput
+	$relatedArtifacts: NodeInputListInput
+	$relatedAssociations: NodeInputListInput
+	$relatedCharacters: NodeInputListInput
+	$relatedItems: NodeInputListInput
+	$relatedPlaces: NodeInputListInput
+	$relatedRaces: NodeInputListInput
 ) {
 	createCharacter(
 		input: {

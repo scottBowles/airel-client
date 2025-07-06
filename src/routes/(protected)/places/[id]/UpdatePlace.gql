@@ -3,15 +3,15 @@ mutation UpdatePlace(
 	$name: String
 	$description: String
 	$markdownNotes: String
-	$parent: OneToManyInput
-	$children: ManyToOneInput
+	$parent: NodeInput
+	$children: NodeInputListInput
 	$placeType: PlaceType
-	$relatedArtifacts: ManyToManyInput
-	$relatedAssociations: ManyToManyInput
-	$relatedCharacters: ManyToManyInput
-	$relatedItems: ManyToManyInput
-	$relatedPlaces: ManyToManyInput
-	$relatedRaces: ManyToManyInput
+	$relatedArtifacts: NodeInputListInput
+	$relatedAssociations: NodeInputListInput
+	$relatedCharacters: NodeInputListInput
+	$relatedItems: NodeInputListInput
+	$relatedPlaces: NodeInputListInput
+	$relatedRaces: NodeInputListInput
 ) {
 	updatePlace(
 		input: {
