@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	interface Props {
 		log: any;
@@ -33,7 +33,7 @@
 		</a>
 	</span>
 
-	{#if $page.data.me?.isStaff}
+	{#if page.data.me?.isStaff}
 		<!-- The button to open modal -->
 		<label for={modalId} class="btn btn-ghost btn-sm modal-button">
 			<span class="icon icon-[fa-solid--times]"></span>

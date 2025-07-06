@@ -3,7 +3,7 @@
 	import { callOnEsc } from '$lib/actions';
 	import Spacer from '../Spacer.svelte';
 	import LogDisplay from './LogDisplay.svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	interface Props {
 		logs: any;
@@ -45,7 +45,7 @@
 			<LogDisplay {log} removeLog={onLogRemove} />
 		{/each}
 		<Spacer sm />
-		{#if $page.data.me?.isStaff}
+		{#if page.data.me?.isStaff}
 			{#if logInputOpen}
 				<div class="flex items-center justify-between gap-2" use:callOnEsc={closeLogInput}>
 					<!-- svelte-ignore a11y_autofocus -->
