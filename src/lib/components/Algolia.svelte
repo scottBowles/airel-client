@@ -50,7 +50,7 @@
 						return indexName;
 					},
 					item({ item, components, html }) {
-						return html`<a href=${getUrlFromId(item.objectID)}>
+						return html`<a href=${getUrlFromId(item.global_id)}>
 							<div class="aa-ItemWrapper">
 								<div class="aa-ItemContent">
 									<img
@@ -58,7 +58,7 @@
 										alt="${item.name}"
 										width="67"
 										height="67"
-										class="border border-grey-700 rounded-sm"
+										class="border-grey-700 rounded-sm border"
 									/>
 									<div class="aa-ItemContentBody">
 										<div class="aa-ItemContentTitle">
@@ -79,7 +79,7 @@
 						</a>`;
 					}
 				},
-				getItemUrl: ({ item }) => getUrlFromId(item.objectID)
+				getItemUrl: ({ item }) => getUrlFromId(item.global_id)
 			};
 		}
 
