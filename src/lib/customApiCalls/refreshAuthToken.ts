@@ -5,8 +5,8 @@ const refreshAuthToken = async (refresh_token: string) => {
 	const refreshResponse = await api({
 		payload: {
 			query: `
-			mutation RefreshToken($refresh_token: String!) {
-				refreshToken(input: { refreshToken: $refresh_token }) {
+			mutation RefreshToken($refresh_token: String!, $revoke_refresh_token: Boolean!) {
+				refreshToken(input: { refreshToken: $refresh_token, revokeRefreshToken: $revoke_refresh_token }) {
 					success
 					errors
 					token {
@@ -24,8 +24,8 @@ const refreshAuthToken = async (refresh_token: string) => {
 					}
 				}
 			}
-		`,
-			variables: { refresh_token }
+			`,
+			variables: { refresh_token, revoke_refresh_token: true }
 		}
 	});
 	const json = (await refreshResponse.json()) as {
