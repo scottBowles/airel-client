@@ -23,10 +23,10 @@ export async function POST(event) {
 	const csrfError = !csrf_token_cookie
 		? 'No CSRF token in cookie.'
 		: !csrf_token_body
-		? 'No CSRF token in body.'
-		: csrf_token_cookie !== csrf_token_body
-		? 'Failed to verify double submit cookie.'
-		: null;
+			? 'No CSRF token in body.'
+			: csrf_token_cookie !== csrf_token_body
+				? 'Failed to verify double submit cookie.'
+				: null;
 
 	if (csrfError) {
 		return new Response(csrfError, {

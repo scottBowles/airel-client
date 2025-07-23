@@ -1,15 +1,14 @@
+import { PUBLIC_GRAPHQL_URL, PUBLIC_SVELTEKIT_APP_ORIGIN } from '$env/static/public';
 import { HoudiniClient, type ClientPlugin } from '$houdini';
-import { PUBLIC_GRAPHQL_URL } from '$env/static/public';
 import { jwtDecode } from 'jwt-decode';
-import refreshAuthToken from '$lib/customApiCalls/refreshAuthToken';
 
 export const authRefreshPlugin: ClientPlugin = () => {
 	return {
 		async network(ctx, { next }) {
 			const { token, refresh_token } = ctx.session ?? {};
 			if (ctx.session && token && refresh_token) {
-				const decodedJon = jwtDecode(token) as { payload: string };
-				const decoded = JSON.parse(decodedJon.payload) as {
+				const decodedJwt = jwtDecode(token) as { payload: string };
+				const decoded = JSON.parse(decodedJwt.payload) as {
 					exp: string;
 					origIat: string;
 					username: string;
@@ -21,14 +20,26 @@ export const authRefreshPlugin: ClientPlugin = () => {
 				const shouldRefresh = exp < now;
 
 				if (shouldRefresh) {
-					const res = await refreshAuthToken(refresh_token);
-					if (res.success) {
-						ctx.session.token = res.token.token;
-						ctx.session.refresh_token = res.refreshToken.token;
-						ctx.session.user = res.token.payload.username;
+					const formData = new FormData();
+					formData.append('refresh_token', refresh_token);
+					const res = await globalThis.fetch(
+						`${PUBLIC_SVELTEKIT_APP_ORIGIN}/endpoints/refresh_token`,
+						{
+							method: 'POST',
+							credentials: 'include',
+							body: formData
+						}
+					);
+
+					if (res?.ok) {
+						const body = await res.json();
+						const { token, refresh_token, user } = body;
+						ctx.session.token = token;
+						ctx.session.refresh_token = refresh_token;
+						ctx.session.user = user;
 						if (!ctx.fetchParams) ctx.fetchParams = {};
 						ctx.fetchParams.headers = {
-							Authorization: `JWT ${res.token.token}`
+							Authorization: `JWT ${token}`
 						};
 					} else {
 						ctx.session.user = undefined;
