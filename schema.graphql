@@ -785,6 +785,85 @@ input CharacterReleaseLockInput {
 
 union CharacterReleaseLockPayload = Character | OperationInfo
 
+"""Individual messages within a chat session"""
+type ChatMessageType implements Node {
+  """List of content types that were searched"""
+  contentTypesSearched: JSON!
+  createdAt: DateTime!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
+
+  """User's question/message"""
+  message: String!
+
+  """RAG bot's response"""
+  response: String!
+  session: ChatSessionType!
+
+  """Minimum similarity score used for this query"""
+  similarityThreshold: Float!
+
+  """OpenAI API tokens consumed"""
+  tokensUsed: Int!
+}
+
+"""A connection to a list of items."""
+type ChatMessageTypeConnection {
+  """Contains the nodes in this connection"""
+  edges: [ChatMessageTypeEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes."""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type ChatMessageTypeEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: ChatMessageType!
+}
+
+"""Represents a chat conversation with the RAG bot"""
+type ChatSessionType implements Node {
+  createdAt: DateTime!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
+  messages: [ChatMessageType!]!
+
+  """Auto-generated from first message"""
+  title: String!
+  updatedAt: DateTime!
+  user: User!
+}
+
+"""A connection to a list of items."""
+type ChatSessionTypeConnection {
+  """Contains the nodes in this connection"""
+  edges: [ChatSessionTypeEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes."""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type ChatSessionTypeEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: ChatSessionType!
+}
+
 type CombinedGameLogAiSummary {
   associations: [String!]!
   briefs: [String!]!
@@ -800,6 +879,61 @@ type CombinedGameLogAiSummary {
   races: [String!]!
   synopses: [String!]!
   titles: [String!]!
+}
+
+"""
+Stores text chunks from various content sources with their embeddings for semantic search
+"""
+type ContentChunkType implements Node {
+  """Order of this chunk within the source content (0 for single chunks)"""
+  chunkIndex: Int!
+
+  """The actual text content of this chunk"""
+  chunkText: String!
+
+  """Type of content this chunk represents"""
+  contentType: String!
+  createdAt: DateTime!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
+
+  """Content-specific metadata: titles, URLs, relationships, dates, etc."""
+  metadata: JSON!
+
+  """
+  ID of the source object (can be foreign key ID, URL, or custom identifier)
+  """
+  objectId: String!
+  updatedAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type ContentChunkTypeConnection {
+  """Contains the nodes in this connection"""
+  edges: [ContentChunkTypeEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes."""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type ContentChunkTypeEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: ContentChunkType!
+}
+
+type ContentStatsType {
+  chunkCount: Int!
+  contentType: String!
+  objectCount: Int!
+  processedCount: Int!
 }
 
 union CreateAbilityScoreIncreasePayload = AbilityScoreIncrease | OperationInfo
@@ -1261,7 +1395,7 @@ input FeatureInputPartial {
 }
 
 """
-GameLog(id, lock_user, lock_time, url, title, google_id, google_created_time, game_date, brief, synopsis, summary, audio_session_notes, last_game_log, generated_log_text)
+GameLog(id, lock_user, lock_time, url, title, google_id, google_created_time, game_date, brief, synopsis, summary, audio_session_notes, last_game_log, generated_log_text, session_number)
 """
 type GameLog implements Lockable & Node {
   aiSuggestions: CombinedGameLogAiSummary
@@ -1411,7 +1545,7 @@ type GameLogEdge {
 }
 
 """
-GameLog(id, lock_user, lock_time, url, title, google_id, google_created_time, game_date, brief, synopsis, summary, audio_session_notes, last_game_log, generated_log_text)
+GameLog(id, lock_user, lock_time, url, title, google_id, google_created_time, game_date, brief, synopsis, summary, audio_session_notes, last_game_log, generated_log_text, session_number)
 """
 input GameLogInputPartial {
   artifacts: NodeInputListInput
@@ -1446,7 +1580,7 @@ input GamelogReleaseLockInput {
 union GamelogReleaseLockPayload = GameLog | OperationInfo
 
 """
-GameLog(id, lock_user, lock_time, url, title, google_id, google_created_time, game_date, brief, synopsis, summary, audio_session_notes, last_game_log, generated_log_text)
+GameLog(id, lock_user, lock_time, url, title, google_id, google_created_time, game_date, brief, synopsis, summary, audio_session_notes, last_game_log, generated_log_text, session_number)
 """
 input GetOrCreateGameLogInput {
   lock: Boolean! = false
@@ -1678,6 +1812,11 @@ input ItemReleaseLockInput {
 
 union ItemReleaseLockPayload = Item | OperationInfo
 
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](https://ecma-international.org/wp-content/uploads/ECMA-404_2nd_edition_december_2017.pdf).
+"""
+scalar JSON
+
 """Language(id, name, description, script)"""
 type Language implements Node {
   description: String!
@@ -1773,6 +1912,7 @@ type Mutation {
     """Input data for `characterReleaseLock` mutation"""
     input: CharacterReleaseLockInput!
   ): CharacterReleaseLockPayload!
+  cleanupOrphanedChunks: ProcessContentPayload!
   createAbilityScoreIncrease(input: AbilityScoreIncreaseInput!): CreateAbilityScoreIncreasePayload!
   createArtifact(input: ArtifactInput!): CreateArtifactPayload!
   createAssociation(input: AssociationInput!): CreateAssociationPayload!
@@ -1839,6 +1979,8 @@ type Mutation {
     """Input data for `placeReleaseLock` mutation"""
     input: PlaceReleaseLockInput!
   ): PlaceReleaseLockPayload!
+  processAllContent(input: ProcessAllContentInput!): ProcessAllContentPayload!
+  processContent(input: ProcessContentInput!): ProcessContentPayload!
   raceAddImage(
     """Input data for `raceAddImage` mutation"""
     input: RaceAddImageInput!
@@ -1873,6 +2015,8 @@ type Mutation {
       
   """
   revokeToken(input: RevokeTokenInput!): RevokeRefreshTokenType!
+  sendChatMessage(input: SendChatMessageInput!): SendChatMessagePayload!
+  startChatSession(input: StartChatSessionInput!): ChatSessionType!
   unlock(input: NodeInput!): Lockable!
   updateAbilityScoreIncrease(input: AbilityScoreIncreaseInputPartial!): UpdateAbilityScoreIncreasePayload!
   updateArtifact(input: ArtifactInputPartial!): UpdateArtifactPayload!
@@ -2223,6 +2367,33 @@ enum PlaceType {
   TOWN
 }
 
+input ProcessAllContentInput {
+  contentTypes: [String!] = null
+  forceReprocess: Boolean = false
+  limit: Int = null
+}
+
+type ProcessAllContentPayload {
+  contentTypes: [String!]!
+  message: String!
+  success: Boolean!
+  taskId: String
+  totalTasks: Int
+}
+
+input ProcessContentInput {
+  contentType: String!
+  forceReprocess: Boolean = false
+  objectId: String!
+}
+
+type ProcessContentPayload {
+  chunksCreated: Int
+  message: String!
+  success: Boolean!
+  taskId: String
+}
+
 """Proficiency(id, name, proficiency_type, description)"""
 type Proficiency implements Node {
   characters(
@@ -2521,6 +2692,7 @@ type Query {
     last: Int = null
     nameStartswith: String!
   ): AssociationConnection!
+  availableContentTypes: [String!]!
   characters(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -2534,7 +2706,47 @@ type Query {
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
   ): CharacterConnection!
+  chatMessages(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ChatMessageTypeConnection!
+  chatSessions(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ChatSessionTypeConnection!
   consolidatedAiLogSuggestions(id: ID!): CombinedGameLogAiSummary!
+  contentChunks(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): ContentChunkTypeConnection!
+  contentStats: [ContentStatsType!]!
   exports(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -2635,6 +2847,19 @@ type Query {
 
   """Returns the current user if he is not anonymous."""
   publicUser: UserType
+  queryCache(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): QueryCacheTypeConnection!
   races(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -2661,6 +2886,7 @@ type Query {
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
   ): ScriptConnection!
+  searchContent(contentTypes: [String!] = null, limit: Int = 10, query: String!, similarityThreshold: Float = null): [ContentChunkType!]!
   skills(
     """Returns the items in the list that come after the specified cursor."""
     after: String = null
@@ -2700,6 +2926,49 @@ type Query {
     """Returns the items in the list that come after the specified cursor."""
     last: Int = null
   ): UserConnection!
+}
+
+"""Cache expensive RAG queries to reduce API costs"""
+type QueryCacheType implements Node {
+  createdAt: DateTime!
+
+  """When this cache entry expires"""
+  expiresAt: DateTime!
+
+  """How many times this cache was used"""
+  hitCount: Int!
+
+  """The Globally Unique ID of this object"""
+  id: ID!
+  queryHash: String!
+
+  """Original query for debugging"""
+  queryText: String!
+
+  """Cached response, sources, etc."""
+  responseData: JSON!
+  tokensSaved: Int!
+}
+
+"""A connection to a list of items."""
+type QueryCacheTypeConnection {
+  """Contains the nodes in this connection"""
+  edges: [QueryCacheTypeEdge!]!
+
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Total quantity of existing nodes."""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type QueryCacheTypeEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: QueryCacheType!
 }
 
 """
@@ -3013,6 +3282,18 @@ input ScriptInputPartial {
   name: String
 }
 
+input SendChatMessageInput {
+  contentTypes: [String!] = null
+  message: String!
+  sessionId: ID!
+  similarityThreshold: Float = null
+}
+
+type SendChatMessagePayload {
+  message: ChatMessageType!
+  session: ChatSessionType!
+}
+
 """Skill(id, name, description, related_ability, custom)"""
 type Skill implements Node {
   custom: Boolean!
@@ -3060,6 +3341,10 @@ input SkillInputPartial {
   id: ID!
   name: String
   relatedAbility: String
+}
+
+input StartChatSessionInput {
+  title: String = null
 }
 
 """
