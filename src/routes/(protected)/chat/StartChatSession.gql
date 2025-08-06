@@ -1,0 +1,14 @@
+mutation StartChatSession($input: StartChatSessionInput!) {
+	startChatSession(input: $input) {
+		id
+		title
+		createdAt
+		updatedAt
+		messages {
+			id
+			message
+			response
+			createdAt
+		}
+	}
+}

@@ -9,6 +9,7 @@
 	import '../app.css';
 	import { browser } from '$app/environment';
 	import { ThemeState } from '$lib/stores';
+	import { page } from '$app/state';
 
 	interface Props {
 		children?: Snippet;
@@ -25,10 +26,16 @@
 	setContext('theme', theme);
 	setContext('showAlgoliaSearch', showAlgoliaSearch);
 
+	let title = $derived(page.url.pathname === '/chat' ? 'Kozmo-Daryon' : 'Kontularien');
+
 	// onMount(() => {
 	// 	themeChange(false);
 	// });
 </script>
+
+<svelte:head>
+	<title>{title}</title>
+</svelte:head>
 
 {#if navigating.to}
 	<PreloadingIndicator />
