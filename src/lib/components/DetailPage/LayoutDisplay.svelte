@@ -18,7 +18,7 @@
 	import Spacer from '../Spacer.svelte';
 	import LayoutBase from './LayoutBase.svelte';
 	import LogsDisplay from './LogsDisplay.svelte';
-	import DOMPurify from 'dompurify';
+	import DOMPurify from 'isomorphic-dompurify';
 
 	const lockForEditMutation = new LockStore();
 	const addLogMutation = new AddEntityLogStore();
