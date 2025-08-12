@@ -2,7 +2,7 @@
 	import { browser } from '$app/environment';
 	import type { QuillOptions } from 'quill';
 	import { onDestroy, onMount } from 'svelte';
-	import DOMPurify from 'dompurify';
+	import DOMPurify from 'isomorphic-dompurify';
 
 	interface Props {
 		options?: QuillOptions;

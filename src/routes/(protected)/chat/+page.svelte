@@ -4,7 +4,7 @@
 	import { SendChatMessageStore, StartChatSessionStore, type ChatSessions$result } from '$houdini';
 	import { onMount, tick } from 'svelte';
 	import type { PageData } from './$houdini';
-	import DOMPurify from 'dompurify';
+	import DOMPurify from 'isomorphic-dompurify';
 
 	const sendChatMessage = new SendChatMessageStore();
 	const startChatSession = new StartChatSessionStore();
