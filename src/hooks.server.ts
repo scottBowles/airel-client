@@ -27,10 +27,9 @@ const populateUserToLocals = (async ({ event, resolve }) => {
 		const decoded = JSON.parse(decodedJson.payload) as JwtPayload;
 		event.locals.user = decoded.username;
 
-		const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
 		const buffer = 15 * 1000;
 		const now = new Date().valueOf();
-		const exp = new Date(decoded.exp).valueOf() - timezoneOffset - buffer;
+		const exp = new Date(decoded.exp).valueOf() - buffer;
 		const shouldRefresh = exp < now;
 
 		if (shouldRefresh) {

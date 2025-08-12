@@ -13,10 +13,9 @@ export const authRefreshPlugin: ClientPlugin = () => {
 					origIat: string;
 					username: string;
 				};
-				const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
 				const buffer = 15 * 1000;
 				const now = new Date().valueOf();
-				const exp = new Date(decoded.exp).valueOf() - timezoneOffset - buffer;
+				const exp = new Date(decoded.exp).valueOf() - buffer;
 				const shouldRefresh = exp < now;
 
 				if (shouldRefresh) {
