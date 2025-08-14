@@ -18,6 +18,7 @@
 	import Spacer from '../Spacer.svelte';
 	import LayoutBase from './LayoutBase.svelte';
 	import LogsDisplay from './LogsDisplay.svelte';
+	import DOMPurify from 'isomorphic-dompurify';
 
 	const lockForEditMutation = new LockStore();
 	const addLogMutation = new AddEntityLogStore();
@@ -167,6 +168,12 @@
 		if (res.errors) somethingWentWrong(res.errors[0].message);
 	};
 
+	// Sanitize assistant response before rendering
+	function sanitizeResponse(response: string): string {
+		// Replace newlines with <br> before sanitizing
+		return DOMPurify.sanitize(response.replace(/\n/g, '<br>'));
+	}
+
 	const propertiesSnippet_render = $derived(propertiesSnippet);
 	const relatedSnippet_render = $derived(relatedSnippet);
 </script>
@@ -252,7 +259,7 @@
 	<!-- MARKDOWN NOTES -->
 	{#snippet markdownNotesSnippet()}
 		<div class="prose inline">
-			{@html markdownNotes ?? ''}
+			{@html sanitizeResponse(markdownNotes ?? '')}
 		</div>
 	{/snippet}
 </LayoutBase>

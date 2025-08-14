@@ -1,0 +1,22 @@
+mutation SendChatMessage($input: SendChatMessageInput!) {
+	sendChatMessage(input: $input) {
+		message {
+			id
+			message
+			response
+			createdAt
+		}
+		session {
+			id
+			title
+			createdAt
+			updatedAt
+			messages {
+				id
+				message
+				response
+				createdAt
+			}
+		}
+	}
+}

@@ -2,6 +2,7 @@
 	import { browser } from '$app/environment';
 	import type { QuillOptions } from 'quill';
 	import { onDestroy, onMount } from 'svelte';
+	import DOMPurify from 'isomorphic-dompurify';
 
 	interface Props {
 		options?: QuillOptions;
@@ -60,10 +61,16 @@
 			}
 		}
 	});
+
+	// Sanitize assistant response before rendering
+	function sanitizeResponse(response: string): string {
+		// Replace newlines with <br> before sanitizing
+		return DOMPurify.sanitize(response.replace(/\n/g, '<br>'));
+	}
 </script>
 
 <div class="editor" bind:this={node}>
-	{@html init}
+	{@html sanitizeResponse(init)}
 </div>
 <textarea name="markdownNotes" bind:value={html} hidden></textarea>
 

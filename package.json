@@ -43,6 +43,7 @@
         "graphql-relay": "^0.10.2",
         "houdini": "^1.5.5",
         "houdini-svelte": "^2.1.15",
+        "isomorphic-dompurify": "^2.26.0",
         "jwt-decode": "^4.0.0",
         "parse-nested-form-data": "^1.0.0",
         "prettier": "^3.4.2",
