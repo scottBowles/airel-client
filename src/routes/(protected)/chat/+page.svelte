@@ -2,9 +2,9 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import { SendChatMessageStore, StartChatSessionStore, type ChatSessions$result } from '$houdini';
+	import DomPurified from '$lib/components/DOMPurified.svelte';
 	import { onMount, tick } from 'svelte';
 	import type { PageData } from './$houdini';
-	import DOMPurify from 'isomorphic-dompurify';
 
 	const sendChatMessage = new SendChatMessageStore();
 	const startChatSession = new StartChatSessionStore();
@@ -38,12 +38,6 @@
 			url.searchParams.delete('session');
 		}
 		goto(url.toString(), { replaceState: true, noScroll: true });
-	}
-
-	// Sanitize assistant response before rendering
-	function sanitizeResponse(response: string): string {
-		// Replace newlines with <br> before sanitizing
-		return DOMPurify.sanitize(response.replace(/\n/g, '<br>'));
 	}
 
 	// Initialize with data from +page.ts
@@ -266,7 +260,7 @@
 								<div class="chat chat-start">
 									<div class="chat-bubble">
 										<div class="prose prose-sm max-w-none">
-											{@html sanitizeResponse(message.response)}
+											<DomPurified html={message.response} />
 										</div>
 									</div>
 								</div>

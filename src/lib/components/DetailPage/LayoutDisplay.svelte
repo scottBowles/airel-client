@@ -15,10 +15,10 @@
 	import { somethingWentWrong } from '$lib/utils';
 	import { prop } from 'ramda';
 	import type { Snippet } from 'svelte';
+	import DomPurified from '../DOMPurified.svelte';
 	import Spacer from '../Spacer.svelte';
 	import LayoutBase from './LayoutBase.svelte';
 	import LogsDisplay from './LogsDisplay.svelte';
-	import DOMPurify from 'isomorphic-dompurify';
 
 	const lockForEditMutation = new LockStore();
 	const addLogMutation = new AddEntityLogStore();
@@ -168,12 +168,6 @@
 		if (res.errors) somethingWentWrong(res.errors[0].message);
 	};
 
-	// Sanitize assistant response before rendering
-	function sanitizeResponse(response: string): string {
-		// Replace newlines with <br> before sanitizing
-		return DOMPurify.sanitize(response.replace(/\n/g, '<br>'));
-	}
-
 	const propertiesSnippet_render = $derived(propertiesSnippet);
 	const relatedSnippet_render = $derived(relatedSnippet);
 </script>
@@ -259,7 +253,7 @@
 	<!-- MARKDOWN NOTES -->
 	{#snippet markdownNotesSnippet()}
 		<div class="prose inline">
-			{@html sanitizeResponse(markdownNotes ?? '')}
+			<DomPurified html={markdownNotes ?? ''} />
 		</div>
 	{/snippet}
 </LayoutBase>

@@ -4,11 +4,5 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-	build: {
-		rollupOptions: {
-			// Needed to make dompurify work in SSR. See: https://github.com/kkomelin/isomorphic-dompurify/issues/163.
-			external: ['isomorphic-dompurify']
-		}
-	},
 	plugins: [houdini(), tailwindcss(), sveltekit()]
 });
