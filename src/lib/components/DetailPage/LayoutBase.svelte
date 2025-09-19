@@ -108,7 +108,7 @@
 	}
 	:global(.description-text) {
 		font-style: italic;
-		font-family: var(--font-family-content);
+		font-family: var(--font-content);
 	}
 	:global(.detail-layout-input) {
 		width: var(--detail-layout-input-width);
