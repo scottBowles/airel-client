@@ -115,7 +115,7 @@
 
 <article class="container mx-auto mt-8 mb-32 px-8">
 	<div class="mb-2 flex justify-between gap-4">
-		<h2 class="card-title">
+		<h2 class="card-title font-heading">
 			<span>
 				{title}
 				<a
@@ -152,15 +152,15 @@
 
 	<div class="flex flex-col gap-16 sm:flex-row">
 		<div class="flex flex-2 flex-col gap-2">
-			<h2 class="my-4 text-xl font-bold">Details</h2>
+			<h2 class="font-heading my-4 text-xl font-bold">Details</h2>
 
 			<h6 class="whitespace-nowrap">
 				{dateDisplay || exampleDate}
 			</h6>
-			<p class="mt-8 italic">{brief || ''}</p>
+			<p class="font-content mt-8 italic">{brief || ''}</p>
 
 			<div class="mt-8">
-				<h3 class="mb-2 font-bold">Set in</h3>
+				<h3 class="font-heading mb-2 font-bold">Set in</h3>
 				<div class="flex flex-wrap gap-2">
 					{#each placesSetIn as place (place.id)}
 						<a
@@ -171,13 +171,13 @@
 					{/each}
 				</div>
 			</div>
-			<div class="mt-8">
+			<div class="font-content mt-8">
 				{synopsis || ''}
 			</div>
 		</div>
 
 		<div class="flex flex-1 flex-col items-center">
-			<h2 class="my-4 text-xl font-bold">Found in this Log</h2>
+			<h2 class="font-heading my-4 text-xl font-bold">Found in this Log</h2>
 
 			<div class="flex w-full flex-col gap-2">
 				<FoundInThisLogEntity entities={artifacts} name="artifacts" />
