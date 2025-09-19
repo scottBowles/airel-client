@@ -125,7 +125,7 @@
 	<!-- RELATED -->
 	{#snippet relatedSnippet()}
 		<div>
-			<h2 class="text-2xl font-bold">Related</h2>
+			<h2 class="font-heading text-2xl font-bold">Related</h2>
 			<RelatedArtifactMultiSelect
 				id="related-artifacts"
 				inputGroupName="relatedArtifacts"

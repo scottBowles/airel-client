@@ -60,6 +60,7 @@
 	.title {
 		font-size: 1rem;
 		font-weight: bold;
+		font-family: var(--font-family-heading);
 	}
 
 	.description {
@@ -68,6 +69,7 @@
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
+		font-family: var(--font-family-content);
 	}
 
 	._card {

@@ -175,7 +175,7 @@
 <LayoutBase>
 	<!-- NAME -->
 	{#snippet nameSnippet()}
-		<h1 class="text-3xl font-bold">{name}</h1>
+		<h1 class="font-heading text-3xl font-bold">{name}</h1>
 	{/snippet}
 
 	<!-- EDIT / SAVE + LOCKED BY {USER} -->
@@ -226,7 +226,7 @@
 
 	<!-- DESCRIPTION -->
 	{#snippet descriptionSnippet()}
-		<p class="italic">{description ?? ''}</p>
+		<p class="font-content italic">{description ?? ''}</p>
 	{/snippet}
 
 	<!-- PROPERTIES -->
@@ -241,7 +241,7 @@
 	<!-- RELATED -->
 	{#snippet relatedSnippet()}
 		{#if relatedSnippet_render}{@render relatedSnippet_render()}{:else if allRelated.length > 0}
-			<h2 class="text-xl font-bold">Associated With</h2>
+			<h2 class="font-heading text-xl font-bold">Associated With</h2>
 			{#each allRelated as { id, name, url } (id)}
 				<div class="badge badge-accent badge-outline">
 					<a href={url} class="link-hover">{name}</a>

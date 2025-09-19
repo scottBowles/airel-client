@@ -84,7 +84,7 @@
 		<label for="mobile-drawer" class="drawer-overlay"></label>
 		<div class="menu bg-base-100 w-80 gap-1 overflow-y-auto p-4">
 			<!-- Sidebar content here -->
-			<div class="mt-4 mb-8 text-center text-4xl font-bold">Airel</div>
+			<div class="font-heading mt-4 mb-8 text-center text-4xl font-bold">Airel</div>
 			<ul>
 				<NavLinks btnSize="lg" />
 			</ul>

@@ -42,13 +42,13 @@
 		<Spacer lg />
 		{#if placeTypeDisplay}
 			<div class="items-container">
-				<h2 class="text-xl font-bold">{placeTypeDisplay}</h2>
+				<h2 class="font-heading text-xl font-bold">{placeTypeDisplay}</h2>
 			</div>
 			<Spacer lg />
 		{/if}
 		{#if children?.length > 0}
 			<div class="items-container">
-				<h2 class="text-xl font-bold">{getChildrenName(placeTypeDisplay)}</h2>
+				<h2 class="font-heading text-xl font-bold">{getChildrenName(placeTypeDisplay)}</h2>
 				<Spacer xs />
 				{#each children as child, i (child.id)}
 					<a class="link link-accent link-hover" href={`/places/${child.id}`}>

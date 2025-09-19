@@ -1,13 +1,41 @@
 /* Tailwind v4 Theme Configuration */
 @theme {
-  --font-family-ui: 'Share Tech Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
-  --font-family-heading: 'Orbitron', 'Menlo', sans-serif;
-  --font-family-content: 'Exo 2', 'Menlo', sans-serif;
+	--font-family-ui: 'Share Tech Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
+	--font-family-heading: 'Orbitron', 'Menlo', sans-serif;
+	--font-family-content: 'Exo 2', 'Menlo', sans-serif;
 }
 
 /* Set Share Tech Mono as the default font family */
 @layer base {
-  html {
-    font-family: theme(--font-family-ui);
-  }
+	html {
+		font-family: var(--font-family-ui);
+	}
+
+	/* Define font utilities */
+	.font-ui {
+		font-family: var(--font-family-ui);
+	}
+
+	.font-heading {
+		font-family: var(--font-family-heading);
+	}
+
+	.font-content {
+		font-family: var(--font-family-content);
+	}
+
+	/* Apply content font to prose by default for readability */
+	.prose {
+		font-family: var(--font-family-content);
+	}
+
+	/* But use heading font for prose headings */
+	.prose h1,
+	.prose h2,
+	.prose h3,
+	.prose h4,
+	.prose h5,
+	.prose h6 {
+		font-family: var(--font-family-heading);
+	}
 }
