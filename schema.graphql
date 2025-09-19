@@ -891,8 +891,8 @@ type ContentChunkType implements Node {
   """The actual text content of this chunk"""
   chunkText: String!
 
-  """Type of content this chunk represents"""
-  contentType: String!
+  """Content type for the generic foreign key"""
+  contentType: Node
   createdAt: DateTime!
 
   """The Globally Unique ID of this object"""
@@ -901,10 +901,8 @@ type ContentChunkType implements Node {
   """Content-specific metadata: titles, URLs, relationships, dates, etc."""
   metadata: JSON!
 
-  """
-  ID of the source object (can be foreign key ID, URL, or custom identifier)
-  """
-  objectId: String!
+  """ID of the source object (primary key of the related model)"""
+  objectId: Int!
   updatedAt: DateTime!
 }
 
@@ -1395,7 +1393,7 @@ input FeatureInputPartial {
 }
 
 """
-GameLog(id, lock_user, lock_time, url, title, google_id, google_created_time, game_date, brief, synopsis, summary, audio_session_notes, last_game_log, generated_log_text, session_number)
+GameLog(id, lock_user, lock_time, url, title, google_id, google_created_time, game_date, brief, synopsis, summary, full_text, full_text_search_vector, audio_session_notes, last_game_log, generated_log_text, session_number)
 """
 type GameLog implements Lockable & Node {
   aiSuggestions: CombinedGameLogAiSummary
@@ -1545,7 +1543,7 @@ type GameLogEdge {
 }
 
 """
-GameLog(id, lock_user, lock_time, url, title, google_id, google_created_time, game_date, brief, synopsis, summary, audio_session_notes, last_game_log, generated_log_text, session_number)
+GameLog(id, lock_user, lock_time, url, title, google_id, google_created_time, game_date, brief, synopsis, summary, full_text, full_text_search_vector, audio_session_notes, last_game_log, generated_log_text, session_number)
 """
 input GameLogInputPartial {
   artifacts: NodeInputListInput
@@ -1580,7 +1578,7 @@ input GamelogReleaseLockInput {
 union GamelogReleaseLockPayload = GameLog | OperationInfo
 
 """
-GameLog(id, lock_user, lock_time, url, title, google_id, google_created_time, game_date, brief, synopsis, summary, audio_session_notes, last_game_log, generated_log_text, session_number)
+GameLog(id, lock_user, lock_time, url, title, google_id, google_created_time, game_date, brief, synopsis, summary, full_text, full_text_search_vector, audio_session_notes, last_game_log, generated_log_text, session_number)
 """
 input GetOrCreateGameLogInput {
   lock: Boolean! = false
@@ -3283,7 +3281,6 @@ input ScriptInputPartial {
 }
 
 input SendChatMessageInput {
-  contentTypes: [String!] = null
   message: String!
   sessionId: ID!
   similarityThreshold: Float = null
@@ -3447,7 +3444,7 @@ union UpdateSkillPayload = OperationInfo | Skill
 union UpdateTraitPayload = OperationInfo | Trait
 
 """
-User(id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined, isDM, last_activity)
+User(id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined, isDM, last_activity, pc_name)
 """
 type User implements Node {
   dateJoined: DateTime!
@@ -3501,7 +3498,7 @@ type UserStatusType {
 }
 
 """
-User(id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined, isDM, last_activity)
+User(id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined, isDM, last_activity, pc_name)
 """
 type UserType {
   archived: Boolean!
