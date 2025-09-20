@@ -43,8 +43,8 @@
 		<input type="checkbox" id={modalId} class="modal-toggle" />
 		<label for={modalId} class="modal modal-bottom sm:modal-middle cursor-pointer">
 			<label class="modal-box relative" for="">
-				<h3 class="text-lg font-bold">Remove log</h3>
-				<p class="py-4">You sure bro?</p>
+				<h3 class="font-heading text-lg font-bold">Remove log</h3>
+				<p class="font-content py-4">You sure bro?</p>
 				<div class="modal-action">
 					<label
 						for={modalId}

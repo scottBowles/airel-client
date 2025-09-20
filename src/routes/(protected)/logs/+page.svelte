@@ -61,7 +61,7 @@
 
 <div class="container mx-auto max-w-5xl p-4">
 	<div class="mb-8 flex flex-wrap items-center justify-between">
-		<h1 class="text-4xl font-bold">Game Logs</h1>
+		<h1 class="font-heading text-4xl font-bold">Game Logs</h1>
 
 		{#if me?.isStaff}
 			<AddALog />
@@ -73,7 +73,7 @@
 			<Sticky tag="li">
 				{#snippet stickySnippet({ isStuck })}
 					<div class="bg-base-100 flex h-16 items-center">
-						<h2 class="text-2xl font-bold" class:text-3xl={isStuck}>
+						<h2 class="font-heading text-2xl font-bold" class:text-3xl={isStuck}>
 							{logGrouping.location}
 						</h2>
 					</div>
@@ -92,7 +92,7 @@
 									>
 										<div class="card-body collapse-title">
 											<div class="justify-between gap-4 md:flex">
-												<h2 class="card-title mb-2">
+												<h2 class="card-title font-heading mb-2">
 													<span>
 														<a href={detailUrl} class="hover:text-accent">{log.title}</a>
 														<a
@@ -121,9 +121,9 @@
 														: '(date unknown)'}
 												</h6>
 											</div>
-											<p>{log.brief || '(brief tbd)'}</p>
+											<p class="font-content">{log.brief || '(brief tbd)'}</p>
 										</div>
-										<div class="card-body collapse-content hidden group-focus:block">
+										<div class="card-body collapse-content font-content hidden group-focus:block">
 											{log.synopsis || '(synopsis tbd)'}
 										</div>
 										<div class="w-full text-center group-focus:hidden">

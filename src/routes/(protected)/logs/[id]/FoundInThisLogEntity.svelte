@@ -18,7 +18,7 @@
 </script>
 
 <div class="mb-3">
-	<h3 class="mb-2">{capitalize(name)}</h3>
+	<h3 class="font-heading mb-2">{capitalize(name)}</h3>
 	<div class="flex flex-wrap gap-x-1 gap-y-1">
 		{#if entities.length > 0}
 			{#each entities as entity (entity.id)}

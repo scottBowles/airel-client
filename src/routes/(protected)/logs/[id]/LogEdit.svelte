@@ -226,7 +226,7 @@
 <form method="POST" onsubmit={handleSubmit}>
 	<div class="container mx-auto mt-8 mb-32 px-8">
 		<div class="mb-8 flex flex-wrap items-center justify-between gap-4">
-			<h1 class="text-3xl font-bold">Edit Log</h1>
+			<h1 class="font-heading text-3xl font-bold">Edit Log</h1>
 
 			<div class="flex min-w-fit items-center gap-8">
 				<span>Locked by {lockUser?.username ?? 'Unknown'}</span>
@@ -239,8 +239,8 @@
 				<input type="checkbox" id={modalId} class="modal-toggle" />
 				<label for={modalId} class="modal modal-bottom sm:modal-middle cursor-pointer">
 					<label class="modal-box relative" for="">
-						<h3 class="text-lg font-bold">Discard changes</h3>
-						<p class="py-4">Are you sure you want to discard any unsaved changes?</p>
+						<h3 class="font-heading text-lg font-bold">Discard changes</h3>
+						<p class="font-content py-4">Are you sure you want to discard any unsaved changes?</p>
 						<div class="modal-action">
 							<label for={modalId} class="btn btn-neutral" onclick={unlock} onkeypress={unlock}
 								>Yes</label
@@ -261,7 +261,7 @@
 
 		<div class="flex flex-col gap-16 sm:flex-row">
 			<div class="flex flex-2 flex-col gap-2">
-				<h2 class="my-4 text-xl font-bold">Details</h2>
+				<h2 class="font-heading my-4 text-xl font-bold">Details</h2>
 
 				<fieldset class="fieldset">
 					<label class="label" for="title-input">Title</label>
@@ -285,7 +285,7 @@
 					<TextAreaAutoGrow
 						id="brief"
 						name="brief"
-						class="textarea w-full"
+						class="textarea font-content w-full"
 						bind:value={brief}
 						required
 					/>
@@ -296,7 +296,7 @@
 					<TextAreaAutoGrow
 						id="synopsis"
 						name="synopsis"
-						class="textarea h-auto w-full"
+						class="textarea font-content h-auto w-full"
 						rows={6}
 						bind:value={synopsis}
 						required
@@ -314,7 +314,7 @@
 			</div>
 
 			<div class="flex flex-1 flex-col items-center">
-				<h2 class="my-4 text-xl font-bold">Found in this Log</h2>
+				<h2 class="font-heading my-4 text-xl font-bold">Found in this Log</h2>
 
 				<div class="flex w-full flex-col gap-2">
 					<RelatedArtifactMultiSelect
@@ -363,10 +363,10 @@
 		)}
 	{:else if aiSuggestions}
 		<div class="container mx-auto mb-32 px-8">
-			<div class="pb-8 text-lg font-bold">Ai Suggestions</div>
+			<div class="font-heading pb-8 text-lg font-bold">Ai Suggestions</div>
 			<div class="mb-6">
 				<div class="mb-4">
-					<div class="text-lg font-bold">Titles</div>
+					<div class="font-heading text-lg font-bold">Titles</div>
 					{#each aiSuggestions.titles as suggestedTitle, i (i + suggestedTitle)}
 						<div>{suggestedTitle}</div>
 						<button
@@ -377,9 +377,9 @@
 					{/each}
 				</div>
 				<div class="mb-4">
-					<div class="text-lg font-bold">Briefs</div>
+					<div class="font-heading text-lg font-bold">Briefs</div>
 					{#each aiSuggestions.briefs as suggestedBrief, i (i + suggestedBrief)}
-						<div>{suggestedBrief}</div>
+						<div class="font-content">{suggestedBrief}</div>
 						<button
 							type="button"
 							onclick={() => (brief = suggestedBrief ?? null)}
@@ -388,9 +388,9 @@
 					{/each}
 				</div>
 				<div class="mb-4">
-					<div class="text-lg font-bold">Synopses</div>
+					<div class="font-heading text-lg font-bold">Synopses</div>
 					{#each aiSuggestions.synopses as suggestedSynopsis, i (i + suggestedSynopsis)}
-						<div>{suggestedSynopsis}</div>
+						<div class="font-content">{suggestedSynopsis}</div>
 						<button
 							type="button"
 							onclick={() => (synopsis = suggestedSynopsis ?? null)}
@@ -411,7 +411,7 @@
 				</div>
 			</div>
 
-			<h3 class="mb-4 text-xl font-bold">Possible Entities</h3>
+			<h3 class="font-heading mb-4 text-xl font-bold">Possible Entities</h3>
 			<div class="mb-6 grid grid-cols-5">
 				<PossibleEntityList
 					suggestedEntityType={ENTITY_TYPE.ASSOCIATION}
@@ -445,10 +445,10 @@
 				/>
 			</div>
 
-			<h3 class="mb-4 text-xl font-bold">Found Entities</h3>
+			<h3 class="font-heading mb-4 text-xl font-bold">Found Entities</h3>
 			<div class="mb-6 grid grid-cols-6">
 				<div>
-					<div class="text-lg font-bold">Artifacts</div>
+					<div class="font-heading text-lg font-bold">Artifacts</div>
 					{#each foundArtifacts.filter((a) => !$artifactIds.includes(a.id)) as foundArtifact (foundArtifact.id)}
 						<div>
 							<button
@@ -461,7 +461,7 @@
 					{/each}
 				</div>
 				<div>
-					<div class="text-lg font-bold">Associations</div>
+					<div class="font-heading text-lg font-bold">Associations</div>
 					{#each foundAssociations.filter((a) => !$associationIds.includes(a.id)) as foundAssociation (foundAssociation.id)}
 						<div>
 							<button
@@ -474,7 +474,7 @@
 					{/each}
 				</div>
 				<div>
-					<div class="text-lg font-bold">Characters</div>
+					<div class="font-heading text-lg font-bold">Characters</div>
 					{#each foundCharacters.filter((c) => !$characterIds.includes(c.id)) as foundCharacter (foundCharacter.id)}
 						<div>
 							<button
@@ -487,7 +487,7 @@
 					{/each}
 				</div>
 				<div class="flex flex-col">
-					<div class="text-lg font-bold">Items</div>
+					<div class="font-heading text-lg font-bold">Items</div>
 					{#each foundItems.filter((i) => !$itemIds.includes(i.id)) as foundItem (foundItem.id)}
 						<div>
 							<button
@@ -500,7 +500,7 @@
 					{/each}
 				</div>
 				<div>
-					<div class="text-lg font-bold">Places</div>
+					<div class="font-heading text-lg font-bold">Places</div>
 					{#each foundPlaces.filter((p) => !$placeIds.includes(p.id)) as foundPlace (foundPlace.id)}
 						<div>
 							<button
@@ -513,7 +513,7 @@
 					{/each}
 				</div>
 				<div>
-					<div class="text-lg font-bold">Races</div>
+					<div class="font-heading text-lg font-bold">Races</div>
 					{#each foundRaces.filter((r) => !$raceIds.includes(r.id)) as foundRace (foundRace.id)}
 						<div>
 							<button
@@ -557,7 +557,7 @@
 	<div class="container mx-auto mt-8 mb-32 px-8">
 		<div class="mb-6">
 			<div class="mb-4">
-				<div class="text-lg font-bold">Title</div>
+				<div class="text-lg font-bold font-heading">Title</div>
 				<div>{aiLogSummary.title}</div>
 				<button
 					type="button"
@@ -566,8 +566,8 @@
 				>
 			</div>
 			<div class="mb-4">
-				<div class="text-lg font-bold">Brief</div>
-				<div>{aiLogSummary.brief}</div>
+				<div class="text-lg font-bold font-heading">Brief</div>
+				<div class="font-content">{aiLogSummary.brief}</div>
 				<button
 					type="button"
 					on:click={() => (brief = aiLogSummary?.brief ?? null)}
@@ -575,8 +575,8 @@
 				>
 			</div>
 			<div class="mb-4">
-				<div class="text-lg font-bold">Synopsis</div>
-				<div>{aiLogSummary.synopsis}</div>
+				<div class="text-lg font-bold font-heading">Synopsis</div>
+				<div class="font-content">{aiLogSummary.synopsis}</div>
 				<button
 					type="button"
 					on:click={() => (synopsis = aiLogSummary?.synopsis ?? null)}
@@ -594,7 +594,7 @@
 			</div>
 		</div>
 
-		<h3 class="text-xl font-bold mb-4">Possible Entities</h3>
+		<h3 class="text-xl font-bold mb-4 font-heading">Possible Entities</h3>
 		<div class="grid grid-cols-5 mb-6">
 			<PossibleEntityList
 				suggestedEntityType={ENTITY_TYPE.ASSOCIATION}
@@ -628,10 +628,10 @@
 			/>
 		</div>
 
-		<h3 class="text-xl font-bold mb-4">Found Entities</h3>
+		<h3 class="text-xl font-bold mb-4 font-heading">Found Entities</h3>
 		<div class="grid grid-cols-6 mb-6">
 			<div>
-				<div class="text-lg font-bold">Artifacts</div>
+				<div class="text-lg font-bold font-heading">Artifacts</div>
 				{#each foundArtifacts.filter((a) => !$artifactIds.includes(a.id)) as foundArtifact (foundArtifact.id)}
 					<div>
 						<button
@@ -644,7 +644,7 @@
 				{/each}
 			</div>
 			<div>
-				<div class="text-lg font-bold">Associations</div>
+				<div class="text-lg font-bold font-heading">Associations</div>
 				{#each foundAssociations.filter((a) => !$associationIds.includes(a.id)) as foundAssociation (foundAssociation.id)}
 					<div>
 						<button
@@ -657,7 +657,7 @@
 				{/each}
 			</div>
 			<div>
-				<div class="text-lg font-bold">Characters</div>
+				<div class="text-lg font-bold font-heading">Characters</div>
 				{#each foundCharacters.filter((c) => !$characterIds.includes(c.id)) as foundCharacter (foundCharacter.id)}
 					<div>
 						<button
@@ -670,7 +670,7 @@
 				{/each}
 			</div>
 			<div class="flex flex-col">
-				<div class="text-lg font-bold">Items</div>
+				<div class="text-lg font-bold font-heading">Items</div>
 				{#each foundItems.filter((i) => !$itemIds.includes(i.id)) as foundItem (foundItem.id)}
 					<div>
 						<button
@@ -683,7 +683,7 @@
 				{/each}
 			</div>
 			<div>
-				<div class="text-lg font-bold">Places</div>
+				<div class="text-lg font-bold font-heading">Places</div>
 				{#each foundPlaces.filter((p) => !$placeIds.includes(p.id)) as foundPlace (foundPlace.id)}
 					<div>
 						<button
@@ -696,7 +696,7 @@
 				{/each}
 			</div>
 			<div>
-				<div class="text-lg font-bold">Races</div>
+				<div class="text-lg font-bold font-heading">Races</div>
 				{#each foundRaces.filter((r) => !$raceIds.includes(r.id)) as foundRace (foundRace.id)}
 					<div>
 						<button

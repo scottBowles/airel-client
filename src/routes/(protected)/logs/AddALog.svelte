@@ -44,7 +44,7 @@
 			>x</label
 		>
 		<form onsubmit={handleSubmit}>
-			<h3 class="mb-3 text-lg font-bold">Add a Log</h3>
+			<h3 class="font-heading mb-3 text-lg font-bold">Add a Log</h3>
 			<fieldset class="fieldset">
 				<label for="url" class="label">Enter url of the log's google doc</label>
 				<input bind:value={newLogUrl} id="url" name="url" class="input" />
