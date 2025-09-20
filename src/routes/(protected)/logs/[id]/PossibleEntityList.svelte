@@ -10,12 +10,8 @@
 		updateLogEntitiesInForm: (id: string) => void;
 	}
 
-	let {
-		suggestedEntityType,
-		entityNames,
-		updateFoundEntities,
-		updateLogEntitiesInForm
-	}: Props = $props();
+	let { suggestedEntityType, entityNames, updateFoundEntities, updateLogEntitiesInForm }: Props =
+		$props();
 
 	let title = $derived(capitalize(entityPlural(suggestedEntityType)));
 </script>

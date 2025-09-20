@@ -39,7 +39,7 @@
 		<Spacer lg />
 
 		<div class="items-container">
-			<h2 class="text-xl font-bold">Race</h2>
+			<h2 class="font-heading text-xl font-bold">Race</h2>
 			<Spacer xs />
 			{#if race}
 				<div>
@@ -55,7 +55,7 @@
 
 		{#if associations?.length > 0}
 			<div class="items-container">
-				<h2 class="text-xl font-bold">Associations</h2>
+				<h2 class="font-heading text-xl font-bold">Associations</h2>
 				<Spacer xs />
 				<div>
 					{#each associations as association, i (association.id)}

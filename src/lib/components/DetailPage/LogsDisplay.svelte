@@ -38,7 +38,7 @@
 </script>
 
 <div>
-	<h2 class="text-2xl font-bold">Logs</h2>
+	<h2 class="font-heading text-2xl font-bold">Logs</h2>
 	<Spacer sm />
 	<div>
 		{#each logNodes as log (log.id)}

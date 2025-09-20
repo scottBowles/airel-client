@@ -16,14 +16,14 @@
 	}: Props = $props();
 </script>
 
-<h3 class="text-xl font-bold">{name}</h3>
+<h3 class="font-heading text-xl font-bold">{name}</h3>
 
 <div class="spacer-sm"></div>
 
 {#if children}
 	{@render children()}
 {:else}
-	<p>{value || ''}</p>
+	<p class="font-content">{value || ''}</p>
 {/if}
 
 <div class="spacer"></div>
